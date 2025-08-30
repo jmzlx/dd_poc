@@ -57,26 +57,25 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Clone the repository
 git clone <repository-url>
-cd dm_agents/dd-checklist
+cd dd_poc
 ```
 
 ### Running Locally
 ```bash
-# Option 1: From parent directory
-cd /Users/jmzlx/Projects/dm_agents
-uv run --project dd-checklist streamlit run dd-checklist/app.py
-
-# Option 2: From dd-checklist directory
-cd dd-checklist
-uv run streamlit run app.py
-
-# Option 3: Use the run script
+# Option 1: Use the run script (recommended)
 ./run.sh
+
+# Option 2: Manual uv commands
+uv sync                           # Install dependencies
+uv run streamlit run app.py       # Run the app
+
+# Option 3: Development mode with auto-reload
+uv run streamlit run app.py --server.runOnSave true
 ```
 
 ### Environment Setup (for AI features)
 ```bash
-# Create .env file in dd-checklist directory
+# Create .env file in the project directory
 echo "ANTHROPIC_API_KEY=your-api-key-here" > .env
 ```
 
@@ -117,30 +116,26 @@ echo "ANTHROPIC_API_KEY=your-api-key-here" > .env
 ## 📁 Project Structure
 
 ```
-dd-checklist/
-├── app.py                 # Main Streamlit application
-├── langgraph_config.py    # LangGraph agent configuration
-├── requirements.txt       # Python dependencies
-├── pyproject.toml        # Project configuration
-├── run.sh               # Launch script
-├── .env                 # API keys (create this)
+dd_poc/
+├── app.py                     # Main Streamlit application
+├── langgraph_config.py        # LangGraph agent configuration
+├── vector_store_config.py     # Vector store configuration
+├── requirements.txt           # Python dependencies (for reference)
+├── pyproject.toml            # uv project configuration
+├── run.sh                    # Launch script
+├── .env                      # API keys (create this)
+├── .venv/                    # uv virtual environment (auto-created)
 ├── data/
-│   ├── checklist/       # Due diligence checklists (.md)
-│   │   ├── bloomberg.md
-│   │   └── expanded.md
-│   ├── questions/       # Question lists (.md)
-│   │   └── questions.md
-│   ├── strategy/        # Strategic documents (.md)
-│   │   └── projects.md
-│   └── vdrs/           # Virtual Data Rooms
+│   ├── checklist/           # Due diligence checklists (.md)
+│   ├── questions/           # Question lists (.md)
+│   ├── strategy/            # Strategic documents (.md)
+│   └── vdrs/               # Virtual Data Rooms
 │       ├── automated-mobile-robotics-expansion/
-│       │   ├── navifloor-robotics-inc/
-│       │   └── polar-dynamics-robotics-inc/
 │       ├── industrial-ai-dominance/
-│       │   └── nexus-industrial-intelligence-inc/
-│       └── ... (other projects)
-└── .streamlit/
-    └── config.toml      # UI configuration
+│       ├── industrial-security-leadership/
+│       ├── proj-ra-1/
+│       └── technology-led-services-transformation/
+└── __pycache__/            # Python cache (auto-generated)
 ```
 
 ## 🎨 Key Features Explained
@@ -179,11 +174,17 @@ dd-checklist/
 
 ### Local Development
 ```bash
-# Install dependencies
-uv pip install -r requirements.txt
+# Install dependencies (automatically creates virtual environment)
+uv sync
 
-# Run with hot reload
+# Run with hot reload for development
 uv run streamlit run app.py --server.runOnSave true
+
+# Add new dependencies
+uv add <package-name>
+
+# Update dependencies
+uv lock --upgrade
 ```
 
 ## 💡 Usage Tips
