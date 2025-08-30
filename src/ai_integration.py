@@ -283,15 +283,17 @@ def batch_summarize_documents(documents: List[Dict], llm: ChatAnthropic, batch_s
         doc_name = doc.get('name', 'Unknown')
         doc_path = doc.get('path', '')
         
-        return f"""Create a brief 1-2 sentence summary of what this document represents.
-Focus on the document's purpose and key content.
+        return f"""Identify and describe what type of document this is in 1-2 sentences.
+Focus specifically on the document type, category, and what kind of information it contains.
+
+Examples of document types: financial statement, contract agreement, corporate governance document, employee handbook, technical specification, compliance report, audit report, etc.
 
 Document: {doc_name}
 Path: {doc_path}
 Content preview:
 {text_preview}
 
-Summary (1-2 sentences only):"""
+Document type description (1-2 sentences only):"""
     
     # Process documents in batches
     summarized_docs = []
