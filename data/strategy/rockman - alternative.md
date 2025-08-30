@@ -1,8 +1,8 @@
-# Rockwell Automation Corporate Development Strategy – Alternative Project Definitions
+# Rockman Automation Corporate Development Strategy – Alternative Project Definitions
 
 ## Company Overview
 
-**Rockwell Automation** is the global leader in industrial automation and digital transformation, with a mission to help manufacturers achieve sustainable, resilient, and data-driven operations.
+**Rockman Automation** is the global leader in industrial automation and digital transformation, with a mission to help manufacturers achieve sustainable, resilient, and data-driven operations.
 
 ---
 
@@ -30,7 +30,7 @@ Focus acquisitions on companies enabling automation, monitoring, and optimizatio
 
 ### Strategic Rationale
 
-The global shift to renewable energy requires industrial-grade automation. Rockwell can leverage its expertise to become the control and optimization backbone of the energy transition.
+The global shift to renewable energy requires industrial-grade automation. Rockman can leverage its expertise to become the control and optimization backbone of the energy transition.
 
 ---
 
@@ -58,7 +58,7 @@ Acquire firms with strong edge computing and real-time analytics capabilities to
 
 ### Strategic Rationale
 
-Edge computing is critical for AI, security, and operational efficiency. Strengthening Rockwell’s edge portfolio will enhance its position as the platform of choice for connected factories.
+Edge computing is critical for AI, security, and operational efficiency. Strengthening Rockman’s edge portfolio will enhance its position as the platform of choice for connected factories.
 
 ---
 
@@ -80,13 +80,13 @@ Build a sustainability-focused portfolio with software and services that track, 
 
 ### Key Success Metrics
 
-* 80% of Rockwell accounts using sustainability tools by 2028
-* Enable customer carbon reduction of 30%+ through Rockwell platforms
+* 80% of Rockman accounts using sustainability tools by 2028
+* Enable customer carbon reduction of 30%+ through Rockman platforms
 * \$200M recurring SaaS revenue from sustainability services
 
 ### Strategic Rationale
 
-Sustainability is no longer optional. By embedding sustainability into automation, Rockwell can become indispensable to clients under ESG mandates.
+Sustainability is no longer optional. By embedding sustainability into automation, Rockman can become indispensable to clients under ESG mandates.
 
 ---
 
@@ -114,7 +114,7 @@ Invest in technologies that enhance human performance in industrial environments
 
 ### Strategic Rationale
 
-The industrial workforce shortage makes human-machine augmentation essential. Rockwell can lead by offering solutions that empower workers while advancing automation.
+The industrial workforce shortage makes human-machine augmentation essential. Rockman can lead by offering solutions that empower workers while advancing automation.
 
 ---
 
@@ -142,7 +142,7 @@ Acquire companies with supply chain visibility and AI-driven optimization tools 
 
 ### Strategic Rationale
 
-The pandemic revealed fragility in supply chains. Rockwell can fill this gap by becoming the trusted partner for resilient, automated supply chains integrated with production.
+The pandemic revealed fragility in supply chains. Rockman can fill this gap by becoming the trusted partner for resilient, automated supply chains integrated with production.
 
 ---
 
@@ -151,18 +151,18 @@ The pandemic revealed fragility in supply chains. Rockwell can fill this gap by 
 ### Investment Philosophy
 
 * **Sustainability & Energy First**: Prioritize acquisitions aligned with the global energy transition
-* **Edge + AI Convergence**: Position Rockwell at the intersection of edge, AI, and industrial automation
+* **Edge + AI Convergence**: Position Rockman at the intersection of edge, AI, and industrial automation
 * **Human-Machine Partnership**: Build solutions that enhance—not replace—human operators
-* **Supply Chain as a Platform**: Extend Rockwell automation into the broader value chain
+* **Supply Chain as a Platform**: Extend Rockman automation into the broader value chain
 
 ### Integration Approach
 
-* Retain specialized expertise while ensuring integration into FactoryTalk and Rockwell’s go-to-market engine
+* Retain specialized expertise while ensuring integration into FactoryTalk and Rockman’s go-to-market engine
 * Co-brand for trust, while embedding into unified platform within 18 months
-* Expand acquired capabilities to Rockwell’s 100+ country footprint
+* Expand acquired capabilities to Rockman’s 100+ country footprint
 
 ### Success Metrics Across All Projects
 
 * Generate \$1.8B+ in incremental revenue by 2029
 * Achieve leadership in 3 new strategic categories: Energy Transition, Industrial Edge, Sustainability
-* Ensure Rockwell is recognized as the indispensable partner for sustainable and resilient manufacturing globally
+* Ensure Rockman is recognized as the indispensable partner for sustainable and resilient manufacturing globally
