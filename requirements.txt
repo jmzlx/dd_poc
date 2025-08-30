@@ -1,0 +1,21 @@
+# Core dependencies
+streamlit>=1.28.0
+sentence-transformers>=2.2.0
+numpy>=1.24.0
+pandas>=2.0.0
+watchdog>=3.0.0  # For auto-reload during development
+
+# Document processing
+PyPDF2>=3.0.0
+python-docx>=0.8.11
+
+# Environment and configuration
+python-dotenv>=1.0.0
+
+# Vector store
+faiss-cpu>=1.7.4
+
+# AI Enhancement (always included for consistency)
+langchain-anthropic>=0.1.0
+langgraph>=0.0.20
+langchain-core>=0.1.0

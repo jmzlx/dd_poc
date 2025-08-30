@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+.python-version
+
+# Environment
+.env
+.env.*
+env.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/secrets.toml
+*.log
+
+# Vector stores
+chroma_db/
+*.faiss
+*.pkl
+
+# Data files
+# VDRs are only 46MB - can include in git if needed
+# Uncomment next line to exclude from git:
+# data/vdrs/
+data/strategy/
+# Always include these
+!data/sample-data/
+!data/checklist/
+
+# Temporary files
+temp/
+tmp/
+uploads/
+*.tmp
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Deployment
+*.pem
+*.key
+*.crt
