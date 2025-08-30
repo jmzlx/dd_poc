@@ -38,15 +38,6 @@ chroma_db/
 *.faiss
 *.pkl
 
-# Data files
-# VDRs are only 46MB - can include in git if needed
-# Uncomment next line to exclude from git:
-# data/vdrs/
-data/strategy/
-# Always include these
-!data/sample-data/
-!data/checklist/
-
 # Temporary files
 temp/
 tmp/
