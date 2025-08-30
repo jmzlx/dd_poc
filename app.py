@@ -85,7 +85,10 @@ class DDChecklistApp:
             'company_summary': "",
             'agent': None,
             'doc_embeddings_data': None,
-            'just_processed': False
+            'just_processed': False,
+            'is_processing': False,
+            'trigger_processing': False,
+            'processing_path': None
         }
         
         for key, default_value in defaults.items():
@@ -165,7 +168,13 @@ class DDChecklistApp:
             selected_project_path, selected_data_room_path = render_project_selector()
             
             # Process button
-            process_button = st.button("🚀 Process Data Room", type="primary", use_container_width=True)
+            button_text = "⏳ Processing..." if st.session_state.is_processing else "🚀 Process Data Room"
+            process_button = st.button(
+                button_text, 
+                type="primary", 
+                use_container_width=True,
+                disabled=st.session_state.is_processing
+            )
             
             if process_button:
                 show_success("Processing... Check main area for progress")
@@ -410,127 +419,135 @@ class DDChecklistApp:
         """
         if not Path(data_room_path).exists():
             show_error(f"Data room path not found: {data_room_path}")
+            st.session_state.is_processing = False  # Reset flag on error
             return
         
-        # Initialize services
-        self.initialize_services()
-        
-        # Create progress container
-        progress_container = st.container()
-        
-        with progress_container:
-            st.markdown("### 🚀 Processing Data Room")
-            tracker = ProgressTracker(10, "Processing")
+        try:
+            # Initialize services
+            self.initialize_services()
             
-            # Step 1: Load documents
-            tracker.update(1, f"Scanning data room: {Path(data_room_path).name}")
-            load_results = self.service.document_processor.load_data_room(data_room_path)
-            st.session_state.documents = self.service.document_processor.documents
-            st.session_state.chunks = self.service.document_processor.chunks
-            st.session_state.embeddings = self.service.document_processor.embeddings
+            # Create progress container
+            progress_container = st.container()
             
-            tracker.update(2, f"Found {load_results['documents_count']} documents")
-            
-            # Step 2: Generate AI summaries if agent available
-            if hasattr(st.session_state, 'agent') and st.session_state.agent:
-                tracker.update(3, "Generating AI document summaries...")
+            with progress_container:
+                st.markdown("### 🚀 Processing Data Room")
+                tracker = ProgressTracker(10, "Processing")
                 
-                # Convert documents for summarization
-                docs_for_summary = []
-                for path, doc_info in st.session_state.documents.items():
-                    docs_for_summary.append({
-                        'name': doc_info['name'],
-                        'path': doc_info['rel_path'],
-                        'content': doc_info.get('content', '')[:1500],
-                        'metadata': doc_info.get('metadata', {})
-                    })
+                # Step 1: Load documents
+                tracker.update(1, f"Scanning data room: {Path(data_room_path).name}")
+                load_results = self.service.document_processor.load_data_room(data_room_path)
+                st.session_state.documents = self.service.document_processor.documents
+                st.session_state.chunks = self.service.document_processor.chunks
+                st.session_state.embeddings = self.service.document_processor.embeddings
                 
-                # Batch summarize
-                summarized_docs = batch_summarize_documents(
-                    docs_for_summary, 
-                    st.session_state.agent.llm,
-                    batch_size=self.config.processing.batch_size
-                )
+                tracker.update(2, f"Found {load_results['documents_count']} documents")
                 
-                # Store summaries
-                for doc in summarized_docs:
+                # Step 2: Generate AI summaries if agent available
+                if hasattr(st.session_state, 'agent') and st.session_state.agent:
+                    tracker.update(3, "Generating AI document summaries...")
+                    
+                    # Convert documents for summarization
+                    docs_for_summary = []
                     for path, doc_info in st.session_state.documents.items():
-                        if doc_info['rel_path'] == doc['path']:
-                            doc_info['summary'] = doc.get('summary', '')
-                
-                # Create embeddings using summaries
-                st.session_state.doc_embeddings_data = create_document_embeddings_with_summaries(
-                    summarized_docs, self.model
-                )
-                
-                tracker.update(4, "AI summaries complete")
-            else:
-                tracker.update(4, "Skipping AI summaries (not enabled)")
-            
-            # Step 3: Parse checklist and questions
-            tracker.update(5, "Loading checklist and questions...")
-            
-            # Load default checklist
-            checklist_text = self._load_default_file(self.config.paths.checklist_path, "*.md")
-            if checklist_text:
-                st.session_state.checklist = self.service.checklist_parser.parse_checklist(checklist_text)
-            
-            # Load default questions
-            questions_text = self._load_default_file(self.config.paths.questions_path, "*.md")
-            if questions_text:
-                st.session_state.questions = self.service.question_parser.parse_questions(questions_text)
-            
-            tracker.update(6, "Checklist and questions loaded")
-            
-            # Step 4: Match checklist to documents
-            if st.session_state.checklist and st.session_state.chunks:
-                tracker.update(7, "Matching checklist to documents...")
-                
-                if hasattr(st.session_state, 'doc_embeddings_data') and st.session_state.doc_embeddings_data:
-                    # Use AI-enhanced matching
-                    st.session_state.checklist_results = match_checklist_with_summaries(
-                        st.session_state.checklist,
-                        st.session_state.doc_embeddings_data,
-                        self.model,
-                        self.config.processing.similarity_threshold
+                        docs_for_summary.append({
+                            'name': doc_info['name'],
+                            'path': doc_info['rel_path'],
+                            'content': doc_info.get('content', '')[:1500],
+                            'metadata': doc_info.get('metadata', {})
+                        })
+                    
+                    # Batch summarize
+                    summarized_docs = batch_summarize_documents(
+                        docs_for_summary, 
+                        st.session_state.agent.llm,
+                        batch_size=self.config.processing.batch_size
                     )
+                    
+                    # Store summaries
+                    for doc in summarized_docs:
+                        for path, doc_info in st.session_state.documents.items():
+                            if doc_info['rel_path'] == doc['path']:
+                                doc_info['summary'] = doc.get('summary', '')
+                    
+                    # Create embeddings using summaries
+                    st.session_state.doc_embeddings_data = create_document_embeddings_with_summaries(
+                        summarized_docs, self.model
+                    )
+                    
+                    tracker.update(4, "AI summaries complete")
                 else:
-                    # Use traditional matching
-                    st.session_state.checklist_results = self.service.checklist_matcher.match_checklist_to_documents(
-                        st.session_state.checklist,
+                    tracker.update(4, "Skipping AI summaries (not enabled)")
+                
+                # Step 3: Parse checklist and questions
+                tracker.update(5, "Loading checklist and questions...")
+                
+                # Load default checklist
+                checklist_text = self._load_default_file(self.config.paths.checklist_path, "*.md")
+                if checklist_text:
+                    st.session_state.checklist = self.service.checklist_parser.parse_checklist(checklist_text)
+                
+                # Load default questions
+                questions_text = self._load_default_file(self.config.paths.questions_path, "*.md")
+                if questions_text:
+                    st.session_state.questions = self.service.question_parser.parse_questions(questions_text)
+                
+                tracker.update(6, "Checklist and questions loaded")
+                
+                # Step 4: Match checklist to documents
+                if st.session_state.checklist and st.session_state.chunks:
+                    tracker.update(7, "Matching checklist to documents...")
+                    
+                    if hasattr(st.session_state, 'doc_embeddings_data') and st.session_state.doc_embeddings_data:
+                        # Use AI-enhanced matching
+                        st.session_state.checklist_results = match_checklist_with_summaries(
+                            st.session_state.checklist,
+                            st.session_state.doc_embeddings_data,
+                            self.model,
+                            self.config.processing.similarity_threshold
+                        )
+                    else:
+                        # Use traditional matching
+                        st.session_state.checklist_results = self.service.checklist_matcher.match_checklist_to_documents(
+                            st.session_state.checklist,
+                            st.session_state.chunks,
+                            st.session_state.embeddings,
+                            self.config.processing.similarity_threshold
+                        )
+                    
+                    tracker.update(8, "Checklist matching complete")
+                
+                # Step 5: Answer questions
+                if (st.session_state.questions and st.session_state.chunks and 
+                    st.session_state.embeddings is not None):
+                    
+                    tracker.update(9, "Answering due diligence questions...")
+                    
+                    st.session_state.question_answers = self.service.question_answerer.answer_questions_with_chunks(
+                        st.session_state.questions,
                         st.session_state.chunks,
                         st.session_state.embeddings,
                         self.config.processing.similarity_threshold
                     )
+                    
+                    answered_count = sum(1 for a in st.session_state.question_answers.values() if a['has_answer'])
+                    tracker.update(10, f"Answered {answered_count}/{len(st.session_state.questions)} questions")
                 
-                tracker.update(8, "Checklist matching complete")
-            
-            # Step 5: Answer questions
-            if (st.session_state.questions and st.session_state.chunks and 
-                st.session_state.embeddings is not None):
+                tracker.complete("Processing complete!")
                 
-                tracker.update(9, "Answering due diligence questions...")
-                
-                st.session_state.question_answers = self.service.question_answerer.answer_questions_with_chunks(
-                    st.session_state.questions,
-                    st.session_state.chunks,
-                    st.session_state.embeddings,
-                    self.config.processing.similarity_threshold
-                )
-                
-                answered_count = sum(1 for a in st.session_state.question_answers.values() if a['has_answer'])
-                tracker.update(10, f"Answered {answered_count}/{len(st.session_state.questions)} questions")
+                # Small delay before clearing
+                import time
+                time.sleep(1.5)
+                progress_container.empty()
             
-            tracker.complete("Processing complete!")
-            
-            # Small delay before clearing
-            import time
-            time.sleep(1.5)
-            progress_container.empty()
-            
-            # Mark as just processed and rerun
+            # Reset processing flag and mark as just processed on success
+            st.session_state.is_processing = False
             st.session_state.just_processed = True
             st.rerun()
+            
+        except Exception:
+            # Reset processing flag on any error
+            st.session_state.is_processing = False
+            raise  # Let decorator handle error display
     
     def _load_default_file(self, directory: Path, pattern: str) -> str:
         """Load the first file matching pattern from directory"""
@@ -576,9 +593,20 @@ class DDChecklistApp:
             show_success("✅ Data room processing complete! View results in the tabs above.")
             st.session_state.just_processed = False
         
-        # Process data room if button was clicked
-        if process_button and selected_data_room_path:
-            self.process_data_room(selected_data_room_path)
+        # Handle processing trigger
+        if process_button and selected_data_room_path and not st.session_state.is_processing:
+            # Set trigger and path for next render
+            st.session_state.trigger_processing = True
+            st.session_state.processing_path = selected_data_room_path
+            st.session_state.is_processing = True
+            st.rerun()
+        
+        # Execute processing if triggered
+        if st.session_state.trigger_processing and st.session_state.processing_path:
+            st.session_state.trigger_processing = False  # Reset trigger
+            processing_path = st.session_state.processing_path
+            st.session_state.processing_path = None
+            self.process_data_room(processing_path)
 
 
 def main():
