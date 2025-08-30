@@ -9,6 +9,12 @@ venv/
 .venv/
 .python-version
 
+# Build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+
 # Environment
 .env
 .env.*
@@ -25,6 +31,7 @@ Thumbs.db
 # Streamlit
 .streamlit/secrets.toml
 *.log
+.logs/
 
 # Vector stores
 chroma_db/

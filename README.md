@@ -1,6 +1,15 @@
 # 🤖 AI Due Diligence
 
-A powerful Streamlit application for automated due diligence document analysis with AI-powered insights, checklist matching, and intelligent Q&A capabilities.
+A professional, enterprise-grade Streamlit application for automated due diligence document analysis with AI-powered insights, checklist matching, and intelligent Q&A capabilities.
+
+> **🚀 Recently Refactored**: Transformed from a 1474-line monolith into a clean, modular architecture with enhanced error handling, type safety, and configuration management.
+>
+> **✨ Key Improvements**: 
+> - **6 focused modules** instead of single large file
+> - **Complete type hint coverage** for better IDE support  
+> - **Centralized configuration** with environment awareness
+> - **Comprehensive error handling** and logging
+> - **Only essential files** - cleaned and optimized structure
 
 ## ✨ Features
 
@@ -42,10 +51,11 @@ A powerful Streamlit application for automated due diligence document analysis w
 - Export strategic reports
 
 ### 🤖 **AI Enhancement (Optional)**
-- Powered by Anthropic Claude (Haiku/Sonnet)
-- Document summarization
-- Intelligent matching
-- Natural language understanding
+- Powered by Anthropic Claude (Haiku/Sonnet/Opus)
+- Document summarization with batch processing
+- Intelligent matching with semantic understanding
+- Natural language understanding and synthesis
+- Comprehensive error handling and retry logic
 - Toggle AI features on/off for comparison
 
 ## 🚀 Quick Start
@@ -77,6 +87,19 @@ uv run streamlit run app.py --server.runOnSave true
 ```bash
 # Create .env file in the project directory
 echo "ANTHROPIC_API_KEY=your-api-key-here" > .env
+
+# Optional: Set environment for configuration
+echo "ENVIRONMENT=development" >> .env
+echo "TOKENIZERS_PARALLELISM=false" >> .env
+```
+
+### Verification
+```bash
+# Test that the app imports correctly
+uv run python -c "from app import DDChecklistApp; print('✅ App ready')"
+
+# Start the application to verify everything works
+uv run streamlit run app.py
 ```
 
 ## 📱 User Interface
@@ -117,25 +140,31 @@ echo "ANTHROPIC_API_KEY=your-api-key-here" > .env
 
 ```
 dd_poc/
-├── app.py                     # Main Streamlit application
-├── langgraph_config.py        # LangGraph agent configuration
-├── vector_store_config.py     # Vector store configuration
-├── requirements.txt           # Python dependencies (for reference)
-├── pyproject.toml            # uv project configuration
-├── run.sh                    # Launch script
-├── .env                      # API keys (create this)
-├── .venv/                    # uv virtual environment (auto-created)
-├── data/
+├── app.py                     # 🎯 Main Streamlit application (clean, refactored)
+├── src/                       # 📦 Modular architecture
+│   ├── __init__.py           # Package initialization & exports
+│   ├── config.py             # Configuration management
+│   ├── ai_integration.py     # AI/LangGraph integration
+│   ├── document_processing.py # Document operations & processing
+│   ├── services.py           # Business logic services
+│   ├── ui_components.py      # Reusable UI components
+│   └── utils.py              # Error handling & utilities
+├── data/                      # 📊 Data directories
 │   ├── checklist/           # Due diligence checklists (.md)
 │   ├── questions/           # Question lists (.md)
 │   ├── strategy/            # Strategic documents (.md)
-│   └── vdrs/               # Virtual Data Rooms
+│   └── vdrs/               # Virtual Data Rooms (5 projects)
 │       ├── automated-mobile-robotics-expansion/
 │       ├── industrial-ai-dominance/
 │       ├── industrial-security-leadership/
 │       ├── proj-ra-1/
 │       └── technology-led-services-transformation/
-└── __pycache__/            # Python cache (auto-generated)
+├── requirements.txt           # Python dependencies (for reference)
+├── pyproject.toml            # uv project configuration
+├── run.sh                    # 🚀 Launch script
+├── .env                      # API keys (create this)
+├── .venv/                    # uv virtual environment (auto-created)
+└── .logs/                   # Application logs (auto-created)
 ```
 
 ## 🎨 Key Features Explained
@@ -242,28 +271,62 @@ uv lock --upgrade
 
 ## 🛠️ Troubleshooting
 
+### Debug Tools
+```bash
+# Test application imports
+uv run python -c "from app import DDChecklistApp; app = DDChecklistApp(); print('✅ App working')"
+
+# Check project structure
+ls -la src/
+
+# Clean Python cache files
+find . -name "*.pyc" -delete && find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+```
+
 ### Common Issues
 1. **"No projects found"**: Check `data/vdrs/` folder structure
 2. **"No checklists found"**: Add `.md` files to `data/checklist/`
-3. **"AI packages not available"**: Install with `uv pip install -r requirements.txt`
+3. **"AI packages not available"**: Run `uv sync` to install dependencies
 4. **"API key not found"**: Create `.env` file with ANTHROPIC_API_KEY
+5. **Import errors**: Clean cache files with the command above
+6. **Tokenizer warnings**: Already fixed with `TOKENIZERS_PARALLELISM=false` in `.env`
 
 ### Performance
 - Large data rooms (>100 docs) may take 2-3 minutes
 - Use progress bars to monitor processing
-- Check console for detailed logs
+- Check logs in `.logs/` directory for detailed information
 
 ## 📝 License
 
 MIT License - See LICENSE file for details
 
+## 🏗️ Architecture
+
+This application uses a **clean, modular architecture**:
+
+- **`app.py`**: Main Streamlit application (single entry point)
+- **`src/`**: All modules organized by responsibility
+  - **`config.py`**: Environment-aware configuration management
+  - **`ai_integration.py`**: AI/LangGraph integration for Claude
+  - **`document_processing.py`**: File handling and text extraction
+  - **`services.py`**: Business logic (parsing, matching, Q&A)
+  - **`ui_components.py`**: Reusable Streamlit components
+  - **`utils.py`**: Error handling, logging, and utilities
+
 ## 🤝 Contributing
 
-Contributions welcome! Please submit pull requests or open issues for bugs and feature requests.
+Contributions welcome! The codebase uses:
+- **Type hints** throughout for better IDE support
+- **Modular architecture** for easy testing and maintenance
+- **Comprehensive error handling** with centralized logging
+- **Environment-aware configuration** for different deployment scenarios
 
 ## 📧 Support
 
-For questions or support, please open an issue on GitHub.
+For questions or support:
+1. Check the [troubleshooting section](#-troubleshooting)
+2. Test your setup: `uv run python -c "from app import DDChecklistApp; print('✅ Ready')"`
+3. Open an issue on GitHub
 
 ---
 

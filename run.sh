@@ -1,17 +1,30 @@
 #!/bin/bash
-# Run the DD-Checklist Streamlit app with uv
 
-echo "🚀 Starting DD-Checklist App..."
-echo "📋 Checklists: $(ls data/checklist/*.md 2>/dev/null | wc -l) found"
-echo "📂 Data rooms: $(find data/vdrs -maxdepth 1 -type d ! -name vdrs ! -name ".*" 2>/dev/null | wc -l) found"
+# DD-Checklist Launch Script
+# Simple script to start the Streamlit application with uv
+
+echo "🚀 Starting DD-Checklist Application..."
 echo ""
 
-# Ensure we have the virtual environment and dependencies
-echo "📦 Setting up environment with uv..."
+# Check if uv is installed
+if ! command -v uv &> /dev/null; then
+    echo "❌ Error: uv is not installed"
+    echo "   Please install uv: curl -LsSf https://astral.sh/uv/install.sh | sh"
+    exit 1
+fi
+
+# Install dependencies if needed
+echo "📦 Ensuring dependencies are installed..."
 uv sync
 
-# Run with uv
-echo "🎯 Launching Streamlit app..."
-uv run streamlit run app.py --server.port 8501 --server.headless true
+echo ""
+echo "🌐 Starting Streamlit server..."
+echo "   App will open in your browser automatically"
+echo "   Press Ctrl+C to stop the server"
+echo ""
 
-echo "✅ App stopped"
+# Set environment variables to suppress warnings
+export TOKENIZERS_PARALLELISM=false
+
+# Start the application
+uv run streamlit run app.py

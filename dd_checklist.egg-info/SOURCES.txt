@@ -1,7 +1,0 @@
-README.md
-pyproject.toml
-dd_checklist.egg-info/PKG-INFO
-dd_checklist.egg-info/SOURCES.txt
-dd_checklist.egg-info/dependency_links.txt
-dd_checklist.egg-info/requires.txt
-dd_checklist.egg-info/top_level.txt

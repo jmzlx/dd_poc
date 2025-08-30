@@ -1,0 +1,369 @@
+#!/usr/bin/env python3
+"""
+Configuration Management Module
+
+This module centralizes all configuration settings for the DD-Checklist application.
+Handles environment variables, default settings, and configuration validation.
+"""
+
+import os
+from pathlib import Path
+from typing import Dict, Any, Optional, List
+from dataclasses import dataclass, field
+from dotenv import load_dotenv
+
+# Fix tokenizers parallelism warning
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+
+
+@dataclass
+class ModelConfig:
+    """Configuration for AI models"""
+    sentence_transformer_model: str = "all-MiniLM-L6-v2"
+    claude_model: str = "claude-3-haiku-20240307"
+    temperature: float = 0.3
+    max_tokens: int = 2000
+    embedding_dimension: int = 384
+
+
+@dataclass
+class ProcessingConfig:
+    """Configuration for document processing"""
+    chunk_size: int = 400
+    chunk_overlap: int = 50
+    max_text_length: int = 10000
+    batch_size: int = 100
+    similarity_threshold: float = 0.35
+    relevancy_threshold: float = 0.4
+    primary_threshold: float = 0.5
+    supported_file_extensions: List[str] = field(
+        default_factory=lambda: ['.pdf', '.docx', '.doc', '.txt', '.md']
+    )
+
+
+@dataclass
+class UIConfig:
+    """Configuration for UI settings"""
+    page_title: str = "AI Due Diligence"
+    page_icon: str = "🤖"
+    layout: str = "wide"
+    top_k_search_results: int = 5
+    max_question_sources: int = 3
+    max_checklist_matches: int = 5
+
+
+@dataclass
+class PathConfig:
+    """Configuration for file paths"""
+    data_dir: str = "data"
+    checklist_dir: str = "data/checklist"
+    questions_dir: str = "data/questions"
+    strategy_dir: str = "data/strategy"
+    vdrs_dir: str = "data/vdrs"
+    cache_dir: str = ".cache"
+    
+    def __post_init__(self):
+        """Convert string paths to Path objects and ensure they exist"""
+        self.data_path = Path(self.data_dir)
+        self.checklist_path = Path(self.checklist_dir)
+        self.questions_path = Path(self.questions_dir)
+        self.strategy_path = Path(self.strategy_dir)
+        self.vdrs_path = Path(self.vdrs_dir)
+        self.cache_path = Path(self.cache_dir)
+
+
+@dataclass
+class APIConfig:
+    """Configuration for API settings"""
+    anthropic_api_key: Optional[str] = None
+    openai_api_key: Optional[str] = None
+    max_concurrent_requests: int = 10
+    request_timeout: int = 30
+    retry_attempts: int = 3
+    
+    def __post_init__(self):
+        """Load API keys from environment if not provided"""
+        if not self.anthropic_api_key:
+            self.anthropic_api_key = os.getenv('ANTHROPIC_API_KEY')
+        if not self.openai_api_key:
+            self.openai_api_key = os.getenv('OPENAI_API_KEY')
+
+
+@dataclass
+class AppConfig:
+    """Main application configuration"""
+    model: ModelConfig = field(default_factory=ModelConfig)
+    processing: ProcessingConfig = field(default_factory=ProcessingConfig)
+    ui: UIConfig = field(default_factory=UIConfig)
+    paths: PathConfig = field(default_factory=PathConfig)
+    api: APIConfig = field(default_factory=APIConfig)
+    
+    # Environment settings
+    debug: bool = False
+    environment: str = "development"
+    log_level: str = "INFO"
+    
+    def __post_init__(self):
+        """Load environment-specific settings"""
+        self.debug = os.getenv('DEBUG', 'false').lower() == 'true'
+        self.environment = os.getenv('ENVIRONMENT', 'development')
+        self.log_level = os.getenv('LOG_LEVEL', 'INFO')
+
+
+class ConfigManager:
+    """
+    Configuration manager that handles loading and validating configuration
+    """
+    
+    def __init__(self, config_file: Optional[str] = None):
+        """
+        Initialize configuration manager
+        
+        Args:
+            config_file: Optional path to configuration file
+        """
+        # Load environment variables
+        load_dotenv()
+        
+        # Initialize configuration
+        self.config = AppConfig()
+        
+        # Load from file if provided
+        if config_file and Path(config_file).exists():
+            self._load_from_file(config_file)
+        
+        # Validate configuration
+        self._validate_config()
+    
+    def _load_from_file(self, config_file: str) -> None:
+        """
+        Load configuration from file (JSON or YAML)
+        
+        Args:
+            config_file: Path to configuration file
+        """
+        import json
+        
+        config_path = Path(config_file)
+        
+        try:
+            if config_path.suffix.lower() == '.json':
+                with open(config_path, 'r') as f:
+                    config_data = json.load(f)
+                self._update_config_from_dict(config_data)
+            elif config_path.suffix.lower() in ['.yml', '.yaml']:
+                try:
+                    import yaml
+                    with open(config_path, 'r') as f:
+                        config_data = yaml.safe_load(f)
+                    self._update_config_from_dict(config_data)
+                except ImportError:
+                    print("PyYAML not installed. Cannot load YAML configuration.")
+        except Exception as e:
+            print(f"Warning: Could not load configuration from {config_file}: {e}")
+    
+    def _update_config_from_dict(self, config_data: Dict[str, Any]) -> None:
+        """
+        Update configuration from dictionary
+        
+        Args:
+            config_data: Configuration dictionary
+        """
+        for section, values in config_data.items():
+            if hasattr(self.config, section) and isinstance(values, dict):
+                config_section = getattr(self.config, section)
+                for key, value in values.items():
+                    if hasattr(config_section, key):
+                        setattr(config_section, key, value)
+    
+    def _validate_config(self) -> None:
+        """Validate configuration settings"""
+        # Validate paths
+        if not self.config.paths.data_path.exists():
+            print(f"Warning: Data directory does not exist: {self.config.paths.data_path}")
+        
+        # Validate model settings
+        if self.config.processing.chunk_size <= self.config.processing.chunk_overlap:
+            print("Warning: Chunk size should be larger than chunk overlap")
+        
+        # Validate thresholds
+        if not 0 <= self.config.processing.similarity_threshold <= 1:
+            print("Warning: Similarity threshold should be between 0 and 1")
+    
+    def get_config(self) -> AppConfig:
+        """Get the current configuration"""
+        return self.config
+    
+    def update_config(self, **kwargs) -> None:
+        """
+        Update configuration settings
+        
+        Args:
+            **kwargs: Configuration updates
+        """
+        for key, value in kwargs.items():
+            if hasattr(self.config, key):
+                setattr(self.config, key, value)
+    
+    def save_config(self, config_file: str) -> None:
+        """
+        Save current configuration to file
+        
+        Args:
+            config_file: Path to save configuration
+        """
+        import json
+        from dataclasses import asdict
+        
+        config_dict = asdict(self.config)
+        
+        # Remove Path objects and other non-serializable items
+        config_dict = self._make_serializable(config_dict)
+        
+        with open(config_file, 'w') as f:
+            json.dump(config_dict, f, indent=2)
+    
+    def _make_serializable(self, obj: Any) -> Any:
+        """Make configuration dictionary serializable"""
+        if isinstance(obj, dict):
+            return {k: self._make_serializable(v) for k, v in obj.items() 
+                   if not k.endswith('_path')}  # Skip Path objects
+        elif isinstance(obj, list):
+            return [self._make_serializable(item) for item in obj]
+        elif isinstance(obj, Path):
+            return str(obj)
+        else:
+            return obj
+
+
+# Global configuration instance
+_config_manager: Optional[ConfigManager] = None
+
+
+def get_config() -> AppConfig:
+    """
+    Get the global configuration instance
+    
+    Returns:
+        Application configuration
+    """
+    global _config_manager
+    if _config_manager is None:
+        _config_manager = ConfigManager()
+    return _config_manager.get_config()
+
+
+def init_config(config_file: Optional[str] = None) -> ConfigManager:
+    """
+    Initialize global configuration
+    
+    Args:
+        config_file: Optional configuration file path
+        
+    Returns:
+        Configuration manager instance
+    """
+    global _config_manager
+    _config_manager = ConfigManager(config_file)
+    return _config_manager
+
+
+def update_config(**kwargs) -> None:
+    """
+    Update global configuration
+    
+    Args:
+        **kwargs: Configuration updates
+    """
+    global _config_manager
+    if _config_manager is None:
+        _config_manager = ConfigManager()
+    _config_manager.update_config(**kwargs)
+
+
+# Environment-specific configurations
+DEVELOPMENT_CONFIG = {
+    "processing": {
+        "batch_size": 50,
+        "similarity_threshold": 0.3
+    },
+    "ui": {
+        "layout": "wide"
+    }
+}
+
+PRODUCTION_CONFIG = {
+    "processing": {
+        "batch_size": 100,
+        "similarity_threshold": 0.35
+    },
+    "api": {
+        "max_concurrent_requests": 20,
+        "request_timeout": 60
+    }
+}
+
+STREAMLIT_CLOUD_CONFIG = {
+    "processing": {
+        "batch_size": 50,  # Smaller batches for memory constraints
+        "max_text_length": 5000  # Reduced text length
+    },
+    "api": {
+        "max_concurrent_requests": 5,  # Lower concurrency
+        "request_timeout": 30
+    }
+}
+
+
+def get_environment_config() -> Dict[str, Any]:
+    """
+    Get environment-specific configuration
+    
+    Returns:
+        Environment configuration dictionary
+    """
+    env = os.getenv('ENVIRONMENT', 'development').lower()
+    
+    if env == 'production':
+        return PRODUCTION_CONFIG
+    elif env == 'streamlit_cloud':
+        return STREAMLIT_CLOUD_CONFIG
+    else:
+        return DEVELOPMENT_CONFIG
+
+
+# Utility functions for common configuration access
+def get_model_config() -> ModelConfig:
+    """Get model configuration"""
+    return get_config().model
+
+
+def get_processing_config() -> ProcessingConfig:
+    """Get processing configuration"""
+    return get_config().processing
+
+
+def get_ui_config() -> UIConfig:
+    """Get UI configuration"""
+    return get_config().ui
+
+
+def get_path_config() -> PathConfig:
+    """Get path configuration"""
+    return get_config().paths
+
+
+def get_api_config() -> APIConfig:
+    """Get API configuration"""
+    return get_config().api
+
+
+def is_ai_enabled() -> bool:
+    """Check if AI features are enabled (API key available)"""
+    api_config = get_api_config()
+    return api_config.anthropic_api_key is not None
+
+
+def get_supported_extensions() -> List[str]:
+    """Get list of supported file extensions"""
+    return get_processing_config().supported_file_extensions
