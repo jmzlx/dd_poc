@@ -105,6 +105,17 @@ class DDChecklistApp:
         
         if self.service is None:
             self.service = DDChecklistService(self.model, self.agent)
+            
+            # Restore document processor state from session state if available
+            if (hasattr(st.session_state, 'chunks') and st.session_state.chunks and
+                hasattr(st.session_state, 'embeddings') and st.session_state.embeddings is not None):
+                
+                self.service.document_processor.chunks = st.session_state.chunks
+                self.service.document_processor.embeddings = st.session_state.embeddings
+                self.service.document_processor.documents = st.session_state.get('documents', {})
+                
+                # Ensure the document processor has the model
+                self.service.document_processor.model = self.model
     
     def setup_ai_agent(self, api_key: str, model_choice: str) -> bool:
         """
@@ -321,9 +332,13 @@ class DDChecklistApp:
         if not self.service:
             self.initialize_services()
         
+        # Use lower threshold for Q&A to get more relevant results
+        qa_threshold = 0.25
+        
         results = self.service.search_documents(
             question, 
-            top_k=self.config.ui.top_k_search_results
+            top_k=self.config.ui.top_k_search_results,
+            threshold=qa_threshold
         )
         
         if results:
