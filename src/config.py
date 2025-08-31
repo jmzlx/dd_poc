@@ -41,12 +41,14 @@ class ProcessingConfig:
     chunk_overlap: int = 50
     max_text_length: int = 10000
     batch_size: int = 100
+    description_batch_size: int = 20
     similarity_threshold: float = 0.35
     relevancy_threshold: float = 0.4
     primary_threshold: float = 0.5
     min_display_threshold: float = 0.15
     max_workers: int = 4
     file_timeout: int = 30
+    skip_descriptions: bool = False
     supported_file_extensions: List[str] = field(
         default_factory=lambda: ['.pdf', '.docx', '.doc', '.txt', '.md']
     )
@@ -57,12 +59,14 @@ class ProcessingConfig:
         self.chunk_overlap = int(os.getenv('CHUNK_OVERLAP', str(self.chunk_overlap)))
         self.max_text_length = int(os.getenv('MAX_TEXT_LENGTH', str(self.max_text_length)))
         self.batch_size = int(os.getenv('BATCH_SIZE', str(self.batch_size)))
+        self.description_batch_size = int(os.getenv('DESCRIPTION_BATCH_SIZE', str(self.description_batch_size)))
         self.similarity_threshold = float(os.getenv('SIMILARITY_THRESHOLD', str(self.similarity_threshold)))
         self.relevancy_threshold = float(os.getenv('RELEVANCY_THRESHOLD', str(self.relevancy_threshold)))
         self.primary_threshold = float(os.getenv('PRIMARY_THRESHOLD', str(self.primary_threshold)))
         self.min_display_threshold = float(os.getenv('MIN_DISPLAY_THRESHOLD', str(self.min_display_threshold)))
         self.max_workers = int(os.getenv('MAX_WORKERS', str(self.max_workers)))
         self.file_timeout = int(os.getenv('FILE_TIMEOUT', str(self.file_timeout)))
+        self.skip_descriptions = os.getenv('SKIP_DESCRIPTIONS', 'false').lower() == 'true'
         
         # Handle file extensions from environment (comma-separated)
         extensions_env = os.getenv('SUPPORTED_FILE_EXTENSIONS')
@@ -106,14 +110,14 @@ class APIConfig:
     """Configuration for API settings"""
     anthropic_api_key: Optional[str] = None
     openai_api_key: Optional[str] = None
-    max_concurrent_requests: int = 10
+    max_concurrent_requests: int = 25
     request_timeout: int = 30
     retry_attempts: int = 3
-    base_delay: float = 1.0
-    max_retries: int = 3
-    batch_retry_attempts: int = 2
-    batch_base_delay: float = 0.5
-    single_retry_base_delay: float = 0.3
+    base_delay: float = 0.5
+    max_retries: int = 2
+    batch_retry_attempts: int = 1
+    batch_base_delay: float = 0.3
+    single_retry_base_delay: float = 0.2
     
     def __post_init__(self):
         """Load API configuration from environment variables"""
@@ -247,6 +251,32 @@ class ConfigManager:
         for key, value in kwargs.items():
             if hasattr(self.config, key):
                 setattr(self.config, key, value)
+    
+    def update_processing_config(self, **kwargs) -> None:
+        """
+        Update processing configuration dynamically
+        
+        Args:
+            **kwargs: Processing configuration parameters to update
+        """
+        for key, value in kwargs.items():
+            if hasattr(self.config.processing, key):
+                setattr(self.config.processing, key, value)
+            else:
+                print(f"Warning: Unknown processing config key: {key}")
+    
+    def update_api_config(self, **kwargs) -> None:
+        """
+        Update API configuration dynamically
+        
+        Args:
+            **kwargs: API configuration parameters to update
+        """
+        for key, value in kwargs.items():
+            if hasattr(self.config, key):
+                setattr(self.config.api, key, value)
+            else:
+                print(f"Warning: Unknown API config key: {key}")
     
     def save_config(self, config_file: str) -> None:
         """
@@ -410,3 +440,19 @@ def is_ai_enabled() -> bool:
 def get_supported_extensions() -> List[str]:
     """Get list of supported file extensions"""
     return get_processing_config().supported_file_extensions
+
+
+def update_processing_config(**kwargs) -> None:
+    """Update processing configuration dynamically"""
+    global _config_manager
+    if _config_manager is None:
+        _config_manager = ConfigManager()
+    _config_manager.update_processing_config(**kwargs)
+
+
+def update_api_config(**kwargs) -> None:
+    """Update API configuration dynamically"""
+    global _config_manager
+    if _config_manager is None:
+        _config_manager = ConfigManager()
+    _config_manager.update_api_config(**kwargs)

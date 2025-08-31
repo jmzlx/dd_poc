@@ -85,7 +85,12 @@ def generate_checklist_descriptions(checklist: Dict, llm: ChatAnthropic, batch_s
     
     config = get_config()
     if batch_size is None:
-        batch_size = config.processing.batch_size
+        batch_size = config.processing.description_batch_size
+    
+    # Quick exit if descriptions are disabled
+    if config.processing.skip_descriptions:
+        print("⚡ Skipping AI description generation for faster processing")
+        return checklist
     
     # Process all checklist items
     enhanced_checklist = {}
@@ -132,7 +137,8 @@ def generate_checklist_descriptions(checklist: Dict, llm: ChatAnthropic, batch_s
         
         # Use exponential backoff for batch processing
         def process_descriptions_batch():
-            max_concurrent = min(batch_size, config.api.max_concurrent_requests)
+            # Use higher concurrency for descriptions since they're short
+            max_concurrent = min(batch_size * 2, config.api.max_concurrent_requests)
             return llm.batch(
                 messages_batch, 
                 config={"max_concurrency": max_concurrent}
