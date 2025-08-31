@@ -26,6 +26,9 @@ import concurrent.futures
 import threading
 import logging
 from functools import wraps
+import joblib
+import hashlib
+import time
 
 # Setup logging for thread-safe error handling
 logger = logging.getLogger(__name__)
@@ -400,6 +403,139 @@ def create_progress_tracker(total_files: int = 0, streamlit_progress_bar=None):
     return progress_callback
 
 
+def _generate_cache_key(documents: Dict[str, Dict]) -> str:
+    """
+    Generate a cache key based on document paths and modification times
+    
+    Args:
+        documents: Dictionary of documents with file paths
+        
+    Returns:
+        Cache key string
+    """
+    # Create a hash based on file paths and their modification times
+    cache_data = []
+    
+    for file_path, doc_info in documents.items():
+        try:
+            path_obj = Path(file_path)
+            if path_obj.exists():
+                mtime = path_obj.stat().st_mtime
+                cache_data.append(f"{file_path}:{mtime}")
+        except Exception as e:
+            logger.warning(f"Could not get modification time for {file_path}: {e}")
+            # Use current time as fallback
+            cache_data.append(f"{file_path}:{time.time()}")
+    
+    # Sort to ensure consistent hashing regardless of document order
+    cache_data.sort()
+    cache_string = "|".join(cache_data)
+    
+    # Generate MD5 hash for the cache key
+    return hashlib.md5(cache_string.encode('utf-8')).hexdigest()
+
+
+def _get_cache_dir() -> Path:
+    """Get or create the cache directory"""
+    cache_dir = Path(".cache")
+    cache_dir.mkdir(exist_ok=True)
+    return cache_dir
+
+
+def _save_embeddings_to_cache(cache_key: str, embeddings: np.ndarray, chunks: List[Dict]) -> bool:
+    """
+    Save embeddings and chunks to cache
+    
+    Args:
+        cache_key: Cache key for the data
+        embeddings: Embeddings array to cache
+        chunks: Document chunks to cache
+        
+    Returns:
+        True if successful, False otherwise
+    """
+    try:
+        cache_dir = _get_cache_dir()
+        cache_file = cache_dir / f"embeddings_{cache_key}.joblib"
+        
+        cache_data = {
+            'embeddings': embeddings,
+            'chunks': chunks,
+            'timestamp': time.time(),
+            'cache_key': cache_key
+        }
+        
+        joblib.dump(cache_data, cache_file, compress=3)
+        logger.info(f"Saved embeddings to cache: {cache_file}")
+        return True
+        
+    except Exception as e:
+        logger.error(f"Failed to save embeddings to cache: {e}")
+        return False
+
+
+def _load_embeddings_from_cache(cache_key: str) -> Tuple[Optional[np.ndarray], Optional[List[Dict]]]:
+    """
+    Load embeddings and chunks from cache
+    
+    Args:
+        cache_key: Cache key for the data
+        
+    Returns:
+        Tuple of (embeddings, chunks) or (None, None) if not found
+    """
+    try:
+        cache_dir = _get_cache_dir()
+        cache_file = cache_dir / f"embeddings_{cache_key}.joblib"
+        
+        if not cache_file.exists():
+            return None, None
+            
+        cache_data = joblib.load(cache_file)
+        
+        # Validate cache data structure
+        if not all(key in cache_data for key in ['embeddings', 'chunks', 'timestamp', 'cache_key']):
+            logger.warning(f"Invalid cache data structure in {cache_file}")
+            return None, None
+            
+        # Check if cache key matches (additional validation)
+        if cache_data['cache_key'] != cache_key:
+            logger.warning(f"Cache key mismatch in {cache_file}")
+            return None, None
+            
+        logger.info(f"Loaded embeddings from cache: {cache_file}")
+        return cache_data['embeddings'], cache_data['chunks']
+        
+    except Exception as e:
+        logger.error(f"Failed to load embeddings from cache: {e}")
+        return None, None
+
+
+def _invalidate_old_cache_files(max_age_days: int = 7) -> None:
+    """
+    Remove old cache files to prevent cache directory from growing too large
+    
+    Args:
+        max_age_days: Maximum age of cache files in days
+    """
+    try:
+        cache_dir = _get_cache_dir()
+        current_time = time.time()
+        max_age_seconds = max_age_days * 24 * 60 * 60
+        
+        for cache_file in cache_dir.glob("embeddings_*.joblib"):
+            try:
+                file_age = current_time - cache_file.stat().st_mtime
+                if file_age > max_age_seconds:
+                    cache_file.unlink()
+                    logger.info(f"Removed old cache file: {cache_file}")
+            except Exception as e:
+                logger.warning(f"Could not remove old cache file {cache_file}: {e}")
+                
+    except Exception as e:
+        logger.error(f"Failed to invalidate old cache files: {e}")
+
+
 class DocumentProcessor:
     """
     Main document processing class that orchestrates document operations with parallel processing support
@@ -452,12 +588,41 @@ class DocumentProcessor:
         
         # Create embeddings if model is available
         embedding_time = 0
+        cache_hit = False
+        
         if self.model and self.chunks:
             embedding_start = time.time()
-            texts = [chunk['text'] for chunk in self.chunks]
-            self.embeddings = create_embeddings_batch(texts, self.model)
+            
+            # Try to load from cache first
+            cache_key = _generate_cache_key(self.documents)
+            cached_embeddings, cached_chunks = _load_embeddings_from_cache(cache_key)
+            
+            if cached_embeddings is not None and cached_chunks is not None:
+                # Cache hit - use cached data
+                self.embeddings = cached_embeddings
+                # Verify chunks match (safety check)
+                if len(cached_chunks) == len(self.chunks):
+                    self.chunks = cached_chunks
+                    cache_hit = True
+                    logger.info(f"Loaded embeddings from cache (key: {cache_key[:8]}...)")
+                else:
+                    logger.warning("Cached chunks length mismatch, regenerating embeddings")
+            
+            if not cache_hit:
+                # Cache miss or invalid - generate new embeddings
+                texts = [chunk['text'] for chunk in self.chunks]
+                self.embeddings = create_embeddings_batch(texts, self.model)
+                
+                # Save to cache
+                if _save_embeddings_to_cache(cache_key, self.embeddings, self.chunks):
+                    logger.info(f"Saved new embeddings to cache (key: {cache_key[:8]}...)")
+                
+                # Clean up old cache files
+                _invalidate_old_cache_files()
+                
             embedding_time = time.time() - embedding_start
-            logger.info(f"Embeddings created in {embedding_time:.2f} seconds")
+            cache_status = "from cache" if cache_hit else "generated"
+            logger.info(f"Embeddings {cache_status} in {embedding_time:.2f} seconds")
         
         total_time = time.time() - start_time
         logger.info(f"Total data room processing completed in {total_time:.2f} seconds")
@@ -471,7 +636,9 @@ class DocumentProcessor:
                 'scan_time': scan_time,
                 'chunk_time': chunk_time,
                 'embedding_time': embedding_time,
-                'documents_per_second': len(self.documents) / scan_time if scan_time > 0 else 0
+                'documents_per_second': len(self.documents) / scan_time if scan_time > 0 else 0,
+                'cache_hit': cache_hit,
+                'cache_key': cache_key[:8] + "..." if 'cache_key' in locals() else None
             }
         }
     
