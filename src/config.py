@@ -20,10 +20,18 @@ os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 class ModelConfig:
     """Configuration for AI models"""
     sentence_transformer_model: str = "all-MiniLM-L6-v2"
-    claude_model: str = "claude-sonnet-4"
+    claude_model: str = "claude-sonnet-4-20250514"
     temperature: float = 0.3
     max_tokens: int = 2000
     embedding_dimension: int = 384
+    
+    def __post_init__(self):
+        """Load model configuration from environment variables"""
+        self.sentence_transformer_model = os.getenv('SENTENCE_TRANSFORMER_MODEL', self.sentence_transformer_model)
+        self.claude_model = os.getenv('CLAUDE_MODEL', self.claude_model)
+        self.temperature = float(os.getenv('CLAUDE_TEMPERATURE', str(self.temperature)))
+        self.max_tokens = int(os.getenv('CLAUDE_MAX_TOKENS', str(self.max_tokens)))
+        self.embedding_dimension = int(os.getenv('EMBEDDING_DIMENSION', str(self.embedding_dimension)))
 
 
 @dataclass
@@ -36,9 +44,30 @@ class ProcessingConfig:
     similarity_threshold: float = 0.35
     relevancy_threshold: float = 0.4
     primary_threshold: float = 0.5
+    min_display_threshold: float = 0.15
+    max_workers: int = 4
+    file_timeout: int = 30
     supported_file_extensions: List[str] = field(
         default_factory=lambda: ['.pdf', '.docx', '.doc', '.txt', '.md']
     )
+    
+    def __post_init__(self):
+        """Load processing configuration from environment variables"""
+        self.chunk_size = int(os.getenv('CHUNK_SIZE', str(self.chunk_size)))
+        self.chunk_overlap = int(os.getenv('CHUNK_OVERLAP', str(self.chunk_overlap)))
+        self.max_text_length = int(os.getenv('MAX_TEXT_LENGTH', str(self.max_text_length)))
+        self.batch_size = int(os.getenv('BATCH_SIZE', str(self.batch_size)))
+        self.similarity_threshold = float(os.getenv('SIMILARITY_THRESHOLD', str(self.similarity_threshold)))
+        self.relevancy_threshold = float(os.getenv('RELEVANCY_THRESHOLD', str(self.relevancy_threshold)))
+        self.primary_threshold = float(os.getenv('PRIMARY_THRESHOLD', str(self.primary_threshold)))
+        self.min_display_threshold = float(os.getenv('MIN_DISPLAY_THRESHOLD', str(self.min_display_threshold)))
+        self.max_workers = int(os.getenv('MAX_WORKERS', str(self.max_workers)))
+        self.file_timeout = int(os.getenv('FILE_TIMEOUT', str(self.file_timeout)))
+        
+        # Handle file extensions from environment (comma-separated)
+        extensions_env = os.getenv('SUPPORTED_FILE_EXTENSIONS')
+        if extensions_env:
+            self.supported_file_extensions = [ext.strip() for ext in extensions_env.split(',')]
 
 
 @dataclass
@@ -80,13 +109,27 @@ class APIConfig:
     max_concurrent_requests: int = 10
     request_timeout: int = 30
     retry_attempts: int = 3
+    base_delay: float = 1.0
+    max_retries: int = 3
+    batch_retry_attempts: int = 2
+    batch_base_delay: float = 0.5
+    single_retry_base_delay: float = 0.3
     
     def __post_init__(self):
-        """Load API keys from environment if not provided"""
+        """Load API configuration from environment variables"""
         if not self.anthropic_api_key:
             self.anthropic_api_key = os.getenv('ANTHROPIC_API_KEY')
         if not self.openai_api_key:
             self.openai_api_key = os.getenv('OPENAI_API_KEY')
+        
+        self.max_concurrent_requests = int(os.getenv('MAX_CONCURRENT_REQUESTS', str(self.max_concurrent_requests)))
+        self.request_timeout = int(os.getenv('REQUEST_TIMEOUT', str(self.request_timeout)))
+        self.retry_attempts = int(os.getenv('RETRY_ATTEMPTS', str(self.retry_attempts)))
+        self.base_delay = float(os.getenv('BASE_DELAY', str(self.base_delay)))
+        self.max_retries = int(os.getenv('MAX_RETRIES', str(self.max_retries)))
+        self.batch_retry_attempts = int(os.getenv('BATCH_RETRY_ATTEMPTS', str(self.batch_retry_attempts)))
+        self.batch_base_delay = float(os.getenv('BATCH_BASE_DELAY', str(self.batch_base_delay)))
+        self.single_retry_base_delay = float(os.getenv('SINGLE_RETRY_BASE_DELAY', str(self.single_retry_base_delay)))
 
 
 @dataclass

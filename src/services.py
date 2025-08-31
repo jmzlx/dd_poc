@@ -14,6 +14,7 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 import faiss
 
+from .config import get_config
 from src.document_processing import DocumentProcessor, escape_markdown_math
 
 
@@ -126,7 +127,7 @@ class ChecklistMatcher:
         checklist: Dict, 
         chunks: List[Dict], 
         embeddings: np.ndarray, 
-        threshold: float = 0.35
+        threshold: Optional[float] = None
     ) -> Dict:
         """
         Match each checklist item to relevant documents using FAISS for 10x faster similarity search
@@ -135,11 +136,15 @@ class ChecklistMatcher:
             checklist: Parsed checklist
             chunks: Document chunks
             embeddings: Precomputed embeddings
-            threshold: Similarity threshold
+            threshold: Similarity threshold (uses config default if None)
             
         Returns:
             Matching results
         """
+        config = get_config()
+        if threshold is None:
+            threshold = config.processing.similarity_threshold
+        
         # Build FAISS index for fast similarity search
         embeddings_f32 = embeddings.astype('float32')
         faiss.normalize_L2(embeddings_f32)  # Normalize for cosine similarity
@@ -204,7 +209,7 @@ class ChecklistMatcher:
         self,
         checklist: Dict, 
         doc_embeddings_data: Dict,
-        threshold: float = 0.35
+        threshold: Optional[float] = None
     ) -> Dict:
         """
         Match checklist items against document summaries using FAISS for 10x faster similarity search
@@ -301,7 +306,7 @@ class QuestionAnswerer:
         questions: List[Dict], 
         chunks: List[Dict], 
         embeddings: np.ndarray,
-        threshold: float = 0.4
+        threshold: Optional[float] = None
     ) -> Dict:
         """
         Answer questions using document chunks with FAISS for 10x faster similarity search
@@ -310,11 +315,15 @@ class QuestionAnswerer:
             questions: List of parsed questions
             chunks: Document chunks
             embeddings: Precomputed embeddings
-            threshold: Similarity threshold
+            threshold: Similarity threshold (uses config default if None)
             
         Returns:
             Dictionary of answers with citations
         """
+        config = get_config()
+        if threshold is None:
+            threshold = config.processing.relevancy_threshold
+        
         # Build FAISS index for fast similarity search
         embeddings_f32 = embeddings.astype('float32')
         faiss.normalize_L2(embeddings_f32)  # Normalize for cosine similarity
@@ -620,7 +629,7 @@ class DDChecklistService:
         
         return results
     
-    def search_documents(self, query: str, top_k: int = 5, threshold: float = 0.3) -> List[Dict]:
+    def search_documents(self, query: str, top_k: int = 5, threshold: Optional[float] = None) -> List[Dict]:
         """
         Search documents using the document processor
         

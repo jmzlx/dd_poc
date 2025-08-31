@@ -33,7 +33,7 @@ from src.utils import ProgressTracker, show_success, show_error, show_info
 
 # Import LangGraph + Anthropic configuration
 try:
-    from src.ai_integration import (
+    from src.ai import (
         DDChecklistAgent,
         LANGGRAPH_AVAILABLE,
         batch_summarize_documents,
