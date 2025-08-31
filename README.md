@@ -112,14 +112,14 @@ echo "MAX_WORKERS=4" >> .env
 echo "FILE_TIMEOUT=30" >> .env
 
 # API Configuration (Optimized for 2025)
-echo "MAX_CONCURRENT_REQUESTS=25" >> .env
+echo "MAX_CONCURRENT_REQUESTS=50" >> .env
 echo "REQUEST_TIMEOUT=30" >> .env
 echo "RETRY_ATTEMPTS=3" >> .env
-echo "BASE_DELAY=0.5" >> .env
+echo "BASE_DELAY=0.2" >> .env
 echo "MAX_RETRIES=2" >> .env
 echo "BATCH_RETRY_ATTEMPTS=1" >> .env
-echo "BATCH_BASE_DELAY=0.3" >> .env
-echo "SINGLE_RETRY_BASE_DELAY=0.2" >> .env
+echo "BATCH_BASE_DELAY=0.1" >> .env
+echo "SINGLE_RETRY_BASE_DELAY=0.05" >> .env
 
 # File Extensions (comma-separated)
 echo "SUPPORTED_FILE_EXTENSIONS=.pdf,.docx,.doc,.txt,.md" >> .env
@@ -165,14 +165,14 @@ TOKENIZERS_PARALLELISM=false
 - `MIN_DISPLAY_THRESHOLD` - Minimum score to display results (default: `0.15`)
 
 #### **API & Performance**
-- `MAX_CONCURRENT_REQUESTS` - Maximum concurrent API requests (default: `25`)
+- `MAX_CONCURRENT_REQUESTS` - Maximum concurrent API requests (default: `50`)
 - `REQUEST_TIMEOUT` - API request timeout in seconds (default: `30`)
 - `RETRY_ATTEMPTS` - Number of retry attempts (default: `3`)
-- `BASE_DELAY` - Base delay for exponential backoff (default: `0.5`)
+- `BASE_DELAY` - Base delay for exponential backoff (default: `0.2`)
 - `MAX_RETRIES` - Maximum retries for batch operations (default: `2`)
 - `BATCH_RETRY_ATTEMPTS` - Retry attempts for batch processing (default: `1`)
-- `BATCH_BASE_DELAY` - Base delay for batch operations (default: `0.3`)
-- `SINGLE_RETRY_BASE_DELAY` - Base delay for single operations (default: `0.2`)
+- `BATCH_BASE_DELAY` - Base delay for batch operations (default: `0.1`)
+- `SINGLE_RETRY_BASE_DELAY` - Base delay for single operations (default: `0.05`)
 
 #### **File Processing**
 - `SUPPORTED_FILE_EXTENSIONS` - Comma-separated file extensions (default: `.pdf,.docx,.doc,.txt,.md`)
@@ -246,10 +246,9 @@ dd_poc/
 │   ├── checklist/           # Due diligence checklists (.md)
 │   ├── questions/           # Question lists (.md)
 │   ├── strategy/            # Strategic documents (.md)
-│   └── vdrs/               # Virtual Data Rooms (3 projects)
+│   └── vdrs/               # Virtual Data Rooms (2 projects)
 │       ├── automated-services-transformation/
-│       ├── industrial-security-leadership/
-│       └── mobile-robotics-expansion/
+│       └── industrial-security-leadership/
 ├── Dockerfile                 # 🐳 Docker container configuration
 ├── docker-compose.yml         # 🐳 Docker Compose for local testing
 ├── .dockerignore             # Docker build optimization
@@ -397,7 +396,7 @@ uv lock --upgrade
 ### Model Configuration (config.py)
 ```python
 # Current 2025 model settings
-claude_model: str = "claude-3-5-sonnet-20241022"
+claude_model: str = "claude-sonnet-4-20250514"
 temperature: float = 0.3
 max_tokens: int = 2000
 embedding_dimension: int = 384

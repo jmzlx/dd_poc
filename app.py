@@ -185,12 +185,7 @@ class DDChecklistApp:
             st.divider()
             
             # AI settings
-            use_ai_features, api_key, model_choice, skip_descriptions = render_ai_settings()
-            
-            # Update configuration with UI settings
-            if skip_descriptions:
-                from src.config import update_processing_config
-                update_processing_config(skip_descriptions=True)
+            use_ai_features, api_key, model_choice = render_ai_settings()
             
             # Initialize AI agent if enabled
             if use_ai_features and api_key:
@@ -215,15 +210,19 @@ class DDChecklistApp:
         
         # Check if we have documents to display summaries
         if st.session_state.documents:
-            self._render_company_overview()
-            self._render_strategic_analysis()
+            # Create nested tabs for different analysis views
+            overview_tab, analysis_tab = st.tabs(["🏢 Company Overview", "🎯 Strategic Analysis"])
+            
+            with overview_tab:
+                self._render_company_overview()
+            
+            with analysis_tab:
+                self._render_strategic_analysis()
         else:
             show_info("👈 Configure and process data room to see analysis")
     
     def _render_company_overview(self):
         """Render company overview section"""
-        st.subheader("🏢 Company Overview")
-        
         # Auto-generate summary if not already present and AI is available
         if (not st.session_state.company_summary and 
             hasattr(st.session_state, 'agent') and st.session_state.agent):
@@ -237,7 +236,7 @@ class DDChecklistApp:
         
         # Display the company summary if available
         if st.session_state.company_summary:
-            st.info(st.session_state.company_summary)
+            st.markdown(st.session_state.company_summary)
             
             # Add export and regenerate buttons
             col1, col2 = st.columns([1, 5])
@@ -246,7 +245,8 @@ class DDChecklistApp:
                     "📥 Export Summary",
                     data=f"# Company Overview\n\n{st.session_state.company_summary}",
                     file_name=f"company_overview_{Path(list(st.session_state.documents.keys())[0]).parent.name if st.session_state.documents else 'export'}.md",
-                    mime="text/markdown"
+                    mime="text/markdown",
+                    key="export_company_summary"
                 )
             with col2:
                 if st.button("🔄 Regenerate Overview"):
@@ -255,8 +255,6 @@ class DDChecklistApp:
     
     def _render_strategic_analysis(self):
         """Render strategic analysis section"""
-        st.subheader("🎯 Strategic Analysis")
-        
         if not st.session_state.checklist_results:
             st.warning("⚠️ Process data room with checklist first to enable strategic analysis")
             return
@@ -274,7 +272,7 @@ class DDChecklistApp:
                 )
         
         if st.session_state.strategy_analysis:
-            st.info(st.session_state.strategy_analysis)
+            st.markdown(st.session_state.strategy_analysis)
             
             # Add export and regenerate buttons
             col1, col2, col3 = st.columns([1, 1, 3])
@@ -288,7 +286,8 @@ class DDChecklistApp:
                     "📥 Export Report",
                     data=combined_report,
                     file_name=f"dd_report_{Path(list(st.session_state.documents.keys())[0]).parent.name if st.session_state.documents else 'export'}.md",
-                    mime="text/markdown"
+                    mime="text/markdown",
+                    key="export_combined_report"
                 )
             with col2:
                 if st.button("🔄 Regenerate Analysis"):
@@ -419,17 +418,31 @@ class DDChecklistApp:
                     with open(file_path, 'rb') as f:
                         file_bytes = f.read()
                     
+                    # Determine MIME type based on file extension
+                    file_extension = file_path.suffix.lower()
+                    if file_extension == '.pdf':
+                        mime_type = 'application/pdf'
+                    elif file_extension in ['.doc', '.docx']:
+                        mime_type = 'application/msword'
+                    elif file_extension == '.txt':
+                        mime_type = 'text/plain'
+                    elif file_extension == '.md':
+                        mime_type = 'text/markdown'
+                    else:
+                        mime_type = 'application/octet-stream'
+                    
                     button_key = f"qacit_dl_{idx}_{question[:20]}".replace(" ", "_").replace("?", "")
                     
                     st.download_button(
                         label="📥 Download",
                         data=file_bytes,
                         file_name=result['source'],
+                        mime=mime_type,
                         key=button_key,
                         help=f"Download {result['source']}"
                     )
-            except Exception:
-                pass
+            except Exception as e:
+                st.error(f"Download failed: {str(e)}")
     
     @handle_exceptions(show_error=True)
     def process_data_room(self, data_room_path: str):

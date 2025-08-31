@@ -41,7 +41,7 @@ class ProcessingConfig:
     chunk_overlap: int = 50
     max_text_length: int = 10000
     batch_size: int = 100
-    description_batch_size: int = 20
+    description_batch_size: int = 100
     similarity_threshold: float = 0.35
     relevancy_threshold: float = 0.4
     primary_threshold: float = 0.5
@@ -110,14 +110,14 @@ class APIConfig:
     """Configuration for API settings"""
     anthropic_api_key: Optional[str] = None
     openai_api_key: Optional[str] = None
-    max_concurrent_requests: int = 25
+    max_concurrent_requests: int = 50
     request_timeout: int = 30
     retry_attempts: int = 3
-    base_delay: float = 0.5
+    base_delay: float = 0.2
     max_retries: int = 2
     batch_retry_attempts: int = 1
-    batch_base_delay: float = 0.3
-    single_retry_base_delay: float = 0.2
+    batch_base_delay: float = 0.1
+    single_retry_base_delay: float = 0.05
     
     def __post_init__(self):
         """Load API configuration from environment variables"""
@@ -378,11 +378,16 @@ PRODUCTION_CONFIG = {
 
 STREAMLIT_CLOUD_CONFIG = {
     "processing": {
-        "batch_size": 50,  # Smaller batches for memory constraints
-        "max_text_length": 5000  # Reduced text length
+        "batch_size": 100,  # Optimized for performance
+        "description_batch_size": 100,  # Match summary batch size
+        "max_text_length": 8000,  # Higher limit for better quality
+        "max_workers": 2,  # Moderate parallelism for cloud
+        "file_timeout": 30  # Standard timeout
     },
     "api": {
-        "max_concurrent_requests": 5,  # Lower concurrency
+        "max_concurrent_requests": 30,  # Good concurrency for cloud
+        "base_delay": 0.1,  # Fast delays
+        "batch_base_delay": 0.05,  # Very fast batches
         "request_timeout": 30
     }
 }

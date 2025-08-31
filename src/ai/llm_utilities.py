@@ -87,10 +87,7 @@ def generate_checklist_descriptions(checklist: Dict, llm: ChatAnthropic, batch_s
     if batch_size is None:
         batch_size = config.processing.description_batch_size
     
-    # Quick exit if descriptions are disabled
-    if config.processing.skip_descriptions:
-        print("⚡ Skipping AI description generation for faster processing")
-        return checklist
+
     
     # Process all checklist items
     enhanced_checklist = {}
@@ -315,6 +312,7 @@ def create_document_embeddings_with_summaries(documents: List[Dict], model) -> D
         doc_info.append({
             'name': doc_name,
             'path': doc_path,
+            'full_path': doc.get('full_path', doc_path),
             'summary': summary,
             'embedding_text': embedding_text,
             'original_doc': doc
@@ -405,6 +403,7 @@ def match_checklist_with_summaries(
                 match_data = {
                     'name': doc_info[idx]['name'],
                     'path': doc_info[idx]['path'],
+                    'full_path': doc_info[idx].get('full_path', doc_info[idx]['path']),
                     'summary': doc_info[idx]['summary'],
                     'score': float(score),
                     'metadata': doc_info[idx].get('original_doc', {}).get('metadata', {})
