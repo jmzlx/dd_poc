@@ -13,7 +13,7 @@ import os
 # Fix tokenizers parallelism warning
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
-import PyPDF2
+import fitz  # PyMuPDF
 import docx
 import io
 import re
@@ -53,16 +53,41 @@ def extract_text_from_file(file_path: Path) -> Tuple[str, Dict]:
     
     try:
         if file_path.suffix.lower() == '.pdf':
-            with open(file_path, 'rb') as file:
-                pdf = PyPDF2.PdfReader(file)
+            # Use PyMuPDF (fitz) for faster and more robust PDF processing
+            try:
+                pdf_document = fitz.open(str(file_path))
                 texts = []
-                for i, page in enumerate(pdf.pages, 1):
-                    page_text = page.extract_text()
-                    if page_text:
-                        texts.append(page_text)
-                        metadata['pages'].append(i)
+                
+                for page_num in range(pdf_document.page_count):
+                    try:
+                        page = pdf_document[page_num]
+                        page_text = page.get_text()
+                        
+                        if page_text.strip():  # Only add non-empty pages
+                            texts.append(page_text)
+                            metadata['pages'].append(page_num + 1)  # 1-based page numbering
+                    except Exception as page_error:
+                        # Handle individual page errors gracefully
+                        if st:
+                            st.warning(f"Error reading page {page_num + 1} of {file_path.name}: {page_error}")
+                        continue
+                
+                pdf_document.close()
                 text_content = '\n'.join(texts)[:10000]
                 metadata['type'] = 'pdf'
+                
+            except Exception as pdf_error:
+                # Handle corrupted or unsupported PDF files
+                error_msg = f"Error processing PDF {file_path.name}: {pdf_error}"
+                if st:
+                    st.error(error_msg)
+                # Try to return partial content if available
+                if 'pdf_document' in locals():
+                    try:
+                        pdf_document.close()
+                    except:
+                        pass
+                return "", metadata
                 
         elif file_path.suffix.lower() in ['.docx', '.doc']:
             doc = docx.Document(str(file_path))
@@ -72,9 +97,11 @@ def extract_text_from_file(file_path: Path) -> Tuple[str, Dict]:
         elif file_path.suffix.lower() in ['.txt', '.md']:
             text_content = file_path.read_text(encoding='utf-8', errors='ignore')[:10000]
             metadata['type'] = 'text'
+            
     except Exception as e:
+        error_msg = f"Could not read {file_path.name}: {e}"
         if st:  # Only use streamlit if available
-            st.warning(f"Could not read {file_path.name}: {e}")
+            st.warning(error_msg)
         
     return text_content, metadata
 

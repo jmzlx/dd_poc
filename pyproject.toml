@@ -11,7 +11,7 @@ dependencies = [
     "pandas>=2.0.0",
     "watchdog>=3.0.0",
     # Document processing
-    "PyPDF2>=3.0.0",
+    "pymupdf>=1.23.0",
     "python-docx>=0.8.11",
     # Environment and configuration
     "python-dotenv>=1.0.0",
