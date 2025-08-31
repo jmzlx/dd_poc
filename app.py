@@ -432,7 +432,24 @@ class DDChecklistApp:
             
             with progress_container:
                 st.markdown("### 🚀 Processing Data Room")
-                tracker = ProgressTracker(11, "Processing")
+                
+                # Define step weights based on expected complexity/duration
+                step_weights = {
+                    1: 1.0,    # Scanning data room (fast)
+                    2: 0.5,    # Found documents (instant)
+                    3: 8.0,    # Generate AI summaries (very slow - depends on doc count)
+                    4: 0.5,    # AI summaries complete (instant)
+                    5: 1.0,    # Loading checklist and questions (fast)
+                    6: 0.5,    # Checklist and questions loaded (instant)
+                    7: 3.0,    # Generate checklist descriptions (moderate)
+                    8: 0.5,    # Descriptions generated (instant)
+                    9: 2.0,    # Match checklist to documents (moderate)
+                    10: 0.5,   # Checklist matching complete (instant)
+                    11: 2.0,   # Answer questions (moderate)
+                    12: 0.5    # Complete (instant)
+                }
+                
+                tracker = ProgressTracker(12, "Processing", step_weights)
                 
                 # Step 1: Load documents
                 tracker.update(1, f"Scanning data room: {Path(data_room_path).name}")
@@ -445,7 +462,18 @@ class DDChecklistApp:
                 
                 # Step 2: Generate AI summaries if agent available
                 if hasattr(st.session_state, 'agent') and st.session_state.agent:
-                    tracker.update(3, "Generating AI document summaries...")
+                    doc_count = len(st.session_state.documents)
+                    tracker.update(3, f"Generating AI summaries for {doc_count} documents...")
+                    
+                    # Adjust weight for step 3 based on actual document count
+                    # More documents = longer processing time
+                    if doc_count > 50:
+                        step_weights[3] = min(15.0, doc_count * 0.15)  # Scale with doc count, cap at 15
+                    elif doc_count > 20:
+                        step_weights[3] = doc_count * 0.2  # 4-10 weight for 20-50 docs
+                    
+                    # Recalculate total weight
+                    tracker.total_weight = sum(step_weights.values())
                     
                     # Convert documents for summarization
                     docs_for_summary = []
@@ -457,12 +485,20 @@ class DDChecklistApp:
                             'metadata': doc_info.get('metadata', {})
                         })
                     
+                    # Create a separate progress tracker for batch summarization
+                    st.session_state.summary_progress = st.progress(0, text="📝 Starting document summarization...")
+                    
                     # Batch summarize
                     summarized_docs = batch_summarize_documents(
                         docs_for_summary, 
                         st.session_state.agent.llm,
                         batch_size=self.config.processing.batch_size
                     )
+                    
+                    # Clean up summary progress tracker
+                    if 'summary_progress' in st.session_state:
+                        st.session_state.summary_progress.progress(1.0, text="✅ Document summarization complete")
+                        del st.session_state.summary_progress
                     
                     # Store summaries
                     for doc in summarized_docs:
@@ -475,7 +511,7 @@ class DDChecklistApp:
                         summarized_docs, self.model
                     )
                     
-                    tracker.update(4, "AI summaries complete")
+                    tracker.update(4, f"AI summaries complete ({doc_count} documents processed)")
                 else:
                     tracker.update(4, "Skipping AI summaries (not enabled)")
                 
@@ -494,11 +530,11 @@ class DDChecklistApp:
                 
                 tracker.update(6, "Checklist and questions loaded")
                 
-                # Step 3.5: Generate checklist descriptions if AI is available
+                # Step 7: Generate checklist descriptions if AI is available
                 if (hasattr(st.session_state, 'agent') and st.session_state.agent and 
                     st.session_state.checklist):
                     
-                    tracker.update(6.5, "Generating checklist item descriptions...")
+                    tracker.update(7, "Generating checklist item descriptions...")
                     
                     # Create progress tracker for descriptions
                     st.session_state.description_progress = st.progress(0, text="📝 Generating descriptions...")
@@ -515,13 +551,13 @@ class DDChecklistApp:
                         st.session_state.description_progress.progress(1.0, text="✅ Descriptions generated")
                         del st.session_state.description_progress
                     
-                    tracker.update(7, "Checklist descriptions generated")
+                    tracker.update(8, "Checklist descriptions generated")
                 else:
-                    tracker.update(7, "Skipping description generation (AI not enabled)")
+                    tracker.update(8, "Skipping description generation (AI not enabled)")
                 
-                # Step 4: Match checklist to documents
+                # Step 9: Match checklist to documents
                 if st.session_state.checklist and st.session_state.chunks:
-                    tracker.update(8, "Matching checklist to documents...")
+                    tracker.update(9, "Matching checklist to documents...")
                     
                     if hasattr(st.session_state, 'doc_embeddings_data') and st.session_state.doc_embeddings_data:
                         # Use AI-enhanced matching with generated descriptions
@@ -540,13 +576,13 @@ class DDChecklistApp:
                             self.config.processing.similarity_threshold
                         )
                     
-                    tracker.update(9, "Checklist matching complete")
+                    tracker.update(10, "Checklist matching complete")
                 
-                # Step 5: Answer questions
+                # Step 11: Answer questions
                 if (st.session_state.questions and st.session_state.chunks and 
                     st.session_state.embeddings is not None):
                     
-                    tracker.update(10, "Answering due diligence questions...")
+                    tracker.update(11, "Answering due diligence questions...")
                     
                     st.session_state.question_answers = self.service.question_answerer.answer_questions_with_chunks(
                         st.session_state.questions,
@@ -556,7 +592,7 @@ class DDChecklistApp:
                     )
                     
                     answered_count = sum(1 for a in st.session_state.question_answers.values() if a['has_answer'])
-                    tracker.update(11, f"Answered {answered_count}/{len(st.session_state.questions)} questions")
+                    tracker.update(12, f"Answered {answered_count}/{len(st.session_state.questions)} questions")
                 
                 tracker.complete("Processing complete!")
                 

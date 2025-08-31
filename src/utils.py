@@ -381,21 +381,33 @@ def timing_decorator(func: Callable) -> Callable:
 
 class ProgressTracker:
     """
-    Progress tracking utility for long-running operations
+    Progress tracking utility for long-running operations with weighted ETA calculation
     """
     
-    def __init__(self, total_steps: int, description: str = "Processing"):
+    def __init__(self, total_steps: int, description: str = "Processing", step_weights: Optional[Dict[int, float]] = None):
         """
         Initialize progress tracker
         
         Args:
             total_steps: Total number of steps
             description: Description of the operation
+            step_weights: Optional dict mapping step numbers to relative weights (default: all steps equal weight)
         """
         self.total_steps = total_steps
         self.current_step = 0
         self.description = description
         self.start_time = datetime.now()
+        self.step_start_times = {}  # Track when each step started
+        self.step_durations = {}    # Track actual duration of completed steps
+        
+        # Set up step weights (default: equal weight for all steps)
+        if step_weights:
+            self.step_weights = step_weights
+        else:
+            self.step_weights = {i: 1.0 for i in range(1, total_steps + 1)}
+        
+        # Calculate total weight for progress calculation
+        self.total_weight = sum(self.step_weights.values())
         
         # Initialize Streamlit progress bar if available
         if 'st' in globals() and st:
@@ -407,22 +419,61 @@ class ProgressTracker:
     
     def update(self, step: int, message: str = ""):
         """
-        Update progress
+        Update progress with weighted ETA calculation
         
         Args:
             step: Current step number
             message: Optional status message
         """
-        self.current_step = step
-        progress = step / self.total_steps if self.total_steps > 0 else 0
+        now = datetime.now()
         
-        # Calculate estimated time remaining
-        elapsed = (datetime.now() - self.start_time).total_seconds()
-        if step > 0:
-            eta = (elapsed / step) * (self.total_steps - step)
-            eta_str = f" (ETA: {eta:.0f}s)" if eta > 1 else ""
-        else:
-            eta_str = ""
+        # Record step timing
+        if self.current_step != step:
+            # Mark completion of previous step
+            if self.current_step > 0 and self.current_step in self.step_start_times:
+                self.step_durations[self.current_step] = (now - self.step_start_times[self.current_step]).total_seconds()
+            
+            # Mark start of new step
+            self.step_start_times[step] = now
+            self.current_step = step
+        
+        # Calculate weighted progress
+        completed_weight = sum(self.step_weights.get(i, 1.0) for i in range(1, step))
+        current_step_weight = self.step_weights.get(step, 1.0)
+        
+        # For current step, assume 50% completion unless we have sub-progress info
+        current_progress_weight = completed_weight + (current_step_weight * 0.5)
+        progress = current_progress_weight / self.total_weight if self.total_weight > 0 else 0
+        progress = min(progress, 1.0)  # Cap at 100%
+        
+        # Calculate improved ETA using weighted approach
+        elapsed = (now - self.start_time).total_seconds()
+        eta_str = ""
+        
+        if step > 1 and completed_weight > 0:
+            # Use actual timing data from completed steps
+            avg_time_per_weight = elapsed / completed_weight
+            remaining_weight = self.total_weight - current_progress_weight
+            eta = avg_time_per_weight * remaining_weight
+            
+            if eta > 1:
+                if eta < 60:
+                    eta_str = f" (ETA: {eta:.0f}s)"
+                elif eta < 3600:
+                    eta_str = f" (ETA: {eta/60:.1f}m)"
+                else:
+                    eta_str = f" (ETA: {eta/3600:.1f}h)"
+        elif step == 1 and elapsed > 5:  # Only show ETA after 5 seconds
+            # For first step, make a rough estimate based on step weights
+            estimated_time_per_weight = elapsed / self.step_weights.get(1, 1.0)
+            remaining_weight = self.total_weight - current_progress_weight
+            eta = estimated_time_per_weight * remaining_weight
+            
+            if eta > 10:  # Only show if meaningful
+                if eta < 60:
+                    eta_str = f" (ETA: ~{eta:.0f}s)"
+                else:
+                    eta_str = f" (ETA: ~{eta/60:.1f}m)"
         
         status_msg = f"{self.description}: {step}/{self.total_steps}{eta_str}"
         if message:
@@ -432,9 +483,77 @@ class ProgressTracker:
         if self.progress_bar:
             self.progress_bar.progress(progress, text=status_msg)
         
-        # Log progress
-        if step % max(1, self.total_steps // 10) == 0:  # Log every 10%
+        # Log progress at key milestones
+        if step == 1 or step % max(1, self.total_steps // 5) == 0:  # Log every 20%
             logger.info(status_msg)
+    
+    def update_step_progress(self, step: int, sub_progress: float, message: str = ""):
+        """
+        Update progress within a specific step (for long-running operations)
+        
+        Args:
+            step: Current step number
+            sub_progress: Progress within the step (0.0 to 1.0)
+            message: Optional status message
+        """
+        now = datetime.now()
+        
+        # Ensure we're tracking this step
+        if step not in self.step_start_times:
+            self.step_start_times[step] = now
+            self.current_step = step
+        
+        # Calculate weighted progress with sub-progress
+        completed_weight = sum(self.step_weights.get(i, 1.0) for i in range(1, step))
+        current_step_weight = self.step_weights.get(step, 1.0)
+        
+        # Use actual sub-progress instead of assuming 50%
+        current_progress_weight = completed_weight + (current_step_weight * sub_progress)
+        progress = current_progress_weight / self.total_weight if self.total_weight > 0 else 0
+        progress = min(progress, 1.0)  # Cap at 100%
+        
+        # Calculate improved ETA
+        elapsed = (now - self.start_time).total_seconds()
+        eta_str = ""
+        
+        if step > 1 and completed_weight > 0:
+            # Use actual timing data from completed steps
+            avg_time_per_weight = elapsed / completed_weight
+            remaining_weight = self.total_weight - current_progress_weight
+            eta = avg_time_per_weight * remaining_weight
+            
+            if eta > 1:
+                if eta < 60:
+                    eta_str = f" (ETA: {eta:.0f}s)"
+                elif eta < 3600:
+                    eta_str = f" (ETA: {eta/60:.1f}m)"
+                else:
+                    eta_str = f" (ETA: {eta/3600:.1f}h)"
+        elif step == 1 and elapsed > 5:
+            # For first step, estimate based on current progress
+            if sub_progress > 0.1:  # Only estimate if we have meaningful progress
+                step_elapsed = (now - self.step_start_times[step]).total_seconds()
+                estimated_step_time = step_elapsed / sub_progress
+                remaining_step_time = estimated_step_time * (1 - sub_progress)
+                
+                # Add estimated time for remaining steps
+                remaining_weight = self.total_weight - self.step_weights.get(step, 1.0)
+                estimated_time_per_weight = estimated_step_time / self.step_weights.get(step, 1.0)
+                eta = remaining_step_time + (estimated_time_per_weight * remaining_weight)
+                
+                if eta > 10:
+                    if eta < 60:
+                        eta_str = f" (ETA: ~{eta:.0f}s)"
+                    else:
+                        eta_str = f" (ETA: ~{eta/60:.1f}m)"
+        
+        status_msg = f"{self.description}: {step}/{self.total_steps}{eta_str}"
+        if message:
+            status_msg += f" - {message}"
+        
+        # Update Streamlit components
+        if self.progress_bar:
+            self.progress_bar.progress(progress, text=status_msg)
     
     def complete(self, message: str = "Complete"):
         """
