@@ -25,7 +25,8 @@ from src import (
 )
 from src.ui_components import (
     render_file_selector, render_progress_section, render_metrics_row,
-    render_checklist_results, render_question_results, render_quick_questions
+    render_checklist_results, render_question_results, render_quick_questions,
+    create_document_link
 )
 from src.services import ReportGenerator
 from src.utils import ProgressTracker, show_success, show_error, show_info
@@ -378,7 +379,20 @@ class DDChecklistApp:
                     with col1:
                         excerpt = result['text'][:200] + "..." if len(result['text']) > 200 else result['text']
                         st.markdown(f"{i}. \"{excerpt}\"")
-                        st.caption(f"   📄 {result['source']} ({result['citation']})")
+                        
+                        # Create clickable link for the document
+                        doc_path = result.get('path', result.get('full_path', ''))
+                        doc_name = result['source']
+                        if '.' in doc_name:
+                            doc_title = doc_name.rsplit('.', 1)[0].replace('_', ' ').replace('-', ' ').title()
+                        else:
+                            doc_title = doc_name.replace('_', ' ').replace('-', ' ').title()
+                        
+                        if doc_path:
+                            link_html = create_document_link(doc_path, doc_name, doc_title)
+                            st.markdown(f"   {link_html} ({result['citation']})", unsafe_allow_html=True)
+                        else:
+                            st.caption(f"   📄 {result['source']} ({result['citation']})")
                     
                     with col2:
                         self._render_qa_download_button(result, i, question)

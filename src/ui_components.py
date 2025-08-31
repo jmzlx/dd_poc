@@ -10,6 +10,57 @@ import streamlit as st
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any
 import numpy as np
+import base64
+
+
+def create_document_link(file_path: str, doc_name: str, doc_title: str) -> str:
+    """
+    Create a clickable link for a document that works with Streamlit Cloud
+    
+    Args:
+        file_path: Path to the document file
+        doc_name: Original document name
+        doc_title: Display title for the document
+        
+    Returns:
+        HTML string with clickable link
+    """
+    try:
+        path_obj = Path(file_path)
+        if not path_obj.is_absolute():
+            path_obj = Path("data") / file_path
+        
+        if path_obj.exists():
+            # Read file and create data URL for download
+            with open(path_obj, 'rb') as f:
+                file_bytes = f.read()
+            
+            # Create base64 encoded data URL
+            file_extension = path_obj.suffix.lower()
+            if file_extension == '.pdf':
+                mime_type = 'application/pdf'
+            elif file_extension in ['.doc', '.docx']:
+                mime_type = 'application/msword'
+            elif file_extension == '.txt':
+                mime_type = 'text/plain'
+            elif file_extension == '.md':
+                mime_type = 'text/markdown'
+            else:
+                mime_type = 'application/octet-stream'
+            
+            b64_data = base64.b64encode(file_bytes).decode()
+            data_url = f"data:{mime_type};base64,{b64_data}"
+            
+            # Create HTML link that opens in new tab
+            link_html = f'<a href="{data_url}" target="_blank" download="{doc_name}" style="text-decoration: none; color: inherit;">📄 {doc_title} 🔗</a>'
+            return link_html
+        else:
+            # File doesn't exist, return plain text
+            return f"📄 {doc_title}"
+            
+    except Exception:
+        # Fallback to plain text if anything goes wrong
+        return f"📄 {doc_title}"
 
 
 def render_project_selector() -> Tuple[Optional[str], Optional[str]]:
@@ -420,8 +471,13 @@ def render_document_match(match: Dict, item_idx: int, primary_threshold: float) 
             st.markdown("🔸 ANCILLARY")
     
     with col2:
-        # Document title without bold and more compact
-        st.write(f"📄 {doc_title}")
+        # Document title as clickable link
+        full_path = match.get('full_path', match.get('path', ''))
+        if full_path:
+            link_html = create_document_link(full_path, doc_name, doc_title)
+            st.markdown(link_html, unsafe_allow_html=True)
+        else:
+            st.write(f"📄 {doc_title}")
     
     with col3:
         # Download button
@@ -554,8 +610,13 @@ def render_question_source(chunk: Dict, chunk_idx: int, question: str) -> None:
         else:
             doc_title = doc_name.replace('_', ' ').replace('-', ' ').title()
         
-        # Document title without bold
-        st.write(f"📄 {doc_title}")
+        # Document title as clickable link
+        doc_path = chunk.get('path', '')
+        if doc_path:
+            link_html = create_document_link(doc_path, doc_name, doc_title)
+            st.markdown(link_html, unsafe_allow_html=True)
+        else:
+            st.write(f"📄 {doc_title}")
     
     with col3:
         # Add download button for the source document
