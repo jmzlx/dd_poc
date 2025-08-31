@@ -6,9 +6,12 @@ pandas==2.3.2
 watchdog==6.0.0
 
 # Document processing - pinned for deployment
-pymupdf==1.26.4
+PyMuPDF==1.24.9
 python-docx==1.2.0
 joblib==1.5.2
+
+# System dependencies for PyMuPDF on cloud platforms
+Pillow>=9.5.0
 
 # Environment and configuration - pinned for deployment
 python-dotenv==1.1.1
