@@ -6,6 +6,8 @@ from typing_extensions import TypedDict
 import json
 from enum import Enum
 import asyncio
+import time
+import random
 from concurrent.futures import ThreadPoolExecutor
 
 try:
@@ -270,7 +272,7 @@ Focus on:
     return app, llm
 
 
-def generate_checklist_descriptions(checklist: Dict, llm: ChatAnthropic, batch_size: int = 10) -> Dict:
+def generate_checklist_descriptions(checklist: Dict, llm: ChatAnthropic, batch_size: int = 20) -> Dict:
     """
     Generate detailed descriptions for each checklist item explaining what documents should satisfy it.
     Returns checklist with added 'description' field for each item.
@@ -328,24 +330,30 @@ Description (2-3 sentences explaining what documents/information satisfy this re
         prompts = [item_data['prompt'] for item_data in batch]
         messages_batch = [[HumanMessage(content=prompt)] for prompt in prompts]
         
-        try:
-            # Use LangChain's batch method for parallel processing
-            max_concurrent = min(batch_size, 8)  # Cap concurrent requests
-            responses = llm.batch(
+        # Use exponential backoff for batch processing
+        def process_descriptions_batch():
+            max_concurrent = min(batch_size, 30)  # Cap at 30 concurrent requests
+            return llm.batch(
                 messages_batch, 
                 config={"max_concurrency": max_concurrent}
             )
+        
+        try:
+            responses = exponential_backoff_retry(process_descriptions_batch, max_retries=3, base_delay=0.5)
             
             # Extract descriptions from responses
             batch_descriptions = [response.content.strip() if response else f"Documents related to {item_data['item_text']}" 
                                 for response, item_data in zip(responses, batch)]
         except Exception as e:
-            # Fallback to sequential processing if batch fails
-            print(f"Batch {batch_num} description generation failed: {e}. Falling back to sequential.")
+            # Fallback to sequential processing with individual retries if batch fails
+            print(f"Batch {batch_num} description generation failed: {e}. Falling back to sequential with retries.")
             batch_descriptions = []
             for item_data in batch:
+                def single_description_process():
+                    return llm.invoke([HumanMessage(content=item_data['prompt'])])
+                
                 try:
-                    response = llm.invoke([HumanMessage(content=item_data['prompt'])])
+                    response = exponential_backoff_retry(single_description_process, max_retries=2, base_delay=0.3)
                     batch_descriptions.append(response.content.strip())
                 except Exception as inner_e:
                     print(f"Failed to generate description for {item_data['item_text']}: {inner_e}")
@@ -357,17 +365,41 @@ Description (2-3 sentences explaining what documents/information satisfy this re
             enhanced_item['description'] = description
             enhanced_checklist[item_data['category_letter']]['items'].append(enhanced_item)
         
-        # Small delay between batches to avoid rate limits
-        if batch_num < total_batches:
-            import time
-            time.sleep(0.3)  # 300ms delay between batches
+        # No delay between batches - using rate limiting with exponential backoff instead
     
     return enhanced_checklist
 
 
-def batch_summarize_documents(documents: List[Dict], llm: ChatAnthropic, batch_size: int = 5) -> List[Dict]:
+def exponential_backoff_retry(func, max_retries: int = 3, base_delay: float = 1.0):
+    """
+    Execute function with exponential backoff retry logic for rate limiting.
+    """
+    for attempt in range(max_retries):
+        try:
+            return func()
+        except Exception as e:
+            error_str = str(e).lower()
+            # Check if it's a rate limiting error
+            if any(keyword in error_str for keyword in ['rate', 'limit', 'quota', 'throttl', '429', 'too many']):
+                if attempt < max_retries - 1:
+                    # Calculate exponential backoff with jitter
+                    delay = base_delay * (2 ** attempt) + random.uniform(0, 1)
+                    print(f"Rate limit hit, retrying in {delay:.2f}s (attempt {attempt + 1}/{max_retries})")
+                    time.sleep(delay)
+                    continue
+                else:
+                    print(f"Rate limit exceeded after {max_retries} attempts")
+                    raise e
+            else:
+                # Non-rate limit error, don't retry
+                raise e
+    return None
+
+
+def batch_summarize_documents(documents: List[Dict], llm: ChatAnthropic, batch_size: int = 20) -> List[Dict]:
     """
     Summarize documents using LangChain's built-in batch processing for true parallelization.
+    Optimized with larger batches, higher concurrency, and exponential backoff rate limiting.
     Returns documents with added 'summary' field.
     """
     
@@ -413,26 +445,32 @@ Document type description (1-2 sentences only):"""
         # Convert prompts to HumanMessage format for batch processing
         messages_batch = [[HumanMessage(content=prompt)] for prompt in prompts]
         
-        try:
-            # Use LangChain's batch method for parallel processing
-            # Increase concurrency for larger batches
-            max_concurrent = min(batch_size, 10)  # Cap at 10 concurrent requests
-            responses = llm.batch(
+        # Use exponential backoff for batch processing
+        def process_batch():
+            max_concurrent = min(batch_size, 30)  # Cap at 30 concurrent requests
+            return llm.batch(
                 messages_batch, 
                 config={"max_concurrency": max_concurrent}
             )
+        
+        try:
+            responses = exponential_backoff_retry(process_batch, max_retries=3, base_delay=0.5)
             
             # Extract summaries from responses
             batch_summaries = [response.content.strip() if response else f"Document: {doc.get('name', 'Unknown')}" 
                               for response, doc in zip(responses, batch)]
         except Exception as e:
-            # Fallback to sequential processing if batch fails
-            print(f"Batch {batch_num} processing failed: {e}. Falling back to sequential.")
+            # Fallback to sequential processing with individual retries if batch fails
+            print(f"Batch {batch_num} processing failed: {e}. Falling back to sequential with retries.")
             batch_summaries = []
             for doc_idx, doc in enumerate(batch):
                 prompt = create_prompt_for_doc(doc)
+                
+                def single_doc_process():
+                    return llm.invoke([HumanMessage(content=prompt)])
+                
                 try:
-                    response = llm.invoke([HumanMessage(content=prompt)])
+                    response = exponential_backoff_retry(single_doc_process, max_retries=2, base_delay=0.3)
                     batch_summaries.append(response.content.strip())
                 except Exception as inner_e:
                     print(f"Failed to summarize {doc.get('name', 'Unknown')}: {inner_e}")
@@ -451,10 +489,7 @@ Document type description (1-2 sentences only):"""
             doc['summary'] = summary
             summarized_docs.append(doc)
         
-        # Small delay between batches to avoid rate limits
-        if batch_num < total_batches:
-            import time
-            time.sleep(0.5)  # 500ms delay between batches
+        # No delay between batches - using rate limiting with exponential backoff instead
     
     return summarized_docs
 
