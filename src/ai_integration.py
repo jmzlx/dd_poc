@@ -270,6 +270,101 @@ Focus on:
     return app, llm
 
 
+def generate_checklist_descriptions(checklist: Dict, llm: ChatAnthropic, batch_size: int = 10) -> Dict:
+    """
+    Generate detailed descriptions for each checklist item explaining what documents should satisfy it.
+    Returns checklist with added 'description' field for each item.
+    """
+    
+    def create_description_prompt(category_name: str, item_text: str) -> str:
+        """Create a prompt to generate a description for a checklist item"""
+        return f"""For this due diligence checklist item, provide a brief description (2-3 sentences) explaining what types of documents or information would satisfy this requirement. Focus on the specific document types, content characteristics, and key information that would be relevant.
+
+Category: {category_name}
+Checklist Item: {item_text}
+
+Description (2-3 sentences explaining what documents/information satisfy this requirement):"""
+    
+    # Process all checklist items
+    enhanced_checklist = {}
+    all_items_to_process = []
+    
+    # Collect all items with their context
+    for cat_letter, category in checklist.items():
+        cat_name = category.get('name', '')
+        enhanced_checklist[cat_letter] = {
+            'name': cat_name,
+            'letter': cat_letter,
+            'items': []
+        }
+        
+        for item in category.get('items', []):
+            item_data = {
+                'category_letter': cat_letter,
+                'category_name': cat_name,
+                'item_text': item.get('text', ''),
+                'original_item': item,
+                'prompt': create_description_prompt(cat_name, item.get('text', ''))
+            }
+            all_items_to_process.append(item_data)
+    
+    # Process items in batches
+    total_items = len(all_items_to_process)
+    total_batches = (total_items + batch_size - 1) // batch_size
+    
+    for batch_num, i in enumerate(range(0, total_items, batch_size), 1):
+        batch = all_items_to_process[i:i + batch_size]
+        batch_end = min(i + batch_size, total_items)
+        
+        # Update progress if available
+        if hasattr(st, 'progress') and 'description_progress' in st.session_state:
+            progress = i / total_items
+            st.session_state.description_progress.progress(
+                progress, 
+                text=f"📝 Generating descriptions batch {batch_num}/{total_batches} (items {i+1}-{batch_end} of {total_items})"
+            )
+        
+        # Create prompts for batch processing
+        prompts = [item_data['prompt'] for item_data in batch]
+        messages_batch = [[HumanMessage(content=prompt)] for prompt in prompts]
+        
+        try:
+            # Use LangChain's batch method for parallel processing
+            max_concurrent = min(batch_size, 8)  # Cap concurrent requests
+            responses = llm.batch(
+                messages_batch, 
+                config={"max_concurrency": max_concurrent}
+            )
+            
+            # Extract descriptions from responses
+            batch_descriptions = [response.content.strip() if response else f"Documents related to {item_data['item_text']}" 
+                                for response, item_data in zip(responses, batch)]
+        except Exception as e:
+            # Fallback to sequential processing if batch fails
+            print(f"Batch {batch_num} description generation failed: {e}. Falling back to sequential.")
+            batch_descriptions = []
+            for item_data in batch:
+                try:
+                    response = llm.invoke([HumanMessage(content=item_data['prompt'])])
+                    batch_descriptions.append(response.content.strip())
+                except Exception as inner_e:
+                    print(f"Failed to generate description for {item_data['item_text']}: {inner_e}")
+                    batch_descriptions.append(f"Documents related to {item_data['item_text']}")
+        
+        # Add descriptions to items
+        for item_data, description in zip(batch, batch_descriptions):
+            enhanced_item = item_data['original_item'].copy()
+            enhanced_item['description'] = description
+            enhanced_checklist[item_data['category_letter']]['items'].append(enhanced_item)
+        
+        # Small delay between batches to avoid rate limits
+        if batch_num < total_batches:
+            import time
+            time.sleep(0.3)  # 300ms delay between batches
+    
+    return enhanced_checklist
+
+
 def batch_summarize_documents(documents: List[Dict], llm: ChatAnthropic, batch_size: int = 5) -> List[Dict]:
     """
     Summarize documents using LangChain's built-in batch processing for true parallelization.
@@ -407,6 +502,7 @@ def match_checklist_with_summaries(
 ) -> Dict:
     """
     Match checklist items against document summaries using embeddings.
+    Enhanced to use LLM-generated descriptions for better semantic matching.
     """
     import numpy as np
     
@@ -427,9 +523,16 @@ def match_checklist_with_summaries(
         
         for item in category.get('items', []):
             item_text = item.get('text', '')
+            item_description = item.get('description', '')
             
-            # Create embedding for checklist item with category context
-            checklist_embedding_text = f"{cat_name}: {item_text}"
+            # Create enhanced embedding text using both item text and generated description
+            if item_description:
+                # Use the LLM-generated description for richer semantic matching
+                checklist_embedding_text = f"{cat_name}: {item_text}\n{item_description}"
+            else:
+                # Fallback to original method if no description available
+                checklist_embedding_text = f"{cat_name}: {item_text}"
+            
             item_embedding = model.encode(checklist_embedding_text)
             
             # Calculate similarities with all documents
@@ -455,6 +558,7 @@ def match_checklist_with_summaries(
             item_result = {
                 'text': item_text,
                 'original': item.get('original', item_text),
+                'description': item_description,  # Include the generated description
                 'matches': matches
             }
             

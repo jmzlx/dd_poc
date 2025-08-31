@@ -311,7 +311,21 @@ def render_checklist_results(
     
     # Show matching method used
     if hasattr(st.session_state, 'doc_embeddings_data') and st.session_state.doc_embeddings_data:
-        st.success("🤖 Results generated using AI-enhanced matching with document summaries")
+        # Check if checklist has descriptions
+        has_descriptions = False
+        if st.session_state.get('checklist'):
+            for category in st.session_state.checklist.values():
+                for item in category.get('items', []):
+                    if item.get('description'):
+                        has_descriptions = True
+                        break
+                if has_descriptions:
+                    break
+        
+        if has_descriptions:
+            st.success("🤖 Results generated using AI-enhanced matching with document summaries and LLM-generated checklist descriptions")
+        else:
+            st.success("🤖 Results generated using AI-enhanced matching with document summaries")
     else:
         st.info("📊 Results generated using traditional embedding matching")
     
@@ -354,6 +368,11 @@ def render_checklist_item(item: Dict, idx: int, relevancy_threshold: float, prim
     if item['matches']:
         st.markdown(f"✅ **{idx}. {item['text']}**")
         
+        # Show AI-generated description if available
+        if item.get('description'):
+            with st.expander("🤖 AI Description", expanded=False):
+                st.info(item['description'])
+        
         # Sort matches by score and apply relevancy threshold
         sorted_matches = sorted(item['matches'], key=lambda x: x['score'], reverse=True)
         relevant_matches = [m for m in sorted_matches if m['score'] >= relevancy_threshold]
@@ -365,6 +384,12 @@ def render_checklist_item(item: Dict, idx: int, relevancy_threshold: float, prim
             st.caption("   Documents found but below relevancy threshold")
     else:
         st.markdown(f"❌ **{idx}. {item['text']}**")
+        
+        # Show AI-generated description even for unmatched items
+        if item.get('description'):
+            with st.expander("🤖 AI Description", expanded=False):
+                st.info(item['description'])
+        
         st.caption("   No matching documents found")
 
 

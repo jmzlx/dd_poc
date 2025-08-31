@@ -37,7 +37,8 @@ try:
         LANGGRAPH_AVAILABLE,
         batch_summarize_documents,
         create_document_embeddings_with_summaries,
-        match_checklist_with_summaries
+        match_checklist_with_summaries,
+        generate_checklist_descriptions
     )
     LLM_AVAILABLE = LANGGRAPH_AVAILABLE
 except ImportError:
@@ -431,7 +432,7 @@ class DDChecklistApp:
             
             with progress_container:
                 st.markdown("### 🚀 Processing Data Room")
-                tracker = ProgressTracker(10, "Processing")
+                tracker = ProgressTracker(11, "Processing")
                 
                 # Step 1: Load documents
                 tracker.update(1, f"Scanning data room: {Path(data_room_path).name}")
@@ -493,12 +494,37 @@ class DDChecklistApp:
                 
                 tracker.update(6, "Checklist and questions loaded")
                 
+                # Step 3.5: Generate checklist descriptions if AI is available
+                if (hasattr(st.session_state, 'agent') and st.session_state.agent and 
+                    st.session_state.checklist):
+                    
+                    tracker.update(6.5, "Generating checklist item descriptions...")
+                    
+                    # Create progress tracker for descriptions
+                    st.session_state.description_progress = st.progress(0, text="📝 Generating descriptions...")
+                    
+                    # Generate enhanced descriptions for better matching
+                    st.session_state.checklist = generate_checklist_descriptions(
+                        st.session_state.checklist,
+                        st.session_state.agent.llm,
+                        batch_size=self.config.processing.batch_size
+                    )
+                    
+                    # Clean up progress tracker
+                    if 'description_progress' in st.session_state:
+                        st.session_state.description_progress.progress(1.0, text="✅ Descriptions generated")
+                        del st.session_state.description_progress
+                    
+                    tracker.update(7, "Checklist descriptions generated")
+                else:
+                    tracker.update(7, "Skipping description generation (AI not enabled)")
+                
                 # Step 4: Match checklist to documents
                 if st.session_state.checklist and st.session_state.chunks:
-                    tracker.update(7, "Matching checklist to documents...")
+                    tracker.update(8, "Matching checklist to documents...")
                     
                     if hasattr(st.session_state, 'doc_embeddings_data') and st.session_state.doc_embeddings_data:
-                        # Use AI-enhanced matching
+                        # Use AI-enhanced matching with generated descriptions
                         st.session_state.checklist_results = match_checklist_with_summaries(
                             st.session_state.checklist,
                             st.session_state.doc_embeddings_data,
@@ -514,13 +540,13 @@ class DDChecklistApp:
                             self.config.processing.similarity_threshold
                         )
                     
-                    tracker.update(8, "Checklist matching complete")
+                    tracker.update(9, "Checklist matching complete")
                 
                 # Step 5: Answer questions
                 if (st.session_state.questions and st.session_state.chunks and 
                     st.session_state.embeddings is not None):
                     
-                    tracker.update(9, "Answering due diligence questions...")
+                    tracker.update(10, "Answering due diligence questions...")
                     
                     st.session_state.question_answers = self.service.question_answerer.answer_questions_with_chunks(
                         st.session_state.questions,
@@ -530,7 +556,7 @@ class DDChecklistApp:
                     )
                     
                     answered_count = sum(1 for a in st.session_state.question_answers.values() if a['has_answer'])
-                    tracker.update(10, f"Answered {answered_count}/{len(st.session_state.questions)} questions")
+                    tracker.update(11, f"Answered {answered_count}/{len(st.session_state.questions)} questions")
                 
                 tracker.complete("Processing complete!")
                 

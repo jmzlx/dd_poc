@@ -2,15 +2,6 @@
 
 A professional, enterprise-grade Streamlit application for automated due diligence document analysis with AI-powered insights, checklist matching, and intelligent Q&A capabilities.
 
-> **🚀 Recently Refactored**: Transformed from a 1474-line monolith into a clean, modular architecture with enhanced error handling, type safety, and configuration management.
->
-> **✨ Key Improvements**: 
-> - **6 focused modules** instead of single large file
-> - **Complete type hint coverage** for better IDE support  
-> - **Centralized configuration** with environment awareness
-> - **Comprehensive error handling** and logging
-> - **Only essential files** - cleaned and optimized structure
-
 ## ✨ Features
 
 ### 🎯 **Hierarchical Project Navigation**
@@ -20,10 +11,12 @@ A professional, enterprise-grade Streamlit application for automated due diligen
 - Support for multiple companies per project
 
 ### 📊 **Intelligent Checklist Matching**
-- Automated document-to-checklist mapping
+- **Enhanced AI Matching**: LLM-generated descriptions for each checklist item explain what documents should satisfy requirements
+- **Semantic Understanding**: Uses both original checklist text and AI descriptions for richer document matching
+- Automated document-to-checklist mapping with improved accuracy
 - PRIMARY/ANCILLARY relevance tagging
 - Dynamic relevancy thresholds
-- Clean, compact display with download buttons
+- Clean, compact display with download buttons and expandable AI descriptions
 - Real-time filtering without reprocessing
 
 ### ❓ **Due Diligence Questions**
@@ -52,8 +45,9 @@ A professional, enterprise-grade Streamlit application for automated due diligen
 
 ### 🤖 **AI Enhancement (Optional)**
 - Powered by Anthropic Claude (Haiku/Sonnet/Opus)
+- **Checklist Description Generation**: AI creates detailed explanations for each checklist item
 - Document summarization with batch processing
-- Intelligent matching with semantic understanding
+- **Enhanced Semantic Matching**: Combines document summaries with LLM-generated checklist descriptions
 - Natural language understanding and synthesis
 - Comprehensive error handling and retry logic
 - Toggle AI features on/off for comparison
@@ -119,6 +113,7 @@ uv run streamlit run app.py
 
 2. **📊 Checklist Matching**
    - Checklist selector with preview
+   - **AI-generated descriptions** for each checklist item (when AI enabled)
    - Category progress bars
    - Document relevance indicators
    - Adjustable thresholds
@@ -140,7 +135,7 @@ uv run streamlit run app.py
 
 ```
 dd_poc/
-├── app.py                     # 🎯 Main Streamlit application (clean, refactored)
+├── app.py                     # 🎯 Main Streamlit application
 ├── src/                       # 📦 Modular architecture
 │   ├── __init__.py           # Package initialization & exports
 │   ├── config.py             # Configuration management
@@ -182,7 +177,9 @@ dd_poc/
 - **No Document Limits**: Shows all relevant matches
 
 ### AI Capabilities
+- **Checklist Description Generation**: Creates detailed explanations for what documents satisfy each requirement
 - **Document Summarization**: Brief summaries for categorization
+- **Enhanced Semantic Matching**: Combines document summaries with checklist descriptions for better accuracy
 - **Strategic Analysis**: Alignment with M&A objectives
 - **Question Answering**: Comprehensive responses with context
 - **Company Overview**: Executive summary generation
@@ -223,6 +220,7 @@ uv lock --upgrade
 2. **Descriptive Names**: Clear, meaningful file names
 3. **Complete Data Rooms**: Include all relevant documents
 4. **Specific Checklists**: Detailed, unambiguous items
+5. **Enable AI Features**: Use AI descriptions for significantly improved matching accuracy
 
 ### Performance Optimization
 - First run downloads AI model (~90MB)
@@ -302,11 +300,11 @@ MIT License - See LICENSE file for details
 
 ## 🏗️ Architecture
 
-This application uses a **clean, modular architecture**:
+This application uses a modular architecture:
 
-- **`app.py`**: Main Streamlit application (single entry point)
+- **`app.py`**: Main Streamlit application
 - **`src/`**: All modules organized by responsibility
-  - **`config.py`**: Environment-aware configuration management
+  - **`config.py`**: Configuration management
   - **`ai_integration.py`**: AI/LangGraph integration for Claude
   - **`document_processing.py`**: File handling and text extraction
   - **`services.py`**: Business logic (parsing, matching, Q&A)
@@ -315,11 +313,7 @@ This application uses a **clean, modular architecture**:
 
 ## 🤝 Contributing
 
-Contributions welcome! The codebase uses:
-- **Type hints** throughout for better IDE support
-- **Modular architecture** for easy testing and maintenance
-- **Comprehensive error handling** with centralized logging
-- **Environment-aware configuration** for different deployment scenarios
+Contributions welcome!
 
 ## 📧 Support
 
