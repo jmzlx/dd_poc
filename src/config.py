@@ -43,8 +43,8 @@ class ProcessingConfig:
     batch_size: int = 100
     description_batch_size: int = 100
     similarity_threshold: float = 0.35
-    relevancy_threshold: float = 0.4
-    primary_threshold: float = 0.5
+    relevancy_threshold: float = 0.5
+    primary_threshold: float = 0.6
     min_display_threshold: float = 0.15
     max_workers: int = 4
     file_timeout: int = 30

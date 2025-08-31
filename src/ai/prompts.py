@@ -111,12 +111,12 @@ def get_description_generation_prompt(category_name: str, item_text: str) -> str
     Returns:
         Formatted prompt string
     """
-    return f"""For this due diligence checklist item, provide a brief description (2-3 sentences) explaining what types of documents or information would satisfy this requirement. Focus on the specific document types, content characteristics, and key information that would be relevant.
+    return f"""For this due diligence checklist item, provide a concise description (1-2 sentences) explaining what types of documents or information would satisfy this requirement. Focus on the specific document types and key information that would be relevant.
 
 Category: {category_name}
 Checklist Item: {item_text}
 
-Description (2-3 sentences explaining what documents/information satisfy this requirement):"""
+Description (1-2 sentences explaining what documents/information satisfy this requirement):"""
 
 
 def get_document_summarization_prompt(doc: Dict) -> str:
