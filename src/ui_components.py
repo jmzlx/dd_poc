@@ -215,7 +215,7 @@ def render_ai_settings() -> Tuple[bool, Optional[str], str]:
     )
     
     api_key = None
-    model_choice = "claude-3-haiku-20240307"
+    model_choice = "claude-sonnet-4"
     
     if use_ai_features:
         # Check if API key is in environment
@@ -235,9 +235,9 @@ def render_ai_settings() -> Tuple[bool, Optional[str], str]:
         # Model selection
         model_choice = st.radio(
             "Claude Model",
-            ["claude-3-haiku-20240307", "claude-3-sonnet-20240229", "claude-3-opus-20240229"],
+            ["claude-sonnet-4", "claude-opus-4.1", "claude-haiku-3.5"],
             index=0,
-            help="Haiku: Fast & cheap | Sonnet: Balanced | Opus: Most capable"
+            help="Sonnet 4: Latest balanced model (May 2025) | Opus 4.1: Most capable (Aug 2025) | Haiku 3.5: Fastest (Oct 2024)"
         )
     else:
         st.info("🔧 AI features disabled - using traditional embedding-based matching")
@@ -416,7 +416,12 @@ def render_checklist_item(item: Dict, idx: int, relevancy_threshold: float, prim
         relevancy_threshold: Minimum relevancy threshold
         primary_threshold: Threshold for primary documents
     """
-    if item['matches']:
+    # Sort matches by score and apply relevancy threshold first
+    sorted_matches = sorted(item.get('matches', []), key=lambda x: x['score'], reverse=True)
+    relevant_matches = [m for m in sorted_matches if m['score'] >= relevancy_threshold]
+    
+    # Determine status based on relevant matches, not all matches
+    if relevant_matches:
         st.markdown(f"✅ **{idx}. {item['text']}**")
         
         # Show AI-generated description if available
@@ -424,16 +429,22 @@ def render_checklist_item(item: Dict, idx: int, relevancy_threshold: float, prim
             with st.expander("🤖 AI Description", expanded=False):
                 st.info(item['description'])
         
-        # Sort matches by score and apply relevancy threshold
-        sorted_matches = sorted(item['matches'], key=lambda x: x['score'], reverse=True)
-        relevant_matches = [m for m in sorted_matches if m['score'] >= relevancy_threshold]
+        # Render the relevant matches
+        for match in relevant_matches:
+            render_document_match(match, idx, primary_threshold)
+            
+    elif item.get('matches'):
+        # Has matches but none above threshold
+        st.markdown(f"🟡 **{idx}. {item['text']}**")
         
-        if relevant_matches:
-            for match in relevant_matches:
-                render_document_match(match, idx, primary_threshold)
-        else:
-            st.caption("   Documents found but below relevancy threshold")
+        # Show AI-generated description if available
+        if item.get('description'):
+            with st.expander("🤖 AI Description", expanded=False):
+                st.info(item['description'])
+        
+        st.caption("   Documents found but below relevancy threshold")
     else:
+        # No matches at all
         st.markdown(f"❌ **{idx}. {item['text']}**")
         
         # Show AI-generated description even for unmatched items
