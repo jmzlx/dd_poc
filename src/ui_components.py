@@ -12,6 +12,8 @@ from typing import Dict, List, Optional, Tuple, Any
 import numpy as np
 import base64
 
+from .config import get_config
+
 
 def create_document_link(file_path: str, doc_name: str, doc_title: str) -> str:
     """
@@ -215,7 +217,8 @@ def render_ai_settings() -> Tuple[bool, Optional[str], str]:
     )
     
     api_key = None
-    model_choice = "claude-sonnet-4"
+    config = get_config()
+    model_choice = config.model.claude_model
     
     if use_ai_features:
         # Check if API key is in environment
@@ -233,11 +236,20 @@ def render_ai_settings() -> Tuple[bool, Optional[str], str]:
             )
         
         # Model selection
+        available_models = [
+            "claude-sonnet-4-20250514",
+            "claude-opus-4-1-20250805",
+            "claude-3-5-haiku-20241022"
+        ]
+        default_index = 0
+        if config.model.claude_model in available_models:
+            default_index = available_models.index(config.model.claude_model)
+        
         model_choice = st.radio(
             "Claude Model",
-            ["claude-sonnet-4", "claude-opus-4.1", "claude-haiku-3.5"],
-            index=0,
-            help="Sonnet 4: Latest balanced model (May 2025) | Opus 4.1: Most capable (Aug 2025) | Haiku 3.5: Fastest (Oct 2024)"
+            available_models,
+            index=default_index,
+            help="Sonnet 4: High-performance model (default) | Opus 4.1: Most capable | Haiku 3.5: Fastest and most cost-effective"
         )
     else:
         st.info("🔧 AI features disabled - using traditional embedding-based matching")
@@ -324,8 +336,8 @@ def render_metrics_row(metrics: Dict[str, Any]) -> None:
 
 def render_checklist_results(
     checklist_results: Dict, 
-    relevancy_threshold: float = 0.4,
-    primary_threshold: float = 0.5
+    relevancy_threshold: Optional[float] = None,
+    primary_threshold: Optional[float] = None
 ) -> None:
     """
     Render checklist matching results with threshold controls

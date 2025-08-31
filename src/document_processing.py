@@ -34,6 +34,9 @@ import faiss
 # Semantic chunking
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
+# Import configuration
+from .config import get_config
+
 # Setup logging for thread-safe error handling
 logger = logging.getLogger(__name__)
 
@@ -182,18 +185,22 @@ def _process_file_with_context(args):
     return None
 
 
-def scan_data_room(data_room_path: str, max_workers: int = 4, progress_callback=None) -> Dict[str, Dict]:
+def scan_data_room(data_room_path: str, max_workers: Optional[int] = None, progress_callback=None) -> Dict[str, Dict]:
     """
     Scan entire data room directory for documents using parallel processing
     
     Args:
         data_room_path: Path to the data room directory
-        max_workers: Maximum number of worker threads (default: 4)
+        max_workers: Maximum number of worker threads (uses config default if None)
         progress_callback: Optional callback function for progress updates
         
     Returns:
         Dictionary mapping file paths to document information
     """
+    config = get_config()
+    if max_workers is None:
+        max_workers = config.processing.max_workers
+    
     documents = {}
     path = Path(data_room_path)
     
@@ -204,7 +211,7 @@ def scan_data_room(data_room_path: str, max_workers: int = 4, progress_callback=
     file_paths = []
     for file_path in path.rglob('*'):
         if file_path.is_file() and not file_path.name.startswith('.'):
-            if file_path.suffix.lower() in ['.pdf', '.docx', '.doc', '.txt', '.md']:
+            if file_path.suffix.lower() in config.processing.supported_file_extensions:
                 file_paths.append(file_path)
     
     if not file_paths:
@@ -240,7 +247,7 @@ def scan_data_room(data_room_path: str, max_workers: int = 4, progress_callback=
         # Collect results as they complete
         for future in concurrent.futures.as_completed(future_to_file):
             try:
-                result = future.result(timeout=30)  # 30-second timeout per file
+                result = future.result(timeout=config.processing.file_timeout)
                 if result:
                     file_path_str, document_info = result
                     documents[file_path_str] = document_info
@@ -310,7 +317,7 @@ def create_chunks_with_metadata(documents: Dict[str, Dict], chunk_size: int = 20
     return chunks
 
 
-def create_embeddings_batch(texts: List[str], model: SentenceTransformer, batch_size: int = 100) -> np.ndarray:
+def create_embeddings_batch(texts: List[str], model: SentenceTransformer, batch_size: Optional[int] = None) -> np.ndarray:
     """
     Create embeddings for texts in batches for better performance
     
@@ -338,7 +345,7 @@ def search_documents_with_faiss(
     faiss_index: faiss.IndexFlatIP, 
     model: SentenceTransformer, 
     top_k: int = 5,
-    threshold: float = 0.3
+    threshold: Optional[float] = None
 ) -> List[Dict]:
     """
     Search documents using FAISS IndexFlatIP for fast similarity search
@@ -349,13 +356,17 @@ def search_documents_with_faiss(
         faiss_index: FAISS index with embeddings
         model: SentenceTransformer model
         top_k: Number of top results to return
-        threshold: Minimum similarity threshold
+        threshold: Minimum similarity threshold (uses config default if None)
         
     Returns:
         List of search results with citations
     """
     if not chunks or faiss_index is None:
         return []
+    
+    config = get_config()
+    if threshold is None:
+        threshold = config.processing.similarity_threshold
     
     # Encode query and normalize for inner product similarity
     query_embedding = model.encode(query).astype('float32')
@@ -407,7 +418,7 @@ def search_documents_with_citations(
     embeddings: np.ndarray, 
     model: SentenceTransformer, 
     top_k: int = 5,
-    threshold: float = 0.3
+    threshold: Optional[float] = None
 ) -> List[Dict]:
     """
     Legacy search documents function - kept for backward compatibility
@@ -621,19 +632,23 @@ class DocumentProcessor:
         self.faiss_index = None  # FAISS index for fast similarity search
         self.performance_stats = {}  # Track performance metrics
     
-    def load_data_room(self, data_room_path: str, max_workers: int = 4, progress_callback=None) -> Dict[str, any]:
+    def load_data_room(self, data_room_path: str, max_workers: Optional[int] = None, progress_callback=None) -> Dict[str, any]:
         """
         Load and process an entire data room with parallel processing
         
         Args:
             data_room_path: Path to the data room directory
-            max_workers: Maximum number of worker threads for document processing
+            max_workers: Maximum number of worker threads (uses config default if None)
             progress_callback: Optional callback function for progress updates
             
         Returns:
             Dictionary with processing results including performance metrics
         """
         import time
+        config = get_config()
+        if max_workers is None:
+            max_workers = config.processing.max_workers
+        
         start_time = time.time()
         
         logger.info(f"Starting data room processing: {data_room_path}")
@@ -738,7 +753,7 @@ class DocumentProcessor:
             logger.error(f"Failed to build FAISS index: {e}")
             self.faiss_index = None
 
-    def faiss_search(self, query: str, top_k: int = 5, threshold: float = 0.3) -> List[Dict]:
+    def faiss_search(self, query: str, top_k: int = 5, threshold: Optional[float] = None) -> List[Dict]:
         """
         Fast similarity search using FAISS IndexFlatIP
         
@@ -757,7 +772,7 @@ class DocumentProcessor:
             query, self.chunks, self.faiss_index, self.model, top_k, threshold
         )
 
-    def search(self, query: str, top_k: int = 5, threshold: float = 0.3) -> List[Dict]:
+    def search(self, query: str, top_k: int = 5, threshold: Optional[float] = None) -> List[Dict]:
         """
         Search documents using semantic similarity - uses FAISS if available, falls back to numpy
         
@@ -800,7 +815,7 @@ class DocumentProcessor:
             
         return stats
     
-    def load_data_room_with_progress(self, data_room_path: str, max_workers: int = 4, 
+    def load_data_room_with_progress(self, data_room_path: str, max_workers: Optional[int] = None, 
                                    progress_bar=None) -> Dict[str, any]:
         """
         Load data room with Streamlit progress bar support
