@@ -8,6 +8,7 @@ watchdog>=3.0.0  # For auto-reload during development
 # Document processing
 pymupdf>=1.23.0
 python-docx>=0.8.11
+joblib>=1.3.0
 
 # Environment and configuration
 python-dotenv>=1.0.0
