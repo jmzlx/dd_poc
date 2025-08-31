@@ -1,0 +1,72 @@
+# Git files
+.git
+.gitignore
+
+# Python cache and temporary files
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.tox
+.coverage
+.pytest_cache
+.mypy_cache
+
+# Virtual environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Documentation
+*.md
+docs/
+
+# Development files
+run.sh
+docker-compose*.yml
+
+# Large data files that should be mounted as volumes
+# (uncomment if you want to exclude large data directories)
+# data/vdrs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Environment files (should be passed as environment variables in production)
+.env
+.env.local
+.env.production
+
+# UV lock file (not needed in container)
+uv.lock

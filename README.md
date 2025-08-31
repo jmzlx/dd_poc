@@ -154,6 +154,10 @@ dd_poc/
 │       ├── industrial-security-leadership/
 │       ├── proj-ra-1/
 │       └── technology-led-services-transformation/
+├── Dockerfile                 # 🐳 Docker container configuration
+├── docker-compose.yml         # 🐳 Docker Compose for local testing
+├── .dockerignore             # Docker build optimization
+├── build-and-run.sh          # 🐳 Docker build & run script
 ├── requirements.txt           # Python dependencies (for reference)
 ├── pyproject.toml            # uv project configuration
 ├── run.sh                    # 🚀 Launch script
@@ -191,14 +195,30 @@ dd_poc/
 
 ## 🌐 Deployment
 
-### Streamlit Cloud (Recommended - Free)
+### Option 1: Streamlit Cloud (Recommended - Free)
 1. Fork/push to GitHub
 2. Visit [share.streamlit.io](https://share.streamlit.io)
 3. Connect GitHub repository
 4. Add ANTHROPIC_API_KEY in Streamlit secrets
 5. Deploy (automatic)
 
-### Local Development
+### Option 2: Docker (Production Ready)
+```bash
+# Quick start with Docker
+./build-and-run.sh
+
+# Or manually
+docker build -t dd-checklist .
+docker run -d -p 8501:8501 --name dd-checklist-app dd-checklist
+
+# Using docker-compose
+docker-compose up --build
+
+# Stop container
+docker stop dd-checklist-app
+```
+
+### Option 3: Local Development
 ```bash
 # Install dependencies (automatically creates virtual environment)
 uv sync
@@ -212,6 +232,13 @@ uv add <package-name>
 # Update dependencies
 uv lock --upgrade
 ```
+
+### Docker Features
+- **Multi-stage build** for optimized image size
+- **Security-focused** with non-root user
+- **Health checks** for load balancers
+- **Volume mounts** for data persistence
+- **Production ready** with proper environment configuration
 
 ## 💡 Usage Tips
 
