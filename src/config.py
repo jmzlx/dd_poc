@@ -20,7 +20,7 @@ os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 class ModelConfig:
     """Configuration for AI models"""
     sentence_transformer_model: str = "all-MiniLM-L6-v2"
-    claude_model: str = "claude-3-haiku-20240307"
+    claude_model: str = "claude-sonnet-4"
     temperature: float = 0.3
     max_tokens: int = 2000
     embedding_dimension: int = 384

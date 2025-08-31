@@ -43,6 +43,7 @@ temp/
 tmp/
 uploads/
 *.tmp
+.cache
 
 # Testing
 .pytest_cache/

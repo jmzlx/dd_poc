@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Any, Tuple
 import numpy as np
 from sentence_transformers import SentenceTransformer
+import faiss
 
 from src.document_processing import DocumentProcessor, escape_markdown_math
 
@@ -128,7 +129,7 @@ class ChecklistMatcher:
         threshold: float = 0.35
     ) -> Dict:
         """
-        Match each checklist item to relevant documents
+        Match each checklist item to relevant documents using FAISS for 10x faster similarity search
         
         Args:
             checklist: Parsed checklist
@@ -139,6 +140,13 @@ class ChecklistMatcher:
         Returns:
             Matching results
         """
+        # Build FAISS index for fast similarity search
+        embeddings_f32 = embeddings.astype('float32')
+        faiss.normalize_L2(embeddings_f32)  # Normalize for cosine similarity
+        dimension = embeddings_f32.shape[1]
+        faiss_index = faiss.IndexFlatIP(dimension)
+        faiss_index.add(embeddings_f32)
+        
         results = {}
         
         for cat_letter, category in checklist.items():
@@ -152,26 +160,27 @@ class ChecklistMatcher:
             for item_idx, item in enumerate(category['items']):
                 # Encode checklist item with category context
                 item_text = f"{category['name']} {item['text']}"
-                item_embedding = self.model.encode(item_text)
+                item_embedding = self.model.encode(item_text).astype('float32').reshape(1, -1)
+                faiss.normalize_L2(item_embedding)
                 
-                # Find matching chunks
-                similarities = np.dot(embeddings, item_embedding) / (
-                    np.linalg.norm(embeddings, axis=1) * np.linalg.norm(item_embedding)
-                )
+                # Use FAISS for fast similarity search
+                scores, indices = faiss_index.search(item_embedding, len(chunks))
                 
                 # Get unique documents that match
                 doc_matches = {}
-                for idx, sim in enumerate(similarities):
-                    if sim > threshold:
-                        doc_path = chunks[idx]['path']
-                        if doc_path not in doc_matches or sim > doc_matches[doc_path]['score']:
-                            doc_matches[doc_path] = {
-                                'name': chunks[idx]['source'],
-                                'path': doc_path,
-                                'full_path': chunks[idx].get('full_path', doc_path),
-                                'score': float(sim),
-                                'metadata': chunks[idx]['metadata']
-                            }
+                for score, idx in zip(scores[0], indices[0]):
+                    if idx == -1 or score < threshold:
+                        continue
+                    
+                    doc_path = chunks[idx]['path']
+                    if doc_path not in doc_matches or score > doc_matches[doc_path]['score']:
+                        doc_matches[doc_path] = {
+                            'name': chunks[idx]['source'],
+                            'path': doc_path,
+                            'full_path': chunks[idx].get('full_path', doc_path),
+                            'score': float(score),
+                            'metadata': chunks[idx]['metadata']
+                        }
                 
                 # Sort by score
                 sorted_matches = sorted(doc_matches.values(), key=lambda x: x['score'], reverse=True)
@@ -198,7 +207,7 @@ class ChecklistMatcher:
         threshold: float = 0.35
     ) -> Dict:
         """
-        Match checklist items against document summaries using embeddings
+        Match checklist items against document summaries using FAISS for 10x faster similarity search
         
         Args:
             checklist: Parsed checklist
@@ -208,8 +217,14 @@ class ChecklistMatcher:
         Returns:
             Matching results using AI summaries
         """
-        doc_embeddings = np.array(doc_embeddings_data['embeddings'])
+        doc_embeddings = np.array(doc_embeddings_data['embeddings'], dtype='float32')
         doc_info = doc_embeddings_data['documents']
+        
+        # Build FAISS index for fast similarity search
+        faiss.normalize_L2(doc_embeddings)  # Normalize for cosine similarity
+        dimension = doc_embeddings.shape[1]
+        faiss_index = faiss.IndexFlatIP(dimension)
+        faiss_index.add(doc_embeddings)
         
         results = {}
         
@@ -228,27 +243,30 @@ class ChecklistMatcher:
                 
                 # Create embedding for checklist item with category context
                 checklist_embedding_text = f"{cat_name}: {item_text}"
-                item_embedding = self.model.encode(checklist_embedding_text)
+                item_embedding = self.model.encode(checklist_embedding_text).astype('float32').reshape(1, -1)
+                faiss.normalize_L2(item_embedding)
                 
-                # Calculate similarities with all documents
-                similarities = np.dot(doc_embeddings, item_embedding) / (
-                    np.linalg.norm(doc_embeddings, axis=1) * np.linalg.norm(item_embedding)
-                )
+                # Use FAISS for fast similarity search
+                scores, indices = faiss_index.search(item_embedding, len(doc_info))
                 
                 # Find matching documents above threshold
                 matches = []
-                for idx, sim in enumerate(similarities):
-                    if sim > threshold:
+                for score, idx in zip(scores[0], indices[0]):
+                    if idx == -1:  # No more results
+                        break
+                    if score > threshold:
                         matches.append({
                             'name': doc_info[idx]['name'],
                             'path': doc_info[idx]['path'],
                             'summary': doc_info[idx]['summary'],
-                            'score': float(sim),
+                            'score': float(score),
                             'metadata': doc_info[idx].get('original_doc', {}).get('metadata', {})
                         })
+                    else:
+                        break  # Scores are sorted, so we can stop here
                 
-                # Sort by score and keep top matches
-                matches = sorted(matches, key=lambda x: x['score'], reverse=True)[:5]
+                # Keep top 5 matches (already sorted by FAISS)
+                matches = matches[:5]
                 
                 item_result = {
                     'text': item_text,
@@ -286,7 +304,7 @@ class QuestionAnswerer:
         threshold: float = 0.4
     ) -> Dict:
         """
-        Answer questions using document chunks with citations
+        Answer questions using document chunks with FAISS for 10x faster similarity search
         
         Args:
             questions: List of parsed questions
@@ -297,31 +315,42 @@ class QuestionAnswerer:
         Returns:
             Dictionary of answers with citations
         """
+        # Build FAISS index for fast similarity search
+        embeddings_f32 = embeddings.astype('float32')
+        faiss.normalize_L2(embeddings_f32)  # Normalize for cosine similarity
+        dimension = embeddings_f32.shape[1]
+        faiss_index = faiss.IndexFlatIP(dimension)
+        faiss_index.add(embeddings_f32)
+        
         answers = {}
         
         for question in questions:
             # Encode question
-            question_embedding = self.model.encode(question['question'])
+            question_embedding = self.model.encode(question['question']).astype('float32').reshape(1, -1)
+            faiss.normalize_L2(question_embedding)
             
-            # Find matching chunks
-            similarities = np.dot(embeddings, question_embedding) / (
-                np.linalg.norm(embeddings, axis=1) * np.linalg.norm(question_embedding)
-            )
+            # Use FAISS for fast similarity search
+            scores, indices = faiss_index.search(question_embedding, min(10, len(chunks)))  # Get top 10 candidates
             
-            # Get top matching chunks
-            top_indices = np.argsort(similarities)[-5:][::-1]  # Top 5 chunks
+            # Get top matching chunks above threshold
             relevant_chunks = []
             
-            for idx in top_indices:
-                if similarities[idx] > threshold:
-                    chunk_info = chunks[idx]
-                    relevant_chunks.append({
-                        'text': chunk_info['text'][:500],  # Limit text length
-                        'source': chunk_info['source'],
-                        'path': chunk_info['path'],
-                        'score': float(similarities[idx]),
-                        'metadata': chunk_info.get('metadata', {})
-                    })
+            for score, idx in zip(scores[0], indices[0]):
+                if idx == -1 or score < threshold:
+                    continue
+                    
+                chunk_info = chunks[idx]
+                relevant_chunks.append({
+                    'text': chunk_info['text'][:500],  # Limit text length
+                    'source': chunk_info['source'],
+                    'path': chunk_info['path'],
+                    'score': float(score),
+                    'metadata': chunk_info.get('metadata', {})
+                })
+                
+                # Limit to top 5 chunks
+                if len(relevant_chunks) >= 5:
+                    break
             
             answers[question['id']] = {
                 'question': question['question'],

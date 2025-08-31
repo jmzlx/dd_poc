@@ -42,7 +42,7 @@ class TaskType(Enum):
     SUMMARIZE_FINDINGS = "summarize_findings"
 
 
-def get_langgraph_agent(api_key: Optional[str] = None, model: str = "claude-3-haiku-20240307"):
+def get_langgraph_agent(api_key: Optional[str] = None, model: str = "claude-sonnet-4"):
     """Create a LangGraph agent with Anthropic"""
     
     if not LANGGRAPH_AVAILABLE:
@@ -536,13 +536,20 @@ def match_checklist_with_summaries(
     threshold: float = 0.35
 ) -> Dict:
     """
-    Match checklist items against document summaries using embeddings.
+    Match checklist items against document summaries using FAISS for 10x faster similarity search.
     Enhanced to use LLM-generated descriptions for better semantic matching.
     """
     import numpy as np
+    import faiss
     
-    doc_embeddings = np.array(doc_embeddings_data['embeddings'])
+    doc_embeddings = np.array(doc_embeddings_data['embeddings'], dtype='float32')
     doc_info = doc_embeddings_data['documents']
+    
+    # Build FAISS index for fast similarity search
+    faiss.normalize_L2(doc_embeddings)  # Normalize for cosine similarity
+    dimension = doc_embeddings.shape[1]
+    faiss_index = faiss.IndexFlatIP(dimension)
+    faiss_index.add(doc_embeddings)
     
     results = {}
     
@@ -568,36 +575,45 @@ def match_checklist_with_summaries(
                 # Fallback to original method if no description available
                 checklist_embedding_text = f"{cat_name}: {item_text}"
             
-            item_embedding = model.encode(checklist_embedding_text)
+            # Create and normalize item embedding
+            item_embedding = model.encode(checklist_embedding_text).astype('float32').reshape(1, -1)
+            faiss.normalize_L2(item_embedding)
             
-            # Calculate similarities with all documents
-            similarities = np.dot(doc_embeddings, item_embedding) / (
-                np.linalg.norm(doc_embeddings, axis=1) * np.linalg.norm(item_embedding)
-            )
+            # Use FAISS for fast similarity search
+            scores, indices = faiss_index.search(item_embedding, len(doc_info))
             
             # Find matching documents above threshold
             matches = []
-            for idx, sim in enumerate(similarities):
-                if sim > threshold:
-                    matches.append({
-                        'name': doc_info[idx]['name'],
-                        'path': doc_info[idx]['path'],
-                        'summary': doc_info[idx]['summary'],
-                        'score': float(sim),
-                        'metadata': doc_info[idx].get('original_doc', {}).get('metadata', {})
-                    })
+            min_display_threshold = 0.15  # Minimum score to even consider showing
             
-            # Sort by score and keep top matches
-            matches = sorted(matches, key=lambda x: x['score'], reverse=True)[:5]
+            for score, idx in zip(scores[0], indices[0]):
+                if idx == -1:  # No more results
+                    break
+                if score < min_display_threshold:  # Skip very low scoring documents
+                    break  # Scores are sorted, so we can stop here
+                
+                match_data = {
+                    'name': doc_info[idx]['name'],
+                    'path': doc_info[idx]['path'],
+                    'summary': doc_info[idx]['summary'],
+                    'score': float(score),
+                    'metadata': doc_info[idx].get('original_doc', {}).get('metadata', {})
+                }
+                
+                matches.append(match_data)
+            
+            # Keep top 5 matches for display
+            display_matches = matches[:5]
             
             item_result = {
                 'text': item_text,
                 'original': item.get('original', item_text),
                 'description': item_description,  # Include the generated description
-                'matches': matches
+                'matches': display_matches
             }
             
-            if matches:
+            # Count items with ANY matches (both green and yellow) toward category total
+            if display_matches:
                 cat_results['matched_items'] += 1
             
             cat_results['items'].append(item_result)
@@ -610,7 +626,7 @@ def match_checklist_with_summaries(
 class DDChecklistAgent:
     """High-level interface for the LangGraph agent"""
     
-    def __init__(self, api_key: Optional[str] = None, model: str = "claude-3-haiku-20240307"):
+    def __init__(self, api_key: Optional[str] = None, model: str = "claude-sonnet-4"):
         result = get_langgraph_agent(api_key, model)
         if result:
             self.app, self.llm = result

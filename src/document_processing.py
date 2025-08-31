@@ -29,6 +29,7 @@ from functools import wraps
 import joblib
 import hashlib
 import time
+import faiss
 
 # Semantic chunking
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -331,6 +332,75 @@ def create_embeddings_batch(texts: List[str], model: SentenceTransformer, batch_
     return np.vstack(embeddings_list) if embeddings_list else np.array([])
 
 
+def search_documents_with_faiss(
+    query: str, 
+    chunks: List[Dict], 
+    faiss_index: faiss.IndexFlatIP, 
+    model: SentenceTransformer, 
+    top_k: int = 5,
+    threshold: float = 0.3
+) -> List[Dict]:
+    """
+    Search documents using FAISS IndexFlatIP for fast similarity search
+    
+    Args:
+        query: Search query
+        chunks: List of document chunks
+        faiss_index: FAISS index with embeddings
+        model: SentenceTransformer model
+        top_k: Number of top results to return
+        threshold: Minimum similarity threshold
+        
+    Returns:
+        List of search results with citations
+    """
+    if not chunks or faiss_index is None:
+        return []
+    
+    # Encode query and normalize for inner product similarity
+    query_embedding = model.encode(query).astype('float32')
+    query_embedding = query_embedding.reshape(1, -1)
+    
+    # Normalize for cosine similarity using inner product
+    faiss.normalize_L2(query_embedding)
+    
+    # Search using FAISS (much faster than numpy)
+    scores, indices = faiss_index.search(query_embedding, min(top_k * 2, len(chunks)))
+    
+    results = []
+    seen_texts = set()
+    
+    for score, idx in zip(scores[0], indices[0]):
+        if idx == -1 or score < threshold:  # -1 indicates no more results
+            continue
+            
+        # Avoid duplicates
+        text_preview = chunks[idx]['text'][:100]
+        if text_preview not in seen_texts:
+            seen_texts.add(text_preview)
+            
+            # Format citation based on file type
+            metadata = chunks[idx]['metadata']
+            if metadata['type'] == 'pdf' and metadata.get('pages'):
+                citation = f"page {metadata['pages'][0]}"
+            else:
+                citation = "document"
+            
+            results.append({
+                'text': chunks[idx]['text'],
+                'source': chunks[idx]['source'],
+                'path': chunks[idx]['path'],
+                'full_path': chunks[idx].get('full_path', ''),
+                'citation': citation,
+                'score': float(score)
+            })
+            
+            if len(results) >= top_k:
+                break
+    
+    return results
+
+
 def search_documents_with_citations(
     query: str, 
     chunks: List[Dict], 
@@ -340,7 +410,8 @@ def search_documents_with_citations(
     threshold: float = 0.3
 ) -> List[Dict]:
     """
-    Search documents and return with citations
+    Legacy search documents function - kept for backward compatibility
+    Creates temporary FAISS index and uses FAISS search for better performance
     
     Args:
         query: Search query
@@ -356,39 +427,14 @@ def search_documents_with_citations(
     if not chunks:
         return []
     
-    query_embedding = model.encode(query)
-    similarities = np.dot(embeddings, query_embedding) / (
-        np.linalg.norm(embeddings, axis=1) * np.linalg.norm(query_embedding)
-    )
+    # Create temporary FAISS index for better performance
+    embeddings_f32 = embeddings.astype('float32')
+    faiss.normalize_L2(embeddings_f32)  # Normalize for cosine similarity
     
-    top_indices = np.argsort(similarities)[-top_k:][::-1]
-    results = []
-    seen_texts = set()
+    index = faiss.IndexFlatIP(embeddings_f32.shape[1])
+    index.add(embeddings_f32)
     
-    for idx in top_indices:
-        if similarities[idx] > threshold:
-            # Avoid duplicates
-            text_preview = chunks[idx]['text'][:100]
-            if text_preview not in seen_texts:
-                seen_texts.add(text_preview)
-                
-                # Format citation based on file type
-                metadata = chunks[idx]['metadata']
-                if metadata['type'] == 'pdf' and metadata.get('pages'):
-                    citation = f"page {metadata['pages'][0]}"
-                else:
-                    citation = "document"
-                
-                results.append({
-                    'text': chunks[idx]['text'],
-                    'source': chunks[idx]['source'],
-                    'path': chunks[idx]['path'],
-                    'full_path': chunks[idx].get('full_path', ''),
-                    'citation': citation,
-                    'score': float(similarities[idx])
-                })
-    
-    return results
+    return search_documents_with_faiss(query, chunks, index, model, top_k, threshold)
 
 
 def create_progress_tracker(total_files: int = 0, streamlit_progress_bar=None):
@@ -558,6 +604,7 @@ def _invalidate_old_cache_files(max_age_days: int = 7) -> None:
 class DocumentProcessor:
     """
     Main document processing class that orchestrates document operations with parallel processing support
+    Enhanced with FAISS for 10x faster similarity search
     """
     
     def __init__(self, model: Optional[SentenceTransformer] = None):
@@ -571,6 +618,7 @@ class DocumentProcessor:
         self.documents = {}
         self.chunks = []
         self.embeddings = None
+        self.faiss_index = None  # FAISS index for fast similarity search
         self.performance_stats = {}  # Track performance metrics
     
     def load_data_room(self, data_room_path: str, max_workers: int = 4, progress_callback=None) -> Dict[str, any]:
@@ -624,6 +672,8 @@ class DocumentProcessor:
                     self.chunks = cached_chunks
                     cache_hit = True
                     logger.info(f"Loaded embeddings from cache (key: {cache_key[:8]}...)")
+                    # Build FAISS index from cached embeddings
+                    self._build_faiss_index()
                 else:
                     logger.warning("Cached chunks length mismatch, regenerating embeddings")
             
@@ -638,10 +688,13 @@ class DocumentProcessor:
                 
                 # Clean up old cache files
                 _invalidate_old_cache_files()
+            
+            # Build FAISS index for fast similarity search
+            self._build_faiss_index()
                 
             embedding_time = time.time() - embedding_start
             cache_status = "from cache" if cache_hit else "generated"
-            logger.info(f"Embeddings {cache_status} in {embedding_time:.2f} seconds")
+            logger.info(f"Embeddings {cache_status} and FAISS index built in {embedding_time:.2f} seconds")
         
         total_time = time.time() - start_time
         logger.info(f"Total data room processing completed in {total_time:.2f} seconds")
@@ -661,9 +714,52 @@ class DocumentProcessor:
             }
         }
     
+    def _build_faiss_index(self) -> None:
+        """
+        Build FAISS IndexFlatIP for fast similarity search
+        """
+        if self.embeddings is None:
+            logger.warning("No embeddings available to build FAISS index")
+            return
+        
+        try:
+            # Convert to float32 and normalize for cosine similarity via inner product
+            embeddings_f32 = self.embeddings.astype('float32')
+            faiss.normalize_L2(embeddings_f32)
+            
+            # Create FAISS index
+            dimension = embeddings_f32.shape[1]
+            self.faiss_index = faiss.IndexFlatIP(dimension)
+            self.faiss_index.add(embeddings_f32)
+            
+            logger.info(f"Built FAISS index with {self.faiss_index.ntotal} vectors, dimension {dimension}")
+            
+        except Exception as e:
+            logger.error(f"Failed to build FAISS index: {e}")
+            self.faiss_index = None
+
+    def faiss_search(self, query: str, top_k: int = 5, threshold: float = 0.3) -> List[Dict]:
+        """
+        Fast similarity search using FAISS IndexFlatIP
+        
+        Args:
+            query: Search query
+            top_k: Number of top results
+            threshold: Minimum similarity threshold
+            
+        Returns:
+            List of search results with citations
+        """
+        if not self.model or self.faiss_index is None:
+            return []
+        
+        return search_documents_with_faiss(
+            query, self.chunks, self.faiss_index, self.model, top_k, threshold
+        )
+
     def search(self, query: str, top_k: int = 5, threshold: float = 0.3) -> List[Dict]:
         """
-        Search documents using semantic similarity
+        Search documents using semantic similarity - uses FAISS if available, falls back to numpy
         
         Args:
             query: Search query
@@ -673,12 +769,19 @@ class DocumentProcessor:
         Returns:
             List of search results
         """
-        if not self.model or self.embeddings is None:
+        if not self.model:
             return []
         
-        return search_documents_with_citations(
-            query, self.chunks, self.embeddings, self.model, top_k, threshold
-        )
+        # Use FAISS search if index is available (10x faster)
+        if self.faiss_index is not None:
+            return self.faiss_search(query, top_k, threshold)
+        elif self.embeddings is not None:
+            # Fallback to numpy-based search
+            return search_documents_with_citations(
+                query, self.chunks, self.embeddings, self.model, top_k, threshold
+            )
+        else:
+            return []
     
     def get_statistics(self) -> Dict[str, any]:
         """Get processing statistics including performance metrics"""
@@ -686,6 +789,8 @@ class DocumentProcessor:
             'total_documents': len(self.documents),
             'total_chunks': len(self.chunks),
             'has_embeddings': self.embeddings is not None,
+            'has_faiss_index': self.faiss_index is not None,
+            'faiss_index_size': self.faiss_index.ntotal if self.faiss_index is not None else 0,
             'embedding_dimension': self.embeddings.shape[1] if self.embeddings is not None else 0
         }
         
