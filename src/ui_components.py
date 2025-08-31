@@ -200,7 +200,7 @@ def render_data_room_selector(project_path: str) -> Optional[str]:
         )
 
 
-def render_ai_settings() -> Tuple[bool, Optional[str], str, bool]:
+def render_ai_settings() -> Tuple[bool, Optional[str], str]:
     """
     Render AI enhancement settings in sidebar
     
@@ -219,16 +219,6 @@ def render_ai_settings() -> Tuple[bool, Optional[str], str, bool]:
     api_key = None
     config = get_config()
     model_choice = config.model.claude_model
-    skip_descriptions = False
-    
-    # Performance options when AI is enabled
-    if use_ai_features:
-        st.write("**⚡ Performance Options:**")
-        skip_descriptions = st.toggle(
-            "Fast Mode (Skip AI Descriptions)",
-            value=False,
-            help="Skip AI-generated descriptions for faster processing. Uses original checklist text only."
-        )
     
     if use_ai_features:
         # Check if API key is in environment
@@ -265,7 +255,7 @@ def render_ai_settings() -> Tuple[bool, Optional[str], str, bool]:
         st.info("🔧 AI features disabled - using traditional embedding-based matching")
         st.caption("Enable the toggle above to use AI-powered enhancements")
     
-    return use_ai_features, api_key, model_choice, skip_descriptions
+    return use_ai_features, api_key, model_choice
 
 
 def render_file_selector(directory: str, file_type: str, key_suffix: str) -> Tuple[Optional[str], str]:
@@ -514,6 +504,7 @@ def render_document_match(match: Dict, item_idx: int, primary_threshold: float) 
     
     with col3:
         # Download button
+
         render_download_button(match, item_idx, doc_name, doc_title)
 
 
@@ -538,17 +529,31 @@ def render_download_button(match: Dict, item_idx: int, doc_name: str, doc_title:
                 with open(file_path, 'rb') as f:
                     file_bytes = f.read()
                 
+                # Determine MIME type based on file extension
+                file_extension = file_path.suffix.lower()
+                if file_extension == '.pdf':
+                    mime_type = 'application/pdf'
+                elif file_extension in ['.doc', '.docx']:
+                    mime_type = 'application/msword'
+                elif file_extension == '.txt':
+                    mime_type = 'text/plain'
+                elif file_extension == '.md':
+                    mime_type = 'text/markdown'
+                else:
+                    mime_type = 'application/octet-stream'
+                
                 button_key = f"dl_{item_idx}_{match['score']:.0f}_{doc_name[:20]}".replace(" ", "_").replace("/", "_").replace(".", "_")
                 
                 st.download_button(
                     label="📥",
                     data=file_bytes,
                     file_name=doc_name,
+                    mime=mime_type,
                     key=button_key,
                     help=f"Download {doc_title}"
                 )
-        except Exception:
-            pass
+        except Exception as e:
+            st.error(f"Download failed: {str(e)}")
 
 
 def render_question_results(question_answers: Dict) -> None:
@@ -664,17 +669,31 @@ def render_question_source(chunk: Dict, chunk_idx: int, question: str) -> None:
                     with open(file_path, 'rb') as f:
                         file_bytes = f.read()
                     
+                    # Determine MIME type based on file extension
+                    file_extension = file_path.suffix.lower()
+                    if file_extension == '.pdf':
+                        mime_type = 'application/pdf'
+                    elif file_extension in ['.doc', '.docx']:
+                        mime_type = 'application/msword'
+                    elif file_extension == '.txt':
+                        mime_type = 'text/plain'
+                    elif file_extension == '.md':
+                        mime_type = 'text/markdown'
+                    else:
+                        mime_type = 'application/octet-stream'
+                    
                     button_key = f"qa_dl_{question[:20]}_{chunk_idx}".replace(" ", "_").replace("?", "").replace("/", "_")
                     
                     st.download_button(
                         label="📥",
                         data=file_bytes,
                         file_name=chunk['source'],
+                        mime=mime_type,
                         key=button_key,
                         help=f"Download {chunk['source']}"
                     )
-            except Exception:
-                pass
+            except Exception as e:
+                st.error(f"Download failed: {str(e)}")
 
 
 def render_ai_answer_button(answer_data: Dict, chunks: List[Dict]) -> None:
