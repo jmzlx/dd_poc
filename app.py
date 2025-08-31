@@ -47,6 +47,7 @@ except ImportError:
     DDChecklistAgent = None
 
 
+
 class DDChecklistApp:
     """
     Main application class that orchestrates all components
@@ -198,6 +199,7 @@ class DDChecklistApp:
         
         return selected_data_room_path, use_ai_features, process_button
     
+
     def render_summary_tab(self):
         """Render the summary and analysis tab"""
         # Strategy selector

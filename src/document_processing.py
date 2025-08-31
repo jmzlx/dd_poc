@@ -5,7 +5,7 @@ Document Processing Module
 This module handles all document-related operations including:
 - File text extraction from various formats (PDF, DOCX, TXT, MD)
 - Document scanning and indexing
-- Text chunking for RAG
+- Semantic text chunking for RAG with better context preservation
 - Document metadata handling
 """
 
@@ -29,6 +29,9 @@ from functools import wraps
 import joblib
 import hashlib
 import time
+
+# Semantic chunking
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # Setup logging for thread-safe error handling
 logger = logging.getLogger(__name__)
@@ -256,34 +259,50 @@ def scan_data_room(data_room_path: str, max_workers: int = 4, progress_callback=
     return documents
 
 
-def create_chunks_with_metadata(documents: Dict[str, Dict], chunk_size: int = 400, overlap: int = 50) -> List[Dict]:
+def create_chunks_with_metadata(documents: Dict[str, Dict], chunk_size: int = 2000, overlap: int = 200) -> List[Dict]:
     """
-    Create searchable chunks with full metadata
+    Create searchable chunks with semantic splitting and full metadata.
+    Uses RecursiveCharacterTextSplitter for better context preservation.
     
     Args:
         documents: Dictionary of documents
-        chunk_size: Size of each chunk in words
-        overlap: Overlap between chunks in words
+        chunk_size: Size of each chunk in characters (default: 2000 for ~400 words)
+        overlap: Overlap between chunks in characters (default: 200 for ~50 words)
         
     Returns:
         List of chunk dictionaries with metadata
     """
     chunks = []
     
+    # Initialize semantic text splitter with hierarchical separators
+    # This preserves document structure by prioritizing paragraph breaks,
+    # then sentences, then words
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=chunk_size,
+        chunk_overlap=overlap,
+        separators=["\n\n", "\n", ".", "!", "?", ",", " "],
+        length_function=len,
+        is_separator_regex=False,
+    )
+    
     for doc_path, doc_info in documents.items():
         text = doc_info['text']
-        words = text.split()
         
-        # Create overlapping chunks
-        for i in range(0, len(words), chunk_size - overlap):
-            chunk_text = ' '.join(words[i:i + chunk_size])
+        if not text.strip():
+            continue
+            
+        # Split text using semantic boundaries
+        semantic_chunks = text_splitter.split_text(text)
+        
+        # Create chunks with metadata
+        for i, chunk_text in enumerate(semantic_chunks):
             if chunk_text.strip():
                 chunks.append({
-                    'text': chunk_text,
+                    'text': chunk_text.strip(),
                     'source': doc_info['name'],
                     'path': doc_info['rel_path'],
                     'full_path': doc_path,
-                    'chunk_id': f"chunk_{i}",
+                    'chunk_id': f"semantic_chunk_{i}",
                     'metadata': doc_info['metadata']
                 })
     
