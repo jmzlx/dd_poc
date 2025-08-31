@@ -102,6 +102,8 @@ echo "CHUNK_SIZE=400" >> .env
 echo "CHUNK_OVERLAP=50" >> .env
 echo "MAX_TEXT_LENGTH=10000" >> .env
 echo "BATCH_SIZE=100" >> .env
+echo "DESCRIPTION_BATCH_SIZE=20" >> .env
+echo "SKIP_DESCRIPTIONS=false" >> .env
 echo "SIMILARITY_THRESHOLD=0.35" >> .env
 echo "RELEVANCY_THRESHOLD=0.4" >> .env
 echo "PRIMARY_THRESHOLD=0.5" >> .env
@@ -109,15 +111,15 @@ echo "MIN_DISPLAY_THRESHOLD=0.15" >> .env
 echo "MAX_WORKERS=4" >> .env
 echo "FILE_TIMEOUT=30" >> .env
 
-# API Configuration
-echo "MAX_CONCURRENT_REQUESTS=10" >> .env
+# API Configuration (Optimized for 2025)
+echo "MAX_CONCURRENT_REQUESTS=25" >> .env
 echo "REQUEST_TIMEOUT=30" >> .env
 echo "RETRY_ATTEMPTS=3" >> .env
-echo "BASE_DELAY=1.0" >> .env
-echo "MAX_RETRIES=3" >> .env
-echo "BATCH_RETRY_ATTEMPTS=2" >> .env
-echo "BATCH_BASE_DELAY=0.5" >> .env
-echo "SINGLE_RETRY_BASE_DELAY=0.3" >> .env
+echo "BASE_DELAY=0.5" >> .env
+echo "MAX_RETRIES=2" >> .env
+echo "BATCH_RETRY_ATTEMPTS=1" >> .env
+echo "BATCH_BASE_DELAY=0.3" >> .env
+echo "SINGLE_RETRY_BASE_DELAY=0.2" >> .env
 
 # File Extensions (comma-separated)
 echo "SUPPORTED_FILE_EXTENSIONS=.pdf,.docx,.doc,.txt,.md" >> .env
@@ -151,6 +153,8 @@ TOKENIZERS_PARALLELISM=false
 - `CHUNK_OVERLAP` - Overlap between chunks (default: `50`)
 - `MAX_TEXT_LENGTH` - Maximum text length per document (default: `10000`)
 - `BATCH_SIZE` - Processing batch size (default: `100`)
+- `DESCRIPTION_BATCH_SIZE` - Description generation batch size (default: `20`)
+- `SKIP_DESCRIPTIONS` - Skip AI description generation for faster processing (default: `false`)
 - `MAX_WORKERS` - Maximum parallel workers (default: `4`)
 - `FILE_TIMEOUT` - File processing timeout in seconds (default: `30`)
 
@@ -161,14 +165,14 @@ TOKENIZERS_PARALLELISM=false
 - `MIN_DISPLAY_THRESHOLD` - Minimum score to display results (default: `0.15`)
 
 #### **API & Performance**
-- `MAX_CONCURRENT_REQUESTS` - Maximum concurrent API requests (default: `10`)
+- `MAX_CONCURRENT_REQUESTS` - Maximum concurrent API requests (default: `25`)
 - `REQUEST_TIMEOUT` - API request timeout in seconds (default: `30`)
 - `RETRY_ATTEMPTS` - Number of retry attempts (default: `3`)
-- `BASE_DELAY` - Base delay for exponential backoff (default: `1.0`)
-- `MAX_RETRIES` - Maximum retries for batch operations (default: `3`)
-- `BATCH_RETRY_ATTEMPTS` - Retry attempts for batch processing (default: `2`)
-- `BATCH_BASE_DELAY` - Base delay for batch operations (default: `0.5`)
-- `SINGLE_RETRY_BASE_DELAY` - Base delay for single operations (default: `0.3`)
+- `BASE_DELAY` - Base delay for exponential backoff (default: `0.5`)
+- `MAX_RETRIES` - Maximum retries for batch operations (default: `2`)
+- `BATCH_RETRY_ATTEMPTS` - Retry attempts for batch processing (default: `1`)
+- `BATCH_BASE_DELAY` - Base delay for batch operations (default: `0.3`)
+- `SINGLE_RETRY_BASE_DELAY` - Base delay for single operations (default: `0.2`)
 
 #### **File Processing**
 - `SUPPORTED_FILE_EXTENSIONS` - Comma-separated file extensions (default: `.pdf,.docx,.doc,.txt,.md`)

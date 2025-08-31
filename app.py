@@ -185,7 +185,12 @@ class DDChecklistApp:
             st.divider()
             
             # AI settings
-            use_ai_features, api_key, model_choice = render_ai_settings()
+            use_ai_features, api_key, model_choice, skip_descriptions = render_ai_settings()
+            
+            # Update configuration with UI settings
+            if skip_descriptions:
+                from src.config import update_processing_config
+                update_processing_config(skip_descriptions=True)
             
             # Initialize AI agent if enabled
             if use_ai_features and api_key:

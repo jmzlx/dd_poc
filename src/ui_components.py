@@ -200,7 +200,7 @@ def render_data_room_selector(project_path: str) -> Optional[str]:
         )
 
 
-def render_ai_settings() -> Tuple[bool, Optional[str], str]:
+def render_ai_settings() -> Tuple[bool, Optional[str], str, bool]:
     """
     Render AI enhancement settings in sidebar
     
@@ -210,8 +210,8 @@ def render_ai_settings() -> Tuple[bool, Optional[str], str]:
     st.subheader("🤖 AI Enhancement Settings")
     
     # Single toggle for AI features
-    use_ai_features = st.checkbox(
-        "Enable AI Features", 
+    use_ai_features = st.toggle(
+        "🤖 Enable AI Features",
         value=True, 
         help="Enable Claude AI for document summaries, intelligent matching, and enhanced Q&A"
     )
@@ -219,6 +219,16 @@ def render_ai_settings() -> Tuple[bool, Optional[str], str]:
     api_key = None
     config = get_config()
     model_choice = config.model.claude_model
+    skip_descriptions = False
+    
+    # Performance options when AI is enabled
+    if use_ai_features:
+        st.write("**⚡ Performance Options:**")
+        skip_descriptions = st.toggle(
+            "Fast Mode (Skip AI Descriptions)",
+            value=False,
+            help="Skip AI-generated descriptions for faster processing. Uses original checklist text only."
+        )
     
     if use_ai_features:
         # Check if API key is in environment
@@ -255,7 +265,7 @@ def render_ai_settings() -> Tuple[bool, Optional[str], str]:
         st.info("🔧 AI features disabled - using traditional embedding-based matching")
         st.caption("Enable the toggle above to use AI-powered enhancements")
     
-    return use_ai_features, api_key, model_choice
+    return use_ai_features, api_key, model_choice, skip_descriptions
 
 
 def render_file_selector(directory: str, file_type: str, key_suffix: str) -> Tuple[Optional[str], str]:
