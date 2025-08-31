@@ -465,14 +465,36 @@ class DDChecklistApp:
                 
                 tracker = ProgressTracker(12, "Processing", step_weights)
                 
-                # Step 1: Load documents
+                # Step 1: Load documents with parallel processing
                 tracker.update(1, f"Scanning data room: {Path(data_room_path).name}")
-                load_results = self.service.document_processor.load_data_room(data_room_path)
+                
+                # Create a progress bar for detailed document loading progress
+                doc_progress_placeholder = st.empty()
+                with doc_progress_placeholder.container():
+                    doc_progress_bar = st.progress(0, text="Initializing document scan...")
+                
+                # Use parallel processing with progress tracking (max_workers=4 as specified)
+                load_results = self.service.document_processor.load_data_room_with_progress(
+                    data_room_path, 
+                    max_workers=4, 
+                    progress_bar=doc_progress_bar
+                )
+                
+                # Clear the detailed progress bar
+                doc_progress_placeholder.empty()
+                
                 st.session_state.documents = self.service.document_processor.documents
                 st.session_state.chunks = self.service.document_processor.chunks
                 st.session_state.embeddings = self.service.document_processor.embeddings
                 
-                tracker.update(2, f"Found {load_results['documents_count']} documents")
+                # Display performance metrics
+                if 'performance' in load_results:
+                    perf = load_results['performance']
+                    tracker.update(2, f"Found {load_results['documents_count']} documents in {perf['total_time']:.1f}s "
+                                    f"({perf['documents_per_second']:.1f} docs/sec)")
+                    logger.info(f"Document loading performance: {perf}")
+                else:
+                    tracker.update(2, f"Found {load_results['documents_count']} documents")
                 
                 # Step 2: Generate AI summaries if agent available
                 if hasattr(st.session_state, 'agent') and st.session_state.agent:

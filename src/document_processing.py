@@ -22,6 +22,21 @@ from typing import Dict, List, Tuple, Optional
 import streamlit as st
 import numpy as np
 from sentence_transformers import SentenceTransformer
+import concurrent.futures
+import threading
+import logging
+from functools import wraps
+
+# Setup logging for thread-safe error handling
+logger = logging.getLogger(__name__)
+
+# Thread-safe context management for Streamlit
+try:
+    from streamlit.runtime.scriptrunner import add_script_run_ctx, get_script_run_ctx
+    STREAMLIT_CONTEXT_AVAILABLE = True
+except ImportError:
+    STREAMLIT_CONTEXT_AVAILABLE = False
+    logger.warning("Streamlit context management not available")
 
 
 def escape_markdown_math(text: str) -> str:
@@ -38,7 +53,7 @@ def escape_markdown_math(text: str) -> str:
     return text
 
 
-def extract_text_from_file(file_path: Path) -> Tuple[str, Dict]:
+def extract_text_from_file(file_path: Path, progress_callback=None) -> Tuple[str, Dict]:
     """
     Extract text from file with metadata
     
@@ -68,8 +83,13 @@ def extract_text_from_file(file_path: Path) -> Tuple[str, Dict]:
                             metadata['pages'].append(page_num + 1)  # 1-based page numbering
                     except Exception as page_error:
                         # Handle individual page errors gracefully
-                        if st:
-                            st.warning(f"Error reading page {page_num + 1} of {file_path.name}: {page_error}")
+                        logger.warning(f"Error reading page {page_num + 1} of {file_path.name}: {page_error}")
+                        if st and hasattr(st, 'session_state'):
+                            # Only use streamlit in main thread context
+                            try:
+                                st.warning(f"Error reading page {page_num + 1} of {file_path.name}: {page_error}")
+                            except Exception:
+                                pass
                         continue
                 
                 pdf_document.close()
@@ -79,8 +99,13 @@ def extract_text_from_file(file_path: Path) -> Tuple[str, Dict]:
             except Exception as pdf_error:
                 # Handle corrupted or unsupported PDF files
                 error_msg = f"Error processing PDF {file_path.name}: {pdf_error}"
-                if st:
-                    st.error(error_msg)
+                logger.error(error_msg)
+                if st and hasattr(st, 'session_state'):
+                    # Only use streamlit in main thread context
+                    try:
+                        st.error(error_msg)
+                    except Exception:
+                        pass
                 # Try to return partial content if available
                 if 'pdf_document' in locals():
                     try:
@@ -100,18 +125,64 @@ def extract_text_from_file(file_path: Path) -> Tuple[str, Dict]:
             
     except Exception as e:
         error_msg = f"Could not read {file_path.name}: {e}"
-        if st:  # Only use streamlit if available
-            st.warning(error_msg)
+        logger.warning(error_msg)
+        if st and hasattr(st, 'session_state'):  # Only use streamlit if available and in main thread
+            try:
+                st.warning(error_msg)
+            except Exception:
+                pass
         
+    # Call progress callback if provided (for parallel processing tracking)
+    if progress_callback:
+        try:
+            progress_callback(file_path.name)
+        except Exception:
+            pass  # Don't let callback errors affect processing
+    
     return text_content, metadata
 
 
-def scan_data_room(data_room_path: str) -> Dict[str, Dict]:
+def _process_file_with_context(args):
     """
-    Scan entire data room directory for documents
+    Thread-safe file processing function with proper context management
+    
+    Args:
+        args: Tuple of (file_path, base_path, progress_callback)
+        
+    Returns:
+        Tuple of (file_path_str, document_info) or None if failed
+    """
+    file_path, base_path, progress_callback = args
+    
+    try:
+        # Extract text from file
+        text, metadata = extract_text_from_file(file_path, progress_callback)
+        
+        if text:
+            # Store relative path for display
+            rel_path = file_path.relative_to(base_path)
+            document_info = {
+                'text': text,
+                'content': text,  # Alias for backward compatibility
+                'name': file_path.name,
+                'rel_path': str(rel_path),
+                'metadata': metadata
+            }
+            return str(file_path), document_info
+    except Exception as e:
+        logger.error(f"Error processing file {file_path.name}: {e}")
+    
+    return None
+
+
+def scan_data_room(data_room_path: str, max_workers: int = 4, progress_callback=None) -> Dict[str, Dict]:
+    """
+    Scan entire data room directory for documents using parallel processing
     
     Args:
         data_room_path: Path to the data room directory
+        max_workers: Maximum number of worker threads (default: 4)
+        progress_callback: Optional callback function for progress updates
         
     Returns:
         Dictionary mapping file paths to document information
@@ -122,21 +193,63 @@ def scan_data_room(data_room_path: str) -> Dict[str, Dict]:
     if not path.exists():
         return documents
     
-    # Scan all files recursively
+    # Collect all document files first
+    file_paths = []
     for file_path in path.rglob('*'):
         if file_path.is_file() and not file_path.name.startswith('.'):
             if file_path.suffix.lower() in ['.pdf', '.docx', '.doc', '.txt', '.md']:
-                text, metadata = extract_text_from_file(file_path)
-                if text:
-                    # Store relative path for display
-                    rel_path = file_path.relative_to(path)
-                    documents[str(file_path)] = {
-                        'text': text,
-                        'content': text,  # Alias for backward compatibility
-                        'name': file_path.name,
-                        'rel_path': str(rel_path),
-                        'metadata': metadata
-                    }
+                file_paths.append(file_path)
+    
+    if not file_paths:
+        return documents
+    
+    logger.info(f"Processing {len(file_paths)} files with {max_workers} workers")
+    
+    # Prepare arguments for parallel processing
+    process_args = [(file_path, path, progress_callback) for file_path in file_paths]
+    
+    # Process files in parallel
+    processed_count = 0
+    failed_count = 0
+    
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+        # Submit all tasks
+        future_to_file = {}
+        
+        for args in process_args:
+            future = executor.submit(_process_file_with_context, args)
+            
+            # Add Streamlit context if available
+            if STREAMLIT_CONTEXT_AVAILABLE:
+                try:
+                    script_ctx = get_script_run_ctx()
+                    if script_ctx:
+                        add_script_run_ctx(future)
+                except Exception as e:
+                    logger.warning(f"Could not add script context: {e}")
+            
+            future_to_file[future] = args[0]  # Store file_path for reference
+        
+        # Collect results as they complete
+        for future in concurrent.futures.as_completed(future_to_file):
+            try:
+                result = future.result(timeout=30)  # 30-second timeout per file
+                if result:
+                    file_path_str, document_info = result
+                    documents[file_path_str] = document_info
+                    processed_count += 1
+                else:
+                    failed_count += 1
+            except concurrent.futures.TimeoutError:
+                file_path = future_to_file[future]
+                logger.error(f"Timeout processing file: {file_path.name}")
+                failed_count += 1
+            except Exception as e:
+                file_path = future_to_file[future]
+                logger.error(f"Error processing file {file_path.name}: {e}")
+                failed_count += 1
+    
+    logger.info(f"Completed processing: {processed_count} successful, {failed_count} failed")
     return documents
 
 
@@ -256,9 +369,40 @@ def search_documents_with_citations(
     return results
 
 
+def create_progress_tracker(total_files: int = 0, streamlit_progress_bar=None):
+    """
+    Create a thread-safe progress tracking function
+    
+    Args:
+        total_files: Total number of files to process
+        streamlit_progress_bar: Optional Streamlit progress bar
+        
+    Returns:
+        Progress callback function
+    """
+    processed_count = [0]  # Use list for mutable counter in closure
+    lock = threading.Lock()
+    
+    def progress_callback(filename: str = None):
+        with lock:
+            processed_count[0] += 1
+            progress = processed_count[0] / max(total_files, 1)
+            
+            if streamlit_progress_bar and hasattr(st, 'session_state'):
+                try:
+                    streamlit_progress_bar.progress(
+                        min(progress, 1.0), 
+                        text=f"Processing {filename or 'documents'}... ({processed_count[0]}/{total_files})"
+                    )
+                except Exception:
+                    pass  # Don't let UI errors affect processing
+    
+    return progress_callback
+
+
 class DocumentProcessor:
     """
-    Main document processing class that orchestrates document operations
+    Main document processing class that orchestrates document operations with parallel processing support
     """
     
     def __init__(self, model: Optional[SentenceTransformer] = None):
@@ -272,32 +416,63 @@ class DocumentProcessor:
         self.documents = {}
         self.chunks = []
         self.embeddings = None
+        self.performance_stats = {}  # Track performance metrics
     
-    def load_data_room(self, data_room_path: str) -> Dict[str, any]:
+    def load_data_room(self, data_room_path: str, max_workers: int = 4, progress_callback=None) -> Dict[str, any]:
         """
-        Load and process an entire data room
+        Load and process an entire data room with parallel processing
         
         Args:
             data_room_path: Path to the data room directory
+            max_workers: Maximum number of worker threads for document processing
+            progress_callback: Optional callback function for progress updates
             
         Returns:
-            Dictionary with processing results
+            Dictionary with processing results including performance metrics
         """
-        # Scan documents
-        self.documents = scan_data_room(data_room_path)
+        import time
+        start_time = time.time()
+        
+        logger.info(f"Starting data room processing: {data_room_path}")
+        
+        # Scan documents with parallel processing
+        self.documents = scan_data_room(
+            data_room_path, 
+            max_workers=max_workers, 
+            progress_callback=progress_callback
+        )
+        
+        scan_time = time.time() - start_time
+        logger.info(f"Document scanning completed in {scan_time:.2f} seconds")
         
         # Create chunks
+        chunk_start = time.time()
         self.chunks = create_chunks_with_metadata(self.documents)
+        chunk_time = time.time() - chunk_start
         
         # Create embeddings if model is available
+        embedding_time = 0
         if self.model and self.chunks:
+            embedding_start = time.time()
             texts = [chunk['text'] for chunk in self.chunks]
             self.embeddings = create_embeddings_batch(texts, self.model)
+            embedding_time = time.time() - embedding_start
+            logger.info(f"Embeddings created in {embedding_time:.2f} seconds")
+        
+        total_time = time.time() - start_time
+        logger.info(f"Total data room processing completed in {total_time:.2f} seconds")
         
         return {
             'documents_count': len(self.documents),
             'chunks_count': len(self.chunks),
-            'has_embeddings': self.embeddings is not None
+            'has_embeddings': self.embeddings is not None,
+            'performance': {
+                'total_time': total_time,
+                'scan_time': scan_time,
+                'chunk_time': chunk_time,
+                'embedding_time': embedding_time,
+                'documents_per_second': len(self.documents) / scan_time if scan_time > 0 else 0
+            }
         }
     
     def search(self, query: str, top_k: int = 5, threshold: float = 0.3) -> List[Dict]:
@@ -320,10 +495,47 @@ class DocumentProcessor:
         )
     
     def get_statistics(self) -> Dict[str, any]:
-        """Get processing statistics"""
-        return {
+        """Get processing statistics including performance metrics"""
+        stats = {
             'total_documents': len(self.documents),
             'total_chunks': len(self.chunks),
             'has_embeddings': self.embeddings is not None,
             'embedding_dimension': self.embeddings.shape[1] if self.embeddings is not None else 0
         }
+        
+        # Add performance metrics if available
+        if self.performance_stats:
+            stats['performance'] = self.performance_stats
+            
+        return stats
+    
+    def load_data_room_with_progress(self, data_room_path: str, max_workers: int = 4, 
+                                   progress_bar=None) -> Dict[str, any]:
+        """
+        Load data room with Streamlit progress bar support
+        
+        Args:
+            data_room_path: Path to the data room directory
+            max_workers: Maximum number of worker threads
+            progress_bar: Streamlit progress bar object
+            
+        Returns:
+            Dictionary with processing results
+        """
+        # Count total files first for accurate progress tracking
+        path = Path(data_room_path)
+        if not path.exists():
+            return {'documents_count': 0, 'chunks_count': 0, 'has_embeddings': False}
+        
+        total_files = sum(1 for file_path in path.rglob('*') 
+                         if file_path.is_file() and not file_path.name.startswith('.') 
+                         and file_path.suffix.lower() in ['.pdf', '.docx', '.doc', '.txt', '.md'])
+        
+        # Create progress tracker
+        progress_callback = create_progress_tracker(total_files, progress_bar)
+        
+        # Load with progress tracking
+        result = self.load_data_room(data_room_path, max_workers, progress_callback)
+        self.performance_stats = result.get('performance', {})
+        
+        return result
