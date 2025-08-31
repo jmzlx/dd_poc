@@ -329,6 +329,12 @@ def create_embeddings_batch(texts: List[str], model: SentenceTransformer, batch_
     Returns:
         NumPy array of embeddings
     """
+    # Set default batch_size from config if None
+    if batch_size is None:
+        from src import get_config
+        config = get_config()
+        batch_size = config.processing.batch_size
+    
     embeddings_list = []
     
     for i in range(0, len(texts), batch_size):
