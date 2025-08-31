@@ -354,20 +354,25 @@ def render_checklist_results(
     # Add relevancy threshold controls
     col1, col2, col3 = st.columns([1, 1, 2])
     with col1:
+        # Use config defaults if no values provided
+        from src.config import get_config
+        config = get_config()
+        default_relevancy = relevancy_threshold if relevancy_threshold is not None else config.processing.relevancy_threshold
         relevancy_threshold = st.slider(
             "Relevancy Threshold",
             min_value=0.2,
             max_value=0.8,
-            value=relevancy_threshold,
+            value=default_relevancy,
             step=0.05,
             help="Documents below this threshold won't be shown"
         )
     with col2:
+        default_primary = primary_threshold if primary_threshold is not None else config.processing.primary_threshold
         primary_threshold = st.slider(
             "Primary Document Threshold",
             min_value=0.3,
             max_value=0.9,
-            value=primary_threshold,
+            value=default_primary,
             step=0.05,
             help="Documents above this are marked as PRIMARY"
         )
