@@ -10,23 +10,32 @@ import streamlit as st
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any
 
-import base64
-
 from .config import get_config, get_mime_type, format_document_title, count_documents_in_directory
 from .document_processing import escape_markdown_math
 
 
-def create_document_link(file_path: str, doc_name: str, doc_title: str) -> str:
+# Simple counter for generating unique keys
+def _get_next_key_counter(key_type: str) -> str:
+    """Get next incremental counter for UI component keys."""
+    if 'ui_key_counters' not in st.session_state:
+        st.session_state.ui_key_counters = {}
+    
+    if key_type not in st.session_state.ui_key_counters:
+        st.session_state.ui_key_counters[key_type] = 0
+    
+    st.session_state.ui_key_counters[key_type] += 1
+    return f"{key_type}_{st.session_state.ui_key_counters[key_type]}"
+
+
+def create_document_link(file_path: str, doc_name: str, doc_title: str, unique_key: str = None) -> None:
     """
-    Create a clickable link for a document that works with Streamlit Cloud
+    Create a clickable filename that acts as a download button (reusable component)
     
     Args:
         file_path: Path to the document file
         doc_name: Original document name
-        doc_title: Display title for the document
-        
-    Returns:
-        HTML string with clickable link
+        doc_title: Display title for the document (used as fallback)
+        unique_key: Unique key for the download button (required to avoid conflicts)
     """
     try:
         path_obj = Path(file_path)
@@ -34,11 +43,11 @@ def create_document_link(file_path: str, doc_name: str, doc_title: str) -> str:
             path_obj = Path("data") / file_path
         
         if path_obj.exists():
-            # Read file and create data URL for download
+            # Read file for download button
             with open(path_obj, 'rb') as f:
                 file_bytes = f.read()
             
-            # Create base64 encoded data URL
+            # Get MIME type for proper download handling
             file_extension = path_obj.suffix.lower()
             if file_extension == '.pdf':
                 mime_type = 'application/pdf'
@@ -51,19 +60,32 @@ def create_document_link(file_path: str, doc_name: str, doc_title: str) -> str:
             else:
                 mime_type = 'application/octet-stream'
             
-            b64_data = base64.b64encode(file_bytes).decode()
-            data_url = f"data:{mime_type};base64,{b64_data}"
+            # Extract just the filename without path
+            display_name = Path(doc_name).name if doc_name else path_obj.name
             
-            # Create HTML link that opens in new tab
-            link_html = f'<a href="{data_url}" target="_blank" download="{doc_name}" style="text-decoration: none; color: inherit;">📄 {doc_title} 🔗</a>'
-            return link_html
+            # Create download button that looks like a filename
+            if unique_key is None:
+                # Generate simple unique key
+                unique_key = _get_next_key_counter("doc")
+            
+            st.download_button(
+                label=f"📄 {display_name}",
+                data=file_bytes,
+                file_name=doc_name,
+                mime=mime_type,
+                key=unique_key,
+                help=f"Click to download {display_name}",
+                use_container_width=False
+            )
         else:
-            # File doesn't exist, return plain text
-            return f"📄 {doc_title}"
+            # File doesn't exist, show as plain text
+            display_name = Path(doc_name).name if doc_name else doc_title
+            st.text(f"📄 {display_name}")
             
-    except Exception:
+    except Exception as e:
         # Fallback to plain text if anything goes wrong
-        return f"📄 {doc_title}"
+        display_name = Path(doc_name).name if doc_name else doc_title
+        st.text(f"📄 {display_name}")
 
 
 def render_project_selector() -> Tuple[Optional[str], Optional[str]]:
@@ -73,7 +95,7 @@ def render_project_selector() -> Tuple[Optional[str], Optional[str]]:
     Returns:
         Tuple of (selected_project_path, selected_data_room_path)
     """
-    st.subheader("🎯 Select Project")
+    st.subheader("🗂️ Select Project")
     
     # Scan for available projects
     projects = []
@@ -255,7 +277,7 @@ def render_ai_settings() -> Tuple[bool, Optional[str], str]:
     return use_ai_features, api_key, model_choice
 
 
-def render_file_selector(directory: str, file_type: str, key_suffix: str) -> Tuple[Optional[str], str]:
+def render_file_selector(directory: str, file_type: str, key_suffix: str, icon: str = "📋") -> Tuple[Optional[str], str]:
     """
     Render file selector for checklists, questions, or strategies
     
@@ -263,6 +285,7 @@ def render_file_selector(directory: str, file_type: str, key_suffix: str) -> Tup
         directory: Directory to scan for files
         file_type: Type of file (for display)
         key_suffix: Unique suffix for streamlit keys
+        icon: Icon to display with the selector (default: 📋)
         
     Returns:
         Tuple of (selected_file_path, file_content)
@@ -286,7 +309,7 @@ def render_file_selector(directory: str, file_type: str, key_suffix: str) -> Tup
         files.sort(key=lambda x: x['name'])
         file_names = [f['name'] for f in files]
         selected_file_idx = st.selectbox(
-            f"📋 Select {file_type}:",
+            f"{icon} Select {file_type}:",
             range(len(file_names)),
             format_func=lambda x: file_names[x],
             help=f"Found {len(files)} {file_type.lower()}s",
@@ -493,56 +516,19 @@ def render_document_match(match: Dict, item_idx: int, primary_threshold: float) 
             st.markdown("🔸 ANCILLARY")
     
     with col2:
-        # Document title as clickable link
+        # Document title as clickable filename
         full_path = match.get('full_path', match.get('path', ''))
         if full_path:
-            link_html = create_document_link(full_path, doc_name, doc_title)
-            st.markdown(link_html, unsafe_allow_html=True)
+            # Create simple unique key for this search result
+            unique_key = _get_next_key_counter("search")
+            create_document_link(full_path, doc_name, doc_title, unique_key)
         else:
             st.write(f"📄 {doc_title}")
     
     with col3:
-        # Download button
-
-        render_download_button(match, item_idx, doc_name, doc_title)
-
-
-def render_download_button(match: Dict, item_idx: int, doc_name: str, doc_title: str) -> None:
-    """
-    Render download button for a document
-    
-    Args:
-        match: Document match data
-        item_idx: Item index for unique keys
-        doc_name: Document name
-        doc_title: Document title for display
-    """
-    full_path = match.get('full_path', match.get('path', ''))
-    if full_path:
-        try:
-            file_path = Path(full_path)
-            if not file_path.is_absolute():
-                file_path = Path("data") / file_path
-            
-            if file_path.exists():
-                with open(file_path, 'rb') as f:
-                    file_bytes = f.read()
-                
-                # Determine MIME type based on file extension
-                mime_type = get_mime_type(file_path)
-                
-                button_key = f"dl_{item_idx}_{match['score']:.0f}_{doc_name[:20]}".replace(" ", "_").replace("/", "_").replace(".", "_")
-                
-                st.download_button(
-                    label="📥",
-                    data=file_bytes,
-                    file_name=doc_name,
-                    mime=mime_type,
-                    key=button_key,
-                    help=f"Download {doc_title}"
-                )
-        except Exception as e:
-            st.error(f"Download failed: {str(e)}")
+        # Score display or other info
+        score = match.get('score', 0)
+        st.caption(f"Score: {score:.3f}")
 
 
 def render_question_results(question_answers: Dict) -> None:
@@ -634,42 +620,18 @@ def render_question_source(chunk: Dict, chunk_idx: int, question: str) -> None:
         doc_name = chunk['source']
         doc_title = format_document_title(doc_name)
         
-        # Document title as clickable link
+        # Document title as clickable filename
         doc_path = chunk.get('path', '')
         if doc_path:
-            link_html = create_document_link(doc_path, doc_name, doc_title)
-            st.markdown(link_html, unsafe_allow_html=True)
+            # Create simple unique key for this QA result
+            unique_key = _get_next_key_counter("qa")
+            create_document_link(doc_path, doc_name, doc_title, unique_key)
         else:
             st.write(f"📄 {doc_title}")
     
     with col3:
-        # Add download button for the source document
-        doc_path = chunk.get('path', '')
-        if doc_path:
-            try:
-                file_path = Path(doc_path)
-                if not file_path.is_absolute():
-                    file_path = Path("data") / file_path
-                
-                if file_path.exists():
-                    with open(file_path, 'rb') as f:
-                        file_bytes = f.read()
-                    
-                    # Determine MIME type based on file extension
-                    mime_type = get_mime_type(file_path)
-                    
-                    button_key = f"qa_dl_{question[:20]}_{chunk_idx}".replace(" ", "_").replace("?", "").replace("/", "_")
-                    
-                    st.download_button(
-                        label="📥",
-                        data=file_bytes,
-                        file_name=chunk['source'],
-                        mime=mime_type,
-                        key=button_key,
-                        help=f"Download {chunk['source']}"
-                    )
-            except Exception as e:
-                st.error(f"Download failed: {str(e)}")
+        # Show chunk information
+        st.caption(f"Chunk {chunk_idx + 1}")
 
 
 def render_ai_answer_button(answer_data: Dict, chunks: List[Dict]) -> None:
@@ -683,19 +645,37 @@ def render_ai_answer_button(answer_data: Dict, chunks: List[Dict]) -> None:
     # Use AI to generate comprehensive answer if agent is available
     if hasattr(st.session_state, 'agent') and st.session_state.agent and hasattr(st.session_state.agent, 'llm'):
         with st.container():
-            if st.button(f"🤖 Generate AI Answer", key=f"ai_answer_{answer_data['question'][:50]}"):
+            # Create simple unique key for AI answer button
+            ai_key = _get_next_key_counter("ai_answer")
+            if st.button(f"🤖 Generate AI Answer", key=ai_key):
                 with st.spinner("AI generating comprehensive answer..."):
-                    # Combine chunk texts for context
-                    context = "\n\n".join([f"From {c['source']}: {c['text']}" for c in chunks[:3]])
-                    # Use LLM directly for more reliable answers
-                    from langchain_core.messages import HumanMessage
-
-                    
-                    prompt = f"Question: {answer_data['question']}\n\nContext from documents:\n{context}\n\nProvide a comprehensive answer based on the context."
-                    response = st.session_state.agent.llm.invoke([HumanMessage(content=prompt)])
-                    # Clean up any leading whitespace and escape math characters
-                    cleaned_response = escape_markdown_math(response.content.strip())
-                    st.info(cleaned_response)
+                    try:
+                        # Import the service function
+                        from .services import generate_ai_answer
+                        import asyncio
+                        
+                        # Run the async service function
+                        loop = asyncio.new_event_loop()
+                        asyncio.set_event_loop(loop)
+                        result = loop.run_until_complete(
+                            generate_ai_answer(
+                                answer_data['question'], 
+                                chunks, 
+                                st.session_state.agent.llm
+                            )
+                        )
+                        loop.close()
+                        
+                        # Handle response
+                        if 'answer' in result:
+                            st.info(result['answer'])
+                        elif 'error' in result:
+                            st.error(result['error'])
+                        else:
+                            st.error("Unexpected response from AI service")
+                            
+                    except Exception as e:
+                        st.error(f"Failed to generate AI answer: {str(e)}")
 
 
 def render_quick_questions() -> Optional[str]:

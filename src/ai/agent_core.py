@@ -17,10 +17,13 @@ from typing import Optional, Dict, List, Any, Tuple, Sequence
 from typing_extensions import TypedDict
 from enum import Enum
 import streamlit as st
+import time
 from langchain_anthropic import ChatAnthropic
 from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage
 from langchain_core.tools import tool
 from langchain_core.output_parsers import PydanticOutputParser
+from langchain_core.runnables import RunnableLambda, RunnableWithFallbacks
+from langchain_core.runnables.config import RunnableConfig
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.documents import Document
@@ -41,6 +44,35 @@ from .prompts import (
 )
 
 logger = logging.getLogger(__name__)
+
+
+def with_retry(func, max_attempts=3, base_delay=1.0):
+    """
+    Wrapper function to add exponential backoff retry logic to any function.
+    
+    Args:
+        func: Function to wrap with retry logic
+        max_attempts: Maximum number of retry attempts (default: 3)
+        base_delay: Base delay in seconds for exponential backoff (default: 1.0)
+        
+    Returns:
+        Wrapped function with retry logic
+    """
+    def wrapper(*args, **kwargs):
+        for attempt in range(max_attempts):
+            try:
+                return func(*args, **kwargs)
+            except Exception as e:
+                if attempt == max_attempts - 1:  # Last attempt
+                    raise e
+                
+                # Exponential backoff with jitter
+                delay = base_delay * (2 ** attempt) + random.uniform(0, 1)
+                logger.warning(f"Attempt {attempt + 1} failed: {str(e)}. Retrying in {delay:.2f}s...")
+                time.sleep(delay)
+        
+        return func(*args, **kwargs)  # Should not reach here
+    return wrapper
 
 
 # =============================================================================
@@ -206,36 +238,107 @@ def route_condition(state: AgentState) -> str:
 # LLM UTILITIES - Merged from llm_utilities.py
 # =============================================================================
 
-def simple_retry(func, max_retries: int = 3, base_delay: float = 1.0):
-    """Simple exponential backoff retry with jitter"""
-    last_exception = None
-    for attempt in range(max_retries):
-        try:
-            return func()
-        except Exception as e:
-            last_exception = e
-            
-            # Check if it's a rate limit error that should be retried
-            error_str = str(e).lower()
-            if any(keyword in error_str for keyword in [
-                'rate', 'limit', 'quota', 'throttl', '429', 'too many',
-                'overload', '529', 'server_overloaded', 'overloaded_error'
-            ]):
-                if attempt < max_retries - 1:  # Don't wait on last attempt
-                    delay = base_delay * (2 ** attempt) + random.uniform(0, 1)
-                    time.sleep(min(delay, 60))  # Cap at 60 seconds
-                    continue
-            
-            # For non-retryable errors, raise immediately
-            raise e
+def create_batch_processor(llm: "ChatAnthropic", max_concurrency: int = None) -> RunnableLambda:
+    """
+    Create a batch processor using LangChain's retry and fallback mechanisms.
     
-    # If we get here, all retries failed
-    raise last_exception
+    Args:
+        llm: ChatAnthropic instance
+        max_concurrency: Maximum concurrent requests (uses config default if None)
+    
+    Returns:
+        RunnableLambda configured with retry and fallback mechanisms
+    """
+    config = get_config()
+    if max_concurrency is None:
+        max_concurrency = config.api.max_concurrent_requests
+    
+    def process_single_item(input_data):
+        """Process a single item with error handling"""
+        try:
+            messages, item_info = input_data
+            response = llm.invoke(messages)
+            return {
+                'success': True,
+                'response': response,
+                'item_info': item_info,
+                'error': None
+            }
+        except Exception as e:
+            # Return error info instead of raising to allow partial batch success
+            return {
+                'success': False, 
+                'response': None,
+                'item_info': item_info,
+                'error': str(e)
+            }
+    
+    def process_batch(batch_inputs):
+        """Process a batch of inputs with individual item error handling"""
+        try:
+            # Use LLM's batch method for efficiency
+            messages_batch = [input_data[0] for input_data in batch_inputs]
+            item_infos = [input_data[1] for input_data in batch_inputs]
+            
+            responses = llm.batch(
+                messages_batch,
+                config={"max_concurrency": max_concurrency}
+            )
+            
+            # Process results with individual error handling
+            results = []
+            for i, (response, item_info) in enumerate(zip(responses, item_infos)):
+                if response:
+                    results.append({
+                        'success': True,
+                        'response': response,
+                        'item_info': item_info,
+                        'error': None
+                    })
+                else:
+                    results.append({
+                        'success': False,
+                        'response': None,
+                        'item_info': item_info,
+                        'error': f'No response for item {i}'
+                    })
+            
+            return results
+            
+        except Exception as e:
+            # If batch fails completely, return error results for all items
+            logger.warning(f"Batch processing failed: {e}")
+            return [{
+                'success': False,
+                'response': None,
+                'item_info': item_info,
+                'error': str(e)
+            } for _, item_info in batch_inputs]
+    
+    # Create the main processor with retry logic
+    retryable_process_batch = with_retry(process_batch, max_attempts=3, base_delay=1.0)
+    processor = RunnableLambda(retryable_process_batch)
+    
+    # Add fallback for complete failures
+    fallback_processor = RunnableLambda(lambda batch_inputs: [
+        {
+            'success': False,
+            'response': None,
+            'item_info': item_info,
+            'error': 'All processing attempts failed'
+        } for _, item_info in batch_inputs
+    ])
+    
+    return RunnableWithFallbacks(
+        runnable=processor,
+        fallbacks=[fallback_processor]
+    )
 
 
 def generate_checklist_descriptions(checklist: Dict, llm: "ChatAnthropic", batch_size: Optional[int] = None) -> Dict:
     """
     Generate detailed descriptions for each checklist item explaining what documents should satisfy it.
+    Uses LangChain's built-in retry mechanisms and proper error handling for individual items.
     Returns checklist with added 'description' field for each item.
     
     Args:
@@ -250,6 +353,9 @@ def generate_checklist_descriptions(checklist: Dict, llm: "ChatAnthropic", batch
     config = get_config()
     if batch_size is None:
         batch_size = config.processing.description_batch_size
+    
+    # Create batch processor with retry and fallback mechanisms
+    batch_processor = create_batch_processor(llm, config.api.max_concurrent_requests)
     
     # Process all checklist items
     enhanced_checklist = {}
@@ -290,43 +396,46 @@ def generate_checklist_descriptions(checklist: Dict, llm: "ChatAnthropic", batch
                 text=f"📝 Generating descriptions batch {batch_num}/{total_batches} (items {i+1}-{batch_end} of {total_items})"
             )
         
-        # Create prompts for batch processing
-        prompts = [item_data['prompt'] for item_data in batch]
-        messages_batch = [[HumanMessage(content=prompt)] for prompt in prompts]
+        # Prepare batch inputs for the processor
+        batch_inputs = []
+        for item_data in batch:
+            messages = [HumanMessage(content=item_data['prompt'])]
+            batch_inputs.append((messages, item_data))
         
-        # Process batch with simple retry logic
+        # Process batch using LangChain's built-in mechanisms
         try:
-            responses = simple_retry(
-                lambda: llm.batch(
-                    messages_batch, 
-                    config={"max_concurrency": min(batch_size, config.api.max_concurrent_requests)}
-                ),
-                max_retries=3,
-                base_delay=0.5
-            )
+            batch_results = batch_processor.invoke(batch_inputs)
             
-            # Extract descriptions from responses
-            batch_descriptions = [response.content.strip() if response else f"Documents related to {item_data['item_text']}" 
-                                for response, item_data in zip(responses, batch)]
+            # Process results with individual item error handling
+            for result in batch_results:
+                item_data = result['item_info']
+                enhanced_item = item_data['original_item'].copy()
+                
+                if result['success'] and result['response']:
+                    # Successfully generated description
+                    enhanced_item['description'] = result['response'].content.strip()
+                else:
+                    # Use fallback description on error
+                    logger.warning(f"Failed to generate description for item '{item_data['item_text']}': {result.get('error', 'Unknown error')}")
+                    enhanced_item['description'] = f"Documents related to {item_data['item_text']}"
+                
+                enhanced_checklist[item_data['category_letter']]['items'].append(enhanced_item)
+                
         except Exception as e:
-            logger.warning(f"Batch {batch_num} description generation failed: {e}. Using fallback descriptions.")
-            batch_descriptions = [f"Documents related to {item_data['item_text']}" for item_data in batch]
-        
-        # Add descriptions to items
-        for item_data, description in zip(batch, batch_descriptions):
-            enhanced_item = item_data['original_item'].copy()
-            enhanced_item['description'] = description
-            enhanced_checklist[item_data['category_letter']]['items'].append(enhanced_item)
-        
-        # No delay between batches - using rate limiting with exponential backoff instead
+            logger.error(f"Batch {batch_num} processing completely failed: {e}. Using fallback descriptions.")
+            # Fallback: add all items with basic descriptions
+            for item_data in batch:
+                enhanced_item = item_data['original_item'].copy()
+                enhanced_item['description'] = f"Documents related to {item_data['item_text']}"
+                enhanced_checklist[item_data['category_letter']]['items'].append(enhanced_item)
     
     return enhanced_checklist
 
 
 def batch_summarize_documents(documents: List[Dict], llm: "ChatAnthropic", batch_size: Optional[int] = None) -> List[Dict]:
     """
-    Summarize documents using LangChain's built-in batch processing for true parallelization.
-    Optimized with larger batches, higher concurrency, and exponential backoff rate limiting.
+    Summarize documents using LangChain's built-in retry mechanisms and proper error handling.
+    Uses RunnableLambda for better batch processing control with individual item error handling.
     Returns documents with added 'summary' field.
     
     Args:
@@ -341,6 +450,9 @@ def batch_summarize_documents(documents: List[Dict], llm: "ChatAnthropic", batch
     config = get_config()
     if batch_size is None:
         batch_size = config.processing.batch_size
+    
+    # Create batch processor with retry and fallback mechanisms
+    batch_processor = create_batch_processor(llm, config.api.max_concurrent_requests)
     
     # Process documents in batches
     summarized_docs = []
@@ -359,37 +471,39 @@ def batch_summarize_documents(documents: List[Dict], llm: "ChatAnthropic", batch
                 text=f"📝 Processing batch {batch_num}/{total_batches} (docs {i+1}-{batch_end} of {total_docs})"
             )
         
-        # Create prompts for all documents in the batch
-        templates = [get_document_summarization_prompt(doc) for doc in batch]
-        prompts = [template.format() for template in templates]
+        # Prepare batch inputs for the processor
+        batch_inputs = []
+        for doc in batch:
+            template = get_document_summarization_prompt(doc)
+            prompt = template.format()
+            messages = [HumanMessage(content=prompt)]
+            batch_inputs.append((messages, doc))
         
-        # Convert prompts to HumanMessage format for batch processing
-        messages_batch = [[HumanMessage(content=prompt)] for prompt in prompts]
-        
-        # Process batch with simple retry logic
+        # Process batch using LangChain's built-in mechanisms
         try:
-            responses = simple_retry(
-                lambda: llm.batch(
-                    messages_batch, 
-                    config={"max_concurrency": min(batch_size // 2 or 1, config.api.max_concurrent_requests)}
-                ),
-                max_retries=3,
-                base_delay=0.5
-            )
+            batch_results = batch_processor.invoke(batch_inputs)
             
-            # Extract summaries from responses
-            batch_summaries = [response.content.strip() if response else f"Document: {doc.get('name', 'Unknown')}" 
-                              for response, doc in zip(responses, batch)]
+            # Process results with individual document error handling
+            for result in batch_results:
+                doc = result['item_info'].copy()
+                
+                if result['success'] and result['response']:
+                    # Successfully generated summary
+                    doc['summary'] = result['response'].content.strip()
+                else:
+                    # Use fallback summary on error
+                    logger.warning(f"Failed to generate summary for document '{doc.get('name', 'Unknown')}': {result.get('error', 'Unknown error')}")
+                    doc['summary'] = f"Document: {doc.get('name', 'Unknown')}"
+                
+                summarized_docs.append(doc)
+                
         except Exception as e:
-            logger.warning(f"Batch {batch_num} processing failed: {e}. Using fallback summaries.")
-            batch_summaries = [f"Document: {doc.get('name', 'Unknown')}" for doc in batch]
-        
-        # Add summaries to documents
-        for doc, summary in zip(batch, batch_summaries):
-            doc['summary'] = summary
-            summarized_docs.append(doc)
-        
-        # No delay between batches - using rate limiting with exponential backoff instead
+            logger.error(f"Batch {batch_num} processing completely failed: {e}. Using fallback summaries.")
+            # Fallback: add all documents with basic summaries
+            for doc in batch:
+                doc_copy = doc.copy()
+                doc_copy['summary'] = f"Document: {doc.get('name', 'Unknown')}"
+                summarized_docs.append(doc_copy)
     
     return summarized_docs
 

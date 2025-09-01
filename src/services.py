@@ -7,15 +7,7 @@ Simplified service layer with focused functions instead of over-abstracted class
 
 import re
 import logging
-import warnings
 from pathlib import Path
-
-# Suppress verbose LangChain warnings in services
-warnings.filterwarnings("ignore", category=UserWarning, module="langchain")
-warnings.filterwarnings("ignore", category=UserWarning, module="langchain_core")
-warnings.filterwarnings("ignore", category=UserWarning, module="langchain_community")
-warnings.filterwarnings("ignore", message=".*Relevance scores must be between.*")
-warnings.filterwarnings("ignore", message=".*No relevant docs were retrieved.*")
 from typing import Dict, List, Optional, Any
 import markdown
 
@@ -177,8 +169,8 @@ def create_vector_store(source_data, model_name: str) -> FAISS:
 
 def search_and_analyze(queries: List[Dict], vector_store: FAISS, llm=None, threshold: float = 0.7, search_type: str = 'items') -> Dict:
     """Unified search function for both checklist items and questions using LangChain RAG"""
-    from langchain.chains import RetrievalQA
-    from langchain.prompts import PromptTemplate
+    from langchain.chains.retrieval import create_retrieval_chain
+    from langchain.chains.combine_documents import create_stuff_documents_chain
     
     retriever = vector_store.as_retriever(
         search_type="similarity_score_threshold",
@@ -198,12 +190,9 @@ Question: {question}
             
 Answer:"""
         )
-        qa_chain = RetrievalQA.from_chain_type(
-            llm=llm,
-            chain_type="stuff",
-            retriever=retriever,
-            chain_type_kwargs={"prompt": prompt_template}
-        )
+        # Create the document chain and then the retrieval chain
+        document_chain = create_stuff_documents_chain(llm, prompt_template)
+        qa_chain = create_retrieval_chain(retriever, document_chain)
     
     if search_type == 'items':
         return _process_checklist_items(queries, retriever, qa_chain)
@@ -277,7 +266,8 @@ def _process_questions(questions: List[Dict], retriever, qa_chain=None) -> Dict:
             answer_text = "Retrieved relevant document chunks."
             if qa_chain:
                 try:
-                    answer_text = qa_chain.run(question['question'])
+                    result = qa_chain.invoke({"input": question['question']})
+                    answer_text = result.get("answer", "Retrieved relevant document chunks.")
                 except Exception as e:
                     logger.error(f"RAG chain failed: {e}")
                     answer_text = "Retrieved relevant document chunks."
@@ -486,5 +476,43 @@ def load_default_file(directory: Path, pattern: str) -> str:
     except Exception as e:
         logger.error(f"File loading failed: {e}")
         return ""
+
+
+async def generate_ai_answer(question: str, chunks: List[Dict], llm) -> Dict[str, str]:
+    """
+    Generate AI answer using LLM based on question and document chunks.
+    
+    Args:
+        question: The question to answer
+        chunks: List of document chunks for context
+        llm: The language model instance
+    
+    Returns:
+        Dictionary with 'answer' or 'error' key
+    """
+    try:
+        # Combine chunk texts for context
+        context = "\n\n".join([f"From {c['source']}: {c['text']}" for c in chunks[:3]])
+        
+        # Create comprehensive prompt
+        prompt = f"""Question: {question}
+
+Context from documents:
+{context}
+
+Provide a comprehensive answer based on the context."""
+
+        # Use LLM to generate response
+        response = llm.invoke([HumanMessage(content=prompt)])
+        
+        # Clean up any leading whitespace and escape math characters
+        from .document_processing import escape_markdown_math
+        cleaned_response = escape_markdown_math(response.content.strip())
+        
+        return {"answer": cleaned_response}
+        
+    except Exception as e:
+        logger.error(f"AI answer generation failed: {e}")
+        return {"error": f"Failed to generate AI answer: {str(e)}"}
 
 
