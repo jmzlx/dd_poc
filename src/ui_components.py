@@ -9,10 +9,11 @@ Separates UI logic from business logic for better maintainability.
 import streamlit as st
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any
-import numpy as np
+
 import base64
 
-from .config import get_config
+from .config import get_config, get_mime_type, format_document_title, count_documents_in_directory
+from .document_processing import escape_markdown_math
 
 
 def create_document_link(file_path: str, doc_name: str, doc_title: str) -> str:
@@ -89,8 +90,7 @@ def render_project_selector() -> Tuple[Optional[str], Optional[str]]:
                     subdirs = [d for d in project_dir.iterdir() if d.is_dir() and not d.name.startswith('.')]
                     if subdirs:
                         # Count total documents in all data rooms
-                        total_docs = sum(1 for f in project_dir.rglob('*') 
-                                       if f.is_file() and f.suffix.lower() in ['.pdf', '.docx', '.doc', '.txt', '.md'])
+                        total_docs = count_documents_in_directory(project_dir)
                         if total_docs > 0:
                             projects.append({
                                 'name': project_dir.name.replace('-', ' ').replace('_', ' ').title(),
@@ -106,8 +106,7 @@ def render_project_selector() -> Tuple[Optional[str], Optional[str]]:
                 subdirs = [d for d in project_dir.iterdir() if d.is_dir() and not d.name.startswith('.')]
                 if subdirs:
                     # Count total documents in all data rooms
-                    total_docs = sum(1 for f in project_dir.rglob('*') 
-                                   if f.is_file() and f.suffix.lower() in ['.pdf', '.docx', '.doc', '.txt', '.md'])
+                    total_docs = count_documents_in_directory(project_dir)
                     if total_docs > 0:
                         projects.append({
                             'name': project_dir.name.replace('-', ' ').replace('_', ' ').title(),
@@ -169,8 +168,7 @@ def render_data_room_selector(project_path: str) -> Optional[str]:
     for data_room_dir in project_path_obj.iterdir():
         if data_room_dir.is_dir() and not data_room_dir.name.startswith('.'):
             # Count documents for display
-            doc_count = sum(1 for f in data_room_dir.rglob('*') 
-                          if f.is_file() and f.suffix.lower() in ['.pdf', '.docx', '.doc', '.txt', '.md'])
+            doc_count = count_documents_in_directory(data_room_dir)
             if doc_count > 0:  # Only show directories with documents
                 data_rooms.append({
                     'name': data_room_dir.name.replace('-', ' ').replace('_', ' ').title(),
@@ -221,12 +219,11 @@ def render_ai_settings() -> Tuple[bool, Optional[str], str]:
     model_choice = config.model.claude_model
     
     if use_ai_features:
-        # Check if API key is in environment
-        import os
-        env_key = os.getenv('ANTHROPIC_API_KEY')
-        if env_key:
+        # Check if API key is available in config (which loads from .env)
+        config_api_key = config.anthropic_api_key
+        if config_api_key:
             st.success("✅ API key loaded from .env file")
-            api_key = env_key
+            api_key = config_api_key
         else:
             api_key = st.text_input(
                 "Anthropic API Key",
@@ -276,11 +273,11 @@ def render_file_selector(directory: str, file_type: str, key_suffix: str) -> Tup
     if dir_path.exists():
         for file in dir_path.glob("*.md"):
             if not file.name.startswith('.'):
-                files.append({
-                    'name': file.stem.replace('_', ' ').replace('-', ' ').title(),
-                    'path': str(file),
-                    'filename': file.name
-                })
+                                    files.append({
+                        'name': format_document_title(file.stem),
+                        'path': str(file),
+                        'filename': file.name
+                    })
     
     file_content = ""
     selected_file_path = None
@@ -483,10 +480,7 @@ def render_document_match(match: Dict, item_idx: int, primary_threshold: float) 
     """
     # Get document title (use name without extension)
     doc_name = match.get('name', match.get('path', 'Unknown'))
-    if '.' in doc_name:
-        doc_title = doc_name.rsplit('.', 1)[0].replace('_', ' ').replace('-', ' ').title()
-    else:
-        doc_title = doc_name.replace('_', ' ').replace('-', ' ').title()
+    doc_title = format_document_title(doc_name)
     
     # Compact display with columns
     col1, col2, col3 = st.columns([0.8, 3.5, 0.5])
@@ -535,17 +529,7 @@ def render_download_button(match: Dict, item_idx: int, doc_name: str, doc_title:
                     file_bytes = f.read()
                 
                 # Determine MIME type based on file extension
-                file_extension = file_path.suffix.lower()
-                if file_extension == '.pdf':
-                    mime_type = 'application/pdf'
-                elif file_extension in ['.doc', '.docx']:
-                    mime_type = 'application/msword'
-                elif file_extension == '.txt':
-                    mime_type = 'text/plain'
-                elif file_extension == '.md':
-                    mime_type = 'text/markdown'
-                else:
-                    mime_type = 'application/octet-stream'
+                mime_type = get_mime_type(file_path)
                 
                 button_key = f"dl_{item_idx}_{match['score']:.0f}_{doc_name[:20]}".replace(" ", "_").replace("/", "_").replace(".", "_")
                 
@@ -648,10 +632,7 @@ def render_question_source(chunk: Dict, chunk_idx: int, question: str) -> None:
     with col2:
         # Get clean document title
         doc_name = chunk['source']
-        if '.' in doc_name:
-            doc_title = doc_name.rsplit('.', 1)[0].replace('_', ' ').replace('-', ' ').title()
-        else:
-            doc_title = doc_name.replace('_', ' ').replace('-', ' ').title()
+        doc_title = format_document_title(doc_name)
         
         # Document title as clickable link
         doc_path = chunk.get('path', '')
@@ -675,17 +656,7 @@ def render_question_source(chunk: Dict, chunk_idx: int, question: str) -> None:
                         file_bytes = f.read()
                     
                     # Determine MIME type based on file extension
-                    file_extension = file_path.suffix.lower()
-                    if file_extension == '.pdf':
-                        mime_type = 'application/pdf'
-                    elif file_extension in ['.doc', '.docx']:
-                        mime_type = 'application/msword'
-                    elif file_extension == '.txt':
-                        mime_type = 'text/plain'
-                    elif file_extension == '.md':
-                        mime_type = 'text/markdown'
-                    else:
-                        mime_type = 'application/octet-stream'
+                    mime_type = get_mime_type(file_path)
                     
                     button_key = f"qa_dl_{question[:20]}_{chunk_idx}".replace(" ", "_").replace("?", "").replace("/", "_")
                     
@@ -718,7 +689,7 @@ def render_ai_answer_button(answer_data: Dict, chunks: List[Dict]) -> None:
                     context = "\n\n".join([f"From {c['source']}: {c['text']}" for c in chunks[:3]])
                     # Use LLM directly for more reliable answers
                     from langchain_core.messages import HumanMessage
-                    from src.document_processing import escape_markdown_math
+
                     
                     prompt = f"Question: {answer_data['question']}\n\nContext from documents:\n{context}\n\nProvide a comprehensive answer based on the context."
                     response = st.session_state.agent.llm.invoke([HumanMessage(content=prompt)])

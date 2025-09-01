@@ -2,22 +2,24 @@
 streamlit==1.49.1
 sentence-transformers==5.1.0
 numpy==2.3.2
-pandas==2.3.2
-watchdog==6.0.0
 
 # Document processing - pinned for deployment  
 PyMuPDF==1.23.18
 python-docx==1.2.0
-joblib==1.5.2
 
 # Environment and configuration - pinned for deployment
 python-dotenv==1.1.1
+pydantic-settings==2.8.1
+markdown==3.9
 
 # Vector store - pinned for deployment
 faiss-cpu==1.12.0
 
-# AI Enhancement - pinned for deployment
+# AI Enhancement - LangChain packages pinned for deployment
 langchain-anthropic==0.3.19
 langgraph==0.6.6
 langchain-core==0.3.75
 langchain-text-splitters==0.3.10
+langchain-community==0.3.29
+langchain-huggingface==0.3.1
+

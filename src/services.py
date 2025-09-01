@@ -2,408 +2,346 @@
 """
 Business Logic Services Module
 
-This module contains the core business logic services for the DD-Checklist application.
-Services handle specific domain operations and coordinate between different components.
+Simplified service layer with focused functions instead of over-abstracted classes.
 """
 
 import re
-import json
+import logging
+import warnings
 from pathlib import Path
-from typing import Dict, List, Optional, Any, Tuple
-import numpy as np
-from sentence_transformers import SentenceTransformer
-import faiss
+
+# Suppress verbose LangChain warnings in services
+warnings.filterwarnings("ignore", category=UserWarning, module="langchain")
+warnings.filterwarnings("ignore", category=UserWarning, module="langchain_core")
+warnings.filterwarnings("ignore", category=UserWarning, module="langchain_community")
+warnings.filterwarnings("ignore", message=".*Relevance scores must be between.*")
+warnings.filterwarnings("ignore", message=".*No relevant docs were retrieved.*")
+from typing import Dict, List, Optional, Any
+import markdown
+
+
+
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import PromptTemplate
+from langchain_community.vectorstores import FAISS
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_core.documents import Document
+from langchain_core.messages import HumanMessage
 
 from .config import get_config
-from src.document_processing import DocumentProcessor, escape_markdown_math
+from .document_processing import DocumentProcessor, escape_markdown_math
 
 
-class ChecklistParser:
-    """Service for parsing due diligence checklists"""
-    
-    @staticmethod
-    def parse_checklist(checklist_text: str) -> Dict:
-        """
-        Parse markdown checklist into categories and items
-        
-        Args:
-            checklist_text: Raw checklist text in markdown format
-            
-        Returns:
-            Dictionary with parsed categories and items
-        """
-        categories = {}
-        current_category = None
-        
-        for line in checklist_text.split('\n'):
-            # Category header (e.g., "A. Corporate Organization" or "## A. Corporate Organization")
-            # Try both formats
-            match = None
-            if line.startswith('## '):
-                match = re.match(r'## ([A-Z])\. (.+)', line)
-            elif line.strip() and not line.startswith('\t') and not line.startswith(' '):
-                # Try plain format (no ##)
-                match = re.match(r'^([A-Z])\. (.+)', line.strip())
-            
-            if match:
-                letter, name = match.groups()
-                current_category = letter
-                categories[letter] = {
-                    'name': name.strip(),
-                    'items': []
-                }
-            # Numbered items (may be indented with tabs or spaces)
-            elif current_category:
-                # Check for numbered items with various indentation
-                line_stripped = line.strip()
-                if re.match(r'^\d+\.', line_stripped):
-                    item_text = re.sub(r'^\d+\.\s*', '', line_stripped)
-                    if item_text:
-                        # Clean up [bracketed] content but keep the text
-                        clean_text = re.sub(r'\[.*?\]', '', item_text).strip()
-                        if not clean_text:
-                            clean_text = item_text
-                        categories[current_category]['items'].append({
-                            'text': clean_text,
-                            'original': item_text
-                        })
-        
-        return categories
+logger = logging.getLogger(__name__)
 
 
-class QuestionParser:
-    """Service for parsing due diligence questions"""
-    
-    @staticmethod
-    def parse_questions(questions_text: str) -> List[Dict]:
-        """
-        Parse markdown questions into a list of questions with categories
-        
-        Args:
-            questions_text: Raw questions text in markdown format
-            
-        Returns:
-            List of parsed questions with categories
-        """
-        questions = []
-        current_category = None
-        
-        for line in questions_text.split('\n'):
-            # Category header (e.g., "### A. Organizational and Corporate Documents")
-            if line.startswith('### '):
-                match = re.match(r'### ([A-Z])\. (.+)', line)
-                if match:
-                    letter, name = match.groups()
-                    current_category = f"{letter}. {name.strip()}"
-            # Question lines (numbered items)
-            elif current_category and line.strip():
-                match = re.match(r'^\d+\.\s+(.+)', line.strip())
-                if match:
-                    question_text = match.group(1).strip()
-                    if question_text:
-                        questions.append({
-                            'category': current_category,
-                            'question': question_text,
-                            'id': f"q_{len(questions)}"
-                        })
-        
-        return questions
+# =============================================================================
+# PARSING FUNCTIONS - Simplified from ChecklistParser and QuestionParser classes
+# =============================================================================
 
+def parse_checklist(checklist_text: str) -> Dict:
+    """Parse markdown checklist into categories and items using standard markdown parser"""
+    categories = {}
+    current_category = None
 
-class ChecklistMatcher:
-    """Service for matching checklists to documents"""
-    
-    def __init__(self, model: SentenceTransformer):
-        """
-        Initialize the matcher
-        
-        Args:
-            model: SentenceTransformer model for embeddings
-        """
-        self.model = model
-    
-    def match_checklist_to_documents(
-        self, 
-        checklist: Dict, 
-        chunks: List[Dict], 
-        embeddings: np.ndarray, 
-        threshold: Optional[float] = None
-    ) -> Dict:
-        """
-        Match each checklist item to relevant documents using FAISS for 10x faster similarity search
-        
-        Args:
-            checklist: Parsed checklist
-            chunks: Document chunks
-            embeddings: Precomputed embeddings
-            threshold: Similarity threshold (uses config default if None)
-            
-        Returns:
-            Matching results
-        """
-        config = get_config()
-        if threshold is None:
-            threshold = config.processing.similarity_threshold
-        
-        # Build FAISS index for fast similarity search
-        embeddings_f32 = embeddings.astype('float32')
-        faiss.normalize_L2(embeddings_f32)  # Normalize for cosine similarity
-        dimension = embeddings_f32.shape[1]
-        faiss_index = faiss.IndexFlatIP(dimension)
-        faiss_index.add(embeddings_f32)
-        
-        results = {}
-        
-        for cat_letter, category in checklist.items():
-            cat_results = {
-                'name': category['name'],
-                'items': [],
-                'total_items': len(category['items']),
-                'matched_items': 0
-            }
-            
-            for item_idx, item in enumerate(category['items']):
-                # Encode checklist item with category context
-                item_text = f"{category['name']} {item['text']}"
-                item_embedding = self.model.encode(item_text).astype('float32').reshape(1, -1)
-                faiss.normalize_L2(item_embedding)
-                
-                # Use FAISS for fast similarity search
-                scores, indices = faiss_index.search(item_embedding, len(chunks))
-                
-                # Get unique documents that match
-                doc_matches = {}
-                for score, idx in zip(scores[0], indices[0]):
-                    if idx == -1 or score < threshold:
-                        continue
-                    
-                    doc_path = chunks[idx]['path']
-                    if doc_path not in doc_matches or score > doc_matches[doc_path]['score']:
-                        doc_matches[doc_path] = {
-                            'name': chunks[idx]['source'],
-                            'path': doc_path,
-                            'full_path': chunks[idx].get('full_path', doc_path),
-                            'score': float(score),
-                            'metadata': chunks[idx]['metadata']
-                        }
-                
-                # Sort by score
-                sorted_matches = sorted(doc_matches.values(), key=lambda x: x['score'], reverse=True)
-                
-                item_result = {
-                    'text': item['text'],
-                    'original': item['original'],
-                    'matches': sorted_matches
-                }
-                
-                if sorted_matches:
-                    cat_results['matched_items'] += 1
-                
-                cat_results['items'].append(item_result)
-            
-            results[cat_letter] = cat_results
-        
-        return results
-    
-    def match_checklist_with_summaries(
-        self,
-        checklist: Dict, 
-        doc_embeddings_data: Dict,
-        threshold: Optional[float] = None
-    ) -> Dict:
-        """
-        Match checklist items against document summaries using FAISS for 10x faster similarity search
-        
-        Args:
-            checklist: Parsed checklist
-            doc_embeddings_data: Document embeddings with summaries
-            threshold: Similarity threshold
-            
-        Returns:
-            Matching results using AI summaries
-        """
-        doc_embeddings = np.array(doc_embeddings_data['embeddings'], dtype='float32')
-        doc_info = doc_embeddings_data['documents']
-        
-        # Build FAISS index for fast similarity search
-        faiss.normalize_L2(doc_embeddings)  # Normalize for cosine similarity
-        dimension = doc_embeddings.shape[1]
-        faiss_index = faiss.IndexFlatIP(dimension)
-        faiss_index.add(doc_embeddings)
-        
-        results = {}
-        
-        for cat_letter, category in checklist.items():
-            cat_name = category.get('name', '')
-            cat_results = {
-                'name': cat_name,
-                'letter': cat_letter,
-                'total_items': len(category.get('items', [])),
-                'matched_items': 0,
+    # Parse line by line for reliable extraction
+    lines = checklist_text.split('\n')
+    for line_num, original_line in enumerate(lines):
+        line = original_line.strip()
+
+        # Skip empty lines and separator lines
+        if not line or line.startswith('⸻') or line.startswith('---'):
+            continue
+
+        # Skip title lines
+        if 'due diligence checklist' in line.lower() or line.startswith('#'):
+            continue
+
+        # Category headers - look for pattern "A. Category Name"
+        category_match = re.match(r'^([A-Z])\.\s+(.+)', line)
+        if category_match and not re.match(r'^\d+\.\s+', line):
+            letter, name = category_match.groups()
+            current_category = letter
+            categories[letter] = {
+                'name': name.strip(),
                 'items': []
             }
-            
-            for item in category.get('items', []):
-                item_text = item.get('text', '')
-                
-                # Create embedding for checklist item with category context
-                checklist_embedding_text = f"{cat_name}: {item_text}"
-                item_embedding = self.model.encode(checklist_embedding_text).astype('float32').reshape(1, -1)
-                faiss.normalize_L2(item_embedding)
-                
-                # Use FAISS for fast similarity search
-                scores, indices = faiss_index.search(item_embedding, len(doc_info))
-                
-                # Find matching documents above threshold
-                matches = []
-                for score, idx in zip(scores[0], indices[0]):
-                    if idx == -1:  # No more results
-                        break
-                    if score > threshold:
-                        matches.append({
-                            'name': doc_info[idx]['name'],
-                            'path': doc_info[idx]['path'],
-                            'summary': doc_info[idx]['summary'],
-                            'score': float(score),
-                            'metadata': doc_info[idx].get('original_doc', {}).get('metadata', {})
-                        })
-                    else:
-                        break  # Scores are sorted, so we can stop here
-                
-                # Keep top 5 matches (already sorted by FAISS)
-                matches = matches[:5]
-                
-                item_result = {
-                    'text': item_text,
-                    'original': item.get('original', item_text),
-                    'matches': matches
-                }
-                
-                if matches:
-                    cat_results['matched_items'] += 1
-                
-                cat_results['items'].append(item_result)
-            
-            results[cat_letter] = cat_results
-        
-        return results
+            continue
 
+        # Numbered items within categories - look for indented items
+        if current_category and line:
+            # Check if original line was indented (starts with tab or multiple spaces)
+            is_indented = original_line.startswith(('\t', '  ', '    '))
+            item_match = re.match(r'^\d+\.\s+(.+)', line)
 
-class QuestionAnswerer:
-    """Service for answering questions using document chunks"""
-    
-    def __init__(self, model: SentenceTransformer):
-        """
-        Initialize the question answerer
-        
-        Args:
-            model: SentenceTransformer model for embeddings
-        """
-        self.model = model
-    
-    def answer_questions_with_chunks(
-        self, 
-        questions: List[Dict], 
-        chunks: List[Dict], 
-        embeddings: np.ndarray,
-        threshold: Optional[float] = None
-    ) -> Dict:
-        """
-        Answer questions using document chunks with FAISS for 10x faster similarity search
-        
-        Args:
-            questions: List of parsed questions
-            chunks: Document chunks
-            embeddings: Precomputed embeddings
-            threshold: Similarity threshold (uses config default if None)
-            
-        Returns:
-            Dictionary of answers with citations
-        """
-        config = get_config()
-        if threshold is None:
-            threshold = config.processing.relevancy_threshold
-        
-        # Build FAISS index for fast similarity search
-        embeddings_f32 = embeddings.astype('float32')
-        faiss.normalize_L2(embeddings_f32)  # Normalize for cosine similarity
-        dimension = embeddings_f32.shape[1]
-        faiss_index = faiss.IndexFlatIP(dimension)
-        faiss_index.add(embeddings_f32)
-        
-        answers = {}
-        
-        for question in questions:
-            # Encode question
-            question_embedding = self.model.encode(question['question']).astype('float32').reshape(1, -1)
-            faiss.normalize_L2(question_embedding)
-            
-            # Use FAISS for fast similarity search
-            scores, indices = faiss_index.search(question_embedding, min(10, len(chunks)))  # Get top 10 candidates
-            
-            # Get top matching chunks above threshold
-            relevant_chunks = []
-            
-            for score, idx in zip(scores[0], indices[0]):
-                if idx == -1 or score < threshold:
-                    continue
+            if item_match and (is_indented or current_category):
+                item_text = item_match.group(1).strip()
+                if item_text and not item_text.lower().startswith('[other requests'):
+                    # Clean up markdown formatting but preserve content
+                    clean_text = re.sub(r'\[.*?\]', '', item_text).strip()
+                    if not clean_text:
+                        clean_text = item_text
                     
-                chunk_info = chunks[idx]
-                relevant_chunks.append({
-                    'text': chunk_info['text'][:500],  # Limit text length
-                    'source': chunk_info['source'],
-                    'path': chunk_info['path'],
-                    'score': float(score),
-                    'metadata': chunk_info.get('metadata', {})
-                })
-                
-                # Limit to top 5 chunks
-                if len(relevant_chunks) >= 5:
-                    break
+                    categories[current_category]['items'].append({
+                        'text': clean_text,
+                        'original': item_text
+                    })
+    
+    return categories
+
+
+def parse_questions(questions_text: str) -> List[Dict]:
+    """Parse markdown questions into a list using standard markdown parser"""
+    # Convert markdown to understand structure
+    md = markdown.Markdown(extensions=['toc'])
+    html = md.convert(questions_text)
+    
+    questions = []
+    current_category = None
+    
+    # Parse line by line for reliable extraction
+    lines = questions_text.split('\n')
+    for line in lines:
+        line = line.strip()
+        
+        # Category headers (### format)
+        if line.startswith('### '):
+            match = re.match(r'###\s+([A-Z])\.\s+(.+)', line)
+            if match:
+                letter, name = match.groups()
+                current_category = f"{letter}. {name.strip()}"
+        
+        # Question items (numbered lists)
+        elif current_category and line:
+            match = re.match(r'^\d+\.\s+(.+)', line)
+            if match:
+                question_text = match.group(1).strip()
+                if question_text:
+                    # Clean markdown formatting
+                    clean_question = re.sub(r'\*\*(.*?)\*\*', r'\1', question_text)  # Remove bold
+                    clean_question = re.sub(r'\*(.*?)\*', r'\1', clean_question)      # Remove italics
+                    
+                    questions.append({
+                        'category': current_category,
+                        'question': clean_question,
+                        'id': f"q_{len(questions)}"
+                    })
+    
+    return questions
+
+
+# =============================================================================
+# SEARCH FUNCTIONS - Consolidated from ChecklistMatcher and QuestionAnswerer
+# =============================================================================
+
+def create_vector_store(source_data, model_name: str) -> FAISS:
+    """Unified vector store creation from various data sources"""
+    embeddings = HuggingFaceEmbeddings(model_name=model_name)
+    
+    # Handle different input types
+    if isinstance(source_data, list):
+        if all(isinstance(item, Document) for item in source_data):
+            # Already LangChain documents
+            return FAISS.from_documents(source_data, embeddings)
+        elif all(isinstance(item, dict) for item in source_data):
+            # Document chunks
+            documents = [
+                Document(
+                    page_content=chunk['text'], 
+                    metadata={
+                        'source': chunk.get('source', ''),
+                        'path': chunk.get('path', ''),
+                        'full_path': chunk.get('full_path', ''),
+                        **chunk.get('metadata', {})
+                    }
+                ) for chunk in source_data
+            ]
+            return FAISS.from_documents(documents, embeddings)
+    elif isinstance(source_data, dict) and 'documents' in source_data:
+        # Document embeddings data with summaries
+        documents = [
+            Document(
+                page_content=f"{doc['name']}\n{doc['path']}\n{doc['summary']}",
+                metadata={
+                    'name': doc['name'],
+                    'path': doc['path'],
+                    'summary': doc['summary'],
+                    **doc.get('original_doc', {}).get('metadata', {})
+                }
+            ) for doc in source_data['documents']
+        ]
+        return FAISS.from_documents(documents, embeddings)
+    
+    raise ValueError("Unsupported data type for vector store creation")
+
+
+def search_and_analyze(queries: List[Dict], vector_store: FAISS, llm=None, threshold: float = 0.7, search_type: str = 'items') -> Dict:
+    """Unified search function for both checklist items and questions using LangChain RAG"""
+    from langchain.chains import RetrievalQA
+    from langchain.prompts import PromptTemplate
+    
+    retriever = vector_store.as_retriever(
+        search_type="similarity_score_threshold",
+        search_kwargs={"score_threshold": threshold, "k": 5 if search_type == 'questions' else 10}
+    )
+    
+    # Create RAG chain if LLM is provided
+    qa_chain = None
+    if llm:
+        prompt_template = PromptTemplate(
+            input_variables=["context", "question"],
+            template="""Use the provided context to answer the question. Be concise and factual.
+            
+Context: {context}
+            
+Question: {question}
+            
+Answer:"""
+        )
+        qa_chain = RetrievalQA.from_chain_type(
+            llm=llm,
+            chain_type="stuff",
+            retriever=retriever,
+            chain_type_kwargs={"prompt": prompt_template}
+        )
+    
+    if search_type == 'items':
+        return _process_checklist_items(queries, retriever, qa_chain)
+    else:
+        return _process_questions(queries, retriever, qa_chain)
+
+
+def _process_checklist_items(checklist: Dict, retriever, qa_chain=None) -> Dict:
+    """Process checklist items with unified search logic"""
+    results = {}
+    for cat_letter, category in checklist.items():
+        cat_results = {
+            'name': category['name'],
+            'items': [],
+            'total_items': len(category['items']),
+            'matched_items': 0
+        }
+        
+        for item in category['items']:
+            query = f"{category['name']}: {item['text']}"
+            try:
+                docs = retriever.invoke(query)
+            except Exception as e:
+                logger.error(f"Error in document matching: {e}")
+                docs = []
+            
+            matches = [{
+                'name': doc.metadata.get('source', ''),
+                'path': doc.metadata.get('path', ''),
+                'full_path': doc.metadata.get('full_path', ''),
+                'score': 0.8,  # LangChain similarity scores not directly accessible
+                'metadata': {k: v for k, v in doc.metadata.items() 
+                           if k not in ['source', 'path', 'full_path']}
+            } for doc in docs[:5]]
+            
+            if matches:
+                cat_results['matched_items'] += 1
+            
+            cat_results['items'].append({
+                'text': item['text'],
+                'original': item['original'],
+                'matches': matches
+            })
+        
+        results[cat_letter] = cat_results
+    
+    return results
+
+
+def _process_questions(questions: List[Dict], retriever, qa_chain=None) -> Dict:
+    """Process questions with unified search logic"""
+    answers = {}
+    for question in questions:
+        try:
+            docs = retriever.invoke(question['question'])
+        except Exception as e:
+            logger.error(f"Error in question answering: {e}")
+            docs = []
+        
+        if docs:
+            chunks_data = [{
+                'text': doc.page_content[:500],
+                'source': doc.metadata.get('source', ''),
+                'path': doc.metadata.get('path', ''),
+                'score': 0.8,
+                'metadata': {k: v for k, v in doc.metadata.items() 
+                           if k not in ['source', 'path']}
+            } for doc in docs]
+            
+            # Generate answer using RAG chain if available
+            answer_text = "Retrieved relevant document chunks."
+            if qa_chain:
+                try:
+                    answer_text = qa_chain.run(question['question'])
+                except Exception as e:
+                    logger.error(f"RAG chain failed: {e}")
+                    answer_text = "Retrieved relevant document chunks."
             
             answers[question['id']] = {
                 'question': question['question'],
                 'category': question['category'],
-                'chunks': relevant_chunks,
-                'has_answer': len(relevant_chunks) > 0
+                'answer': answer_text,
+                'chunks': chunks_data,
+                'has_answer': True
             }
-        
-        return answers
+        else:
+            answers[question['id']] = {
+                'question': question['question'],
+                'category': question['category'],
+                'answer': "No relevant documents found",
+                'chunks': [],
+                'has_answer': False
+            }
+    
+    return answers
 
 
-class ReportGenerator:
-    """Service for generating reports and summaries"""
+# =============================================================================
+# REPORT GENERATION FUNCTIONS - Simplified from ReportGenerator class
+# =============================================================================
+
+def generate_reports(documents: Dict[str, Dict], data_room_name: str = "Unknown", 
+                    strategy_text: str = "", checklist_results: Dict = None, 
+                    report_type: str = "overview", llm=None) -> str:
+    """Unified report generation using LangChain prompt templates"""
     
-    def __init__(self, agent=None):
-        """
-        Initialize the report generator
-        
-        Args:
-            agent: Optional AI agent for enhanced reporting
-        """
-        self.agent = agent
+    if not llm:
+        return _generate_basic_report(documents, data_room_name, checklist_results, report_type)
     
-    def generate_company_summary(self, documents: Dict[str, Dict], data_room_name: str = "Unknown") -> str:
-        """
-        Generate company overview summary
+    # Define prompt templates
+    if report_type == "overview":
+        template = PromptTemplate(
+            input_variables=["company_name", "document_summaries"],
+            template="""Based on the following document summaries from a due diligence data room, provide a comprehensive company overview.
+
+Company: {company_name}
+
+Document Summaries:
+{document_summaries}
+
+Please provide:
+1. Company name and industry
+2. Business model and key products/services  
+3. Market position and competitive advantages
+4. Key financials (if available)
+5. Organizational structure
+6. Notable risks or concerns
+7. Overall assessment for M&A consideration
+
+Format the response in clear sections with bullet points where appropriate."""
+        )
         
-        Args:
-            documents: Dictionary of processed documents
-            data_room_name: Name of the data room/company
-            
-        Returns:
-            Company summary text
-        """
-        if not self.agent or not hasattr(self.agent, 'llm'):
-            return self._generate_basic_summary(documents, data_room_name)
-        
-        # Gather key information from documents
+        # Prepare document summaries
         doc_summaries = []
-        for path, doc_info in list(documents.items())[:10]:  # Use top 10 docs
+        for path, doc_info in list(documents.items())[:10]:
             if 'summary' in doc_info:
                 doc_summaries.append(f"{doc_info['name']}: {doc_info['summary']}")
             else:
-                # Use first 500 chars of content if no summary
                 content_preview = doc_info.get('content', '')[:500]
                 if content_preview:
                     doc_summaries.append(f"{doc_info['name']}: {content_preview}")
@@ -411,34 +349,69 @@ class ReportGenerator:
         if not doc_summaries:
             return "No documents available for summary generation."
         
-        # Create prompt for company summary
-        from langchain_core.messages import HumanMessage
-        prompt = f"""Based on the following document summaries from a due diligence data room, provide a comprehensive company overview.
+        inputs = {
+            "company_name": data_room_name,
+            "document_summaries": "\n".join(doc_summaries[:10])
+        }
         
-        Company: {data_room_name}
+    elif report_type == "strategic":
+        template = PromptTemplate(
+            input_variables=["strategy_text", "checklist_context"],
+            template="""Based on the due diligence checklist results and the selected strategy, provide a strategic analysis.
+
+Strategy Document:
+{strategy_text}
+
+Checklist Coverage:
+{checklist_context}
+
+Please provide:
+1. Strategic alignment assessment
+2. Key risks and gaps identified
+3. Opportunities and synergies
+4. Recommended next steps
+5. Overall recommendation
+
+Format the response with clear sections and bullet points."""
+        )
         
-        Document Summaries:
-        {chr(10).join(doc_summaries[:10])}
+        # Build checklist context
+        if not checklist_results:
+            return "No checklist results available for strategic analysis."
+            
+        checklist_context = []
+        for cat_id, cat_data in checklist_results.items():
+            cat_name = cat_data['name']
+            matched_items = cat_data['matched_items']
+            total_items = cat_data['total_items']
+            coverage = (matched_items / total_items * 100) if total_items > 0 else 0
+            
+            checklist_context.append(f"- {cat_name}: {coverage:.0f}% coverage ({matched_items}/{total_items} items)")
+            
+            # Add details about gaps
+            missing_items = [item['text'] for item in cat_data['items'] if not item['matches']]
+            if missing_items and len(missing_items) <= 3:
+                checklist_context.append(f"  Missing: {', '.join(missing_items[:3])}")
         
-        Please provide:
-        1. Company name and industry
-        2. Business model and key products/services
-        3. Market position and competitive advantages
-        4. Key financials (if available)
-        5. Organizational structure
-        6. Notable risks or concerns
-        7. Overall assessment for M&A consideration
-        
-        Format the response in clear sections with bullet points where appropriate."""
-        
-        try:
-            response = self.agent.llm.invoke([HumanMessage(content=prompt)])
-            return escape_markdown_math(response.content.strip())
-        except Exception as e:
-            return f"Failed to generate AI summary: {str(e)}"
+        inputs = {
+            "strategy_text": strategy_text,
+            "checklist_context": "\n".join(checklist_context)
+        }
     
-    def _generate_basic_summary(self, documents: Dict[str, Dict], data_room_name: str) -> str:
-        """Generate basic summary without AI"""
+    # Execute the chain
+    try:
+        chain = template | llm | StrOutputParser()
+        response = chain.invoke(inputs)
+        return escape_markdown_math(response.strip())
+    except Exception as e:
+        logger.error(f"LLM report generation failed: {e}")
+        return f"Failed to generate {report_type} report: {str(e)}"
+
+
+def _generate_basic_report(documents: Dict[str, Dict], data_room_name: str, 
+                          checklist_results: Dict, report_type: str) -> str:
+    """Generate basic reports without AI"""
+    if report_type == "overview":
         doc_count = len(documents)
         file_types = {}
         
@@ -446,7 +419,7 @@ class ReportGenerator:
             doc_type = doc_info.get('metadata', {}).get('type', 'unknown')
             file_types[doc_type] = file_types.get(doc_type, 0) + 1
         
-        summary = f"""# Company Overview: {data_room_name}
+        return f"""# Company Overview: {data_room_name}
 
 ## Document Analysis
 - **Total Documents**: {doc_count}
@@ -457,70 +430,11 @@ Based on the document structure, this data room appears to cover standard due di
 
 *Note: Enable AI features for detailed company analysis and insights.*
 """
-        return summary
     
-    def generate_strategic_analysis(
-        self, 
-        strategy_text: str, 
-        checklist_results: Dict, 
-        documents: Dict[str, Dict]
-    ) -> str:
-        """
-        Generate strategic analysis based on strategy and checklist results
-        
-        Args:
-            strategy_text: Strategic document content
-            checklist_results: Results from checklist matching
-            documents: Document dictionary
+    elif report_type == "strategic":
+        if not checklist_results:
+            return "No checklist results available for strategic analysis."
             
-        Returns:
-            Strategic analysis text
-        """
-        if not self.agent or not hasattr(self.agent, 'llm'):
-            return self._generate_basic_strategic_analysis(checklist_results)
-        
-        # Build context from checklist results
-        checklist_context = []
-        for cat_id, cat_data in checklist_results.items():
-            cat_name = cat_data['name']
-            matched_items = sum(1 for item in cat_data['items'] if item['matches'])
-            total_items = len(cat_data['items'])
-            coverage = (matched_items / total_items * 100) if total_items > 0 else 0
-            
-            checklist_context.append(f"- {cat_name}: {coverage:.0f}% coverage ({matched_items}/{total_items} items)")
-            
-            # Add details about specific gaps
-            missing_items = [item['text'] for item in cat_data['items'] if not item['matches']]
-            if missing_items and len(missing_items) <= 3:
-                checklist_context.append(f"  Missing: {', '.join(missing_items[:3])}")
-        
-        # Build prompt
-        prompt = f"""Based on the due diligence checklist results and the selected strategy, provide a strategic analysis.
-        
-        Strategy Document:
-        {strategy_text}
-        
-        Checklist Coverage:
-        {chr(10).join(checklist_context)}
-        
-        Please provide:
-        1. Strategic alignment assessment
-        2. Key risks and gaps identified
-        3. Opportunities and synergies
-        4. Recommended next steps
-        5. Overall recommendation
-        
-        Format the response with clear sections and bullet points."""
-        
-        try:
-            from langchain_core.messages import HumanMessage
-            response = self.agent.llm.invoke([HumanMessage(content=prompt)])
-            return escape_markdown_math(response.content.strip())
-        except Exception as e:
-            return f"Failed to generate strategic analysis: {str(e)}"
-    
-    def _generate_basic_strategic_analysis(self, checklist_results: Dict) -> str:
-        """Generate basic strategic analysis without AI"""
         total_items = sum(cat['total_items'] for cat in checklist_results.values())
         matched_items = sum(cat['matched_items'] for cat in checklist_results.values())
         coverage = (matched_items / total_items * 100) if total_items > 0 else 0
@@ -547,102 +461,30 @@ Based on the document structure, this data room appears to cover standard due di
 """
         
         return analysis
+    
+    return "Invalid report type specified."
 
 
-class DDChecklistService:
-    """
-    Main service orchestrator for DD-Checklist operations
-    Coordinates between different services and manages the overall workflow
-    """
-    
-    def __init__(self, model: SentenceTransformer, agent=None):
-        """
-        Initialize the service
-        
-        Args:
-            model: SentenceTransformer model
-            agent: Optional AI agent
-        """
-        self.model = model
-        self.agent = agent
-        self.document_processor = DocumentProcessor(model)
-        self.checklist_parser = ChecklistParser()
-        self.question_parser = QuestionParser()
-        self.checklist_matcher = ChecklistMatcher(model)
-        self.question_answerer = QuestionAnswerer(model)
-        self.report_generator = ReportGenerator(agent)
-    
-    def process_data_room(
-        self, 
-        data_room_path: str, 
-        checklist_text: str = "", 
-        questions_text: str = ""
-    ) -> Dict[str, Any]:
-        """
-        Process entire data room with checklist and questions
-        
-        Args:
-            data_room_path: Path to data room
-            checklist_text: Optional checklist text
-            questions_text: Optional questions text
-            
-        Returns:
-            Dictionary with all processing results
-        """
-        results = {}
-        
-        # Load data room
-        load_results = self.document_processor.load_data_room(data_room_path)
-        results['load_results'] = load_results
-        
-        # Parse checklist if provided
-        checklist = {}
-        if checklist_text:
-            checklist = self.checklist_parser.parse_checklist(checklist_text)
-            results['checklist'] = checklist
-        
-        # Parse questions if provided
-        questions = []
-        if questions_text:
-            questions = self.question_parser.parse_questions(questions_text)
-            results['questions'] = questions
-        
-        # Match checklist to documents
-        checklist_results = {}
-        if checklist and self.document_processor.chunks:
-            checklist_results = self.checklist_matcher.match_checklist_to_documents(
-                checklist,
-                self.document_processor.chunks,
-                self.document_processor.embeddings
-            )
-            results['checklist_results'] = checklist_results
-        
-        # Answer questions
-        question_answers = {}
-        if questions and self.document_processor.chunks and self.document_processor.embeddings is not None:
-            question_answers = self.question_answerer.answer_questions_with_chunks(
-                questions,
-                self.document_processor.chunks,
-                self.document_processor.embeddings
-            )
-            results['question_answers'] = question_answers
-        
-        return results
-    
-    def search_documents(self, query: str, top_k: int = 5, threshold: Optional[float] = None) -> List[Dict]:
-        """
-        Search documents using the document processor
-        
-        Args:
-            query: Search query
-            top_k: Number of results
-            threshold: Similarity threshold
-            
-        Returns:
-            Search results
-        """
-        return self.document_processor.search(query, top_k, threshold)
-    
-    def get_processing_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive processing statistics"""
-        return self.document_processor.get_statistics()
+# =============================================================================
+# MAIN SERVICE FUNCTIONS - Simplified orchestration
+# =============================================================================
+
+
+
+
+def search_documents(doc_processor: DocumentProcessor, query: str, top_k: int = 5, 
+                    threshold: Optional[float] = None) -> List[Dict]:
+    """Search documents using the document processor"""
+    return doc_processor.search(query, top_k, threshold)
+
+
+def load_default_file(directory: Path, pattern: str) -> str:
+    """Load the first file matching pattern from directory"""
+    try:
+        files = list(directory.glob(pattern))
+        return files[0].read_text(encoding='utf-8') if files else ""
+    except Exception as e:
+        logger.error(f"File loading failed: {e}")
+        return ""
+
+

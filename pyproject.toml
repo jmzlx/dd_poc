@@ -8,22 +8,31 @@ dependencies = [
     "streamlit>=1.28.0",
     "sentence-transformers>=2.2.0",
     "numpy>=1.24.0",
-    "pandas>=2.0.0",
-    "watchdog>=3.0.0",
     # Document processing
     "pymupdf>=1.23.0",
     "python-docx>=0.8.11",
     # Environment and configuration
     "python-dotenv>=1.0.0",
+    "pydantic-settings>=2.10.1",
+    "markdown>=3.8.2",
     # Vector store
     "faiss-cpu>=1.7.4",
-    # AI Enhancement
+    # AI Enhancement - LangChain packages
     "langchain-anthropic>=0.1.0",
     "langgraph>=0.0.20",
     "langchain-core>=0.1.0",
     "langchain-text-splitters>=0.3.10",
+    "langchain-community>=0.3.29",
+    "langchain-huggingface>=0.3.1",
+    "pypdf>=6.0.0",
+    "watchdog>=6.0.0",
 ]
 
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[dependency-groups]
+dev = [
+    "autoflake>=2.3.1",
+]

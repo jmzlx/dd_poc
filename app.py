@@ -7,56 +7,65 @@ using the new modular architecture for better maintainability.
 """
 
 import os
+import warnings
 # Fix tokenizers parallelism warning early
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
+# Suppress all LangChain verbose warnings globally
+warnings.filterwarnings("ignore", category=UserWarning, module="langchain")
+warnings.filterwarnings("ignore", category=UserWarning, module="langchain_core")
+warnings.filterwarnings("ignore", category=UserWarning, module="langchain_community")
+warnings.filterwarnings("ignore", category=UserWarning, module="langchain_huggingface")
+warnings.filterwarnings("ignore", message=".*Relevance scores must be between.*")
+warnings.filterwarnings("ignore", message=".*No relevant docs were retrieved.*")
+
+# Set up LangChain logging levels early
+import logging
+logging.getLogger("langchain").setLevel(logging.ERROR)
+logging.getLogger("langchain_core").setLevel(logging.ERROR)
+logging.getLogger("langchain_community").setLevel(logging.ERROR)
+logging.getLogger("langchain_huggingface").setLevel(logging.ERROR)
+
 import streamlit as st
-import numpy as np
-from sentence_transformers import SentenceTransformer
+
 from pathlib import Path
-from typing import Dict, List, Optional, Any
+from typing import Dict
 
 # Import our refactored modules
 from src import (
-    get_config, init_config,
-    DocumentProcessor, DDChecklistService,
-    logger, handle_exceptions, safe_execute, ErrorHandler,
-    render_project_selector, render_ai_settings, escape_markdown_math
+    init_config, DocumentProcessor,
+    logger,
+    render_project_selector,
+    render_ai_settings, escape_markdown_math,
+    get_mime_type, format_document_title
 )
+from src.document_processing import safe_execute
+# Using Streamlit directly for simplicity
 from src.ui_components import (
-    render_file_selector, render_progress_section, render_metrics_row,
-    render_checklist_results, render_question_results, render_quick_questions,
-    create_document_link
+    render_file_selector, render_checklist_results, render_question_results,
+    render_quick_questions, create_document_link
 )
-from src.services import ReportGenerator
-from src.utils import ProgressTracker, show_success, show_error, show_info
+from src.services import (
+    search_documents
+)
+
+from src.config import show_success, show_error, show_info
 
 # Import LangGraph + Anthropic configuration
-try:
-    from src.ai import (
-        DDChecklistAgent,
-        LANGGRAPH_AVAILABLE,
-        batch_summarize_documents,
-        create_document_embeddings_with_summaries,
-        match_checklist_with_summaries,
-        generate_checklist_descriptions
-    )
-    LLM_AVAILABLE = LANGGRAPH_AVAILABLE
-except ImportError:
-    LLM_AVAILABLE = False
-    DDChecklistAgent = None
-
+from src.ai import (
+    DDChecklistAgent
+)
 
 
 class DDChecklistApp:
     """
     Main application class that orchestrates all components
     """
-    
+
     def __init__(self):
         """Initialize the application"""
         # Initialize configuration
-        self.config = init_config().get_config()
+        self.config = init_config()
         
         # Initialize session state
         self._init_session_state()
@@ -69,63 +78,44 @@ class DDChecklistApp:
         )
         
         # Initialize services (will be loaded when needed)
-        self.model = None
-        self.service = None
+        self.model_name = self.config.model.sentence_transformer_model
+        self.document_processor = None
         self.agent = None
     
     def _init_session_state(self):
-        """Initialize Streamlit session state variables"""
-        defaults = {
+        """Initialize essential session state variables only"""
+        essential_defaults = {
             'documents': {},
             'chunks': [],
             'embeddings': None,
-            'checklist': {},
             'checklist_results': {},
-            'questions': [],
             'question_answers': {},
-            'strategy_text': "",
-            'strategy_analysis': "",
             'company_summary': "",
+            'strategy_analysis': "",
             'agent': None,
-            'doc_embeddings_data': None,
-            'just_processed': False,
-            'is_processing': False,
-            'trigger_processing': False,
-            'processing_path': None
+            'is_processing': False
         }
         
-        for key, default_value in defaults.items():
+        for key, default_value in essential_defaults.items():
             if key not in st.session_state:
                 st.session_state[key] = default_value
-    
-    @st.cache_resource
-    def load_model(_self) -> SentenceTransformer:
-        """Load the sentence transformer model"""
-        with ErrorHandler("Failed to load AI model"):
-            return SentenceTransformer(_self.config.model.sentence_transformer_model)
-    
+
     def initialize_services(self):
         """Initialize core services"""
-        if self.model is None:
-            self.model = self.load_model()
-        
-        if self.service is None:
-            self.service = DDChecklistService(self.model, self.agent)
+        if self.document_processor is None:
+            self.document_processor = DocumentProcessor(self.model_name)
             
             # Restore document processor state from session state if available
             if (hasattr(st.session_state, 'chunks') and st.session_state.chunks and
                 hasattr(st.session_state, 'embeddings') and st.session_state.embeddings is not None):
                 
-                self.service.document_processor.chunks = st.session_state.chunks
-                self.service.document_processor.embeddings = st.session_state.embeddings
-                self.service.document_processor.documents = st.session_state.get('documents', {})
-                
-                # Ensure the document processor has the model
-                self.service.document_processor.model = self.model
+                self.document_processor.chunks = st.session_state.chunks
+                self.document_processor.embeddings = st.session_state.embeddings
+                # Note: Don't restore documents here - they'll be recreated from chunks if needed
     
     def setup_ai_agent(self, api_key: str, model_choice: str) -> bool:
         """
-        Setup AI agent if enabled
+        Setup AI agent
         
         Args:
             api_key: Anthropic API key
@@ -133,11 +123,7 @@ class DDChecklistApp:
             
         Returns:
             True if agent was successfully initialized
-        """
-        if not LLM_AVAILABLE or not DDChecklistAgent:
-            show_error("AI packages not installed")
-            return False
-        
+        """        
         try:
             with st.spinner("Initializing AI agent..."):
                 agent = DDChecklistAgent(api_key, model_choice)
@@ -147,9 +133,6 @@ class DDChecklistApp:
                     self.agent = agent
                     show_success("✅ AI Agent ready")
                     
-                    # Update service with agent
-                    if self.service:
-                        self.service.report_generator = ReportGenerator(agent)
                     
                     return True
                 else:
@@ -198,15 +181,13 @@ class DDChecklistApp:
                 self.agent = None
         
         return selected_data_room_path, use_ai_features, process_button
-    
 
     def render_summary_tab(self):
-        """Render the summary and analysis tab"""
+        """Render consolidated summary and analysis tab"""
         # Strategy selector
         strategy_path, strategy_text = render_file_selector(
             self.config.paths.strategy_dir, "Strategy", "tab"
         )
-        st.session_state.strategy_text = strategy_text
         
         # Check if we have documents to display summaries
         if st.session_state.documents:
@@ -214,113 +195,115 @@ class DDChecklistApp:
             overview_tab, analysis_tab = st.tabs(["🏢 Company Overview", "🎯 Strategic Analysis"])
             
             with overview_tab:
-                self._render_company_overview()
+                self._render_report_section("overview", strategy_text=strategy_text)
             
             with analysis_tab:
-                self._render_strategic_analysis()
+                self._render_report_section("strategic", strategy_text=strategy_text)
         else:
             show_info("👈 Configure and process data room to see analysis")
     
-    def _render_company_overview(self):
-        """Render company overview section"""
-        # Auto-generate summary if not already present and AI is available
-        if (not st.session_state.company_summary and 
-            hasattr(st.session_state, 'agent') and st.session_state.agent):
-            
-            with st.spinner("🤖 Generating company overview..."):
-                report_gen = ReportGenerator(st.session_state.agent)
-                data_room_name = Path(list(st.session_state.documents.keys())[0]).parent.name if st.session_state.documents else "Unknown"
-                st.session_state.company_summary = report_gen.generate_company_summary(
-                    st.session_state.documents, data_room_name
-                )
+    def _render_report_section(self, report_type: str, strategy_text: str = ""):
+        """Unified report rendering for both overview and strategic analysis"""
+        from src.services import generate_reports
         
-        # Display the company summary if available
-        if st.session_state.company_summary:
-            st.markdown(st.session_state.company_summary)
-            
-            # Add export and regenerate buttons
-            col1, col2 = st.columns([1, 5])
-            with col1:
-                st.download_button(
-                    "📥 Export Summary",
-                    data=f"# Company Overview\n\n{st.session_state.company_summary}",
-                    file_name=f"company_overview_{Path(list(st.session_state.documents.keys())[0]).parent.name if st.session_state.documents else 'export'}.md",
-                    mime="text/markdown",
-                    key="export_company_summary"
-                )
-            with col2:
-                if st.button("🔄 Regenerate Overview"):
-                    st.session_state.company_summary = ""
-                    st.rerun()
-    
-    def _render_strategic_analysis(self):
-        """Render strategic analysis section"""
-        if not st.session_state.checklist_results:
+        summary_key = f"{report_type}_summary"
+        
+        # Check prerequisites for strategic analysis
+        if report_type == "strategic" and not st.session_state.checklist_results:
             st.warning("⚠️ Process data room with checklist first to enable strategic analysis")
             return
         
-        # Auto-generate analysis if not already present and AI is available
-        if (not st.session_state.strategy_analysis and 
-            hasattr(st.session_state, 'agent') and st.session_state.agent):
-            
-            with st.spinner("🤖 Generating strategic analysis..."):
-                report_gen = ReportGenerator(st.session_state.agent)
-                st.session_state.strategy_analysis = report_gen.generate_strategic_analysis(
-                    st.session_state.strategy_text,
+        # Auto-generate report if not already present and AI is available
+        if (not st.session_state.get(summary_key, "") and st.session_state.agent):
+            with st.spinner(f"🤖 Generating {report_type} analysis..."):
+                data_room_name = (Path(list(st.session_state.documents.keys())[0]).parent.name 
+                                if st.session_state.documents else "Unknown")
+                
+                st.session_state[summary_key] = generate_reports(
+                    st.session_state.documents,
+                    data_room_name,
+                    strategy_text,
                     st.session_state.checklist_results,
-                    st.session_state.documents
+                    report_type,
+                    st.session_state.agent.llm if st.session_state.agent else None
                 )
         
-        if st.session_state.strategy_analysis:
-            st.markdown(st.session_state.strategy_analysis)
+        # Display the report if available
+        if st.session_state.get(summary_key, ""):
+            st.markdown(st.session_state[summary_key])
             
             # Add export and regenerate buttons
-            col1, col2, col3 = st.columns([1, 1, 3])
+            self._render_report_actions(report_type, summary_key)
+    
+    def _render_report_actions(self, report_type: str, summary_key: str):
+        """Render export and regenerate actions for reports"""
+        if report_type == "overview":
+            col1, col2 = st.columns([1, 5])
             with col1:
-                # Combined report export
+                company_name = (Path(list(st.session_state.documents.keys())[0]).parent.name 
+                               if st.session_state.documents else 'export')
+                file_name = f"company_overview_{company_name}.md"
+                st.download_button(
+                    "📥 Export Summary",
+                    data=f"# Company Overview\n\n{st.session_state[summary_key]}",
+                    file_name=file_name,
+                    mime="text/markdown",
+                    key=f"export_{summary_key}"
+                )
+            with col2:
+                if st.button(f"🔄 Regenerate {report_type.title()}"):
+                    st.session_state[summary_key] = ""
+                    st.rerun()
+        else:
+            col1, col2 = st.columns([1, 5])
+            with col1:
+                # Combined report export for strategic analysis
                 combined_report = f"# Due Diligence Report\n\n"
-                combined_report += f"## Company Overview\n\n{st.session_state.company_summary}\n\n"
-                combined_report += f"## Strategic Analysis\n\n{st.session_state.strategy_analysis}"
+                combined_report += f"## Company Overview\n\n{st.session_state.get('overview_summary', '')}\n\n"
+                combined_report += f"## Strategic Analysis\n\n{st.session_state[summary_key]}"
                 
+                company_name = (Path(list(st.session_state.documents.keys())[0]).parent.name 
+                               if st.session_state.documents else 'export')
+                file_name = f"dd_report_{company_name}.md"
                 st.download_button(
                     "📥 Export Report",
                     data=combined_report,
-                    file_name=f"dd_report_{Path(list(st.session_state.documents.keys())[0]).parent.name if st.session_state.documents else 'export'}.md",
+                    file_name=file_name,
                     mime="text/markdown",
-                    key="export_combined_report"
+                    key=f"export_combined_{summary_key}"
                 )
             with col2:
-                if st.button("🔄 Regenerate Analysis"):
-                    st.session_state.strategy_analysis = ""
+                if st.button(f"🔄 Regenerate {report_type.title()}"):
+                    st.session_state[summary_key] = ""
                     st.rerun()
     
-    def render_checklist_tab(self):
-        """Render the checklist matching tab"""
-        # Checklist selector
-        checklist_path, checklist_text = render_file_selector(
-            self.config.paths.checklist_dir, "Checklist", "tab"
-        )
-        
-        if not checklist_text:
-            show_error("No checklists found in data/checklist directory")
-            return
-        
-        # Render results if available
-        render_checklist_results(st.session_state.checklist_results)
-    
-    def render_questions_tab(self):
-        """Render the questions tab"""
-        # Question list selector
-        questions_path, questions_text = render_file_selector(
-            self.config.paths.questions_dir, "Question List", "tab"
-        )
-        
-        if not questions_text:
-            show_info("No question lists found in data/questions/")
-            return
-        
-        # Render results if available
-        render_question_results(st.session_state.question_answers)
+    def render_analysis_tab(self, tab_type: str):
+        """Unified rendering for checklist and questions tabs"""
+        if tab_type == "checklist":
+            # Checklist selector
+            file_path, file_text = render_file_selector(
+                self.config.paths.checklist_dir, "Checklist", "tab"
+            )
+            
+            if not file_text:
+                show_error("No checklists found in data/checklist directory")
+                return
+            
+            # Render results if available
+            render_checklist_results(st.session_state.checklist_results)
+            
+        elif tab_type == "questions":
+            # Question list selector
+            file_path, file_text = render_file_selector(
+                self.config.paths.questions_dir, "Question List", "tab"
+            )
+            
+            if not file_text:
+                show_info("No question lists found in data/questions/")
+                return
+            
+            # Render results if available
+            render_question_results(st.session_state.question_answers)
     
     def render_qa_tab(self):
         """Render the Q&A with citations tab"""
@@ -346,13 +329,14 @@ class DDChecklistApp:
     
     def _handle_qa_query(self, question: str):
         """Handle Q&A query and display results"""
-        if not self.service:
+        if not self.document_processor:
             self.initialize_services()
         
         # Use lower threshold for Q&A to get more relevant results
         qa_threshold = 0.25
         
-        results = self.service.search_documents(
+        results = search_documents(
+            self.document_processor,
             question, 
             top_k=self.config.ui.top_k_search_results,
             threshold=qa_threshold
@@ -369,7 +353,9 @@ class DDChecklistApp:
                     context = "\n\n".join([f"From {r['source']}:\n{r['text']}" for r in results[:3]])
                     # Use LLM directly for more reliable answers
                     from langchain_core.messages import HumanMessage
-                    prompt = f"Question: {question}\n\nRelevant document excerpts:\n{context}\n\nProvide a comprehensive answer with citations to the sources."
+                    prompt = (f"Question: {question}\n\n"
+                             f"Relevant document excerpts:\n{context}\n\n"
+                             f"Provide a comprehensive answer with citations to the sources.")
                     response = st.session_state.agent.llm.invoke([HumanMessage(content=prompt)])
                     # Clean up any leading whitespace and escape math characters
                     answer_text = escape_markdown_math(response.content.strip())
@@ -389,10 +375,7 @@ class DDChecklistApp:
                         # Create clickable link for the document
                         doc_path = result.get('path', result.get('full_path', ''))
                         doc_name = result['source']
-                        if '.' in doc_name:
-                            doc_title = doc_name.rsplit('.', 1)[0].replace('_', ' ').replace('-', ' ').title()
-                        else:
-                            doc_title = doc_name.replace('_', ' ').replace('-', ' ').title()
+                        doc_title = format_document_title(doc_name)
                         
                         if doc_path:
                             link_html = create_document_link(doc_path, doc_name, doc_title)
@@ -419,17 +402,7 @@ class DDChecklistApp:
                         file_bytes = f.read()
                     
                     # Determine MIME type based on file extension
-                    file_extension = file_path.suffix.lower()
-                    if file_extension == '.pdf':
-                        mime_type = 'application/pdf'
-                    elif file_extension in ['.doc', '.docx']:
-                        mime_type = 'application/msword'
-                    elif file_extension == '.txt':
-                        mime_type = 'text/plain'
-                    elif file_extension == '.md':
-                        mime_type = 'text/markdown'
-                    else:
-                        mime_type = 'application/octet-stream'
+                    mime_type = get_mime_type(file_path)
                     
                     button_key = f"qacit_dl_{idx}_{question[:20]}".replace(" ", "_").replace("?", "")
                     
@@ -444,238 +417,107 @@ class DDChecklistApp:
             except Exception as e:
                 st.error(f"Download failed: {str(e)}")
     
-    @handle_exceptions(show_error=True)
     def process_data_room(self, data_room_path: str):
-        """
-        Process the selected data room
-        
-        Args:
-            data_room_path: Path to the data room to process
-        """
+        """Simplified data room processing"""
         if not Path(data_room_path).exists():
             show_error(f"Data room path not found: {data_room_path}")
-            st.session_state.is_processing = False  # Reset flag on error
+            st.session_state.is_processing = False
             return
         
-        try:
-            # Initialize services
+        # Use safe_execute for the entire processing operation
+        def process_operation():
             self.initialize_services()
+            # Simple processing - load documents
+            self.document_processor.load_data_room(data_room_path)
             
-            # Create progress container
-            progress_container = st.container()
-            
-            with progress_container:
-                st.markdown("### 🚀 Processing Data Room")
-                
-                # Define step weights based on expected complexity/duration
-                step_weights = {
-                    1: 1.0,    # Scanning data room (fast)
-                    2: 0.5,    # Found documents (instant)
-                    3: 8.0,    # Generate AI summaries (very slow - depends on doc count)
-                    4: 0.5,    # AI summaries complete (instant)
-                    5: 1.0,    # Loading checklist and questions (fast)
-                    6: 0.5,    # Checklist and questions loaded (instant)
-                    7: 3.0,    # Generate checklist descriptions (moderate)
-                    8: 0.5,    # Descriptions generated (instant)
-                    9: 2.0,    # Match checklist to documents (moderate)
-                    10: 0.5,   # Checklist matching complete (instant)
-                    11: 2.0,   # Answer questions (moderate)
-                    12: 0.5    # Complete (instant)
+            # Store results in session state with simplified structure
+            # Convert list of LangChain documents to dictionary format expected by UI
+            documents_dict = {}
+            for doc in self.document_processor.documents:
+                file_path = doc.metadata.get('source', doc.metadata.get('path', 'unknown'))
+                documents_dict[file_path] = {
+                    'name': doc.metadata.get('name', Path(file_path).name if file_path != 'unknown' else 'unknown'),
+                    'path': doc.metadata.get('path', ''),
+                    'content': doc.page_content,
+                    'metadata': doc.metadata
                 }
-                
-                tracker = ProgressTracker(12, "Processing", step_weights)
-                
-                # Step 1: Load documents with parallel processing
-                tracker.update(1, f"Scanning data room: {Path(data_room_path).name}")
-                
-                # Create a progress bar for detailed document loading progress
-                doc_progress_placeholder = st.empty()
-                with doc_progress_placeholder.container():
-                    doc_progress_bar = st.progress(0, text="Initializing document scan...")
-                
-                # Use parallel processing with progress tracking (max_workers=4 as specified)
-                load_results = self.service.document_processor.load_data_room_with_progress(
-                    data_room_path, 
-                    max_workers=4, 
-                    progress_bar=doc_progress_bar
-                )
-                
-                # Clear the detailed progress bar
-                doc_progress_placeholder.empty()
-                
-                st.session_state.documents = self.service.document_processor.documents
-                st.session_state.chunks = self.service.document_processor.chunks
-                st.session_state.embeddings = self.service.document_processor.embeddings
-                
-                # Display performance metrics
-                if 'performance' in load_results:
-                    perf = load_results['performance']
-                    tracker.update(2, f"Found {load_results['documents_count']} documents in {perf['total_time']:.1f}s "
-                                    f"({perf['documents_per_second']:.1f} docs/sec)")
-                    logger.info(f"Document loading performance: {perf}")
-                else:
-                    tracker.update(2, f"Found {load_results['documents_count']} documents")
-                
-                # Step 2: Generate AI summaries if agent available
-                if hasattr(st.session_state, 'agent') and st.session_state.agent:
-                    doc_count = len(st.session_state.documents)
-                    tracker.update(3, f"Generating AI summaries for {doc_count} documents...")
-                    
-                    # Adjust weight for step 3 based on actual document count
-                    # More documents = longer processing time
-                    if doc_count > 50:
-                        step_weights[3] = min(15.0, doc_count * 0.15)  # Scale with doc count, cap at 15
-                    elif doc_count > 20:
-                        step_weights[3] = doc_count * 0.2  # 4-10 weight for 20-50 docs
-                    
-                    # Recalculate total weight
-                    tracker.total_weight = sum(step_weights.values())
-                    
-                    # Convert documents for summarization
-                    docs_for_summary = []
-                    for path, doc_info in st.session_state.documents.items():
-                        docs_for_summary.append({
-                            'name': doc_info['name'],
-                            'path': doc_info['rel_path'],
-                            'content': doc_info.get('content', '')[:1500],
-                            'metadata': doc_info.get('metadata', {})
-                        })
-                    
-                    # Create a separate progress tracker for batch summarization
-                    st.session_state.summary_progress = st.progress(0, text="📝 Starting document summarization...")
-                    
-                    # Batch summarize
-                    summarized_docs = batch_summarize_documents(
-                        docs_for_summary, 
-                        st.session_state.agent.llm,
-                        batch_size=self.config.processing.batch_size
-                    )
-                    
-                    # Clean up summary progress tracker
-                    if 'summary_progress' in st.session_state:
-                        st.session_state.summary_progress.progress(1.0, text="✅ Document summarization complete")
-                        del st.session_state.summary_progress
-                    
-                    # Store summaries
-                    for doc in summarized_docs:
-                        for path, doc_info in st.session_state.documents.items():
-                            if doc_info['rel_path'] == doc['path']:
-                                doc_info['summary'] = doc.get('summary', '')
-                    
-                    # Create embeddings using summaries
-                    st.session_state.doc_embeddings_data = create_document_embeddings_with_summaries(
-                        summarized_docs, self.model
-                    )
-                    
-                    tracker.update(4, f"AI summaries complete ({doc_count} documents processed)")
-                else:
-                    tracker.update(4, "Skipping AI summaries (not enabled)")
-                
-                # Step 3: Parse checklist and questions
-                tracker.update(5, "Loading checklist and questions...")
-                
-                # Load default checklist
-                checklist_text = self._load_default_file(self.config.paths.checklist_path, "*.md")
-                if checklist_text:
-                    st.session_state.checklist = self.service.checklist_parser.parse_checklist(checklist_text)
-                
-                # Load default questions
-                questions_text = self._load_default_file(self.config.paths.questions_path, "*.md")
-                if questions_text:
-                    st.session_state.questions = self.service.question_parser.parse_questions(questions_text)
-                
-                tracker.update(6, "Checklist and questions loaded")
-                
-                # Step 7: Generate checklist descriptions if AI is available
-                if (hasattr(st.session_state, 'agent') and st.session_state.agent and 
-                    st.session_state.checklist):
-                    
-                    tracker.update(7, "Generating checklist item descriptions...")
-                    
-                    # Create progress tracker for descriptions
-                    st.session_state.description_progress = st.progress(0, text="📝 Generating descriptions...")
-                    
-                    # Generate enhanced descriptions for better matching
-                    st.session_state.checklist = generate_checklist_descriptions(
-                        st.session_state.checklist,
-                        st.session_state.agent.llm,
-                        batch_size=self.config.processing.batch_size
-                    )
-                    
-                    # Clean up progress tracker
-                    if 'description_progress' in st.session_state:
-                        st.session_state.description_progress.progress(1.0, text="✅ Descriptions generated")
-                        del st.session_state.description_progress
-                    
-                    tracker.update(8, "Checklist descriptions generated")
-                else:
-                    tracker.update(8, "Skipping description generation (AI not enabled)")
-                
-                # Step 9: Match checklist to documents
-                if st.session_state.checklist and st.session_state.chunks:
-                    tracker.update(9, "Matching checklist to documents...")
-                    
-                    if hasattr(st.session_state, 'doc_embeddings_data') and st.session_state.doc_embeddings_data:
-                        # Use AI-enhanced matching with generated descriptions
-                        st.session_state.checklist_results = match_checklist_with_summaries(
-                            st.session_state.checklist,
-                            st.session_state.doc_embeddings_data,
-                            self.model,
-                            self.config.processing.similarity_threshold
-                        )
-                    else:
-                        # Use traditional matching
-                        st.session_state.checklist_results = self.service.checklist_matcher.match_checklist_to_documents(
-                            st.session_state.checklist,
-                            st.session_state.chunks,
-                            st.session_state.embeddings,
-                            self.config.processing.similarity_threshold
-                        )
-                    
-                    tracker.update(10, "Checklist matching complete")
-                
-                # Step 11: Answer questions
-                if (st.session_state.questions and st.session_state.chunks and 
-                    st.session_state.embeddings is not None):
-                    
-                    tracker.update(11, "Answering due diligence questions...")
-                    
-                    st.session_state.question_answers = self.service.question_answerer.answer_questions_with_chunks(
-                        st.session_state.questions,
-                        st.session_state.chunks,
-                        st.session_state.embeddings,
-                        self.config.processing.similarity_threshold
-                    )
-                    
-                    answered_count = sum(1 for a in st.session_state.question_answers.values() if a['has_answer'])
-                    tracker.update(12, f"Answered {answered_count}/{len(st.session_state.questions)} questions")
-                
-                tracker.complete("Processing complete!")
-                
-                # Small delay before clearing
-                import time
-                time.sleep(1.5)
-                progress_container.empty()
             
-            # Reset processing flag and mark as just processed on success
-            st.session_state.is_processing = False
-            st.session_state.just_processed = True
+            st.session_state.documents = documents_dict
+            st.session_state.chunks = self.document_processor.chunks
+            st.session_state.embeddings = self.document_processor.embeddings
+            
+            # Process checklist and questions if available
+            self._process_checklist_and_questions()
+            
+            # Clear any existing analysis to trigger regeneration
+            st.session_state.company_summary = ""
+            st.session_state.strategy_analysis = ""
+            st.session_state.overview_summary = ""
+            st.session_state.strategic_summary = ""
+            
+            show_success("✅ Data room processing complete! View results in the tabs above.")
             st.rerun()
             
-        except Exception:
-            # Reset processing flag on any error
-            st.session_state.is_processing = False
-            raise  # Let decorator handle error display
+        safe_execute(
+            process_operation,
+            None,
+            "Data room processing"
+        )
+        
+        st.session_state.is_processing = False
     
-    def _load_default_file(self, directory: Path, pattern: str) -> str:
-        """Load the first file matching pattern from directory"""
-        try:
-            files = list(directory.glob(pattern))
-            if files:
-                return files[0].read_text(encoding='utf-8')
-        except Exception as e:
-            logger.warning(f"Could not load default file from {directory}: {e}")
-        return ""
+    def _process_checklist_and_questions(self):
+        """Process checklist and questions after documents are loaded"""
+        from src.services import parse_checklist, parse_questions, create_vector_store, search_and_analyze, load_default_file
+        
+        # Load default checklist if available
+        checklist_text = load_default_file(Path(self.config.paths.checklist_dir), "*.md")
+        if checklist_text and self.document_processor.chunks:
+            try:
+                # Parse checklist
+                checklist = parse_checklist(checklist_text)
+                st.session_state.checklist = checklist
+                
+                # Create vector store from chunks for processing
+                vector_store = create_vector_store(self.document_processor.chunks, self.model_name)
+                
+                # Process checklist items
+                checklist_results = search_and_analyze(
+                    checklist,
+                    vector_store,
+                    self.agent.llm if self.agent else None,
+                    self.config.processing.similarity_threshold,
+                    'items'
+                )
+                st.session_state.checklist_results = checklist_results
+                logger.info("✅ Checklist processing completed")
+            except Exception as e:
+                logger.error(f"Checklist processing failed: {e}")
+        
+        # Load default questions if available  
+        questions_text = load_default_file(Path(self.config.paths.questions_dir), "*.md")
+        if questions_text and self.document_processor.chunks:
+            try:
+                # Parse questions
+                questions = parse_questions(questions_text)
+                st.session_state.questions = questions
+                
+                # Create vector store from chunks for processing (reuse if already created)
+                if 'vector_store' not in locals():
+                    vector_store = create_vector_store(self.document_processor.chunks, self.model_name)
+                
+                # Process questions
+                question_answers = search_and_analyze(
+                    questions,
+                    vector_store,
+                    self.agent.llm if self.agent else None,
+                    self.config.processing.relevancy_threshold,
+                    'questions'
+                )
+                st.session_state.question_answers = question_answers
+                logger.info("✅ Questions processing completed")
+            except Exception as e:
+                logger.error(f"Questions processing failed: {e}")
     
     def run(self):
         """Run the main application"""
@@ -698,33 +540,20 @@ class DDChecklistApp:
             self.render_summary_tab()
         
         with tab2:
-            self.render_checklist_tab()
+            self.render_analysis_tab("checklist")
         
         with tab3:
-            self.render_questions_tab()
+            self.render_analysis_tab("questions")
         
         with tab4:
             self.render_qa_tab()
         
-        # Show success message if just processed
-        if st.session_state.just_processed:
-            show_success("✅ Data room processing complete! View results in the tabs above.")
-            st.session_state.just_processed = False
+        # Processing complete message is handled in process_data_room function
         
-        # Handle processing trigger
+        # Simplified processing trigger
         if process_button and selected_data_room_path and not st.session_state.is_processing:
-            # Set trigger and path for next render
-            st.session_state.trigger_processing = True
-            st.session_state.processing_path = selected_data_room_path
             st.session_state.is_processing = True
-            st.rerun()
-        
-        # Execute processing if triggered
-        if st.session_state.trigger_processing and st.session_state.processing_path:
-            st.session_state.trigger_processing = False  # Reset trigger
-            processing_path = st.session_state.processing_path
-            st.session_state.processing_path = None
-            self.process_data_room(processing_path)
+            self.process_data_room(selected_data_room_path)
 
 
 def main():
