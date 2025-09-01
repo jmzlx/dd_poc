@@ -6,147 +6,92 @@ This module contains all prompt templates used for AI interactions
 in the DD-Checklist application.
 """
 
+import json
 from typing import Dict, List
+from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
+from langchain_core.messages import SystemMessage, HumanMessage
 
 
-def get_checklist_parsing_prompt(checklist_text: str) -> str:
-    """
-    Generate prompt for parsing due diligence checklists
-    
-    Args:
-        checklist_text: Raw checklist text to parse
-        
-    Returns:
-        Formatted prompt string
-    """
-    return f"""Parse this due diligence checklist into a structured JSON format.
-        
-Extract categories (A., B., C.) and numbered items.
+def get_checklist_parsing_prompt(checklist_text: str) -> ChatPromptTemplate:
+    """Generate prompt for parsing due diligence checklists with structured output"""
+    return ChatPromptTemplate.from_messages([
+        SystemMessage(content="""
+Parse this due diligence checklist into structured format. Extract:
+- Categories (A., B., C., etc.) with their names
+- Numbered items within each category (1., 2., 3., etc.)
+- Total count of items
 
-Return ONLY valid JSON:
-{{
-    "A": {{
-        "name": "Category Name",
-        "items": [{{"text": "item", "number": 1}}]
-    }}
-}}
+Follow the exact format specified in the format instructions.
+"""),
+        HumanMessage(content="""Parse this checklist:
 
-Checklist:
-{checklist_text[:3000]}
+{checklist_text}
 
-JSON:"""
+{format_instructions}
+
+Please provide the structured output:""")
+    ])
 
 
-def get_document_relevance_prompt(item_text: str, documents: List[str]) -> str:
-    """
-    Generate prompt for assessing document relevance to checklist items
-    
-    Args:
-        item_text: Checklist item text
-        documents: List of document names
-        
-    Returns:
-        Formatted prompt string
-    """
-    return f"""Which of these documents is relevant to: {item_text}
-                
-Documents: {documents}
+def get_document_relevance_prompt(item_text: str, documents: List[str]) -> PromptTemplate:
+    """Generate prompt for assessing document relevance to checklist items with structured output"""
+    return PromptTemplate.from_template(
+        """Analyze which documents are relevant to the following checklist item:
 
-List the relevant document names only."""
-
-
-def get_question_answering_prompt(question: str, context: str) -> str:
-    """
-    Generate prompt for answering questions based on document context
-    
-    Args:
-        question: User question
-        context: Document context
-        
-    Returns:
-        Formatted prompt string
-    """
-    return f"""Answer this question based on the documents:
-
-Question: {question}
-
-Document Context:
-{context}
-
-Provide a comprehensive answer with citations."""
-
-
-def get_findings_summary_prompt(findings: Dict, max_chars: int = 2000) -> str:
-    """
-    Generate prompt for summarizing due diligence findings
-    
-    Args:
-        findings: Dictionary of findings to summarize
-        max_chars: Maximum characters to include from findings
-        
-    Returns:
-        Formatted prompt string
-    """
-    import json
-    findings_text = json.dumps(findings, indent=2)[:max_chars]
-    
-    return f"""Provide an executive summary of the due diligence findings:
-
-{findings_text}
-
-Focus on:
-1. Completeness of documentation
-2. Key gaps or concerns
-3. Overall assessment"""
-
-
-def get_description_generation_prompt(category_name: str, item_text: str) -> str:
-    """
-    Generate prompt for creating checklist item descriptions
-    
-    Args:
-        category_name: Name of the checklist category
-        item_text: Text of the checklist item
-        
-    Returns:
-        Formatted prompt string
-    """
-    return f"""For this due diligence checklist item, provide a concise description (1-2 sentences) explaining what types of documents or information would satisfy this requirement. Focus on the specific document types and key information that would be relevant.
-
-Category: {category_name}
 Checklist Item: {item_text}
 
-Description (1-2 sentences explaining what documents/information satisfy this requirement):"""
+Available Documents:
+{documents}
+
+{format_instructions}
+
+Please provide your analysis in the specified format:"""
+    )
 
 
-def get_document_summarization_prompt(doc: Dict) -> str:
-    """
-    Generate prompt for document type identification and summarization
-    
-    Args:
-        doc: Dictionary containing document information
-        
-    Returns:
-        Formatted prompt string
-    """
-    # Extract text preview (first 1000 chars)
-    text_preview = doc.get('content', '')[:1000] if doc.get('content') else ''
+def get_question_answering_prompt(question: str, context: str) -> ChatPromptTemplate:
+    """Generate prompt for answering questions based on document context"""
+    return ChatPromptTemplate.from_messages([
+        SystemMessage(content="Answer questions based on document context. Provide comprehensive answers with citations."),
+        HumanMessage(content=f"Question: {question}\n\nDocument Context:\n{context}\n\nAnswer:")
+    ])
+
+
+def get_findings_summary_prompt(findings: Dict, max_chars: int = 2000) -> PromptTemplate:
+    """Generate prompt for summarizing due diligence findings"""
+    findings_text = json.dumps(findings, indent=2)[:max_chars]
+    return PromptTemplate.from_template(
+        "Provide an executive summary of these due diligence findings:\n\n"
+        "{findings_text}\n\n"
+        "Focus on:\n"
+        "1. Completeness of documentation\n"
+        "2. Key gaps or concerns\n"
+        "3. Overall assessment"
+    ).partial(findings_text=findings_text)
+
+
+def get_description_generation_prompt(category_name: str, item_text: str) -> PromptTemplate:
+    """Generate prompt for creating checklist item descriptions"""
+    return PromptTemplate.from_template(
+        "For this due diligence checklist item, provide a concise description (1-2 sentences) "
+        "explaining what types of documents or information would satisfy this requirement.\n\n"
+        "Category: {category_name}\n"
+        "Checklist Item: {item_text}\n\n"
+        "Description:"
+    ).partial(category_name=category_name, item_text=item_text)
+
+
+def get_document_summarization_prompt(doc: Dict) -> PromptTemplate:
+    """Generate prompt for document type identification and summarization"""
     doc_name = doc.get('name', 'Unknown')
     doc_path = doc.get('path', '')
+    text_preview = doc.get('content', '')[:1000] if doc.get('content') else ''
     
-    return f"""Identify and describe what type of document this is in 1-2 sentences.
-Focus specifically on the document type, category, and what kind of information it contains.
-
-Examples of document types: financial statement, contract agreement, corporate governance document, employee handbook, technical specification, compliance report, audit report, etc.
-
-Document: {doc_name}
-Path: {doc_path}
-Content preview:
-{text_preview}
-
-Document type description (1-2 sentences only):"""
-
-
-# Template constants for common patterns
-DEFAULT_TEMPERATURE = 0.3
-DEFAULT_MAX_TOKENS = 2000
+    return PromptTemplate.from_template(
+        "Identify and describe what type of document this is in 1-2 sentences.\n\n"
+        "Examples: financial statement, contract agreement, corporate governance document, etc.\n\n"
+        "Document: {doc_name}\n"
+        "Path: {doc_path}\n"
+        "Content preview:\n{text_preview}\n\n"
+        "Document type description:"
+    ).partial(doc_name=doc_name, doc_path=doc_path, text_preview=text_preview)
