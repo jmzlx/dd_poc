@@ -8,23 +8,14 @@ using the new modular architecture for better maintainability.
 
 import os
 import warnings
+import logging
+
 # Fix tokenizers parallelism warning early
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
-# Suppress all LangChain verbose warnings globally
-warnings.filterwarnings("ignore", category=UserWarning, module="langchain")
-warnings.filterwarnings("ignore", category=UserWarning, module="langchain_core")
-warnings.filterwarnings("ignore", category=UserWarning, module="langchain_community")
-warnings.filterwarnings("ignore", category=UserWarning, module="langchain_huggingface")
+# Only suppress specific known non-critical warnings
 warnings.filterwarnings("ignore", message=".*Relevance scores must be between.*")
 warnings.filterwarnings("ignore", message=".*No relevant docs were retrieved.*")
-
-# Set up LangChain logging levels early
-import logging
-logging.getLogger("langchain").setLevel(logging.ERROR)
-logging.getLogger("langchain_core").setLevel(logging.ERROR)
-logging.getLogger("langchain_community").setLevel(logging.ERROR)
-logging.getLogger("langchain_huggingface").setLevel(logging.ERROR)
 
 import streamlit as st
 
@@ -39,6 +30,7 @@ from src import (
     render_ai_settings, escape_markdown_math,
     get_mime_type, format_document_title
 )
+from src.config import configure_langchain_logging
 from src.document_processing import safe_execute
 # Using Streamlit directly for simplicity
 from src.ui_components import (
@@ -93,7 +85,13 @@ class DDChecklistApp:
             'company_summary': "",
             'strategy_analysis': "",
             'agent': None,
-            'is_processing': False
+            # Sidebar file selections
+            'selected_strategy_path': None,
+            'selected_strategy_text': "",
+            'selected_checklist_path': None,
+            'selected_checklist_text': "",
+            'selected_questions_path': None,
+            'selected_questions_text': ""
         }
         
         for key, default_value in essential_defaults.items():
@@ -144,7 +142,7 @@ class DDChecklistApp:
     
     def render_sidebar(self) -> tuple:
         """
-        Render sidebar with project selection and AI settings
+        Render sidebar with project selection, file selectors, and AI settings
         
         Returns:
             Tuple of (selected_data_room_path, use_ai_features, process_button)
@@ -154,16 +152,43 @@ class DDChecklistApp:
             selected_project_path, selected_data_room_path = render_project_selector()
             
             # Process button
-            button_text = "⏳ Processing..." if st.session_state.is_processing else "🚀 Process Data Room"
             process_button = st.button(
-                button_text, 
+                "🚀 Process Data Room", 
                 type="primary", 
-                use_container_width=True,
-                disabled=st.session_state.is_processing
+                use_container_width=True
             )
             
             if process_button:
                 show_success("Processing... Check main area for progress")
+            
+            st.divider()
+            
+            # Strategy, Checklist, and Questions selectors
+            st.subheader("📋 Analysis Configuration")
+            
+            # Strategy selector
+            strategy_path, strategy_text = render_file_selector(
+                self.config.paths.strategy_dir, "Strategy", "sidebar", "🎯"
+            )
+            # Store in session state
+            st.session_state.selected_strategy_path = strategy_path
+            st.session_state.selected_strategy_text = strategy_text
+            
+            # Checklist selector
+            checklist_path, checklist_text = render_file_selector(
+                self.config.paths.checklist_dir, "Checklist", "sidebar", "📊"
+            )
+            # Store in session state
+            st.session_state.selected_checklist_path = checklist_path
+            st.session_state.selected_checklist_text = checklist_text
+            
+            # Questions selector
+            questions_path, questions_text = render_file_selector(
+                self.config.paths.questions_dir, "Questions", "sidebar", "❓"
+            )
+            # Store in session state
+            st.session_state.selected_questions_path = questions_path
+            st.session_state.selected_questions_text = questions_text
             
             st.divider()
             
@@ -182,23 +207,25 @@ class DDChecklistApp:
         
         return selected_data_room_path, use_ai_features, process_button
 
-    def render_summary_tab(self):
-        """Render consolidated summary and analysis tab"""
-        # Strategy selector
-        strategy_path, strategy_text = render_file_selector(
-            self.config.paths.strategy_dir, "Strategy", "tab"
-        )
+    def render_company_overview_tab(self):
+        """Render company overview tab"""
+        # Use strategy from sidebar
+        strategy_text = st.session_state.get('selected_strategy_text', "")
         
         # Check if we have documents to display summaries
         if st.session_state.documents:
-            # Create nested tabs for different analysis views
-            overview_tab, analysis_tab = st.tabs(["🏢 Company Overview", "🎯 Strategic Analysis"])
-            
-            with overview_tab:
-                self._render_report_section("overview", strategy_text=strategy_text)
-            
-            with analysis_tab:
-                self._render_report_section("strategic", strategy_text=strategy_text)
+            self._render_report_section("overview", strategy_text=strategy_text)
+        else:
+            show_info("👈 Configure and process data room to see analysis")
+    
+    def render_strategic_analysis_tab(self):
+        """Render strategic analysis tab"""
+        # Use strategy from sidebar
+        strategy_text = st.session_state.get('selected_strategy_text', "")
+        
+        # Check if we have documents to display summaries
+        if st.session_state.documents:
+            self._render_report_section("strategic", strategy_text=strategy_text)
         else:
             show_info("👈 Configure and process data room to see analysis")
     
@@ -280,26 +307,22 @@ class DDChecklistApp:
     def render_analysis_tab(self, tab_type: str):
         """Unified rendering for checklist and questions tabs"""
         if tab_type == "checklist":
-            # Checklist selector
-            file_path, file_text = render_file_selector(
-                self.config.paths.checklist_dir, "Checklist", "tab"
-            )
+            # Use checklist from sidebar
+            file_text = st.session_state.get('selected_checklist_text', "")
             
             if not file_text:
-                show_error("No checklists found in data/checklist directory")
+                show_info("👈 Select a checklist in the sidebar to see analysis results")
                 return
             
             # Render results if available
             render_checklist_results(st.session_state.checklist_results)
             
         elif tab_type == "questions":
-            # Question list selector
-            file_path, file_text = render_file_selector(
-                self.config.paths.questions_dir, "Question List", "tab"
-            )
+            # Use questions from sidebar
+            file_text = st.session_state.get('selected_questions_text', "")
             
             if not file_text:
-                show_info("No question lists found in data/questions/")
+                show_info("👈 Select a questions list in the sidebar to see analysis results")
                 return
             
             # Render results if available
@@ -335,12 +358,13 @@ class DDChecklistApp:
         # Use lower threshold for Q&A to get more relevant results
         qa_threshold = 0.25
         
-        results = search_documents(
-            self.document_processor,
-            question, 
-            top_k=self.config.ui.top_k_search_results,
-            threshold=qa_threshold
-        )
+        with st.spinner("🔍 Searching documents..."):
+            results = search_documents(
+                self.document_processor,
+                question, 
+                top_k=self.config.ui.top_k_search_results,
+                threshold=qa_threshold
+            )
         
         if results:
             # Use agent to synthesize answer if available
@@ -378,8 +402,13 @@ class DDChecklistApp:
                         doc_title = format_document_title(doc_name)
                         
                         if doc_path:
-                            link_html = create_document_link(doc_path, doc_name, doc_title)
-                            st.markdown(f"   {link_html} ({result['citation']})", unsafe_allow_html=True)
+                            # Create unique key for this result
+                            unique_key = f"result_{i}_{hash(doc_path) % 10000}"
+                            col_a, col_b = st.columns([3, 1])
+                            with col_a:
+                                create_document_link(doc_path, doc_name, doc_title, unique_key)
+                            with col_b:
+                                st.caption(f"({result['citation']})")
                         else:
                             st.caption(f"   📄 {result['source']} ({result['citation']})")
                     
@@ -421,7 +450,6 @@ class DDChecklistApp:
         """Simplified data room processing"""
         if not Path(data_room_path).exists():
             show_error(f"Data room path not found: {data_room_path}")
-            st.session_state.is_processing = False
             return
         
         # Use safe_execute for the entire processing operation
@@ -463,15 +491,13 @@ class DDChecklistApp:
             None,
             "Data room processing"
         )
-        
-        st.session_state.is_processing = False
     
     def _process_checklist_and_questions(self):
         """Process checklist and questions after documents are loaded"""
-        from src.services import parse_checklist, parse_questions, create_vector_store, search_and_analyze, load_default_file
+        from src.services import parse_checklist, parse_questions, create_vector_store, search_and_analyze
         
-        # Load default checklist if available
-        checklist_text = load_default_file(Path(self.config.paths.checklist_dir), "*.md")
+        # Use checklist from sidebar selection
+        checklist_text = st.session_state.get('selected_checklist_text', "")
         if checklist_text and self.document_processor.chunks:
             try:
                 # Parse checklist
@@ -494,8 +520,8 @@ class DDChecklistApp:
             except Exception as e:
                 logger.error(f"Checklist processing failed: {e}")
         
-        # Load default questions if available  
-        questions_text = load_default_file(Path(self.config.paths.questions_dir), "*.md")
+        # Use questions from sidebar selection
+        questions_text = st.session_state.get('selected_questions_text', "")
         if questions_text and self.document_processor.chunks:
             try:
                 # Parse questions
@@ -528,36 +554,43 @@ class DDChecklistApp:
         # Render sidebar and get selections
         selected_data_room_path, use_ai_features, process_button = self.render_sidebar()
         
-        # Main tabs
-        tab1, tab2, tab3, tab4 = st.tabs([
-            "📈 Summary & Analysis", 
+        # Main tabs - Company Overview and Strategic Analysis moved to top level
+        tab1, tab2, tab3, tab4, tab5 = st.tabs([
+            "🏢 Company Overview",
+            "🎯 Strategic Analysis", 
             "📊 Checklist Matching", 
             "❓ Due Diligence Questions", 
             "💬 Q&A with Citations"
         ])
         
         with tab1:
-            self.render_summary_tab()
+            self.render_company_overview_tab()
         
         with tab2:
-            self.render_analysis_tab("checklist")
+            self.render_strategic_analysis_tab()
         
         with tab3:
-            self.render_analysis_tab("questions")
+            self.render_analysis_tab("checklist")
         
         with tab4:
+            self.render_analysis_tab("questions")
+        
+        with tab5:
             self.render_qa_tab()
         
         # Processing complete message is handled in process_data_room function
         
         # Simplified processing trigger
-        if process_button and selected_data_room_path and not st.session_state.is_processing:
-            st.session_state.is_processing = True
-            self.process_data_room(selected_data_room_path)
+        if process_button and selected_data_room_path:
+            with st.spinner("🚀 Processing data room..."):
+                self.process_data_room(selected_data_room_path)
 
 
 def main():
     """Main application entry point"""
+    # Configure LangChain logging to reduce verbosity  
+    configure_langchain_logging(log_level="WARNING")
+    
     app = DDChecklistApp()
     app.run()
 

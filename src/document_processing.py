@@ -10,24 +10,10 @@ This module provides a simplified document processing pipeline with:
 """
 
 import os
-import warnings
-# Fix tokenizers parallelism warning
-os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
-
 import logging
 
-# Suppress verbose LangChain warnings and output
-warnings.filterwarnings("ignore", category=UserWarning, module="langchain")
-warnings.filterwarnings("ignore", category=UserWarning, module="langchain_core")
-warnings.filterwarnings("ignore", category=UserWarning, module="langchain_community")
-warnings.filterwarnings("ignore", message=".*Relevance scores must be between.*")
-warnings.filterwarnings("ignore", message=".*No relevant docs were retrieved.*")
-
-# Set LangChain logging to WARNING level to reduce verbosity
-logging.getLogger("langchain").setLevel(logging.WARNING)
-logging.getLogger("langchain_core").setLevel(logging.WARNING)
-logging.getLogger("langchain_community").setLevel(logging.WARNING)
-logging.getLogger("langchain_huggingface").setLevel(logging.WARNING)
+# Fix tokenizers parallelism warning
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 import re
 
 from pathlib import Path

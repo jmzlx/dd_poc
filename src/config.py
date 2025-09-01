@@ -240,6 +240,25 @@ def init_config(config_file: Optional[str] = None) -> Config:
 # LOGGING UTILITIES - Merged from utils.py
 # =============================================================================
 
+def configure_langchain_logging(log_level: str = "WARNING") -> None:
+    """
+    Configure LangChain library logging levels to reduce verbosity.
+    
+    Args:
+        log_level: Logging level for LangChain modules (default: WARNING)
+    """
+    langchain_modules = [
+        "langchain",
+        "langchain_core", 
+        "langchain_community",
+        "langchain_huggingface"
+    ]
+    
+    level = getattr(logging, log_level.upper())
+    for module in langchain_modules:
+        logging.getLogger(module).setLevel(level)
+
+
 def setup_logging(
     name: str = "dd_checklist", 
     log_level: Optional[str] = None,
