@@ -1,0 +1,64 @@
+{
+  "store_name": "summit-digital-solutions-inc",
+  "metrics": {
+    "num_nodes": 4553,
+    "num_edges": 107,
+    "density": 5.162783031485835e-06,
+    "is_connected": false,
+    "top_central_entities": [
+      [
+        "companies:James Martinez\nDirector of Human Resources\nSummit Digital Solutions",
+        0.004173989455184534
+      ],
+      [
+        "companies:Sarah Blackwell\nChief Operating Officer\nSummit Digital Solutions",
+        0.0026362038664323375
+      ],
+      [
+        "companies:Chief Operating Officer\nSummit Digital Solutions",
+        0.0026362038664323375
+      ],
+      [
+        "companies:Sarah Blackwell\nSarah Blackwell\nChief Operating Officer\nSummit Digital Solutions",
+        0.0026362038664323375
+      ],
+      [
+        "companies:Chief Operating Officer and Secretary of Summit Digital Solutions",
+        0.0026362038664323375
+      ],
+      [
+        "companies:Sarah Blackwell\nSarah Blackwell\nChief Operating Officer & Secretary\nSummit Digital Solutions",
+        0.0026362038664323375
+      ],
+      [
+        "companies:Sarah Blackwell\nChief Operating Officer & Secretary\nSummit Digital Solutions",
+        0.0026362038664323375
+      ],
+      [
+        "people:Chief Operating Officer",
+        0.0026362038664323375
+      ],
+      [
+        "people:James Martinez",
+        0.0026362038664323375
+      ],
+      [
+        "companies:Employees must notify their immediate supervisor and Human Resources as soon as",
+        0.001977152899824253
+      ]
+    ],
+    "entity_distribution": {
+      "companies": 4283,
+      "people": 270
+    }
+  },
+  "entities": {
+    "companies": 7354,
+    "people": 477,
+    "financial_metrics": 2701,
+    "contracts": 0,
+    "dates": 0
+  },
+  "relationships_count": 2,
+  "created_at": "2025-09-13T07:16:22.383592"
+}

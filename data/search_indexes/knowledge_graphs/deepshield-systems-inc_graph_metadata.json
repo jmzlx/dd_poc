@@ -1,0 +1,64 @@
+{
+  "store_name": "deepshield-systems-inc",
+  "metrics": {
+    "num_nodes": 4951,
+    "num_edges": 10,
+    "density": 4.0803918808362355e-07,
+    "is_connected": false,
+    "top_central_entities": [
+      [
+        "people:Sarah Martinez",
+        0.00202020202020202
+      ],
+      [
+        "companies:Human Resources Department\nDeepShield Systems",
+        0.00040404040404040404
+      ],
+      [
+        "companies:Director of Human Resources\nDeepShield Systems",
+        0.00040404040404040404
+      ],
+      [
+        "companies:Human Resources Director\nDeepShield Systems",
+        0.00040404040404040404
+      ],
+      [
+        "people:Human Resources",
+        0.00040404040404040404
+      ],
+      [
+        "people:and\nHuman Resources",
+        0.00040404040404040404
+      ],
+      [
+        "companies:SECURE COMMUNICATIONS LAYER FOR INDUSTRIAL CONTROL SYSTEMS",
+        0.0
+      ],
+      [
+        "companies:DeepShield Systems",
+        0.0
+      ],
+      [
+        "companies:The present invention relates to a secure communications architecture for industrial control\nsystems",
+        0.0
+      ],
+      [
+        "companies:specifically concerning methods and systems",
+        0.0
+      ]
+    ],
+    "entity_distribution": {
+      "companies": 4651,
+      "people": 300
+    }
+  },
+  "entities": {
+    "companies": 8220,
+    "people": 826,
+    "financial_metrics": 1981,
+    "contracts": 0,
+    "dates": 0
+  },
+  "relationships_count": 2,
+  "created_at": "2025-09-13T07:16:30.071018"
+}

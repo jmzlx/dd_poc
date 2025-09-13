@@ -1,0 +1,170 @@
+{
+  "companies": [
+    {
+      "name": "certificates of incorporation",
+      "source": "doc_0",
+      "context": "Articles/certificates of incorporation, bylaws, amendments.",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "All names used by company",
+      "source": "doc_4",
+      "context": "All names used by company/subsidiaries.",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "ERISA",
+      "source": "doc_131",
+      "context": "Reportable events (ERISA).",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "ESG compliance monitoring systems",
+      "source": "doc_184",
+      "context": "ESG compliance monitoring systems.",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "Articles of incorporation",
+      "source": "doc_189",
+      "context": "Articles of incorporation; certificates of incorporation",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "certificates of incorporation",
+      "source": "doc_189",
+      "context": "Articles of incorporation; certificates of incorporation",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "Organizational chart of Company",
+      "source": "doc_192",
+      "context": "Organizational chart of Company and subsidiaries",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "Evidence Company",
+      "source": "doc_225",
+      "context": "Evidence Company is current on all taxes (income, property, payrol",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "Tax deficiency assessments and resolutions",
+      "source": "doc_229",
+      "context": "Tax deficiency assessments and resolutions",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "Affiliates and associates",
+      "source": "doc_268",
+      "context": "Affiliates and associates list (per SEC Rule 12b-2)",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "Trade associations or advocacy group",
+      "source": "doc_277",
+      "context": "Trade associations or advocacy group memberships",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "governmental investigations involving Company",
+      "source": "doc_297",
+      "context": "Pending or threatened litigation; governmental investigations involving Company or subsidiaries",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "rulings binding Company",
+      "source": "doc_299",
+      "context": "y orders, writs, decrees, injunctions, judgments, rulings binding Company",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "resolutions",
+      "source": "doc_302",
+      "context": " with suppliers, competitors, customers, clients; resolutions",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "certificates obtained by Company",
+      "source": "doc_306",
+      "context": "Regulatory filings, reports, permits, certificates obtained by Company",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "Loans or transactions between Company",
+      "source": "doc_315",
+      "context": "Loans or transactions between Company and insiders",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "tracking technologies",
+      "source": "doc_341",
+      "context": "Use of cookies, identifiers, web beacons, tracking technologies; third-party trackers",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "ESG importance measurement systems",
+      "source": "doc_380",
+      "context": "ESG importance measurement systems (shareholder/stakeholder perception surveys)",
+      "chunk_id": null,
+      "document_type": "unknown"
+    }
+  ],
+  "people": [
+    {
+      "name": "for officers and",
+      "source": "doc_3",
+      "context": "Biographical info for officers and directors.",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "Current officers and",
+      "source": "doc_193",
+      "context": "Current officers and directors list",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "Officer and",
+      "source": "doc_194",
+      "context": "Officer and director biographical information",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "biographical information",
+      "source": "doc_194",
+      "context": "Officer and director biographical information",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "Indemnification agreements for",
+      "source": "doc_207",
+      "context": "Indemnification agreements for directors and officers",
+      "chunk_id": null,
+      "document_type": "unknown"
+    }
+  ],
+  "financial_metrics": [],
+  "contracts": [],
+  "dates": []
+}
