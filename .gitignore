@@ -54,3 +54,7 @@ htmlcov/
 *.pem
 *.key
 *.crt
+# Cache directories
+.cache/
+
+# Model files - allow in models/ directory for Streamlit Cloud

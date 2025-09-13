@@ -1,0 +1,65 @@
+{
+  "companies": [
+    {
+      "name": "Are all historical names and addresses of the company",
+      "source": "doc_4",
+      "context": "Are all historical names and addresses of the company/subsidiaries documented?",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "Are property surveys consistent with company",
+      "source": "doc_22",
+      "context": "Are property surveys consistent with company records?",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "Do incorporation",
+      "source": "doc_65",
+      "context": "Do incorporation documents, bylaws, and amendments reflect the cur",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "Do tax sharing or intercompany",
+      "source": "doc_77",
+      "context": "Do tax sharing or intercompany agreements create post-closing obligations?",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "Are liens or encumbrances recorded on company",
+      "source": "doc_82",
+      "context": "Are liens or encumbrances recorded on company assets?",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "contractor agreements assign IP rights fully to the company",
+      "source": "doc_94",
+      "context": "Do employee/contractor agreements assign IP rights fully to the company?",
+      "chunk_id": null,
+      "document_type": "unknown"
+    },
+    {
+      "name": "threatened claims that could materially impact the company",
+      "source": "doc_105",
+      "context": "Are there pending/threatened claims that could materially impact the company?",
+      "chunk_id": null,
+      "document_type": "unknown"
+    }
+  ],
+  "people": [
+    {
+      "name": "biographical disclosures",
+      "source": "doc_3",
+      "context": "Are officer/director biographical disclosures consistent with filings?",
+      "chunk_id": null,
+      "document_type": "unknown"
+    }
+  ],
+  "financial_metrics": [],
+  "contracts": [],
+  "dates": []
+}

@@ -1,0 +1,56 @@
+{
+  "store_name": "questions-simple",
+  "metrics": {
+    "num_nodes": 8,
+    "num_edges": 0,
+    "density": 0,
+    "is_connected": false,
+    "top_central_entities": [
+      [
+        "companies:Are all historical names and addresses of the company",
+        0.0
+      ],
+      [
+        "companies:Are property surveys consistent with company",
+        0.0
+      ],
+      [
+        "companies:Do incorporation",
+        0.0
+      ],
+      [
+        "companies:Do tax sharing or intercompany",
+        0.0
+      ],
+      [
+        "companies:Are liens or encumbrances recorded on company",
+        0.0
+      ],
+      [
+        "companies:contractor agreements assign IP rights fully to the company",
+        0.0
+      ],
+      [
+        "companies:threatened claims that could materially impact the company",
+        0.0
+      ],
+      [
+        "people:biographical disclosures",
+        0.0
+      ]
+    ],
+    "entity_distribution": {
+      "companies": 7,
+      "people": 1
+    }
+  },
+  "entities": {
+    "companies": 7,
+    "people": 1,
+    "financial_metrics": 0,
+    "contracts": 0,
+    "dates": 0
+  },
+  "relationships_count": 0,
+  "created_at": "2025-09-13T07:16:30.137793"
+}

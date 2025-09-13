@@ -1,0 +1,83 @@
+{
+  "stages": {
+    "scan": {
+      "completed_at": "2025-09-10T21:51:49.888529",
+      "metadata": {
+        "execution_time": 0.006573915481567383,
+        "result": {
+          "total_documents": 972,
+          "vdr_documents": 968,
+          "checklist_files": 2,
+          "questions_files": 2,
+          "vdr_projects": 2,
+          "vdr_company_dirs": 2
+        }
+      }
+    },
+    "extract": {
+      "completed_at": "2025-09-10T21:52:35.480003",
+      "metadata": {
+        "execution_time": 45.59137296676636,
+        "result": {
+          "documents_processed": 4038,
+          "chunks_created": 6366,
+          "vdr_results": 4,
+          "markdown_results": 4
+        }
+      }
+    },
+    "classify": {
+      "completed_at": "2025-09-10T16:45:04.266311",
+      "metadata": {
+        "execution_time": 3.5762786865234375e-05,
+        "result": {
+          "status": "classification_integrated"
+        }
+      }
+    },
+    "chunk": {
+      "completed_at": "2025-09-13T07:16:07.550023",
+      "metadata": {
+        "execution_time": 0.0001461505889892578,
+        "result": {
+          "status": "chunking_integrated"
+        }
+      }
+    },
+    "embed": {
+      "completed_at": "2025-09-10T16:45:04.266483",
+      "metadata": {
+        "execution_time": 2.384185791015625e-05,
+        "result": {
+          "status": "embeddings_generated"
+        }
+      }
+    },
+    "index": {
+      "completed_at": "2025-09-10T16:45:04.266563",
+      "metadata": {
+        "execution_time": 2.2172927856445312e-05,
+        "result": {
+          "status": "indices_built"
+        }
+      }
+    },
+    "sparse": {
+      "completed_at": "2025-09-13T07:16:12.018698",
+      "metadata": {
+        "execution_time": 4.468429803848267,
+        "result": {
+          "success": true,
+          "total_stores": 2,
+          "successful": 2,
+          "failed": 0,
+          "skipped": 0,
+          "total_documents": 6366
+        }
+      }
+    }
+  },
+  "last_build": "2025-09-13T07:16:12.018913",
+  "version": "1.0",
+  "total_builds": 9
+}
