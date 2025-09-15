@@ -1,64 +1,67 @@
 {
   "store_name": "deepshield-systems-inc",
   "metrics": {
-    "num_nodes": 4951,
-    "num_edges": 10,
-    "density": 4.0803918808362355e-07,
+    "num_nodes": 2857,
+    "num_edges": 504,
+    "density": 6.176779427206654e-05,
     "is_connected": false,
     "top_central_entities": [
       [
-        "people:Sarah Martinez",
-        0.00202020202020202
+        "companies:Engineering Department of DeepShield Systems, Inc",
+        0.17647058823529413
       ],
       [
-        "companies:Human Resources Department\nDeepShield Systems",
-        0.00040404040404040404
+        "companies:Company",
+        0.0028011204481792717
       ],
       [
-        "companies:Director of Human Resources\nDeepShield Systems",
-        0.00040404040404040404
+        "companies:Mediterranean Shipping Company",
+        0.0028011204481792717
       ],
       [
-        "companies:Human Resources Director\nDeepShield Systems",
-        0.00040404040404040404
+        "companies:Abu Dhabi National Oil Company",
+        0.0028011204481792717
       ],
       [
-        "people:Human Resources",
-        0.00040404040404040404
+        "companies:ExxonMobil Pipeline Company",
+        0.0028011204481792717
       ],
       [
-        "people:and\nHuman Resources",
-        0.00040404040404040404
+        "companies:Natural Gas Pipeline Company of America",
+        0.0028011204481792717
       ],
       [
-        "companies:SECURE COMMUNICATIONS LAYER FOR INDUSTRIAL CONTROL SYSTEMS",
-        0.0
+        "companies:Saudi Arabian Oil Company",
+        0.0028011204481792717
       ],
       [
-        "companies:DeepShield Systems",
-        0.0
+        "companies:Qatar National Gas Operations Company LLC",
+        0.0028011204481792717
       ],
       [
-        "companies:The present invention relates to a secure communications architecture for industrial control\nsystems",
-        0.0
+        "companies:DeepShield Systems, Inc Trust Company",
+        0.0028011204481792717
       ],
       [
-        "companies:specifically concerning methods and systems",
-        0.0
+        "companies:Atlantic Specialty Insurance Company",
+        0.0028011204481792717
       ]
     ],
     "entity_distribution": {
-      "companies": 4651,
-      "people": 300
+      "companies": 924,
+      "people": 80,
+      "financial_metrics": 766,
+      "documents": 364,
+      "legal_keywords": 723
     }
   },
   "entities": {
-    "companies": 8220,
-    "people": 826,
-    "financial_metrics": 1981,
-    "contracts": 0,
-    "dates": 0
+    "companies": 2660,
+    "people": 436,
+    "financial_metrics": 1418,
+    "documents": 364,
+    "legal_keywords": 1326
   },
-  "relationships_count": 2,
-  "created_at": "2025-09-13T07:16:30.071018"
+  "relationships_count": 2009,
+  "created_at": "2025-09-15T08:50:19.503623"
 }

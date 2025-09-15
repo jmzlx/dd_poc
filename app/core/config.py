@@ -26,7 +26,7 @@ class AppConfig:
 
         self._config['model'] = {
             'sentence_transformer_model': 'sentence-transformers/all-mpnet-base-v2',
-            'claude_model': os.getenv('CLAUDE_MODEL', 'claude-3-5-sonnet'),
+            'claude_model': os.getenv('CLAUDE_MODEL', 'claude-sonnet-4-20250514'),
             'claude_haiku_model': 'claude-3-5-haiku-20241022',
             'classification_max_tokens': CLASSIFICATION_MAX_TOKENS,
             'temperature': float(os.getenv('CLAUDE_TEMPERATURE', str(TEMPERATURE))),
@@ -98,11 +98,9 @@ class AppConfig:
             raise ValueError("CLAUDE_MODEL environment variable is required")
 
         valid_claude_models = [
-            'claude-3-5-sonnet',
-            'claude-3-5-haiku-20241022',
-            'claude-3-opus-20240229',
-            'claude-3-sonnet-20240229',
-            'claude-3-haiku-20240307'
+            'claude-sonnet-4-20250514',
+            'claude-opus-4-1-20250805',
+            'claude-3-5-haiku-20241022'
         ]
         if model not in valid_claude_models:
             raise ValueError(f"Invalid Claude model: {model}. Valid models: {', '.join(valid_claude_models)}")

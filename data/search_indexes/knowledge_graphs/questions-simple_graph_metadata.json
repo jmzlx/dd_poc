@@ -1,56 +1,64 @@
 {
   "store_name": "questions-simple",
   "metrics": {
-    "num_nodes": 8,
+    "num_nodes": 133,
     "num_edges": 0,
     "density": 0,
     "is_connected": false,
     "top_central_entities": [
       [
-        "companies:Are all historical names and addresses of the company",
+        "companies:IRS",
         0.0
       ],
       [
-        "companies:Are property surveys consistent with company",
+        "companies:D \\ & O",
         0.0
       ],
       [
-        "companies:Do incorporation",
+        "companies:PCI",
         0.0
       ],
       [
-        "companies:Do tax sharing or intercompany",
+        "documents:doc 0",
         0.0
       ],
       [
-        "companies:Are liens or encumbrances recorded on company",
+        "documents:doc 1",
         0.0
       ],
       [
-        "companies:contractor agreements assign IP rights fully to the company",
+        "documents:doc 2",
         0.0
       ],
       [
-        "companies:threatened claims that could materially impact the company",
+        "documents:doc 3",
         0.0
       ],
       [
-        "people:biographical disclosures",
+        "documents:doc 4",
+        0.0
+      ],
+      [
+        "documents:doc 5",
+        0.0
+      ],
+      [
+        "documents:doc 6",
         0.0
       ]
     ],
     "entity_distribution": {
-      "companies": 7,
-      "people": 1
+      "companies": 3,
+      "documents": 130
     }
   },
   "entities": {
-    "companies": 7,
-    "people": 1,
+    "companies": 4,
+    "people": 0,
     "financial_metrics": 0,
-    "contracts": 0,
-    "dates": 0
+    "documents": 130,
+    "legal_keywords": 0
   },
   "relationships_count": 0,
-  "created_at": "2025-09-13T07:16:30.137793"
+  "created_at": "2025-09-15T08:50:32.058378"
 }

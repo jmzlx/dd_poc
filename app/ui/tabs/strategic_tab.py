@@ -24,19 +24,19 @@ class StrategicTab(TabBase):
 
         # Generate button row
         button_clicked = self._render_generate_buttons(
-            "🎯 Generate Analysis",
+            "🎯 Generate Strategic Assessment",
             "regenerate_strategic_btn",
             "strategic_summary",
-            "Use AI to generate strategic analysis"
+            "Use AI to generate strategic analysis of the target company"
         )
 
         # Generate or display content
         if self._should_generate_content(button_clicked, "strategic_summary"):
-            self._generate_report("strategic", "strategic_summary", "✅ Strategic analysis generated successfully!")
+            self._generate_report("strategic", "strategic_summary", "✅ Target company strategic assessment generated successfully!")
         else:
             self._render_content_or_placeholder(
                 "strategic_summary",
-                "👆 Click 'Generate Analysis' to create AI-powered strategic assessment"
+                "👆 Click 'Generate Strategic Assessment' to create AI-powered target company strategic analysis"
             )
 
     def _generate_report(self, report_type: str, session_attr: str, success_message: str):

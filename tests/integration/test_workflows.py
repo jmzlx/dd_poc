@@ -171,32 +171,32 @@ class TestUserWorkflows:
         self.session.selected_questions_text = self.test_questions_text
         self.session.documents = self.test_documents
 
-        # Mock LLM for parsing questions
+        # Mock LLM for parsing questions - must match StructuredQuestions format
         from unittest.mock import Mock
-        mock_llm_response = """
-        [
-            {
-                "category": "A. Corporate Structure",
-                "question": "Are incorporation documents current?",
-                "id": "q_0"
-            },
-            {
-                "category": "A. Corporate Structure",
-                "question": "Are bylaws properly maintained?",
-                "id": "q_1"
-            },
-            {
-                "category": "B. Financial Health",
-                "question": "Are financial statements audited?",
-                "id": "q_2"
-            },
-            {
-                "category": "B. Financial Health",
-                "question": "What is the revenue growth rate?",
-                "id": "q_3"
-            }
-        ]
-        """
+        mock_llm_response = """{
+            "questions": [
+                {
+                    "category": "A. Corporate Structure",
+                    "question": "Are incorporation documents current?",
+                    "id": "q_0"
+                },
+                {
+                    "category": "A. Corporate Structure",
+                    "question": "Are bylaws properly maintained?",
+                    "id": "q_1"
+                },
+                {
+                    "category": "B. Financial Health",
+                    "question": "Are financial statements audited?",
+                    "id": "q_2"
+                },
+                {
+                    "category": "B. Financial Health",
+                    "question": "What is the revenue growth rate?",
+                    "id": "q_3"
+                }
+            ]
+        }"""
         mock_llm = Mock()
         mock_llm.invoke.return_value = Mock(content=mock_llm_response)
 

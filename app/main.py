@@ -90,8 +90,8 @@ class App:
 
         # Main tabs
         tab_names = [
-            "🏢 Company Overview",
-            "🎯 Strategic Analysis",
+            "🏢 Target Company Analysis",
+            "🎯 Strategic Assessment",
             "📊 Checklist Matching",
             "❓ Due Diligence Questions",
             "💬 Q&A with Citations",
