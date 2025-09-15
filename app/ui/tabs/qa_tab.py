@@ -85,18 +85,9 @@ class QATab:
                         threshold=qa_threshold
                     )
 
-                    # Fallback: try with lower threshold if no results found
+                    # Fail explicitly if no results found
                     if not results:
-                        logger.info(f"No results found with threshold {qa_threshold}, trying lower threshold...")
-                        fallback_threshold = 0.05  # Very low threshold as last resort
-                        results = search_documents(
-                            question,
-                            document_processor,
-                            top_k=self.config.ui['top_k_search_results'],
-                            threshold=fallback_threshold
-                        )
-                        if results:
-                            st.info(f"ℹ️ Found results with lower relevance threshold ({fallback_threshold})")
+                        st.error(f"❌ No relevant documents found for your question with threshold {qa_threshold}. Try rephrasing your question or ensure the data room contains relevant information.")
 
                 # Store results in session state to prevent resets
                 st.session_state[qa_key] = {
@@ -125,8 +116,8 @@ class QATab:
 
     def _render_ai_answer(self, question: str, results: list):
         """Render AI-generated answer with citations"""
-        st.markdown("### 🤖 AI Service Answer")
-        with st.spinner("AI processing, please wait..."):
+        st.markdown("### 🤖 AI Answer")
+        with st.spinner("AI analyzing documents..."):
             try:
                 # Convert results to document format for context
                 context_docs = [f"From {r.get('source', 'Unknown')}:\n{r.get('text', '')}" for r in results[:3]]
@@ -152,24 +143,19 @@ class QATab:
         """Render source documents with download buttons"""
         st.markdown("### 📚 Source Documents")
 
-        # Display source documents with download buttons
+        # Display source documents with download buttons in collapsed expanders
         for i, result in enumerate(results[:3], 1):
-            with st.container():
+            doc_source = result.get('source', 'Unknown')
+            citation = result.get('citation', '')
+            doc_title = f"{i}. {doc_source} ({citation})" if citation else f"{i}. {doc_source}"
+            
+            # Use expander to show documents collapsed by default
+            with st.expander(f"📄 {doc_title}", expanded=False):
                 col1, col2 = st.columns([5, 1])
                 with col1:
                     text_content = result.get('text', '')
-                    excerpt = text_content[:200] + "..." if len(text_content) > 200 else text_content
-                    st.markdown(f"{i}. \"{excerpt}\")")
-
-                    # Create clickable link for the document
-                    doc_path = result.get('path', result.get('full_path', ''))
-                    doc_name = result.get('source', 'Unknown Document')
-                    doc_title = self._format_document_title(doc_name)
-
-                    # Show document info and citation
-                    doc_source = result.get('source', 'Unknown')
-                    citation = result.get('citation', '')
-                    st.caption(f"   📄 {doc_source} ({citation})" if citation else f"   📄 {doc_source}")
+                    excerpt = text_content[:500] + "..." if len(text_content) > 500 else text_content
+                    st.markdown(f"\"{excerpt}\"")
 
                 with col2:
                     # Only show one download button

@@ -1,0 +1,1727 @@
+{
+  "original.md": {
+    "A": {
+      "name": "Organizational and Corporate Documents",
+      "items": [
+        {
+          "text": "Articles/certificates of incorporation, bylaws, amendments.",
+          "original": "1. Articles/certificates of incorporation, bylaws, amendments."
+        },
+        {
+          "text": "Minutes and consents of shareholders, directors, committees.",
+          "original": "2. Minutes and consents of shareholders, directors, committees."
+        },
+        {
+          "text": "Organizational chart, officers, directors.",
+          "original": "3. Organizational chart, officers, directors."
+        },
+        {
+          "text": "Biographical info for officers and directors.",
+          "original": "4. Biographical info for officers and directors."
+        },
+        {
+          "text": "All names used by company/subsidiaries.",
+          "original": "5. All names used by company/subsidiaries."
+        },
+        {
+          "text": "Schedule of all addresses used.",
+          "original": "6. Schedule of all addresses used."
+        },
+        {
+          "text": "Jurisdictions of qualification and copies.",
+          "original": "7. Jurisdictions of qualification and copies."
+        },
+        {
+          "text": "Equity structure details.",
+          "original": "8. Equity structure details."
+        },
+        {
+          "text": "Holders of all securities and rights.",
+          "original": "9. Holders of all securities and rights."
+        },
+        {
+          "text": "Sample certificates of securities.",
+          "original": "10. Sample certificates of securities."
+        },
+        {
+          "text": "Shareholder agreements, voting trusts, restrictive agreements.",
+          "original": "11. Shareholder agreements, voting trusts, restrictive agreements."
+        },
+        {
+          "text": "Applications/permits for issuance or transfer of securities.",
+          "original": "12. Applications/permits for issuance or transfer of securities."
+        },
+        {
+          "text": "Agreements and offering materials re: sales of securities.",
+          "original": "13. Agreements and offering materials re: sales of securities."
+        },
+        {
+          "text": "Agreements granting rights over securities.",
+          "original": "14. Agreements granting rights over securities."
+        },
+        {
+          "text": "Agreements to issue equity.",
+          "original": "15. Agreements to issue equity."
+        },
+        {
+          "text": "Latest directors' and officers' questionnaire.",
+          "original": "16. Latest directors' and officers' questionnaire."
+        },
+        {
+          "text": "Indemnification agreements.",
+          "original": "17. Indemnification agreements."
+        },
+        {
+          "text": "[Other Requests.]",
+          "original": "18. [Other Requests.]"
+        }
+      ]
+    },
+    "B": {
+      "name": "Financial and Accounting Records",
+      "items": [
+        {
+          "text": "Audited and unaudited financials.",
+          "original": "1. Audited and unaudited financials."
+        },
+        {
+          "text": "Auditor correspondence and management letters.",
+          "original": "2. Auditor correspondence and management letters."
+        },
+        {
+          "text": "Liabilities not on statements.",
+          "original": "3. Liabilities not on statements."
+        },
+        {
+          "text": "Budgets and projections.",
+          "original": "4. Budgets and projections."
+        },
+        {
+          "text": "Summary of accounting policies and changes.",
+          "original": "5. Summary of accounting policies and changes."
+        },
+        {
+          "text": "Write-downs/write-offs.",
+          "original": "6. Write-downs/write-offs."
+        },
+        {
+          "text": "Aging schedules for A/R.",
+          "original": "7. Aging schedules for A/R."
+        },
+        {
+          "text": "G&A breakdown.",
+          "original": "8. G&A breakdown."
+        },
+        {
+          "text": "Revenue, margin, ASP breakdown.",
+          "original": "9. Revenue, margin, ASP breakdown."
+        },
+        {
+          "text": "Equity valuations.",
+          "original": "10. Equity valuations."
+        },
+        {
+          "text": "Contingent liabilities.",
+          "original": "11. Contingent liabilities."
+        },
+        {
+          "text": "[Other Requests.]",
+          "original": "12. [Other Requests.]"
+        }
+      ]
+    },
+    "C": {
+      "name": "Tax Matters",
+      "items": [
+        {
+          "text": "Tax jurisdictions, returns, and payments.",
+          "original": "1. Tax jurisdictions, returns, and payments."
+        },
+        {
+          "text": "Federal, state, local tax filings.",
+          "original": "2. Federal, state, local tax filings."
+        },
+        {
+          "text": "Proof of current tax payments.",
+          "original": "3. Proof of current tax payments."
+        },
+        {
+          "text": "Tax audits and correspondence.",
+          "original": "4. Tax audits and correspondence."
+        },
+        {
+          "text": "Tax sharing/benefit agreements.",
+          "original": "5. Tax sharing/benefit agreements."
+        },
+        {
+          "text": "Consents and agreements with tax authorities.",
+          "original": "6. Consents and agreements with tax authorities."
+        },
+        {
+          "text": "Deficiency assessments.",
+          "original": "7. Deficiency assessments."
+        },
+        {
+          "text": "Pending/threatened tax disputes.",
+          "original": "8. Pending/threatened tax disputes."
+        },
+        {
+          "text": "Real estate taxes payable.",
+          "original": "9. Real estate taxes payable."
+        },
+        {
+          "text": "Notices of assessment.",
+          "original": "10. Notices of assessment."
+        },
+        {
+          "text": "IRS Form 3115 filings.",
+          "original": "11. IRS Form 3115 filings."
+        },
+        {
+          "text": "Tax shelters/transactions.",
+          "original": "12. Tax shelters/transactions."
+        },
+        {
+          "text": "Acquisitions without indemnity.",
+          "original": "13. Acquisitions without indemnity."
+        },
+        {
+          "text": "ASC 740 tax reserves.",
+          "original": "14. ASC 740 tax reserves."
+        },
+        {
+          "text": "[Other Requests.]",
+          "original": "15. [Other Requests.]"
+        }
+      ]
+    },
+    "D": {
+      "name": "Loans and Obligations",
+      "items": [
+        {
+          "text": "List of banks, creditors, guarantors.",
+          "original": "1. List of banks, creditors, guarantors."
+        },
+        {
+          "text": "Debt instruments and amendments.",
+          "original": "2. Debt instruments and amendments."
+        },
+        {
+          "text": "Security agreements, indentures, guarantees.",
+          "original": "3. Security agreements, indentures, guarantees."
+        },
+        {
+          "text": "Debt/guarantee agreements with insiders.",
+          "original": "4. Debt/guarantee agreements with insiders."
+        },
+        {
+          "text": "Letters of credit, bonds.",
+          "original": "5. Letters of credit, bonds."
+        },
+        {
+          "text": "Mortgages, liens, encumbrances.",
+          "original": "6. Mortgages, liens, encumbrances."
+        },
+        {
+          "text": "Compliance reports (3 years).",
+          "original": "7. Compliance reports (3 years)."
+        },
+        {
+          "text": "Compliance certificates.",
+          "original": "8. Compliance certificates."
+        },
+        {
+          "text": "Correspondence with lenders.",
+          "original": "9. Correspondence with lenders."
+        },
+        {
+          "text": "[Other Requests.]",
+          "original": "10. [Other Requests.]"
+        }
+      ]
+    },
+    "E": {
+      "name": "Property and Equipment",
+      "items": [
+        {
+          "text": "Schedule of physical assets and equipment.",
+          "original": "1. Schedule of physical assets and equipment."
+        },
+        {
+          "text": "Inventory schedule.",
+          "original": "2. Inventory schedule."
+        },
+        {
+          "text": "Real property schedule.",
+          "original": "3. Real property schedule."
+        },
+        {
+          "text": "Title insurance policies, deeds.",
+          "original": "4. Title insurance policies, deeds."
+        },
+        {
+          "text": "Leases, subleases, related correspondence.",
+          "original": "5. Leases, subleases, related correspondence."
+        },
+        {
+          "text": "Appraisals, surveys.",
+          "original": "6. Appraisals, surveys."
+        },
+        {
+          "text": "Warranties and guaranties.",
+          "original": "7. Warranties and guaranties."
+        },
+        {
+          "text": "[Other Requests.]",
+          "original": "8. [Other Requests.]"
+        }
+      ]
+    },
+    "F": {
+      "name": "Intellectual Property",
+      "items": [
+        {
+          "text": "IP list (copyrights, patents, trademarks), agreements, certificates.",
+          "original": "1. IP list (copyrights, patents, trademarks), agreements, certificates."
+        },
+        {
+          "text": "Software list.",
+          "original": "2. Software list."
+        },
+        {
+          "text": "Royalty and license agreements.",
+          "original": "3. Royalty and license agreements."
+        },
+        {
+          "text": "Internet domains.",
+          "original": "4. Internet domains."
+        },
+        {
+          "text": "Pending/threatened IP claims.",
+          "original": "5. Pending/threatened IP claims."
+        },
+        {
+          "text": "IP policies.",
+          "original": "6. IP policies."
+        },
+        {
+          "text": "[Other Requests.]",
+          "original": "7. [Other Requests.]"
+        }
+      ]
+    },
+    "G": {
+      "name": "Material Contracts",
+      "items": [
+        {
+          "text": "JV, partnership, alliance agreements.",
+          "original": "1. JV, partnership, alliance agreements."
+        },
+        {
+          "text": "Top revenue customer agreements.",
+          "original": "2. Top revenue customer agreements."
+        },
+        {
+          "text": "Brokers, finders, advisory agreements.",
+          "original": "3. Brokers, finders, advisory agreements."
+        },
+        {
+          "text": "Affiliates/Associates list.",
+          "original": "4. Affiliates/Associates list."
+        },
+        {
+          "text": "Affiliate agreements (tax, indemnity, leases, etc.).",
+          "original": "5. Affiliate agreements (tax, indemnity, leases, etc.)."
+        },
+        {
+          "text": "Insurance policies.",
+          "original": "6. Insurance policies."
+        },
+        {
+          "text": "Insurance cancellation/non-renewal correspondence.",
+          "original": "7. Insurance cancellation/non-renewal correspondence."
+        },
+        {
+          "text": "Claims experience.",
+          "original": "8. Claims experience."
+        },
+        {
+          "text": "Self-insurance/captive reports.",
+          "original": "9. Self-insurance/captive reports."
+        },
+        {
+          "text": "Insurance exposure docs.",
+          "original": "10. Insurance exposure docs."
+        },
+        {
+          "text": "Planned JV/alliances/acquisitions/divestitures.",
+          "original": "11. Planned JV/alliances/acquisitions/divestitures."
+        },
+        {
+          "text": "Other contracts (acquisitions, suppliers, government).",
+          "original": "12. Other contracts (acquisitions, suppliers, government)."
+        },
+        {
+          "text": "Trade association memberships.",
+          "original": "13. Trade association memberships."
+        },
+        {
+          "text": "Consents/approvals needed.",
+          "original": "14. Consents/approvals needed."
+        },
+        {
+          "text": "Hedging/swap agreements.",
+          "original": "15. Hedging/swap agreements."
+        },
+        {
+          "text": "Government agreements.",
+          "original": "16. Government agreements."
+        },
+        {
+          "text": "Government contract bids.",
+          "original": "17. Government contract bids."
+        },
+        {
+          "text": "[Other Requests.]",
+          "original": "18. [Other Requests.]"
+        }
+      ]
+    },
+    "H": {
+      "name": "Operational Matters",
+      "items": [
+        {
+          "text": "Customers list.",
+          "original": "1. Customers list."
+        },
+        {
+          "text": "Suppliers and service providers.",
+          "original": "2. Suppliers and service providers."
+        },
+        {
+          "text": "Purchase/supply contracts.",
+          "original": "3. Purchase/supply contracts."
+        },
+        {
+          "text": "Marketing, sales, distribution agreements.",
+          "original": "4. Marketing, sales, distribution agreements."
+        },
+        {
+          "text": "Business/marketing plans, forecasts.",
+          "original": "5. Business/marketing plans, forecasts."
+        },
+        {
+          "text": "Advertising agreements, materials.",
+          "original": "6. Advertising agreements, materials."
+        },
+        {
+          "text": "Credit/collection policies.",
+          "original": "7. Credit/collection policies."
+        },
+        {
+          "text": "Internal policy manuals.",
+          "original": "8. Internal policy manuals."
+        },
+        {
+          "text": "Press releases.",
+          "original": "9. Press releases."
+        },
+        {
+          "text": "Operational changes (last 2 years).",
+          "original": "10. Operational changes (last 2 years)."
+        },
+        {
+          "text": "Competitor info.",
+          "original": "11. Competitor info."
+        },
+        {
+          "text": "Customer satisfaction surveys.",
+          "original": "12. Customer satisfaction surveys."
+        },
+        {
+          "text": "Social media accounts and access.",
+          "original": "13. Social media accounts and access."
+        },
+        {
+          "text": "[Other Requests.]",
+          "original": "14. [Other Requests.]"
+        }
+      ]
+    },
+    "I": {
+      "name": "Litigation",
+      "items": [
+        {
+          "text": "Pending/threatened litigation and investigations.",
+          "original": "1. Pending/threatened litigation and investigations."
+        },
+        {
+          "text": "Litigation involving officers/directors/major holders.",
+          "original": "2. Litigation involving officers/directors/major holders."
+        },
+        {
+          "text": "Court or agency orders.",
+          "original": "3. Court or agency orders."
+        },
+        {
+          "text": "Settlements/waivers.",
+          "original": "4. Settlements/waivers."
+        },
+        {
+          "text": "Settlement documents.",
+          "original": "5. Settlement documents."
+        },
+        {
+          "text": "Supplier/competitor/customer disputes.",
+          "original": "6. Supplier/competitor/customer disputes."
+        },
+        {
+          "text": "Auditor correspondence re: litigation.",
+          "original": "7. Auditor correspondence re: litigation."
+        },
+        {
+          "text": "[Other Requests.]",
+          "original": "8. [Other Requests.]"
+        }
+      ]
+    },
+    "J": {
+      "name": "Regulatory Matters",
+      "items": [
+        {
+          "text": "Regulatory filings, permits, licenses.",
+          "original": "1. Regulatory filings, permits, licenses."
+        },
+        {
+          "text": "Copies of filings and approvals.",
+          "original": "2. Copies of filings and approvals."
+        },
+        {
+          "text": "Violations or alleged violations.",
+          "original": "3. Violations or alleged violations."
+        },
+        {
+          "text": "Correspondence with regulators.",
+          "original": "4. Correspondence with regulators."
+        },
+        {
+          "text": "Minutes/correspondence with regulators.",
+          "original": "5. Minutes/correspondence with regulators."
+        },
+        {
+          "text": "Filings/consents for share purchase.",
+          "original": "6. Filings/consents for share purchase."
+        },
+        {
+          "text": "Antitrust compliance program.",
+          "original": "7. Antitrust compliance program."
+        },
+        {
+          "text": "[Other Requests.]",
+          "original": "8. [Other Requests.]"
+        }
+      ]
+    },
+    "K": {
+      "name": "Employment and Compensation",
+      "items": [
+        {
+          "text": "Officers, directors, employees, contractors: titles, service, pay.",
+          "original": "1. Officers, directors, employees, contractors: titles, service, pay."
+        },
+        {
+          "text": "Employment/consultant/noncompete/confidentiality agreements.",
+          "original": "2. Employment/consultant/noncompete/confidentiality agreements."
+        },
+        {
+          "text": "Insider loan/transaction agreements.",
+          "original": "3. Insider loan/transaction agreements."
+        },
+        {
+          "text": "Benefit and compensation plans.",
+          "original": "4. Benefit and compensation plans."
+        },
+        {
+          "text": "IRS determination letters, Form 5500s, actuarial reports.",
+          "original": "5. IRS determination letters, Form 5500s, actuarial reports."
+        },
+        {
+          "text": "Welfare plan premiums, claims, expenses.",
+          "original": "6. Welfare plan premiums, claims, expenses."
+        },
+        {
+          "text": "Collective bargaining agreements.",
+          "original": "7. Collective bargaining agreements."
+        },
+        {
+          "text": "Union negotiations.",
+          "original": "8. Union negotiations."
+        },
+        {
+          "text": "Multiemployer plans.",
+          "original": "9. Multiemployer plans."
+        },
+        {
+          "text": "Multiemployer contributions, liabilities.",
+          "original": "10. Multiemployer contributions, liabilities."
+        },
+        {
+          "text": "Employment claims/disputes.",
+          "original": "11. Employment claims/disputes."
+        },
+        {
+          "text": "Agency audits/investigations (last 6 years).",
+          "original": "12. Agency audits/investigations (last 6 years)."
+        },
+        {
+          "text": "Agency reports (last 3 years).",
+          "original": "13. Agency reports (last 3 years)."
+        },
+        {
+          "text": "Reportable events (ERISA).",
+          "original": "14. Reportable events (ERISA)."
+        },
+        {
+          "text": "Employee handbooks, manuals.",
+          "original": "15. Employee handbooks, manuals."
+        },
+        {
+          "text": "Harassment/misconduct policies.",
+          "original": "16. Harassment/misconduct policies."
+        },
+        {
+          "text": "[Other Requests.]",
+          "original": "17. [Other Requests.]"
+        }
+      ]
+    },
+    "L": {
+      "name": "Data Privacy & Security",
+      "items": [
+        {
+          "text": "Privacy policies (employees, customers).",
+          "original": "1. Privacy policies (employees, customers)."
+        },
+        {
+          "text": "Information security policies.",
+          "original": "2. Information security policies."
+        },
+        {
+          "text": "Breach response policies.",
+          "original": "3. Breach response policies."
+        },
+        {
+          "text": "Audit reports (3 years).",
+          "original": "4. Audit reports (3 years)."
+        },
+        {
+          "text": "Privacy/security officer details.",
+          "original": "5. Privacy/security officer details."
+        },
+        {
+          "text": "Employee training materials.",
+          "original": "6. Employee training materials."
+        },
+        {
+          "text": "Certifications (SOC, PCI DSS, HIPAA, ISO, NIST, etc.).",
+          "original": "7. Certifications (SOC, PCI DSS, HIPAA, ISO, NIST, etc.)."
+        },
+        {
+          "text": "Background checks description.",
+          "original": "8. Background checks description."
+        },
+        {
+          "text": "Data privacy/security incidents (3 years).",
+          "original": "9. Data privacy/security incidents (3 years)."
+        },
+        {
+          "text": "Cross-border data transfer compliance (e.g., GDPR).",
+          "original": "10. Cross-border data transfer compliance (e.g., GDPR)."
+        },
+        {
+          "text": "Data sharing for marketing.",
+          "original": "11. Data sharing for marketing."
+        },
+        {
+          "text": "Use of cookies/tracking.",
+          "original": "12. Use of cookies/tracking."
+        },
+        {
+          "text": "Global/regional personal data databases.",
+          "original": "13. Global/regional personal data databases."
+        },
+        {
+          "text": "[Other Requests.]",
+          "original": "14. [Other Requests.]"
+        }
+      ]
+    },
+    "M": {
+      "name": "ESG Matters",
+      "items": [
+        {
+          "text": "Environmental investigations, Phase I/II.",
+          "original": "1. Environmental investigations, Phase I/II."
+        },
+        {
+          "text": "Hazardous substances list.",
+          "original": "2. Hazardous substances list."
+        },
+        {
+          "text": "Records on hazardous substances.",
+          "original": "3. Records on hazardous substances."
+        },
+        {
+          "text": "Off-site storage/disposal.",
+          "original": "4. Off-site storage/disposal."
+        },
+        {
+          "text": "Studies on pollution, biodiversity, climate, energy/water.",
+          "original": "5. Studies on pollution, biodiversity, climate, energy/water."
+        },
+        {
+          "text": "Responsible sourcing policies.",
+          "original": "6. Responsible sourcing policies."
+        },
+        {
+          "text": "Environmental litigation/investigations.",
+          "original": "7. Environmental litigation/investigations."
+        },
+        {
+          "text": "Environmental permits/licenses.",
+          "original": "8. Environmental permits/licenses."
+        },
+        {
+          "text": "Known contamination issues.",
+          "original": "9. Known contamination issues."
+        },
+        {
+          "text": "Customer satisfaction reports.",
+          "original": "10. Customer satisfaction reports."
+        },
+        {
+          "text": "Employee satisfaction reports.",
+          "original": "11. Employee satisfaction reports."
+        },
+        {
+          "text": "Workplace safety investigations.",
+          "original": "12. Workplace safety investigations."
+        },
+        {
+          "text": "Product safety violations.",
+          "original": "13. Product safety violations."
+        },
+        {
+          "text": "Policies on safety, child labor, trafficking.",
+          "original": "14. Policies on safety, child labor, trafficking."
+        },
+        {
+          "text": "Diversity & inclusion policies.",
+          "original": "15. Diversity & inclusion policies."
+        },
+        {
+          "text": "Policies on subcontractors/suppliers.",
+          "original": "16. Policies on subcontractors/suppliers."
+        },
+        {
+          "text": "Responsible persons/systems for supply chain risks.",
+          "original": "17. Responsible persons/systems for supply chain risks."
+        },
+        {
+          "text": "Supplier/subcontractor lists.",
+          "original": "18. Supplier/subcontractor lists."
+        },
+        {
+          "text": "Consumer protection policies.",
+          "original": "19. Consumer protection policies."
+        },
+        {
+          "text": "Employee recruitment/retention policies.",
+          "original": "20. Employee recruitment/retention policies."
+        },
+        {
+          "text": "Workplace safety policies.",
+          "original": "21. Workplace safety policies."
+        },
+        {
+          "text": "Sexual harassment investigation processes.",
+          "original": "22. Sexual harassment investigation processes."
+        },
+        {
+          "text": "Corrective actions for harassment.",
+          "original": "23. Corrective actions for harassment."
+        },
+        {
+          "text": "Reports of harassment (5 years).",
+          "original": "24. Reports of harassment (5 years)."
+        },
+        {
+          "text": "Settlement agreements re: harassment.",
+          "original": "25. Settlement agreements re: harassment."
+        },
+        {
+          "text": "Whistleblower mechanisms.",
+          "original": "26. Whistleblower mechanisms."
+        },
+        {
+          "text": "Compliance with accounting/disclosure standards.",
+          "original": "27. Compliance with accounting/disclosure standards."
+        },
+        {
+          "text": "Internal controls for disclosure compliance.",
+          "original": "28. Internal controls for disclosure compliance."
+        },
+        {
+          "text": "Responsible persons/systems for compliance.",
+          "original": "29. Responsible persons/systems for compliance."
+        },
+        {
+          "text": "ESG in executive compensation.",
+          "original": "30. ESG in executive compensation."
+        },
+        {
+          "text": "Succession planning policies.",
+          "original": "31. Succession planning policies."
+        },
+        {
+          "text": "Investor initiatives/activism related to ESG.",
+          "original": "32. Investor initiatives/activism related to ESG."
+        },
+        {
+          "text": "Shareholder matters (last 5 years).",
+          "original": "33. Shareholder matters (last 5 years)."
+        },
+        {
+          "text": "Voluntary ESG standards/frameworks.",
+          "original": "34. Voluntary ESG standards/frameworks."
+        },
+        {
+          "text": "Mandatory ESG standards/frameworks.",
+          "original": "35. Mandatory ESG standards/frameworks."
+        },
+        {
+          "text": "ESG compliance monitoring systems.",
+          "original": "36. ESG compliance monitoring systems."
+        },
+        {
+          "text": "Shareholder/stakeholder ESG importance measures.",
+          "original": "37. Shareholder/stakeholder ESG importance measures."
+        },
+        {
+          "text": "[Other Requests.]",
+          "original": "38. [Other Requests.]"
+        }
+      ]
+    },
+    "N": {
+      "name": "Other Categories",
+      "items": [
+        {
+          "text": "[Other Requests.]",
+          "original": "1. [Other Requests.]"
+        },
+        {
+          "text": "[Other Requests.]",
+          "original": "2. [Other Requests.]"
+        }
+      ]
+    }
+  },
+  "bloomberg.md": {
+    "A": {
+      "name": "Organizational & Corporate Documents",
+      "items": [
+        {
+          "text": "Articles of incorporation; certificates of incorporation",
+          "original": "1. Articles of incorporation; certificates of incorporation"
+        },
+        {
+          "text": "By-laws; operating agreements; amendments",
+          "original": "2. By-laws; operating agreements; amendments"
+        },
+        {
+          "text": "Board and shareholder meeting minutes; written consents; materials presented",
+          "original": "3. Board and shareholder meeting minutes; written consents; materials presented"
+        },
+        {
+          "text": "Organizational chart of Company and subsidiaries",
+          "original": "4. Organizational chart of Company and subsidiaries"
+        },
+        {
+          "text": "Current officers and directors list",
+          "original": "5. Current officers and directors list"
+        },
+        {
+          "text": "Officer and director biographical information",
+          "original": "6. Officer and director biographical information"
+        },
+        {
+          "text": "Trade names; fictitious names; aliases used since inception",
+          "original": "7. Trade names; fictitious names; aliases used since inception"
+        },
+        {
+          "text": "Company and subsidiary addresses; office and property locations",
+          "original": "8. Company and subsidiary addresses; office and property locations"
+        },
+        {
+          "text": "Jurisdictions of registration or qualification; certificates of authority",
+          "original": "9. Jurisdictions of registration or qualification; certificates of authority"
+        },
+        {
+          "text": "Equity structure; authorized and outstanding shares; classes or series",
+          "original": "10. Equity structure; authorized and outstanding shares; classes or series"
+        },
+        {
+          "text": "Shareholder and securities holders schedule; rights to acquire securities; consideration paid",
+          "original": "11. Shareholder and securities holders schedule; rights to acquire securities; consideration paid"
+        },
+        {
+          "text": "Certificates evidencing shares, options, warrants, bonds, or securities",
+          "original": "12. Certificates evidencing shares, options, warrants, bonds, or securities"
+        },
+        {
+          "text": "Shareholder agreements; voting trusts; proxies; restrictive agreements",
+          "original": "13. Shareholder agreements; voting trusts; proxies; restrictive agreements"
+        },
+        {
+          "text": "Applications or permits for issuance or transfer of securities",
+          "original": "14. Applications or permits for issuance or transfer of securities"
+        },
+        {
+          "text": "Agreements, memoranda, or offering materials relating to securities sales; investor correspondence; acquisition proposals; financial projections; placement memoranda; appraisals; fairness opinions",
+          "original": "15. Agreements, memoranda, or offering materials relating to securities sales; investor correspondence; acquisition proposals; financial projections; placement memoranda; appraisals; fairness opinions"
+        },
+        {
+          "text": "Agreements granting rights over issued/unissued securities (purchase, repurchase, preemptive, registration, options, warrants, convertible)",
+          "original": "16. Agreements granting rights over issued/unissued securities (purchase, repurchase, preemptive, registration, options, warrants, convertible)"
+        },
+        {
+          "text": "Agreements to issue securities or equity interests; amendments",
+          "original": "17. Agreements to issue securities or equity interests; amendments"
+        },
+        {
+          "text": "Directors' and officers' questionnaires (most recent)",
+          "original": "18. Directors' and officers' questionnaires (most recent)"
+        },
+        {
+          "text": "Indemnification agreements for directors and officers",
+          "original": "19. Indemnification agreements for directors and officers"
+        },
+        {
+          "text": "Other organizational documents not covered above",
+          "original": "20. Other organizational documents not covered above"
+        }
+      ]
+    },
+    "B": {
+      "name": "Financial & Accounting Records",
+      "items": [
+        {
+          "text": "Audited financial statements",
+          "original": "1. Audited financial statements"
+        },
+        {
+          "text": "Unaudited financial statements",
+          "original": "2. Unaudited financial statements"
+        },
+        {
+          "text": "Independent auditor reports",
+          "original": "3. Independent auditor reports"
+        },
+        {
+          "text": "Audit correspondence; management letters; special reports; counsel letters to auditors",
+          "original": "4. Audit correspondence; management letters; special reports; counsel letters to auditors"
+        },
+        {
+          "text": "Unrecorded liabilities not in financial statements",
+          "original": "5. Unrecorded liabilities not in financial statements"
+        },
+        {
+          "text": "Budgets; projected financial statements; cash flow forecasts",
+          "original": "6. Budgets; projected financial statements; cash flow forecasts"
+        },
+        {
+          "text": "Accounting policies and changes in methods or principles",
+          "original": "7. Accounting policies and changes in methods or principles"
+        },
+        {
+          "text": "Write-downs and write-offs outside ordinary course",
+          "original": "8. Write-downs and write-offs outside ordinary course"
+        },
+        {
+          "text": "Accounts receivable aging schedules",
+          "original": "9. Accounts receivable aging schedules"
+        },
+        {
+          "text": "General and administrative (G&A) expense breakdown",
+          "original": "10. General and administrative (G&A) expense breakdown"
+        },
+        {
+          "text": "Revenue, gross margin, and average selling price breakdown",
+          "original": "11. Revenue, gross margin, and average selling price breakdown"
+        },
+        {
+          "text": "Valuations of equity securities",
+          "original": "12. Valuations of equity securities"
+        },
+        {
+          "text": "Contingent liabilities (recorded)",
+          "original": "13. Contingent liabilities (recorded)"
+        },
+        {
+          "text": "Other financial and accounting documents not covered above",
+          "original": "14. Other financial and accounting documents not covered above"
+        }
+      ]
+    },
+    "C": {
+      "name": "Tax Matters",
+      "items": [
+        {
+          "text": "State and local jurisdictions for tax filings and payments; schedule of taxes paid",
+          "original": "1. State and local jurisdictions for tax filings and payments; schedule of taxes paid"
+        },
+        {
+          "text": "Federal, state, local tax returns (last 3 closed years + open years)",
+          "original": "2. Federal, state, local tax returns (last 3 closed years + open years)"
+        },
+        {
+          "text": "Evidence Company is current on all taxes (income, property, payroll, VAT, etc.)",
+          "original": "3. Evidence Company is current on all taxes (income, property, payroll, VAT, etc.)"
+        },
+        {
+          "text": "Tax audits (3 closed + open years); correspondence",
+          "original": "4. Tax audits (3 closed + open years); correspondence"
+        },
+        {
+          "text": "Tax sharing or tax benefit agreements; state unitary filings",
+          "original": "5. Tax sharing or tax benefit agreements; state unitary filings"
+        },
+        {
+          "text": "Consents and agreements with tax authorities",
+          "original": "6. Consents and agreements with tax authorities"
+        },
+        {
+          "text": "Tax deficiency assessments and resolutions",
+          "original": "7. Tax deficiency assessments and resolutions"
+        },
+        {
+          "text": "Pending or threatened disputes with tax authorities",
+          "original": "8. Pending or threatened disputes with tax authorities"
+        },
+        {
+          "text": "Real estate taxes payable",
+          "original": "9. Real estate taxes payable"
+        },
+        {
+          "text": "Notices of assessment; revenue agent reports for open years",
+          "original": "10. Notices of assessment; revenue agent reports for open years"
+        },
+        {
+          "text": "IRS Form 3115 filings; Section 481(a) depreciation adjustments",
+          "original": "11. IRS Form 3115 filings; Section 481(a) depreciation adjustments"
+        },
+        {
+          "text": "Tax shelters; reportable transactions",
+          "original": "12. Tax shelters; reportable transactions"
+        },
+        {
+          "text": "Acquisitions lacking pre-closing tax indemnities",
+          "original": "13. Acquisitions lacking pre-closing tax indemnities"
+        },
+        {
+          "text": "ASC 740 (FIN 48) reserves; underlying issues and assessments",
+          "original": "14. ASC 740 (FIN 48) reserves; underlying issues and assessments"
+        },
+        {
+          "text": "Other tax documents not covered above",
+          "original": "15. Other tax documents not covered above"
+        }
+      ]
+    },
+    "D": {
+      "name": "Loans & Obligations",
+      "items": [
+        {
+          "text": "Banks, creditors, guarantors, lenders list and relationships",
+          "original": "1. Banks, creditors, guarantors, lenders list and relationships"
+        },
+        {
+          "text": "Debt instruments; lines of credit; amendments, consents, waivers",
+          "original": "2. Debt instruments; lines of credit; amendments, consents, waivers"
+        },
+        {
+          "text": "Security agreements; trust indentures; mortgages; deeds of trust; guaranties; installment purchases; leases; letters of credit; contingent obligations; indemnities",
+          "original": "3. Security agreements; trust indentures; mortgages; deeds of trust; guaranties; installment purchases; leases; letters of credit; contingent obligations; indemnities"
+        },
+        {
+          "text": "Debt, guaranty, indemnification, or similar arrangements with insiders",
+          "original": "4. Debt, guaranty, indemnification, or similar arrangements with insiders"
+        },
+        {
+          "text": "Outstanding letters of credit; performance and other bonds",
+          "original": "5. Outstanding letters of credit; performance and other bonds"
+        },
+        {
+          "text": "Mortgages, liens, security interests, encumbrances",
+          "original": "6. Mortgages, liens, security interests, encumbrances"
+        },
+        {
+          "text": "Compliance reports (past 3 years) related to debt instruments",
+          "original": "7. Compliance reports (past 3 years) related to debt instruments"
+        },
+        {
+          "text": "Compliance certificates for covenants or restrictions",
+          "original": "8. Compliance certificates for covenants or restrictions"
+        },
+        {
+          "text": "Material correspondence with lenders",
+          "original": "9. Material correspondence with lenders"
+        },
+        {
+          "text": "Other loan and obligation documents not covered above",
+          "original": "10. Other loan and obligation documents not covered above"
+        }
+      ]
+    },
+    "E": {
+      "name": "Property & Equipment",
+      "items": [
+        {
+          "text": "Physical assets and equipment schedules; ownership and lease terms",
+          "original": "1. Physical assets and equipment schedules; ownership and lease terms"
+        },
+        {
+          "text": "Inventories: descriptions, locations, quantities",
+          "original": "2. Inventories: descriptions, locations, quantities"
+        },
+        {
+          "text": "Real property owned or leased",
+          "original": "3. Real property owned or leased"
+        },
+        {
+          "text": "Title insurance policies; abstracts of title; deeds; certificates",
+          "original": "4. Title insurance policies; abstracts of title; deeds; certificates"
+        },
+        {
+          "text": "Leases, subleases, financing and security agreements; lessor/lessee correspondence on defaults",
+          "original": "5. Leases, subleases, financing and security agreements; lessor/lessee correspondence on defaults"
+        },
+        {
+          "text": "Appraisal reports and surveys of real property",
+          "original": "6. Appraisal reports and surveys of real property"
+        },
+        {
+          "text": "Warranties and guaranties for real and personal property",
+          "original": "7. Warranties and guaranties for real and personal property"
+        },
+        {
+          "text": "Other property and equipment documents not covered above",
+          "original": "8. Other property and equipment documents not covered above"
+        }
+      ]
+    },
+    "F": {
+      "name": "Intellectual Property",
+      "items": [
+        {
+          "text": "Registered copyrights, trademarks, service marks, patents; certificates of registration",
+          "original": "1. Registered copyrights, trademarks, service marks, patents; certificates of registration"
+        },
+        {
+          "text": "Unregistered IP and pending applications",
+          "original": "2. Unregistered IP and pending applications"
+        },
+        {
+          "text": "IP acquisition, assignment, licensing agreements; related correspondence",
+          "original": "3. IP acquisition, assignment, licensing agreements; related correspondence"
+        },
+        {
+          "text": "Software owned, licensed, or used",
+          "original": "4. Software owned, licensed, or used"
+        },
+        {
+          "text": "Royalty, fee, and license agreements; concessions or special rights",
+          "original": "5. Royalty, fee, and license agreements; concessions or special rights"
+        },
+        {
+          "text": "Internet domain names held, assigned, or used",
+          "original": "6. Internet domain names held, assigned, or used"
+        },
+        {
+          "text": "Claims for infringement or violation of proprietary rights",
+          "original": "7. Claims for infringement or violation of proprietary rights"
+        },
+        {
+          "text": "Company IP policies (registration, use, maintenance, monitoring)",
+          "original": "8. Company IP policies (registration, use, maintenance, monitoring)"
+        },
+        {
+          "text": "Other intellectual property documents not covered above",
+          "original": "9. Other intellectual property documents not covered above"
+        }
+      ]
+    },
+    "G": {
+      "name": "Material Contracts",
+      "items": [
+        {
+          "text": "Joint venture, partnership, teaming, subcontract, alliance agreements",
+          "original": "1. Joint venture, partnership, teaming, subcontract, alliance agreements"
+        },
+        {
+          "text": "Customer agreements comprising top 10% of revenues; other major agreements",
+          "original": "2. Customer agreements comprising top 10% of revenues; other major agreements"
+        },
+        {
+          "text": "Brokers, finders, financial advisory agreements",
+          "original": "3. Brokers, finders, financial advisory agreements"
+        },
+        {
+          "text": "Affiliates and associates list (per SEC Rule 12b-2)",
+          "original": "4. Affiliates and associates list (per SEC Rule 12b-2)"
+        },
+        {
+          "text": "Agreements with affiliates/associates (tax sharing, indemnification, leases, consulting, facilities, supply, licenses)",
+          "original": "5. Agreements with affiliates/associates (tax sharing, indemnification, leases, consulting, facilities, supply, licenses)"
+        },
+        {
+          "text": "Insurance policies (general liability, property, casualty, D&O, workers comp, key man, cyber, excess)",
+          "original": "6. Insurance policies (general liability, property, casualty, D&O, workers comp, key man, cyber, excess)"
+        },
+        {
+          "text": "Insurance cancellations, non-renewals, or declinations",
+          "original": "7. Insurance cancellations, non-renewals, or declinations"
+        },
+        {
+          "text": "Insurance claims experience",
+          "original": "8. Insurance claims experience"
+        },
+        {
+          "text": "Self-insurance or captive programs; actuarial reports",
+          "original": "9. Self-insurance or captive programs; actuarial reports"
+        },
+        {
+          "text": "Documents on insurance and liability exposure; reserve funds, accounts",
+          "original": "10. Documents on insurance and liability exposure; reserve funds, accounts"
+        },
+        {
+          "text": "Contemplated JVs, partnerships, alliances, acquisitions, divestitures",
+          "original": "11. Contemplated JVs, partnerships, alliances, acquisitions, divestitures"
+        },
+        {
+          "text": "Other contracts (acquisition, purchase, agency, land, construction, supply, government agreements, divestitures)",
+          "original": "12. Other contracts (acquisition, purchase, agency, land, construction, supply, government agreements, divestitures)"
+        },
+        {
+          "text": "Trade associations or advocacy group memberships",
+          "original": "13. Trade associations or advocacy group memberships"
+        },
+        {
+          "text": "Material consents, approvals, notices, filings for the Transaction",
+          "original": "14. Material consents, approvals, notices, filings for the Transaction"
+        },
+        {
+          "text": "Hedging or swap agreements; commodities trading policies; hedge identification for tax purposes",
+          "original": "15. Hedging or swap agreements; commodities trading policies; hedge identification for tax purposes"
+        },
+        {
+          "text": "Agreements with government entities",
+          "original": "16. Agreements with government entities"
+        },
+        {
+          "text": "Pending bids or recompetes for government contracts",
+          "original": "17. Pending bids or recompetes for government contracts"
+        },
+        {
+          "text": "Other material contracts not covered above",
+          "original": "18. Other material contracts not covered above"
+        }
+      ]
+    },
+    "H": {
+      "name": "Operational Matters",
+      "items": [
+        {
+          "text": "Customers or clients list",
+          "original": "1. Customers or clients list"
+        },
+        {
+          "text": "Suppliers and third-party service providers list",
+          "original": "2. Suppliers and third-party service providers list"
+        },
+        {
+          "text": "Purchase and supply contract forms; pricing terms, rebates, concessions",
+          "original": "3. Purchase and supply contract forms; pricing terms, rebates, concessions"
+        },
+        {
+          "text": "Marketing, sales, franchise, distribution, agency, promotion, influencer agreements; independent salespersons/distributors list",
+          "original": "4. Marketing, sales, franchise, distribution, agency, promotion, influencer agreements; independent salespersons/distributors list"
+        },
+        {
+          "text": "Business plans, marketing plans, sales forecasts, consultant studies, industry trend reports",
+          "original": "5. Business plans, marketing plans, sales forecasts, consultant studies, industry trend reports"
+        },
+        {
+          "text": "Advertising, promotion, PR agreements; advertising materials, brochures, marketing collateral",
+          "original": "6. Advertising, promotion, PR agreements; advertising materials, brochures, marketing collateral"
+        },
+        {
+          "text": "Credit and collection policies",
+          "original": "7. Credit and collection policies"
+        },
+        {
+          "text": "Internal policy manuals (including social media and online privacy)",
+          "original": "8. Internal policy manuals (including social media and online privacy)"
+        },
+        {
+          "text": "Press releases",
+          "original": "9. Press releases"
+        },
+        {
+          "text": "Significant operational changes (past 2 years)",
+          "original": "10. Significant operational changes (past 2 years)"
+        },
+        {
+          "text": "Competitor analyses and reports",
+          "original": "11. Competitor analyses and reports"
+        },
+        {
+          "text": "Customer satisfaction surveys",
+          "original": "12. Customer satisfaction surveys"
+        },
+        {
+          "text": "Social media platforms used; company accounts; access lists",
+          "original": "13. Social media platforms used; company accounts; access lists"
+        },
+        {
+          "text": "Other operational documents not covered above",
+          "original": "14. Other operational documents not covered above"
+        }
+      ]
+    },
+    "I": {
+      "name": "Litigation",
+      "items": [
+        {
+          "text": "Pending or threatened litigation; governmental investigations involving Company or subsidiaries",
+          "original": "1. Pending or threatened litigation; governmental investigations involving Company or subsidiaries"
+        },
+        {
+          "text": "Litigation or investigations involving officers, directors, or >5% shareholders",
+          "original": "2. Litigation or investigations involving officers, directors, or >5% shareholders"
+        },
+        {
+          "text": "Court or agency orders, writs, decrees, injunctions, judgments, rulings binding Company",
+          "original": "3. Court or agency orders, writs, decrees, injunctions, judgments, rulings binding Company"
+        },
+        {
+          "text": "Settlements of litigation; waiver agreements cancelling material claims",
+          "original": "4. Settlements of litigation; waiver agreements cancelling material claims"
+        },
+        {
+          "text": "Settlement documents; tolling agreements; statute extensions",
+          "original": "5. Settlement documents; tolling agreements; statute extensions"
+        },
+        {
+          "text": "Disputes with suppliers, competitors, customers, clients; resolutions",
+          "original": "6. Disputes with suppliers, competitors, customers, clients; resolutions"
+        },
+        {
+          "text": "Auditor/accountant correspondence on threatened or pending litigation, assessments, or claims",
+          "original": "7. Auditor/accountant correspondence on threatened or pending litigation, assessments, or claims"
+        },
+        {
+          "text": "Other litigation documents not covered above",
+          "original": "8. Other litigation documents not covered above"
+        }
+      ]
+    },
+    "J": {
+      "name": "Regulatory Matters",
+      "items": [
+        {
+          "text": "Regulatory filings, reports, licenses, permits, consents, approvals required for business",
+          "original": "1. Regulatory filings, reports, licenses, permits, consents, approvals required for business"
+        },
+        {
+          "text": "Regulatory filings, reports, permits, certificates obtained by Company",
+          "original": "2. Regulatory filings, reports, permits, certificates obtained by Company"
+        },
+        {
+          "text": "Violations or alleged violations of laws/regulations",
+          "original": "3. Violations or alleged violations of laws/regulations"
+        },
+        {
+          "text": "Correspondence with regulatory bodies; notices of violations",
+          "original": "4. Correspondence with regulatory bodies; notices of violations"
+        },
+        {
+          "text": "Minutes/transcripts of meetings with regulatory agencies; related correspondence",
+          "original": "5. Minutes/transcripts of meetings with regulatory agencies; related correspondence"
+        },
+        {
+          "text": "Governmental filings and consents required for share purchase",
+          "original": "6. Governmental filings and consents required for share purchase"
+        },
+        {
+          "text": "Antitrust compliance program; manuals and policies",
+          "original": "7. Antitrust compliance program; manuals and policies"
+        },
+        {
+          "text": "Other regulatory documents not covered above",
+          "original": "8. Other regulatory documents not covered above"
+        }
+      ]
+    },
+    "K": {
+      "name": "Employment & Compensation",
+      "items": [
+        {
+          "text": "Officers, directors, managers, key employees, consultants, contractors: titles, tenure, compensation",
+          "original": "1. Officers, directors, managers, key employees, consultants, contractors: titles, tenure, compensation"
+        },
+        {
+          "text": "Employment, consultant, contractor, non-compete, confidentiality, nondisclosure agreements",
+          "original": "2. Employment, consultant, contractor, non-compete, confidentiality, nondisclosure agreements"
+        },
+        {
+          "text": "Loans or transactions between Company and insiders",
+          "original": "3. Loans or transactions between Company and insiders"
+        },
+        {
+          "text": "Benefit and compensation plans (pension, retirement, incentive, stock options, welfare, insurance)",
+          "original": "4. Benefit and compensation plans (pension, retirement, incentive, stock options, welfare, insurance)"
+        },
+        {
+          "text": "IRS determination letters; Form 5500s (last 3 years); actuarial reports",
+          "original": "5. IRS determination letters; Form 5500s (last 3 years); actuarial reports"
+        },
+        {
+          "text": "Welfare plan data: premiums, claims, reserves, admin expenses (last 3 years)",
+          "original": "6. Welfare plan data: premiums, claims, reserves, admin expenses (last 3 years)"
+        },
+        {
+          "text": "Collective bargaining agreements",
+          "original": "7. Collective bargaining agreements"
+        },
+        {
+          "text": "Current labor negotiations",
+          "original": "8. Current labor negotiations"
+        },
+        {
+          "text": "Multiemployer plans (past 6 years)",
+          "original": "9. Multiemployer plans (past 6 years)"
+        },
+        {
+          "text": "Multiemployer contributions, withdrawal liabilities, pending claims",
+          "original": "10. Multiemployer contributions, withdrawal liabilities, pending claims"
+        },
+        {
+          "text": "Pending/threatened employment claims; union activity; strikes; disputes",
+          "original": "11. Pending/threatened employment claims; union activity; strikes; disputes"
+        },
+        {
+          "text": "Audits/investigations by IRS, DOL, PBGC, OSHA, or other agencies (last 6 years)",
+          "original": "12. Audits/investigations by IRS, DOL, PBGC, OSHA, or other agencies (last 6 years)"
+        },
+        {
+          "text": "Reports/correspondence submitted to government agencies (last 3 years)",
+          "original": "13. Reports/correspondence submitted to government agencies (last 3 years)"
+        },
+        {
+          "text": "Correspondence on reportable events for plans (last 6 years)",
+          "original": "14. Correspondence on reportable events for plans (last 6 years)"
+        },
+        {
+          "text": "Employee handbooks, personnel policies, procedures, manuals",
+          "original": "15. Employee handbooks, personnel policies, procedures, manuals"
+        },
+        {
+          "text": "Policies on sexual harassment and misconduct",
+          "original": "16. Policies on sexual harassment and misconduct"
+        },
+        {
+          "text": "Other employment and compensation documents not covered above",
+          "original": "17. Other employment and compensation documents not covered above"
+        }
+      ]
+    },
+    "L": {
+      "name": "Data Privacy & Security",
+      "items": [
+        {
+          "text": "Privacy policies for employees, customers, consumers (websites, apps, disclosures)",
+          "original": "1. Privacy policies for employees, customers, consumers (websites, apps, disclosures)"
+        },
+        {
+          "text": "Information security policies (physical, administrative, IT)",
+          "original": "2. Information security policies (physical, administrative, IT)"
+        },
+        {
+          "text": "Breach response and incident response policies",
+          "original": "3. Breach response and incident response policies"
+        },
+        {
+          "text": "Internal system audits (last 3 years); compliance with privacy laws",
+          "original": "4. Internal system audits (last 3 years); compliance with privacy laws"
+        },
+        {
+          "text": "Privacy officer; security officer; designated personnel",
+          "original": "5. Privacy officer; security officer; designated personnel"
+        },
+        {
+          "text": "Privacy/security training materials (last 3 years)",
+          "original": "6. Privacy/security training materials (last 3 years)"
+        },
+        {
+          "text": "Certifications (SOC, PCI DSS, HIPAA/HITECH, ISO, CSA, NIST, etc.)",
+          "original": "7. Certifications (SOC, PCI DSS, HIPAA/HITECH, ISO, CSA, NIST, etc.)"
+        },
+        {
+          "text": "Background checks for employees/contractors with access to personal data",
+          "original": "8. Background checks for employees/contractors with access to personal data"
+        },
+        {
+          "text": "Incidents, investigations, claims, regulatory actions on data privacy/security (last 3 years)",
+          "original": "9. Incidents, investigations, claims, regulatory actions on data privacy/security (last 3 years)"
+        },
+        {
+          "text": "Cross-border data transfer compliance (e.g., GDPR)",
+          "original": "10. Cross-border data transfer compliance (e.g., GDPR)"
+        },
+        {
+          "text": "Sharing of personal information with affiliates/unaffiliated entities for marketing",
+          "original": "11. Sharing of personal information with affiliates/unaffiliated entities for marketing"
+        },
+        {
+          "text": "Use of cookies, identifiers, web beacons, tracking technologies; third-party trackers",
+          "original": "12. Use of cookies, identifiers, web beacons, tracking technologies; third-party trackers"
+        },
+        {
+          "text": "Global/regional databases or applications for storing personal data",
+          "original": "13. Global/regional databases or applications for storing personal data"
+        },
+        {
+          "text": "Other data privacy and security documents not covered above",
+          "original": "14. Other data privacy and security documents not covered above"
+        }
+      ]
+    },
+    "M": {
+      "name": "Environmental, Social, Governance (ESG) Matters",
+      "items": [
+        {
+          "text": "Environmental investigations, reviews, assessments (Phase I/II)",
+          "original": "1. Environmental investigations, reviews, assessments (Phase I/II)"
+        },
+        {
+          "text": "Hazardous substances used",
+          "original": "2. Hazardous substances used"
+        },
+        {
+          "text": "Records of handling, storage, transportation, disposal of hazardous substances",
+          "original": "3. Records of handling, storage, transportation, disposal of hazardous substances"
+        },
+        {
+          "text": "Off-site hazardous storage or disposal locations",
+          "original": "4. Off-site hazardous storage or disposal locations"
+        },
+        {
+          "text": "Studies/reports: pollution, contamination, biodiversity impacts, climate change risks, energy/water usage",
+          "original": "5. Studies/reports: pollution, contamination, biodiversity impacts, climate change risks, energy/water usage"
+        },
+        {
+          "text": "Policies/statements on responsible sourcing, supply chain risks",
+          "original": "6. Policies/statements on responsible sourcing, supply chain risks"
+        },
+        {
+          "text": "Environmental legal actions, investigations, complaints, settlements, fines",
+          "original": "7. Environmental legal actions, investigations, complaints, settlements, fines"
+        },
+        {
+          "text": "Environmental licenses, permits, authorizations",
+          "original": "8. Environmental licenses, permits, authorizations"
+        },
+        {
+          "text": "Known contaminations or hazardous material concerns (asbestos, lead paint, petroleum, mercury, radiation, radon)",
+          "original": "9. Known contaminations or hazardous material concerns (asbestos, lead paint, petroleum, mercury, radiation, radon)"
+        },
+        {
+          "text": "Customer satisfaction reports",
+          "original": "10. Customer satisfaction reports"
+        },
+        {
+          "text": "Employee satisfaction reports",
+          "original": "11. Employee satisfaction reports"
+        },
+        {
+          "text": "Workplace safety violation investigations, litigation, fines, penalties",
+          "original": "12. Workplace safety violation investigations, litigation, fines, penalties"
+        },
+        {
+          "text": "Product safety violation investigations, litigation, fines, penalties",
+          "original": "13. Product safety violation investigations, litigation, fines, penalties"
+        },
+        {
+          "text": "Workplace safety, child labor, human trafficking policies",
+          "original": "14. Workplace safety, child labor, human trafficking policies"
+        },
+        {
+          "text": "Diversity and inclusion policies (board, management, workforce)",
+          "original": "15. Diversity and inclusion policies (board, management, workforce)"
+        },
+        {
+          "text": "Subcontractor, contractor, supplier vetting policies",
+          "original": "16. Subcontractor, contractor, supplier vetting policies"
+        },
+        {
+          "text": "Responsible persons/systems for supply chain risk monitoring (internal or external)",
+          "original": "17. Responsible persons/systems for supply chain risk monitoring (internal or external)"
+        },
+        {
+          "text": "Suppliers, subcontractors, contractors list; projects and locations",
+          "original": "18. Suppliers, subcontractors, contractors list; projects and locations"
+        },
+        {
+          "text": "Consumer protection and product safety policies",
+          "original": "19. Consumer protection and product safety policies"
+        },
+        {
+          "text": "Recruitment and retention policies",
+          "original": "20. Recruitment and retention policies"
+        },
+        {
+          "text": "Workplace safety records/policies",
+          "original": "21. Workplace safety records/policies"
+        },
+        {
+          "text": "Sexual harassment/misconduct investigation processes",
+          "original": "22. Sexual harassment/misconduct investigation processes"
+        },
+        {
+          "text": "Corrective actions taken to prevent further sexual harassment/misconduct",
+          "original": "23. Corrective actions taken to prevent further sexual harassment/misconduct"
+        },
+        {
+          "text": "Reports of sexual harassment (last 5 years); including against executives/directors",
+          "original": "24. Reports of sexual harassment (last 5 years); including against executives/directors"
+        },
+        {
+          "text": "Settlement agreements relating to sexual harassment/misconduct",
+          "original": "25. Settlement agreements relating to sexual harassment/misconduct"
+        },
+        {
+          "text": "Whistleblower and grievance mechanism reports and policies",
+          "original": "26. Whistleblower and grievance mechanism reports and policies"
+        },
+        {
+          "text": "Compliance with accounting/disclosure standards: reports, policies, disclosures",
+          "original": "27. Compliance with accounting/disclosure standards: reports, policies, disclosures"
+        },
+        {
+          "text": "Internal controls for accounting/disclosure compliance",
+          "original": "28. Internal controls for accounting/disclosure compliance"
+        },
+        {
+          "text": "Responsible persons/systems for monitoring disclosure compliance",
+          "original": "29. Responsible persons/systems for monitoring disclosure compliance"
+        },
+        {
+          "text": "Integration of ESG data/issues into executive compensation",
+          "original": "30. Integration of ESG data/issues into executive compensation"
+        },
+        {
+          "text": "Management succession plans or policies",
+          "original": "31. Management succession plans or policies"
+        },
+        {
+          "text": "Investor initiatives or activist campaigns related to ESG",
+          "original": "32. Investor initiatives or activist campaigns related to ESG"
+        },
+        {
+          "text": "Shareholder matters (proxies, activist investors, no-action requests, proposals)",
+          "original": "33. Shareholder matters (proxies, activist investors, no-action requests, proposals)"
+        },
+        {
+          "text": "Voluntary ESG standards/frameworks used; related disclosures",
+          "original": "34. Voluntary ESG standards/frameworks used; related disclosures"
+        },
+        {
+          "text": "Mandatory ESG standards/frameworks applicable; related disclosures",
+          "original": "35. Mandatory ESG standards/frameworks applicable; related disclosures"
+        },
+        {
+          "text": "Persons/systems monitoring ESG commitments and priorities",
+          "original": "36. Persons/systems monitoring ESG commitments and priorities"
+        },
+        {
+          "text": "ESG importance measurement systems (shareholder/stakeholder perception surveys)",
+          "original": "37. ESG importance measurement systems (shareholder/stakeholder perception surveys)"
+        },
+        {
+          "text": "Other ESG documents not covered above",
+          "original": "38. Other ESG documents not covered above"
+        }
+      ]
+    },
+    "N": {
+      "name": "Vendor Matters",
+      "items": [
+        {
+          "text": "Major vendors and suppliers; goods/services; spend; relationship length",
+          "original": "1. Major vendors and suppliers; goods/services; spend; relationship length"
+        },
+        {
+          "text": "Significant purchase/master supply/procurement contracts",
+          "original": "2. Significant purchase/master supply/procurement contracts"
+        },
+        {
+          "text": "Standard forms: purchase orders; supply agreements",
+          "original": "3. Standard forms: purchase orders; supply agreements"
+        },
+        {
+          "text": "Vendors/suppliers >5% annual purchases; sole/primary source providers",
+          "original": "4. Vendors/suppliers >5% annual purchases; sole/primary source providers"
+        },
+        {
+          "text": "Vendor qualification, selection, management policies/procedures",
+          "original": "5. Vendor qualification, selection, management policies/procedures"
+        },
+        {
+          "text": "Vendor/supplier disputes (last 3 years)",
+          "original": "6. Vendor/supplier disputes (last 3 years)"
+        },
+        {
+          "text": "Vendor/supplier audits, performance reviews, quality assessments (last 2 years)",
+          "original": "7. Vendor/supplier audits, performance reviews, quality assessments (last 2 years)"
+        },
+        {
+          "text": "Vendor compliance programs (anti-corruption, modern slavery, ethics)",
+          "original": "8. Vendor compliance programs (anti-corruption, modern slavery, ethics)"
+        },
+        {
+          "text": "Vendor rebate programs; volume discounts; special pricing",
+          "original": "9. Vendor rebate programs; volume discounts; special pricing"
+        },
+        {
+          "text": "Anticipated material changes to vendor relationships (next 12 months)",
+          "original": "10. Anticipated material changes to vendor relationships (next 12 months)"
+        },
+        {
+          "text": "Other vendor documents not covered above",
+          "original": "11. Other vendor documents not covered above"
+        }
+      ]
+    },
+    "Z": {
+      "name": "Other / Not Categorized",
+      "items": [
+        {
+          "text": "Documents, records, or materials not relevant to or not included within Categories A–N",
+          "original": "1. Documents, records, or materials not relevant to or not included within Categories A–N"
+        }
+      ]
+    }
+  }
+}

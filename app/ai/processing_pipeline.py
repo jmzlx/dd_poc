@@ -35,13 +35,21 @@ logger = logging.getLogger(__name__)
 # Pydantic models for structured output parsing
 class ChecklistItem(BaseModel):
     """Individual checklist item"""
-    text: str = Field(description="The checklist item text")
+    text: Optional[str] = Field(default=None, description="The checklist item text")
     original: Optional[str] = Field(default=None, description="The original text before any cleanup")
+    
+    def is_valid(self) -> bool:
+        """Check if this item has required data"""
+        return bool(self.text and self.text.strip())
 
 class ChecklistCategory(BaseModel):
     """Checklist category with items"""
     name: str = Field(description="Category name (e.g., 'Organizational and Corporate Documents')")
     items: List[ChecklistItem] = Field(description="List of checklist items in this category")
+    
+    def get_valid_items(self) -> List[ChecklistItem]:
+        """Return only valid items with text content"""
+        return [item for item in self.items if item.is_valid()]
 
 class StructuredChecklist(BaseModel):
     """Complete checklist with all categories"""
@@ -104,19 +112,22 @@ def parse_checklist_node(state: AgentState, llm: "ChatAnthropic") -> AgentState:
         # Parse the response using the Pydantic parser
         result = parser.parse(llm_response.content)
 
-        # Convert Pydantic model to expected dictionary format (same as parse_checklist)
+        # Convert Pydantic model to expected dictionary format, filtering out invalid items
         categories_dict = {}
         for key, category in result.categories.items():
-            categories_dict[key] = {
-                'name': category.name,
-                'items': [
-                    {
-                        'text': item.text,
-                        'original': item.original or item.text  # Use text as fallback if original is None
-                    }
-                    for item in category.items
-                ]
-            }
+            # Only include valid items with actual text content
+            valid_items = category.get_valid_items()
+            if valid_items:  # Only include categories that have valid items
+                categories_dict[key] = {
+                    'name': category.name,
+                    'items': [
+                        {
+                            'text': item.text,
+                            'original': item.original or item.text  # Use text as fallback if original is None
+                        }
+                        for item in valid_items
+                    ]
+                }
 
         state["checklist"] = categories_dict
         state["messages"].append(AIMessage(content=f"Parsed {len(categories_dict)} categories"))

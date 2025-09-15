@@ -35,40 +35,24 @@ class TestAIAnalysis:
         if api_inputs.count() > 0:
             expect(api_inputs.first).to_be_visible()
 
-    def test_overview_tab_functionality(self, page: Page, streamlit_helpers: StreamlitPageHelpers):
-        """Test the Overview analysis tab"""
+    def test_company_analysis_tab_functionality(self, page: Page, streamlit_helpers: StreamlitPageHelpers):
+        """Test the unified Strategic Company Analysis tab"""
         streamlit_helpers.wait_for_streamlit_load()
         
-        # Navigate to Overview tab
-        overview_tab = page.locator("button:has-text('Overview'), text='Overview'").first
-        if overview_tab.count() > 0:
-            overview_tab.click()
+        # Navigate to Strategic Company Analysis tab
+        analysis_tab = page.locator("button:has-text('Strategic Company Analysis'), text='Strategic Company Analysis'").first
+        if analysis_tab.count() > 0:
+            analysis_tab.click()
             page.wait_for_timeout(1000)
             
-            # Should show overview-related content
-            overview_content = page.locator("text=/.*[Oo]verview.*|.*[Cc]ompany.*[Aa]nalysis.*|.*[Bb]usiness.*[Mm]odel.*/")
+            # Should show company analysis content
+            analysis_content = page.locator("text=/.*[Cc]ompany.*[Aa]nalysis.*|.*[Dd]ue.*[Dd]iligence.*|.*[Ss]trategic.*[Aa]nalysis.*/")
             
-            # Look for generate/analyze buttons
-            generate_buttons = page.locator("button:has-text(/.*[Gg]enerate.*|.*[Aa]nalyze.*|.*[Cc]reate.*/)")
+            # Look for generate/analyze buttons for comprehensive analysis
+            generate_buttons = page.locator("button:has-text(/.*[Gg]enerate.*[Dd]ue.*[Dd]iligence.*|.*[Gg]enerate.*[Aa]nalysis.*|.*[Cc]omprehensive.*/)")
             
             if generate_buttons.count() > 0:
                 expect(generate_buttons.first).to_be_visible()
-
-    def test_strategic_tab_functionality(self, page: Page, streamlit_helpers: StreamlitPageHelpers):
-        """Test the Strategic analysis tab"""
-        streamlit_helpers.wait_for_streamlit_load()
-        
-        # Navigate to Strategic tab
-        strategic_tab = page.locator("button:has-text('Strategic'), text='Strategic'").first
-        if strategic_tab.count() > 0:
-            strategic_tab.click()
-            page.wait_for_timeout(1000)
-            
-            # Should show strategic analysis content
-            strategic_content = page.locator("text=/.*[Ss]trategic.*|.*[Ss]trategy.*|.*[Aa]nalysis.*/")
-            
-            # Look for strategy-related controls
-            strategy_elements = page.locator("text=/.*[Ss]trategy.*[Ff]ile.*|.*[Ss]trategic.*[Oo]bjectives.*/")
 
     def test_qa_tab_functionality(self, page: Page, streamlit_helpers: StreamlitPageHelpers):
         """Test the Q&A functionality tab"""
@@ -210,14 +194,14 @@ class TestAIAnalysis:
             # Enter a mock API key (this will likely fail, but tests the flow)
             api_inputs.first.fill("sk-ant-test-mock-key-for-testing-12345678901234567890")
             
-            # Navigate to Overview tab
-            overview_tab = page.locator("button:has-text('Overview'), text='Overview'").first
-            if overview_tab.count() > 0:
-                overview_tab.click()
+            # Navigate to Strategic Company Analysis tab
+            analysis_tab = page.locator("button:has-text('Strategic Company Analysis'), text='Strategic Company Analysis'").first
+            if analysis_tab.count() > 0:
+                analysis_tab.click()
                 page.wait_for_timeout(1000)
                 
-                # Try to generate an overview
-                generate_buttons = page.locator("button:has-text(/.*[Gg]enerate.*|.*[Aa]nalyze.*/)")
+                # Try to generate a comprehensive analysis
+                generate_buttons = page.locator("button:has-text(/.*[Gg]enerate.*[Dd]ue.*[Dd]iligence.*|.*[Gg]enerate.*[Aa]nalysis.*|.*[Cc]omprehensive.*/)")
                 
                 if generate_buttons.count() > 0:
                     generate_buttons.first.click()

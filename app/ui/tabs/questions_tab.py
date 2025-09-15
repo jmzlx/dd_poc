@@ -95,15 +95,19 @@ class QuestionsTab:
             # Show progress indicator
             with st.spinner("🚀 Starting question analysis..."):
                 try:
-                    from app.core.parsers import parse_questions
-                    from app.core.search import search_and_analyze
+                    from app.core.search import search_and_analyze, load_prebuilt_questions
+                    from pathlib import Path
 
-                    # Step 1: Parse questions
-                    st.info("📋 Parsing questions...")
-                    llm = self.ai_handler.llm
-                    if not llm:
-                        raise ValueError("AI service not configured. Please set up your API key first.")
-                    questions = parse_questions(questions_text, llm)
+                    # Step 1: Load pre-parsed questions (no LLM needed)
+                    st.info("📋 Loading pre-parsed questions...")
+                    
+                    # Extract filename from questions path
+                    if hasattr(self.session, 'questions_path') and self.session.questions_path:
+                        questions_filename = Path(self.session.questions_path).name
+                    else:
+                        raise ValueError("No questions file selected. Please select a questions file in the sidebar first.")
+                    
+                    questions = load_prebuilt_questions(questions_filename)
                     self.session.questions = questions
                     st.info(f"Found {len(questions)} questions to process")
 
@@ -114,8 +118,8 @@ class QuestionsTab:
                     vector_store = document_processor.vector_store
 
                     # Step 3: Process questions with batch processing
-                    st.info("🤖 Processing questions with AI (batch mode)...")
-                    st.info("Using concurrent processing for faster results...")
+                    st.info("🤖 **AI Agent Processing:** Running batch analysis with ReAct reasoning...")
+                    st.info("🧠 **Agent Status:** Using concurrent processing for faster results...")
 
                     question_answers = search_and_analyze(
                         questions,

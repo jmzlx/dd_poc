@@ -90,16 +90,21 @@ class ChecklistTab:
 
             # Note: Document type embeddings will be auto-loaded if missing during processing
 
-            with st.spinner("Processing checklist, please wait..."):
-                from app.core.parsers import parse_checklist
+            with st.spinner("🤖 AI Agent matching checklist items to documents..."):
                 from app.core import search_and_analyze
 
                 try:
-                    # Parse raw checklist
-                    llm = self.ai_handler.llm
-                    if not llm:
-                        raise ValueError("AI service not configured. Please set up your API key first.")
-                    checklist = parse_checklist(checklist_text, llm)
+                    # Load pre-parsed checklist structure (no LLM needed)
+                    from app.core.search import load_prebuilt_checklist
+                    from pathlib import Path
+                    
+                    # Extract filename from checklist path
+                    if hasattr(self.session, 'checklist_path') and self.session.checklist_path:
+                        checklist_filename = Path(self.session.checklist_path).name
+                    else:
+                        raise ValueError("No checklist file selected. Please select a checklist in the sidebar first.")
+                    
+                    checklist = load_prebuilt_checklist(checklist_filename)
                     self.session.checklist = checklist
 
                     # Use pre-built FAISS index from document processor

@@ -15,7 +15,7 @@ A professional, enterprise-grade Streamlit application for automated due diligen
 - **Semantic Understanding**: Uses both original checklist text and AI descriptions for richer document matching
 - **FAISS-Powered Search**: 10x faster similarity search with optimized indexing
 - Automated document-to-checklist mapping with improved accuracy
-- PRIMARY/ANCILLARY relevance tagging
+- Statistical relevance filtering using adaptive thresholds
 - Dynamic relevancy thresholds
 - Clean, compact display with download buttons and expandable AI descriptions
 - Real-time filtering without reprocessing
@@ -37,12 +37,15 @@ A professional, enterprise-grade Streamlit application for automated due diligen
 - Precise document citations with excerpts
 - AI agent synthesis of answers
 
-### 📈 **Strategic Analysis**
-- Company overview generation
-- Strategic alignment assessment
-- Risk identification from missing documents
-- Go/No-Go recommendations
-- Export strategic reports
+### 🏢 **Strategic Company Analysis**
+- **Unified Analysis Tab**: Consolidated company overview and strategic assessment into a single comprehensive interface
+- **Advanced ReAct Agent**: Unified comprehensive agent with 10-12 tool call analysis combining company overview and strategic assessment
+- **Complete Due Diligence**: Covers business model, financials, competitive position, strategic value, and M&A fit assessment
+- **Context-Aware Analysis**: Leverages strategic objectives, checklist results, and Q&A insights for comprehensive evaluation
+- **Citation Management**: Full citation tracking with document downloads and source verification
+- **Structured UX**: Expandable sections for better user experience and organized information display
+- **Robust Error Handling**: RAG fallback mechanism if recursion limits are hit during analysis
+- **Export Capabilities**: Generate comprehensive company analysis reports in multiple formats
 
 ### 🤖 **AI Enhancement (Optional)**
 - Powered by **Anthropic Claude 3.5 Sonnet** (2025 models)
@@ -66,6 +69,8 @@ This project implements several cutting-edge AI and search techniques specifical
 
 #### **LangGraph Agent System**
 - **Modular Workflow Orchestration**: Uses LangGraph for complex multi-step AI workflows
+- **Advanced ReAct Agents**: Comprehensive reasoning and action agents for strategic analysis
+- **Citation Management**: Full citation tracking and document reference management
 - **State Management**: Maintains conversation state across document analysis tasks
 - **Conditional Routing**: Dynamic task routing based on content analysis
 - **Memory Persistence**: Checkpoint-based conversation memory with SQLite backend
@@ -373,7 +378,7 @@ echo "DESCRIPTION_BATCH_SIZE=20" >> .env
 echo "SKIP_DESCRIPTIONS=false" >> .env
 echo "SIMILARITY_THRESHOLD=0.35" >> .env
 echo "RELEVANCY_THRESHOLD=0.4" >> .env
-echo "PRIMARY_THRESHOLD=0.5" >> .env
+echo "STATISTICAL_STD_MULTIPLIER=1.5" >> .env
 echo "MIN_DISPLAY_THRESHOLD=0.15" >> .env
 echo "MAX_WORKERS=4" >> .env
 echo "FILE_TIMEOUT=30" >> .env
@@ -434,7 +439,7 @@ TOKENIZERS_PARALLELISM=false
 #### **Similarity Thresholds**
 - `SIMILARITY_THRESHOLD` - General similarity threshold (default: `0.35`)
 - `RELEVANCY_THRESHOLD` - Relevancy threshold for Q&A (default: `0.4`)
-- `PRIMARY_THRESHOLD` - Primary vs ancillary classification (default: `0.5`)
+- `STATISTICAL_STD_MULTIPLIER` - Standard deviations above mean for significance (default: `1.5`)
 - `MIN_DISPLAY_THRESHOLD` - Minimum score to display results (default: `0.15`)
 
 #### **API & Performance**
@@ -622,11 +627,13 @@ Tests are configured to run automatically in CI/CD pipelines with:
 4. **⚙️ Configuration** - AI settings and options
 
 ### Main Tabs
-1. **📈 Summary & Analysis**
-   - Strategy selector with preview
-   - Company overview (AI-generated)
-   - Strategic alignment analysis
-   - Export capabilities
+1. **🏢 Strategic Company Analysis**
+   - Unified comprehensive analysis combining company overview and strategic assessment
+   - Advanced ReAct agent with iterative reasoning (10-12 tool calls)
+   - Complete M&A due diligence evaluation with Go/No-Go recommendations
+   - Full citation tracking with document downloads
+   - Expandable sections for organized information display
+   - Export comprehensive analysis reports
 
 2. **📊 Checklist Matching**
    - Checklist selector with preview
@@ -659,9 +666,11 @@ dd_poc/
 │   │   ├── __init__.py
 │   │   ├── agent_core.py      # LangGraph agent setup & DDChecklistAgent
 │   │   ├── agent_utils.py     # AI utility functions
+│   │   ├── citation_manager.py # Citation tracking and document reference management
 │   │   ├── document_classifier.py # Document classification
 │   │   ├── processing_pipeline.py # AI processing workflows
-│   │   └── prompts.py         # AI prompt templates
+│   │   ├── prompts.py         # AI prompt templates
+│   │   └── react_agents.py    # Advanced ReAct agents for strategic analysis
 │   ├── core/                  # Core functionality
 │   │   ├── __init__.py
 │   │   ├── config.py          # Configuration management
@@ -700,10 +709,11 @@ dd_poc/
 │   │   ├── tabs/              # Tab components
 │   │   │   ├── __init__.py
 │   │   │   ├── checklist_tab.py
-│   │   │   ├── overview_tab.py
+│   │   │   ├── company_analysis_tab.py # Unified strategic company analysis
+│   │   │   ├── graph_tab.py
 │   │   │   ├── qa_tab.py
 │   │   │   ├── questions_tab.py
-│   │   │   └── strategic_tab.py
+│   │   │   └── tab_base.py    # Base tab functionality
 │   │   └── ui_components/     # Additional UI components
 │   ├── error_handler.py       # Error handling
 │   └── session_manager.py     # Session management
@@ -762,11 +772,14 @@ dd_poc/
 - **Cache System**: Persistent embedding cache with hash-based invalidation
 - **Processing Speed**: ~10-20 documents/second with parallel workers
 
-### Relevance Scoring
-- **Primary Documents**: ≥50% relevance (🔹 PRIMARY tag)
-- **Ancillary Documents**: <50% relevance (🔸 ANCILLARY tag)
-- **Adjustable Thresholds**: Real-time filtering without reprocessing
-- **No Document Limits**: Shows all relevant matches
+### Statistical Relevance Filtering
+- **Adaptive Thresholds**: Uses mean + (std_multiplier × standard_deviation) to identify statistically significant matches
+- **Three Filtering Methods**:
+  - 📊 **Statistical Filtering**: Clear separation found, shows documents above adaptive threshold
+  - 📉 **Flat Distribution**: No clear separation, shows top N matches as fallback
+  - 📋 **Insufficient Data**: <5 candidates, shows all available matches
+- **Configurable Strictness**: Adjust `STATISTICAL_STD_MULTIPLIER` (1.0=loose, 2.0=strict)
+- **No Document Limits**: Shows all statistically relevant matches
 - **FAISS-Powered**: Sub-second similarity search on large document sets
 
 ### AI Capabilities (2025 Models)
@@ -927,6 +940,10 @@ uv run python -c "from app import DDChecklistApp; app = DDChecklistApp(); print(
 # Test AI module specifically
 uv run python -c "from app.ai import agent_core; print('✅ AI module available')"
 
+# Test new ReAct agents and citation management
+uv run python -c "from app.ai.react_agents import ComprehensiveReActAgent; print('✅ ReAct agents available')"
+uv run python -c "from app.ai.citation_manager import CitationManager; print('✅ Citation management available')"
+
 # Test new entity processing modules
 uv run python -c "from app.core.entity_resolution import EntityResolver; print('✅ Entity resolution available')"
 uv run python -c "from app.core.enhanced_entity_extractor import EnhancedEntityExtractor; print('✅ Enhanced extraction available')"
@@ -985,12 +1002,14 @@ find . -name "*.pyc" -delete && find . -name "__pycache__" -type d -exec rm -rf 
 ## 📊 Technical Specifications
 
 ### AI Architecture
-- **Modular Design**: Separate modules for core, nodes, utilities, and prompts
-- **LangGraph Integration**: Workflow-based AI processing
+- **Modular Design**: Separate modules for core, nodes, utilities, prompts, and specialized agents
+- **LangGraph Integration**: Workflow-based AI processing with advanced ReAct agents
+- **Strategic Analysis Agents**: Comprehensive 10-12 tool call ReAct agents for company analysis
+- **Citation Management System**: Full citation tracking, document downloads, and source verification
 - **Multi-Stage Entity Processing**: Transformer extraction → Enhanced attributes → Entity resolution → Legal coreference
 - **Semantic Entity Resolution**: Embedding-based clustering with configurable similarity thresholds
 - **Legal Document Processing**: Specialized patterns for legal keyword extraction and mapping
-- **Graceful Degradation**: Fallback modes when AI unavailable
+- **Graceful Degradation**: RAG fallback modes when recursion limits hit or AI unavailable
 - **Rate Limiting**: Exponential backoff with jitter
 - **Batch Processing**: Concurrent document summarization and entity processing
 

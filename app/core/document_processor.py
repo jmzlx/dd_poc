@@ -401,29 +401,36 @@ class DocumentProcessor:
             # Perform similarity search with scores - get more candidates for reranking
             docs_and_scores = self.vector_store.similarity_search_with_score(query, k=max(20, top_k*3))
 
-            # Initial filtering and conversion to candidates format
+            # VECTORIZED: Initial filtering and conversion to candidates format
+            import numpy as np
+            
+            # Extract documents and scores for vectorized processing
+            docs = [doc for doc, score in docs_and_scores]
+            scores = np.array([score for doc, score in docs_and_scores])
+            
+            # VECTORIZED: Convert FAISS distances to similarity scores in batch
+            similarity_scores = np.where(scores <= 2.0, 1.0 - (scores / 2.0), 0.0)
+            
+            # VECTORIZED: Filter by threshold using boolean mask
+            threshold_mask = similarity_scores >= threshold
+            valid_indices = np.where(threshold_mask)[0]
+            
+            # Build candidates list for all valid documents (no duplicate filtering needed)
+            # Note: Removed duplicate checking as it was removing valuable overlapping chunks
+            # that are intentionally created by the 200-character chunk overlap setting
             candidates = []
-            seen_texts = set()
+            
+            for idx in valid_indices:
+                doc = docs[idx]
+                similarity_score = similarity_scores[idx]
 
-            for doc, score in docs_and_scores:
-                # Convert FAISS distance to similarity score (higher is better)
-                similarity_score = 1.0 - (score / 2.0) if score <= 2.0 else 0.0
-
-                if similarity_score < threshold:
-                    continue
-
-                # Avoid duplicates based on text content
-                text_preview = doc.page_content[:100]
-                if text_preview not in seen_texts:
-                    seen_texts.add(text_preview)
-
-                    candidates.append({
-                        'text': doc.page_content,
-                        'source': doc.metadata.get('name', ''),
-                        'path': doc.metadata.get('path', ''),
-                        'score': float(similarity_score),
-                        'metadata': doc.metadata
-                    })
+                candidates.append({
+                    'text': doc.page_content,
+                    'source': doc.metadata.get('name', ''),
+                    'path': doc.metadata.get('path', ''),
+                    'score': float(similarity_score),
+                    'metadata': doc.metadata
+                })
 
             # Apply reranking if we have candidates
             if candidates:

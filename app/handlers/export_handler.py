@@ -66,6 +66,26 @@ class ExportHandler:
 
         return file_name, content
 
+    @handle_ui_errors("Export strategic company report", "Please ensure strategic company analysis is complete")
+    def export_strategic_company_report(self) -> tuple[str, str]:
+        """
+        Export strategic company analysis report.
+
+        Returns:
+            Tuple of (file_name, content)
+        """
+        if not self.session.strategic_company_summary:
+            raise create_processing_error(
+                "No company analysis available for export",
+                recovery_hint="Please complete the company analysis first"
+            )
+
+        company_name = self._get_company_name()
+        file_name = f"company_analysis_{company_name}.md"
+        content = f"# Company Analysis - {company_name.title()}\n\n{self.session.strategic_company_summary}"
+
+        return file_name, content
+
     @handle_ui_errors("Export combined report", "Please ensure analysis is complete")
     def export_combined_report(self) -> tuple[str, str]:
         """
@@ -74,10 +94,39 @@ class ExportHandler:
         Returns:
             Tuple of (file_name, content)
         """
+        # Check for new company analysis first, then fall back to old format
+        if self.session.strategic_company_summary:
+            # Use the comprehensive company analysis
+            company_name = self._get_company_name()
+            file_name = f"complete_dd_report_{company_name}.md"
+            content = f"# Complete Due Diligence Report - {company_name.title()}\n\n{self.session.strategic_company_summary}\n\n"
+            
+            # Add additional analyses if available
+            if self.session.checklist_results:
+                content += "## Checklist Analysis\n\n"
+                for category, items in self.session.checklist_results.items():
+                    content += f"### {category}\n\n"
+                    if isinstance(items, list):
+                        for item in items:
+                            if isinstance(item, dict):
+                                content += f"- {item.get('text', str(item))}\n"
+                            else:
+                                content += f"- {str(item)}\n"
+                    content += "\n"
+
+            if self.session.question_answers:
+                content += "## Due Diligence Questions\n\n"
+                for question, answer in self.session.question_answers.items():
+                    if isinstance(answer, dict) and answer.get('has_answer'):
+                        content += f"### {question}\n\n{answer.get('answer', '')}\n\n"
+
+            return file_name, content
+        
+        # Fall back to old combined format if no company analysis
         if not (self.session.overview_summary or self.session.strategic_summary):
             raise create_processing_error(
                 "No analysis data available for export",
-                recovery_hint="Please complete overview or strategic analysis first"
+                recovery_hint="Please complete company analysis first"
             )
 
         company_name = self._get_company_name()

@@ -56,19 +56,24 @@ def parse_checklist(checklist_text: str, llm) -> Dict:
         # Parse the response using the Pydantic parser
         result = parser.parse(llm_response.content)
         
-        # Convert Pydantic model to expected dictionary format
+        # Convert Pydantic model to expected dictionary format, filtering out invalid items
         categories_dict = {}
         for key, category in result.categories.items():
-            categories_dict[key] = {
-                'name': category.name,
-                'items': [
-                    {
+            # Only include valid items with actual text content
+            valid_items = category.get_valid_items()
+            if valid_items:  # Only include categories that have valid items
+                items_list = []
+                for item in valid_items:
+                    
+                    items_list.append({
                         'text': item.text,
                         'original': item.original or item.text  # Use text as fallback if original is None
-                    }
-                    for item in category.items
-                ]
-            }
+                    })
+                
+                categories_dict[key] = {
+                    'name': category.name,
+                    'items': items_list
+                }
         
         logger.info(f"Successfully parsed {len(categories_dict)} categories: {list(categories_dict.keys())}")
         return categories_dict

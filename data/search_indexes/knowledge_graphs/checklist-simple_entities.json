@@ -39,8 +39,8 @@
       "confidence": 0.9927753210067749,
       "extraction_method": "transformer",
       "sources": [
-        "doc_336",
-        "doc_141"
+        "doc_141",
+        "doc_336"
       ],
       "merged_contexts": [
         "Certifications (SOC, PCI DSS, HIPAA, ISO, NIST, etc.).",
@@ -94,9 +94,9 @@
       "confidence": 0.8241416811943054,
       "extraction_method": "transformer",
       "sources": [
+        "doc_377",
         "doc_182",
-        "doc_378",
-        "doc_377"
+        "doc_378"
       ],
       "merged_contexts": [
         "Voluntary ESG standards/frameworks.",
@@ -206,8 +206,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_189",
-        "doc_0"
+        "doc_0",
+        "doc_189"
       ],
       "merged_contexts": [
         "Articles/certificates of incorporation, bylaws, amendments.",
@@ -231,8 +231,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_192",
-        "doc_2"
+        "doc_2",
+        "doc_192"
       ],
       "merged_contexts": [
         "Organizational chart, officers, directors.",
@@ -249,8 +249,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_3",
-        "doc_194"
+        "doc_194",
+        "doc_3"
       ],
       "merged_contexts": [
         "Biographical info for officers and directors.",
@@ -385,8 +385,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_205",
-        "doc_14"
+        "doc_14",
+        "doc_205"
       ],
       "merged_contexts": [
         "Agreements to issue equity.",
@@ -403,8 +403,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_15",
-        "doc_206"
+        "doc_206",
+        "doc_15"
       ],
       "merged_contexts": [
         "Latest directors\u2019 and officers\u2019 questionnaire.",
@@ -421,8 +421,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_16",
-        "doc_207"
+        "doc_207",
+        "doc_16"
       ],
       "merged_contexts": [
         "Indemnification agreements.",
@@ -439,21 +439,21 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_62",
-        "doc_134",
-        "doc_29",
-        "doc_101",
-        "doc_117",
-        "doc_109",
-        "doc_188",
+        "doc_187",
         "doc_54",
-        "doc_44",
+        "doc_62",
         "doc_148",
         "doc_87",
-        "doc_17",
-        "doc_187",
+        "doc_109",
+        "doc_29",
+        "doc_117",
+        "doc_186",
+        "doc_101",
         "doc_69",
-        "doc_186"
+        "doc_17",
+        "doc_44",
+        "doc_188",
+        "doc_134"
       ],
       "merged_contexts": [
         "[Other Requests.]",
@@ -471,8 +471,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_210",
         "doc_18",
+        "doc_210",
         "doc_209"
       ],
       "merged_contexts": [
@@ -591,8 +591,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_220",
-        "doc_27"
+        "doc_27",
+        "doc_220"
       ],
       "merged_contexts": [
         "Equity valuations.",
@@ -609,8 +609,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_28",
-        "doc_221"
+        "doc_221",
+        "doc_28"
       ],
       "merged_contexts": [
         "Contingent liabilities.",
@@ -749,8 +749,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_38",
-        "doc_231"
+        "doc_231",
+        "doc_38"
       ],
       "merged_contexts": [
         "Real estate taxes payable.",
@@ -774,8 +774,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_41",
-        "doc_234"
+        "doc_234",
+        "doc_41"
       ],
       "merged_contexts": [
         "Tax shelters/transactions.",
@@ -884,8 +884,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_53",
-        "doc_246"
+        "doc_246",
+        "doc_53"
       ],
       "merged_contexts": [
         "Correspondence with lenders.",
@@ -1009,8 +1009,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_260",
-        "doc_65"
+        "doc_65",
+        "doc_260"
       ],
       "merged_contexts": [
         "Royalty and license agreements.",
@@ -1048,8 +1048,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_70",
-        "doc_275"
+        "doc_275",
+        "doc_70"
       ],
       "merged_contexts": [
         "JV, partnership, alliance agreements.",
@@ -1148,8 +1148,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_273",
-        "doc_78"
+        "doc_78",
+        "doc_273"
       ],
       "merged_contexts": [
         "Self-insurance/captive reports.",
@@ -1166,8 +1166,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_79",
-        "doc_274"
+        "doc_274",
+        "doc_79"
       ],
       "merged_contexts": [
         "Insurance exposure docs.",
@@ -1191,8 +1191,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_276",
-        "doc_81"
+        "doc_81",
+        "doc_276"
       ],
       "merged_contexts": [
         "Other contracts (acquisitions, suppliers, government).",
@@ -1252,8 +1252,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_280",
-        "doc_85"
+        "doc_85",
+        "doc_280"
       ],
       "merged_contexts": [
         "Government agreements.",
@@ -1277,8 +1277,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_89",
-        "doc_88"
+        "doc_88",
+        "doc_89"
       ],
       "merged_contexts": [
         "Customers list.",
@@ -1302,8 +1302,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_286",
-        "doc_91"
+        "doc_91",
+        "doc_286"
       ],
       "merged_contexts": [
         "Marketing, sales, distribution agreements.",
@@ -1338,8 +1338,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_93",
-        "doc_288"
+        "doc_288",
+        "doc_93"
       ],
       "merged_contexts": [
         "Advertising agreements, materials.",
@@ -1388,8 +1388,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_97",
-        "doc_292"
+        "doc_292",
+        "doc_97"
       ],
       "merged_contexts": [
         "Operational changes (last 2 years).",
@@ -1427,9 +1427,9 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_298",
         "doc_297",
-        "doc_102"
+        "doc_102",
+        "doc_298"
       ],
       "merged_contexts": [
         "Pending/threatened litigation and investigations.",
@@ -1461,8 +1461,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_300",
-        "doc_105"
+        "doc_105",
+        "doc_300"
       ],
       "merged_contexts": [
         "Settlements/waivers.",
@@ -1583,8 +1583,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_116",
-        "doc_311"
+        "doc_311",
+        "doc_116"
       ],
       "merged_contexts": [
         "Antitrust compliance program.",
@@ -1619,8 +1619,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_314",
-        "doc_119"
+        "doc_119",
+        "doc_314"
       ],
       "merged_contexts": [
         "Employment/consultant/noncompete/confidentiality agreements.",
@@ -1637,8 +1637,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_315",
-        "doc_120"
+        "doc_120",
+        "doc_315"
       ],
       "merged_contexts": [
         "Insider loan/transaction agreements.",
@@ -1709,9 +1709,9 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_319",
         "doc_124",
         "doc_320",
+        "doc_319",
         "doc_125"
       ],
       "merged_contexts": [
@@ -1730,8 +1730,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_321",
-        "doc_126"
+        "doc_126",
+        "doc_321"
       ],
       "merged_contexts": [
         "Multiemployer plans.",
@@ -1748,8 +1748,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_127",
-        "doc_322"
+        "doc_322",
+        "doc_127"
       ],
       "merged_contexts": [
         "Multiemployer contributions, liabilities.",
@@ -1811,9 +1811,9 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_327",
         "doc_140",
-        "doc_132"
+        "doc_132",
+        "doc_327"
       ],
       "merged_contexts": [
         "Employee handbooks, manuals.",
@@ -1831,9 +1831,9 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_133",
         "doc_170",
         "doc_365",
+        "doc_133",
         "doc_328"
       ],
       "merged_contexts": [
@@ -1852,8 +1852,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_135",
-        "doc_330"
+        "doc_330",
+        "doc_135"
       ],
       "merged_contexts": [
         "Privacy policies (employees, customers).",
@@ -1870,8 +1870,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_331",
-        "doc_136"
+        "doc_136",
+        "doc_331"
       ],
       "merged_contexts": [
         "Information security policies.",
@@ -1888,8 +1888,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_137",
-        "doc_332"
+        "doc_332",
+        "doc_137"
       ],
       "merged_contexts": [
         "Breach response policies.",
@@ -1906,8 +1906,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_139",
-        "doc_334"
+        "doc_334",
+        "doc_139"
       ],
       "merged_contexts": [
         "Privacy/security officer details.",
@@ -1924,8 +1924,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_336",
-        "doc_141"
+        "doc_141",
+        "doc_336"
       ],
       "merged_contexts": [
         "Certifications (SOC, PCI DSS, HIPAA, ISO, NIST, etc.).",
@@ -1981,8 +1981,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_146",
-        "doc_341"
+        "doc_341",
+        "doc_146"
       ],
       "merged_contexts": [
         "Use of cookies/tracking.",
@@ -2006,8 +2006,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_149",
-        "doc_344"
+        "doc_344",
+        "doc_149"
       ],
       "merged_contexts": [
         "Environmental investigations, Phase I/II.",
@@ -2024,9 +2024,9 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_345",
         "doc_151",
-        "doc_150"
+        "doc_150",
+        "doc_345"
       ],
       "merged_contexts": [
         "Hazardous substances list.",
@@ -2044,8 +2044,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_152",
-        "doc_347"
+        "doc_347",
+        "doc_152"
       ],
       "merged_contexts": [
         "Off-site storage/disposal.",
@@ -2062,8 +2062,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_348",
-        "doc_153"
+        "doc_153",
+        "doc_348"
       ],
       "merged_contexts": [
         "Studies on pollution, biodiversity, climate, energy/water.",
@@ -2116,8 +2116,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_156",
-        "doc_351"
+        "doc_351",
+        "doc_156"
       ],
       "merged_contexts": [
         "Environmental permits/licenses.",
@@ -2153,8 +2153,8 @@
       "extraction_method": "document_metadata",
       "sources": [
         "doc_158",
-        "doc_353",
-        "doc_294"
+        "doc_294",
+        "doc_353"
       ],
       "merged_contexts": [
         "Customer satisfaction reports.",
@@ -2172,8 +2172,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_159",
-        "doc_354"
+        "doc_354",
+        "doc_159"
       ],
       "merged_contexts": [
         "Employee satisfaction reports.",
@@ -2191,9 +2191,9 @@
       "extraction_method": "document_metadata",
       "sources": [
         "doc_169",
+        "doc_364",
         "doc_160",
-        "doc_355",
-        "doc_364"
+        "doc_355"
       ],
       "merged_contexts": [
         "Workplace safety investigations.",
@@ -2211,8 +2211,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_161",
-        "doc_356"
+        "doc_356",
+        "doc_161"
       ],
       "merged_contexts": [
         "Product safety violations.",
@@ -2272,8 +2272,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_165",
-        "doc_360"
+        "doc_360",
+        "doc_165"
       ],
       "merged_contexts": [
         "Responsible persons/systems for supply chain risks.",
@@ -2290,8 +2290,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_361",
-        "doc_166"
+        "doc_166",
+        "doc_361"
       ],
       "merged_contexts": [
         "Supplier/subcontractor lists.",
@@ -2344,8 +2344,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_368",
         "doc_173",
+        "doc_368",
         "doc_171"
       ],
       "merged_contexts": [
@@ -2364,8 +2364,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_367",
-        "doc_172"
+        "doc_172",
+        "doc_367"
       ],
       "merged_contexts": [
         "Reports of harassment (5 years).",
@@ -2382,8 +2382,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_369",
-        "doc_174"
+        "doc_174",
+        "doc_369"
       ],
       "merged_contexts": [
         "Whistleblower mechanisms.",
@@ -2400,9 +2400,9 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_175",
+        "doc_176",
         "doc_370",
-        "doc_176"
+        "doc_175"
       ],
       "merged_contexts": [
         "Compliance with accounting/disclosure standards.",
@@ -2470,8 +2470,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_181",
-        "doc_199"
+        "doc_199",
+        "doc_181"
       ],
       "merged_contexts": [
         "Shareholder matters (last 5 years).",
@@ -2488,10 +2488,10 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_182",
-        "doc_378",
         "doc_377",
-        "doc_183"
+        "doc_182",
+        "doc_183",
+        "doc_378"
       ],
       "merged_contexts": [
         "Voluntary ESG standards/frameworks.",
@@ -2516,8 +2516,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_185",
-        "doc_380"
+        "doc_380",
+        "doc_185"
       ],
       "merged_contexts": [
         "Shareholder/stakeholder ESG importance measures.",
@@ -2583,8 +2583,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_296",
-        "doc_208"
+        "doc_208",
+        "doc_296"
       ],
       "merged_contexts": [
         "Other organizational documents not covered above",
@@ -2703,8 +2703,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_243",
-        "doc_240"
+        "doc_240",
+        "doc_243"
       ],
       "merged_contexts": [
         "Security agreements; trust indentures; mortgages; deeds of trust; guaranties; installment purchases; leases; letters of credit; contingent obligations; indemnities",
@@ -2914,8 +2914,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_285",
-        "doc_384"
+        "doc_384",
+        "doc_285"
       ],
       "merged_contexts": [
         "Purchase and supply contract forms; pricing terms, rebates, concessions",
@@ -2988,8 +2988,8 @@
       "confidence": 1.0,
       "extraction_method": "document_metadata",
       "sources": [
-        "doc_312",
-        "doc_308"
+        "doc_308",
+        "doc_312"
       ],
       "merged_contexts": [
         "Correspondence with regulatory bodies; notices of violations",

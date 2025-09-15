@@ -188,9 +188,10 @@ def clean_existing_faiss_files(faiss_dir: Path) -> None:
         # Remove FAISS index files for clean rebuild (with document type classification)
         file_patterns = [
             "*.faiss",      # FAISS index files
-            "*.pkl",        # FAISS metadata files
+            "*.pkl",        # FAISS metadata files and embeddings
             "*_summaries.json",  # Legacy AI summary files (cleanup)
             "*_document_types.json",  # Document type classification files
+            "*_document_type_embeddings.pkl",  # Document type embedding files
             "checklists.json",  # Direct checklist files
             "company_summaries.json",    # Legacy metadata
             "default_tracker.json",      # Processing tracker
@@ -444,6 +445,20 @@ class BuildStageManager(StageManager):
             'markdown_results': len([r for r in results if r.get('content_type')])
         }
 
+        # Generate enhanced embeddings for checklists and questions with LLM parsing
+        logger.info("🧠 Generating enhanced embeddings with LLM parsing...")
+        from app.core.search import generate_checklist_embeddings, generate_questions_embeddings
+        
+        # Generate checklist embeddings and structures - fail if this fails
+        logger.info("📋 Generating checklist embeddings...")
+        checklist_count = generate_checklist_embeddings()
+        logger.info(f"✅ Generated {checklist_count} checklist embeddings")
+        
+        # Generate questions embeddings and structures - fail if this fails
+        logger.info("❓ Generating questions embeddings...")
+        questions_count = generate_questions_embeddings()
+        logger.info(f"✅ Generated {questions_count} questions embeddings")
+
         # Save extraction cache
         extraction_cache = self.faiss_dir / '.extraction_cache.json'
         extraction_cache.write_text(json.dumps(result, indent=2))
@@ -684,8 +699,9 @@ def main():
                 # Remove all FAISS-related files
                 patterns = [
                     "*.faiss",      # FAISS index files
-                    "*.pkl",        # FAISS metadata files
+                    "*.pkl",        # FAISS metadata files and embeddings
                     "*_document_types.json",  # Document type classifications
+                    "*_document_type_embeddings.pkl",  # Document type embeddings
                     ".extraction_cache.json",
                     ".scan_cache.json",
                     ".build_state.json"

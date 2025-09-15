@@ -4,7 +4,7 @@ Search and analysis functions for document retrieval and ranking.
 """
 
 # Standard library imports
-from typing import Dict, List
+from typing import Dict, List, Tuple
 from pathlib import Path
 
 # Third-party imports for Unicode normalization
@@ -18,11 +18,81 @@ from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import PromptTemplate
 
 # Local imports
-from app.core.constants import SIMILARITY_THRESHOLD
+from app.core.constants import (
+    SIMILARITY_THRESHOLD, STATISTICAL_CANDIDATE_POOL_SIZE, 
+    STATISTICAL_STD_MULTIPLIER, STATISTICAL_MIN_CANDIDATES,
+    STATISTICAL_MIN_STD_DEV
+)
 from app.core.document_processor import DocumentProcessor
 from app.core.logging import logger
 from app.core.ranking import rerank_results
 from app.core.sparse_index import load_sparse_index_for_store, BM25Index
+
+
+def filter_statistically_significant_matches(matches: List[Dict], std_multiplier: float = STATISTICAL_STD_MULTIPLIER) -> Tuple[List[Dict], Dict]:
+    """
+    Filter matches using statistical significance instead of fixed thresholds.
+    
+    This approach analyzes the score distribution to identify documents that are 
+    statistically significantly more relevant than the average, eliminating the
+    need for arbitrary fixed thresholds.
+    
+    Optimized with vectorized numpy operations for better performance.
+    
+    Args:
+        matches: List of match dictionaries with 'score' keys
+        std_multiplier: Number of standard deviations above mean to use as threshold
+                       (1.0=loose, 1.5=moderate, 2.0=strict)
+    
+    Returns:
+        Tuple of (filtered_matches, statistics_dict)
+    """
+    if len(matches) < STATISTICAL_MIN_CANDIDATES:  # Need minimum samples for meaningful statistics
+        return matches, {
+            'method': 'insufficient_data',
+            'total_candidates': len(matches),
+            'significant_matches': len(matches),
+            'note': 'Less than 5 candidates - returning all'
+        }
+    
+    import numpy as np
+    
+    # VECTORIZED: Extract scores using numpy array operations instead of list comprehension
+    scores_array = np.array([m['score'] for m in matches])
+    mean_score = np.mean(scores_array)
+    std_score = np.std(scores_array)
+    
+    # Use minimum standard deviation when variance is too low to prevent tiny thresholds
+    effective_std = max(std_score, STATISTICAL_MIN_STD_DEV)
+    
+    # Calculate adaptive threshold using effective standard deviation
+    adaptive_threshold = mean_score + (std_multiplier * effective_std)
+    
+    # VECTORIZED: Use numpy boolean masking for efficient filtering
+    significance_mask = scores_array >= adaptive_threshold
+    significant_indices = np.where(significance_mask)[0]
+    significant_matches = [matches[i] for i in significant_indices]
+    
+    # Return only statistically significant matches (no fallback)
+    method = 'statistical_filtering' if significant_matches else 'no_significant_matches'
+    
+    # Generate statistics metadata - using vectorized operations
+    score_min, score_max = np.min(scores_array), np.max(scores_array)
+    
+    stats = {
+        'method': method,
+        'mean': round(float(mean_score), 3),
+        'std': round(float(std_score), 3),
+        'effective_std': round(float(effective_std), 3),
+        'adaptive_threshold': round(float(adaptive_threshold), 3),
+        'std_multiplier': std_multiplier,
+        'min_std_applied': effective_std > std_score,
+        'total_candidates': len(matches),
+        'significant_matches': len(significant_matches),
+        'score_range': [round(float(score_min), 3), round(float(score_max), 3)]
+    }
+    
+    return significant_matches, stats
 
 
 def search_and_analyze(queries: List[Dict], vector_store: FAISS, llm=None, threshold: float = SIMILARITY_THRESHOLD, search_type: str = 'items', store_name: str = None, session=None) -> Dict:
@@ -57,18 +127,21 @@ Answer:"""
 
 
 def _process_checklist_items(checklist: Dict, vector_store: FAISS, threshold: float, store_name: str = None, session=None) -> Dict:
-    """Compare checklist items directly against LLM-generated document type classifications"""
+    """Compare checklist items directly against LLM-generated document type classifications using optimized batch processing"""
+    import numpy as np
 
     # Ensure checklist embeddings are preloaded first
     if not hasattr(get_checklist_embedding, '_cache') or not get_checklist_embedding._cache:
-        logger.info("Checklist embeddings cache is empty, preloading...")
+        logger.error("CRITICAL: Checklist embeddings cache is empty during processing - this should have been preloaded!")
+        logger.info("Attempting emergency preload of checklist embeddings...")
         try:
             from app.core.search import preload_checklist_embeddings
             count = preload_checklist_embeddings()
-            logger.info(f"✅ Preloaded {count} checklist embeddings for processing")
+            logger.info(f"✅ Emergency preloaded {count} checklist embeddings for processing")
         except Exception as e:
-            logger.error(f"Failed to preload checklist embeddings: {e}")
-            return {}
+            logger.error(f"❌ Failed to emergency preload checklist embeddings: {e}")
+            logger.error("This indicates embeddings were not properly generated or saved during build process")
+            raise RuntimeError(f"Checklist embeddings are required but not available: {e}")
 
     # Ensure document type embeddings are available
     if session:
@@ -76,35 +149,59 @@ def _process_checklist_items(checklist: Dict, vector_store: FAISS, threshold: fl
         if hasattr(session, 'document_type_embeddings'):
             logger.debug(f"Embeddings count: {len(session.document_type_embeddings) if session.document_type_embeddings else 0}")
 
-    # Try to auto-preload embeddings if missing
+    # Check that document type embeddings are available in session
     embeddings_missing = not session or not hasattr(session, 'document_type_embeddings') or not session.document_type_embeddings
 
-    if embeddings_missing and store_name:
-        logger.info(f"Document type embeddings missing, attempting auto-preload for {store_name}...")
-        try:
-            from app.core.search import preload_document_type_embeddings
-            type_embeddings = preload_document_type_embeddings(store_name)
-            if not hasattr(session, 'document_type_embeddings') or session.document_type_embeddings is None:
-                session.document_type_embeddings = {}
-            session.document_type_embeddings.update(type_embeddings)
-            logger.info(f"✅ Auto-preloaded {len(type_embeddings)} document type embeddings")
-            embeddings_missing = False
-        except Exception as e:
-            logger.warning(f"Failed to auto-preload document type embeddings: {e}")
-
     if embeddings_missing:
-        logger.error("Document type embeddings not available. Checklist processing requires preloaded embeddings.")
-        logger.error("Make sure data room processing completed successfully or embeddings can be auto-loaded.")
+        logger.error("Document type embeddings not available in session. Checklist processing requires pre-built embeddings.")
+        logger.error("Make sure data room processing completed successfully during application startup.")
+        logger.error("If embeddings are missing, run 'uv run build-indexes' to regenerate them.")
         return {}
 
-    # Load document type classifications - these are our primary comparison targets
+    # OPTIMIZATION 1: Load document type classifications ONCE at the start
     doc_types = {}
     if store_name:
         doc_types = _load_document_types(vector_store, store_name)
 
     if not doc_types:
-        logger.warning(f"No document type classifications found for {store_name}")
-        return {}
+        logger.error(f"No document type classifications found for {store_name}")
+        raise ValueError(f"No document type classifications available for {store_name}. This indicates the data room processing did not complete successfully or build indexes were not run.")
+
+    # OPTIMIZATION 4: Pre-build matrices for batch similarity calculations
+    logger.info(f"🚀 Preparing batch similarity computation for {len(doc_types)} documents...")
+    
+    # Filter out unclassified documents and prepare data structures
+    valid_docs = []
+    doc_embeddings = []
+    
+    for doc_path, doc_type in doc_types.items():
+        if not doc_type or doc_type == 'not classified':
+            continue
+            
+        doc_type_lower = doc_type.lower().strip()
+        
+        try:
+            # Get document type embedding (from preloaded cache)
+            doc_type_embedding = get_document_type_embedding(doc_type_lower, session)
+            
+            valid_docs.append({
+                'path': doc_path,
+                'type': doc_type,
+                'name': _extract_doc_name_from_path(doc_path)
+            })
+            doc_embeddings.append(doc_type_embedding)
+        except Exception as e:
+            logger.error(f"Error loading embedding for {doc_path}: {e}")
+            raise ValueError(f"Failed to load document type embedding for {doc_path}: {e}. This indicates missing or corrupted embeddings data.")
+    
+    if not valid_docs:
+        logger.error("No valid documents with embeddings found")
+        raise ValueError("No valid documents with embeddings available for checklist matching. This indicates document type embeddings were not properly generated during build process.")
+        
+    # Convert to numpy matrix for vectorized operations
+    doc_embeddings_matrix = np.vstack(doc_embeddings)
+    doc_norms = np.linalg.norm(doc_embeddings_matrix, axis=1)
+    logger.info(f"✅ Built embedding matrix: {doc_embeddings_matrix.shape} for {len(valid_docs)} documents")
 
     results = {}
     for cat_letter, category in checklist.items():
@@ -117,66 +214,66 @@ def _process_checklist_items(checklist: Dict, vector_store: FAISS, threshold: fl
 
         for item in category['items']:
             checklist_item_text = item['text'].lower().strip()
-            matches = []
+            
+            
+            try:
+                # Get checklist embedding from memory cache
+                checklist_embedding = get_checklist_embedding(checklist_item_text)
+                checklist_norm = np.linalg.norm(checklist_embedding)
+                
+                # BATCH SIMILARITY CALCULATION: Compute all similarities at once using matrix operations
+                # This replaces the O(n) inner loop with O(1) vectorized computation
+                dot_products = np.dot(doc_embeddings_matrix, checklist_embedding)
+                similarities = dot_products / (doc_norms * checklist_norm)
+                
+                # Build candidate matches from batch results
+                candidate_matches = []
+                for idx, similarity in enumerate(similarities):
+                    doc_info = valid_docs[idx]
+                    candidate_matches.append({
+                        'name': doc_info['name'],
+                        'path': doc_info['path'],
+                        'full_path': doc_info['path'],  # For consistency
+                        'score': round(float(similarity), 3),
+                        'document_type': doc_info['type'],
+                        'text': f"Document type: {doc_info['type']}"
+                    })
+                
+                # Sort all candidates by score (highest first)
+                candidate_matches.sort(key=lambda x: x['score'], reverse=True)
 
-            # Compare checklist item against each document's type classification
-            for doc_path, doc_type in doc_types.items():
-                if not doc_type or doc_type == 'not classified':
-                    continue
+                # Take top candidates for statistical analysis 
+                top_candidates = candidate_matches[:STATISTICAL_CANDIDATE_POOL_SIZE]
 
-                doc_type_lower = doc_type.lower().strip()
+                # Apply statistical filtering instead of fixed threshold
+                if top_candidates:
+                    # Use configurable standard deviation multiplier
+                    matches, stats = filter_statistically_significant_matches(top_candidates, STATISTICAL_STD_MULTIPLIER)
+                    
+                    # Reduced logging - only log summary info to improve performance
+                    logger.debug(f"📊 '{checklist_item_text[:30]}...' -> {stats['significant_matches']} matches via {stats['method']}")
+                    
+                    # Only count as matched if there are actual matches after filtering
+                    if matches:
+                        cat_results['matched_items'] += 1
+                else:
+                    matches = []
+                    stats = {'method': 'no_candidates', 'significant_matches': 0}
 
-                # Calculate semantic similarity between checklist item and document type
-                try:
-                    # Get checklist embedding from memory cache (preloaded during data room processing)
-                    checklist_embedding = get_checklist_embedding(checklist_item_text)
-
-                    # Get document type embedding (from preloaded cache)
-                    doc_type_embedding = get_document_type_embedding(doc_type_lower, session)
-
-                    # Calculate cosine similarity
-                    import numpy as np
-                    similarity = np.dot(checklist_embedding, doc_type_embedding) / (
-                        np.linalg.norm(checklist_embedding) * np.linalg.norm(doc_type_embedding)
-                    )
-
-                    # Only include matches above threshold
-                    if similarity >= threshold:
-                        # Find the document metadata from the vector store
-                        # We need to get the document name and other metadata
-                        doc_name = _extract_doc_name_from_path(doc_path)
-
-                        matches.append({
-                            'name': doc_name,
-                            'path': doc_path,
-                            'full_path': doc_path,  # For consistency
-                            'score': round(float(similarity), 3),
-                            'document_type': doc_type,
-                            'text': f"Document type: {doc_type}"  # Include document type as text
-                        })
-
-                except Exception as e:
-                    logger.warning(f"Error calculating similarity for {doc_path}: {e}")
-                    continue
-
-            # Sort matches by score (highest first)
-            matches.sort(key=lambda x: x['score'], reverse=True)
-
-            # Limit to top matches for performance
-            matches = matches[:10]
-
-            if matches:
-                cat_results['matched_items'] += 1
-                logger.info(f"✅ Found {len(matches)} matches for checklist item: '{checklist_item_text[:50]}...'")
-
-            cat_results['items'].append({
-                'text': item['text'],
-                'original': item['original'],
-                'matches': matches
-            })
+                cat_results['items'].append({
+                    'text': item['text'],
+                    'original': item['original'],
+                    'matches': matches,
+                    'statistics': stats  # Include statistical metadata for debugging/analysis
+                })
+                
+            except Exception as e:
+                logger.error(f"Failed to process checklist item '{checklist_item_text[:50]}...': {e}")
+                raise ValueError(f"Checklist item processing failed: {e}. This indicates a critical failure in embedding comparison for item: '{checklist_item_text[:100]}...'")
 
         results[cat_letter] = cat_results
 
+    logger.info(f"✅ Completed optimized batch processing for {len(checklist)} categories")
     return results
 
 
@@ -192,8 +289,8 @@ def _load_document_types(vector_store, store_name: str):
             with open(doc_types_path, 'r') as f:
                 return json.load(f)
     except Exception as e:
-        logger.warning(f"Failed to load document types for {store_name}: {e}")
-    return {}
+        logger.error(f"Failed to load document types for {store_name}: {e}")
+        raise ValueError(f"Document type loading failed for {store_name}: {e}. This indicates the build process did not complete successfully.")
 
 
 def _extract_doc_name_from_path(doc_path: str) -> str:
@@ -225,47 +322,43 @@ def get_checklist_embedding(checklist_text: str):
     # Initialize cache if not exists
     if not hasattr(get_checklist_embedding, '_cache'):
         get_checklist_embedding._cache = {}
-        logger.warning("Checklist embedding cache was not initialized - this should not happen!")
+        logger.error("❌ Checklist embedding cache was not initialized!")
+        logger.error("This indicates embeddings were not preloaded during document processing.")
+        logger.error("Make sure preload_checklist_embeddings() is called before any similarity calculations.")
 
     # Create cache key from checklist text with normalized Unicode
     cache_key = checklist_text.lower().strip()
     # Use unidecode for comprehensive Unicode to ASCII conversion
     cache_key = unidecode.unidecode(cache_key)
+    # Additional normalization for common Unicode issues
+    cache_key = cache_key.replace('–', '-').replace('—', '-')  # Normalize dashes
+    cache_key = cache_key.replace(''', "'").replace(''', "'")  # Normalize quotes
+
 
     # Check in-memory cache only
     if cache_key in get_checklist_embedding._cache:
         return get_checklist_embedding._cache[cache_key]
 
-    # Enhanced debugging for troubleshooting
+    # No fallbacks - fail explicitly if embedding not found
     cache_size = len(get_checklist_embedding._cache)
-    logger.warning(f"Checklist embedding not found: '{checklist_text[:50]}...'")
-    logger.warning(f"Cache key generated: '{cache_key}'")
-    logger.warning(f"Cache has {cache_size} items total")
-
-    if cache_size > 0:
-        # Look for similar keys to help debug
-        similar_keys = []
-        search_terms = checklist_text.lower().split()
-        for key in get_checklist_embedding._cache.keys():
-            if any(term in key for term in search_terms if len(term) > 3):
-                similar_keys.append(key)
-
-        if similar_keys:
-            logger.warning(f"Similar keys found: {similar_keys[:3]}")
-        else:
-            logger.warning("No similar keys found in cache")
-
-        # Show a few sample keys
-        sample_keys = list(get_checklist_embedding._cache.keys())[:5]
-        logger.warning(f"Sample cache keys: {sample_keys}")
+    
+    # Minimal debugging info
+    logger.error(f"❌ Checklist embedding not found for: '{checklist_text[:50]}...'")
+    logger.error(f"❌ Cache key: '{cache_key}'")
+    logger.error(f"❌ Cache size: {cache_size}")
+    
+    if cache_size == 0:
+        logger.error("❌ Cache is empty - embeddings were not preloaded!")
+        logger.error("❌ Run data room processing first to generate embeddings")
     else:
-        logger.error("Cache is completely empty - embeddings were not preloaded!")
+        logger.error("❌ This indicates a mismatch between build-time and runtime parsing")
+        logger.error("❌ The system should use pre-parsed structures, not runtime re-parsing")
 
-    # Fail if not found - no fallbacks
+    # Fail fast - no fallbacks, no workarounds
     raise RuntimeError(
-        f"Checklist embedding not found for: '{checklist_text[:50]}...' (cache key: '{cache_key}'). "
-        f"Cache has {cache_size} items. "
-        "Make sure embeddings were preloaded during data room processing."
+        f"Checklist embedding not found. This should not happen with pre-parsed structures. "
+        f"Cache key: '{cache_key}', Cache size: {cache_size}. "
+        f"Rebuild search indexes or check checklist_structures.json exists."
     )
 
 
@@ -302,6 +395,7 @@ def generate_checklist_embeddings():
 
     This function should be called during the build process to pre-calculate
     embeddings for all checklist items from the available checklist files.
+    Uses LLM parsing to ensure consistency with runtime parsing.
 
     Returns:
         int: Number of embeddings generated and saved
@@ -309,17 +403,44 @@ def generate_checklist_embeddings():
     try:
         from app.core.config import get_config
         from app.core.model_cache import get_cached_embeddings
+        from app.core.parsers import parse_checklist
         import json
         import numpy as np
+        import unidecode
 
         config = get_config()
         embeddings_model = get_cached_embeddings()
         checklist_dir = config.paths['checklist_dir']
 
-        logger.info("🔄 Generating checklist embeddings...")
+        logger.info("🔄 Generating checklist embeddings using LLM parsing...")
 
-        # Initialize embeddings cache
+        # Get LLM instance for parsing - use same config as runtime for consistency
+        try:
+            from langchain_anthropic import ChatAnthropic
+            import os
+            
+            api_key = os.getenv('ANTHROPIC_API_KEY')
+            if not api_key:
+                raise RuntimeError("ANTHROPIC_API_KEY environment variable not set")
+            
+            # Use exact same configuration as runtime to ensure consistent parsing    
+            model = os.getenv('CLAUDE_MODEL', 'claude-sonnet-4-20250514')
+            temperature = float(os.getenv('CLAUDE_TEMPERATURE', '0.0'))
+            max_tokens = int(os.getenv('CLAUDE_MAX_TOKENS', '16000'))
+                
+            llm = ChatAnthropic(
+                api_key=api_key,
+                model=model,
+                temperature=temperature,
+                max_tokens=max_tokens
+            )
+            logger.info(f"Using LLM config: model={model}, temperature={temperature}, max_tokens={max_tokens}")
+        except Exception as e:
+            raise RuntimeError(f"Failed to create LLM instance: {e}")
+
+        # Initialize embeddings cache and parsed structures storage
         embeddings_cache = {}
+        all_parsed_checklists = {}
 
         # Process all checklist files
         checklist_files = list(checklist_dir.glob("*.md"))
@@ -334,41 +455,59 @@ def generate_checklist_embeddings():
                 # Read checklist content
                 content = checklist_file.read_text(encoding='utf-8')
 
-                # Parse checklist items from markdown
-                checklist_items = _parse_checklist_items_from_markdown(content)
+                # Parse checklist using improved LLM parsing
+                parsed_checklist = parse_checklist(content, llm)
+                
+                # Store parsed structure for runtime use
+                all_parsed_checklists[checklist_file.name] = parsed_checklist
+                
+                # OPTIMIZATION: Collect all texts for batch embedding generation
+                texts_to_embed = []
+                text_to_cache_key = {}
+                
+                for category_key, category in parsed_checklist.items():
+                    for item in category.get('items', []):
+                        item_text = item['text']
+                        
+                        # Process cache key
+                        cache_key = item_text.lower().strip()
+                        cache_key = unidecode.unidecode(cache_key)
+                        cache_key = cache_key.replace('–', '-').replace('—', '-')
+                        cache_key = cache_key.replace(''', "'").replace(''', "'")
 
-                # Generate embeddings for each item
-                for item_text in checklist_items:
-                    # Normalize Unicode in cache key
-                    cache_key = item_text.lower().strip()
-                    cache_key = unidecode.unidecode(cache_key)
-
-                    # Skip if already processed
-                    if cache_key in embeddings_cache:
-                        continue
-
-                    try:
-                        # Generate embedding
-                        embedding = embeddings_model.embed_query(item_text)
-
-                        # Handle both list and numpy array cases
+                        # Skip if already cached
+                        if cache_key in embeddings_cache:
+                            continue
+                            
+                        # Add to batch processing lists
+                        texts_to_embed.append(item_text)
+                        text_to_cache_key[item_text] = cache_key
+                
+                # BATCH EMBEDDING GENERATION: Process all texts at once using matrix operations
+                if texts_to_embed:
+                    logger.info(f"🚀 Batch generating embeddings for {len(texts_to_embed)} checklist items...")
+                    from app.core.performance import optimize_embedding_batch
+                    batch_embeddings = optimize_embedding_batch(texts_to_embed, embeddings_model)
+                    
+                    # Store batch results in cache
+                    for item_text, embedding in zip(texts_to_embed, batch_embeddings):
+                        cache_key = text_to_cache_key[item_text]
                         if hasattr(embedding, 'tolist'):
                             embeddings_cache[cache_key] = embedding.tolist()
-                        else:
-                            # Already a list
+                        elif isinstance(embedding, list):
                             embeddings_cache[cache_key] = embedding
-
-                        logger.debug(f"✅ Embedded: {item_text[:50]}...")
-
-                    except Exception as e:
-                        logger.warning(f"Failed to embed checklist item '{item_text[:50]}...': {e}")
-                        continue
+                        else:
+                            embeddings_cache[cache_key] = embedding.tolist() if hasattr(embedding, 'tolist') else list(embedding)
+                        logger.debug(f"✅ Batch embedded: {item_text[:50]}...")
+                        
+                    logger.info(f"✅ Successfully batch generated {len(batch_embeddings)} checklist embeddings")
 
             except Exception as e:
                 logger.error(f"Failed to process checklist file {checklist_file}: {e}")
+                # Continue processing other files even if one fails
                 continue
 
-        # Save to disk
+        # Save embeddings to disk
         cache_file = config.paths['faiss_dir'] / "checklist_embeddings.json"
         cache_file.parent.mkdir(parents=True, exist_ok=True)
 
@@ -376,6 +515,17 @@ def generate_checklist_embeddings():
             json.dump(embeddings_cache, f, indent=2, ensure_ascii=False)
 
         logger.info(f"💾 Saved {len(embeddings_cache)} checklist embeddings to {cache_file}")
+        
+        # Save parsed checklist structures to eliminate runtime re-parsing
+        structures_file = config.paths['faiss_dir'] / "checklist_structures.json"
+        with open(structures_file, 'w', encoding='utf-8') as f:
+            json.dump(all_parsed_checklists, f, indent=2, ensure_ascii=False)
+        
+        logger.info(f"💾 Saved {len(all_parsed_checklists)} parsed checklist structures to {structures_file}")
+        
+        if not embeddings_cache:
+            raise RuntimeError("No checklist embeddings were successfully generated. All checklist files failed to process.")
+        
         return len(embeddings_cache)
 
     except Exception as e:
@@ -426,6 +576,51 @@ def _parse_checklist_items_from_markdown(content: str) -> list:
     return items
 
 
+def load_prebuilt_checklist(checklist_filename: str) -> dict:
+    """
+    Load pre-parsed checklist structure from build artifacts.
+    
+    This function loads checklist structures that were parsed during build time,
+    eliminating the need for runtime LLM parsing and ensuring consistency.
+    
+    Args:
+        checklist_filename: Name of the checklist file (e.g., 'bloomberg.md')
+        
+    Returns:
+        Dictionary containing parsed checklist structure
+        
+    Raises:
+        RuntimeError: If structures file doesn't exist or checklist not found
+    """
+    from app.core.config import get_config
+    import json
+    
+    config = get_config()
+    structures_file = config.paths['faiss_dir'] / "checklist_structures.json"
+    
+    if not structures_file.exists():
+        raise RuntimeError(
+            f"Checklist structures file not found: {structures_file}. "
+            f"Run build process first to generate pre-parsed structures."
+        )
+    
+    try:
+        with open(structures_file, 'r', encoding='utf-8') as f:
+            all_structures = json.load(f)
+    except Exception as e:
+        raise RuntimeError(f"Failed to load checklist structures: {e}")
+    
+    if checklist_filename not in all_structures:
+        available_files = list(all_structures.keys())
+        raise RuntimeError(
+            f"Checklist '{checklist_filename}' not found in pre-built structures. "
+            f"Available: {available_files}. Rebuild search indexes."
+        )
+    
+    logger.info(f"✅ Loaded pre-parsed checklist structure for: {checklist_filename}")
+    return all_structures[checklist_filename]
+
+
 def preload_checklist_embeddings():
     """
     Preload all checklist embeddings into memory during data room processing.
@@ -448,21 +643,10 @@ def preload_checklist_embeddings():
         cache_file = config.paths['faiss_dir'] / "checklist_embeddings.json"
 
         if not cache_file.exists():
-            logger.warning(f"Checklist embeddings file not found: {cache_file}")
-            logger.info("Generating checklist embeddings now...")
-
-            # Try to generate embeddings on-the-fly
-            try:
-                generated_count = generate_checklist_embeddings()
-                if generated_count > 0:
-                    logger.info(f"✅ Generated {generated_count} embeddings, now preloading...")
-                else:
-                    raise RuntimeError("No checklist items found to embed")
-            except Exception as gen_error:
-                raise RuntimeError(
-                    f"Could not generate checklist embeddings: {gen_error}. "
-                    "Make sure checklist files exist and are properly formatted."
-                )
+            raise RuntimeError(
+                f"Checklist embeddings file not found: {cache_file}. "
+                f"Run build process first: python scripts/build_indexes.py"
+            )
 
         # Initialize cache
         if not hasattr(get_checklist_embedding, '_cache'):
@@ -477,6 +661,9 @@ def preload_checklist_embeddings():
         for cache_key, embedding_list in cache_data.items():
             # Normalize Unicode in cache key to match search normalization
             normalized_key = unidecode.unidecode(cache_key)
+            # Additional normalization for common Unicode issues
+            normalized_key = normalized_key.replace('–', '-').replace('—', '-')  # Normalize dashes
+            normalized_key = normalized_key.replace(''', "'").replace(''', "'")  # Normalize quotes
             embedding_array = np.array(embedding_list, dtype=np.float32)
             get_checklist_embedding._cache[normalized_key] = embedding_array
             preloaded_count += 1
@@ -492,58 +679,46 @@ def preload_checklist_embeddings():
 
 def preload_document_type_embeddings(store_name: str):
     """
-    Preload all document type embeddings into memory during data room processing.
+    Load pre-built document type embeddings from disk.
+    
+    This function loads document type embeddings that were generated and saved
+    during the build process. It will fail if embeddings are not available.
 
-    This function loads document type classifications and computes their embeddings
-    once during data room processing to avoid runtime computation.
-
+    Args:
+        store_name: Name of the document store
+        
     Returns:
         dict: Dictionary mapping normalized document types to their embeddings
 
     Raises:
-        RuntimeError: If document types can't be loaded or embeddings can't be computed
+        RuntimeError: If pre-built embeddings can't be loaded
     """
     try:
-        from app.core.model_cache import get_cached_embeddings
-        import numpy as np
-
-        # Load document type classifications
-        doc_types = _load_document_types(None, store_name)
-        if not doc_types:
-            raise RuntimeError(f"No document type classifications found for {store_name}")
-
-        # Get embeddings model
-        embeddings = get_cached_embeddings()
-
-        # Precompute embeddings for all unique document types
-        type_embeddings = {}
-        unique_types = set()
-
-        # Collect all unique document types
-        for doc_path, doc_type in doc_types.items():
-            if doc_type and doc_type != 'not classified':
-                normalized_type = unidecode.unidecode(doc_type.lower().strip())
-                unique_types.add(normalized_type)
-
-        # Precompute embeddings for each unique type
-        for doc_type in unique_types:
-            try:
-                embedding = embeddings.embed_query(doc_type)
-                # Ensure it's a numpy array
-                if hasattr(embedding, 'tolist'):
-                    embedding_array = np.array(embedding, dtype=np.float32)
-                else:
-                    embedding_array = np.array(embedding, dtype=np.float32)
-                type_embeddings[doc_type] = embedding_array
-            except Exception as e:
-                logger.warning(f"Failed to compute embedding for document type '{doc_type}': {e}")
-                continue
-
-        logger.info(f"✅ Precomputed {len(type_embeddings)} document type embeddings")
+        from app.core.config import get_app_config
+        import pickle
+        
+        config = get_app_config()
+        embeddings_file = config.paths['faiss_dir'] / f"{store_name}_document_type_embeddings.pkl"
+        
+        if not embeddings_file.exists():
+            raise RuntimeError(
+                f"Pre-built document type embeddings not found: {embeddings_file}\n"
+                f"Run 'uv run build-indexes' to generate embeddings during build process"
+            )
+        
+        logger.info(f"📥 Loading pre-built document type embeddings from {embeddings_file.name}...")
+        
+        with open(embeddings_file, 'rb') as f:
+            type_embeddings = pickle.load(f)
+        
+        if not type_embeddings:
+            raise RuntimeError(f"Empty embeddings file: {embeddings_file}")
+            
+        logger.info(f"✅ Loaded {len(type_embeddings)} pre-built document type embeddings")
         return type_embeddings
 
     except Exception as e:
-        error_msg = f"Failed to preload document type embeddings: {e}"
+        error_msg = f"Failed to load pre-built document type embeddings for {store_name}: {e}"
         logger.error(error_msg)
         raise RuntimeError(error_msg)
 
@@ -769,5 +944,194 @@ def hybrid_search(query: str, vector_store: FAISS, store_name: str,
     logger.info(f"Hybrid search returned {len(top_results)} final results")
 
     return top_results
+
+
+def generate_questions_embeddings():
+    """
+    Generate embeddings for all questions and save to disk.
+
+    This function should be called during the build process to pre-calculate
+    embeddings for all questions from the available question files.
+    Uses LLM parsing to ensure consistency with runtime parsing.
+
+    Returns:
+        int: Number of embeddings generated and saved
+    """
+    try:
+        from app.core.config import get_config
+        from app.core.model_cache import get_cached_embeddings
+        from app.core.parsers import parse_questions
+        import json
+        import numpy as np
+        import unidecode
+
+        config = get_config()
+        embeddings_model = get_cached_embeddings()
+        questions_dir = config.paths['questions_dir']
+
+        logger.info("🔄 Generating questions embeddings using LLM parsing...")
+
+        # Get LLM instance for parsing - use same config as runtime for consistency
+        try:
+            from langchain_anthropic import ChatAnthropic
+            import os
+            
+            api_key = os.getenv('ANTHROPIC_API_KEY')
+            if not api_key:
+                raise RuntimeError("ANTHROPIC_API_KEY environment variable not set")
+            
+            # Use exact same configuration as runtime to ensure consistent parsing    
+            model = os.getenv('CLAUDE_MODEL', 'claude-sonnet-4-20250514')
+            temperature = float(os.getenv('CLAUDE_TEMPERATURE', '0.0'))
+            max_tokens = int(os.getenv('CLAUDE_MAX_TOKENS', '16000'))
+                
+            llm = ChatAnthropic(
+                api_key=api_key,
+                model=model,
+                temperature=temperature,
+                max_tokens=max_tokens
+            )
+            logger.info(f"Using LLM config: model={model}, temperature={temperature}, max_tokens={max_tokens}")
+        except Exception as e:
+            raise RuntimeError(f"Failed to create LLM instance: {e}")
+
+        # Initialize embeddings cache and parsed structures storage
+        embeddings_cache = {}
+        all_parsed_questions = {}
+
+        # Process all question files
+        question_files = list(questions_dir.glob("*.md"))
+        if not question_files:
+            logger.warning(f"No question files found in {questions_dir}")
+            return 0
+
+        for question_file in question_files:
+            logger.info(f"Processing questions file: {question_file.name}")
+
+            try:
+                # Read question content
+                content = question_file.read_text(encoding='utf-8')
+
+                # Parse questions using improved LLM parsing
+                parsed_questions = parse_questions(content, llm)
+                
+                # Store parsed structure for runtime use
+                all_parsed_questions[question_file.name] = parsed_questions
+                
+                # OPTIMIZATION: Collect all question texts for batch embedding generation
+                texts_to_embed = []
+                text_to_cache_key = {}
+                
+                for question_data in parsed_questions:
+                    question_text = question_data['question']
+                    
+                    # Process cache key
+                    cache_key = question_text.lower().strip()
+                    cache_key = unidecode.unidecode(cache_key)
+                    cache_key = cache_key.replace('–', '-').replace('—', '-')
+                    cache_key = cache_key.replace(''', "'").replace(''', "'")
+
+                    # Skip if already cached
+                    if cache_key in embeddings_cache:
+                        continue
+                        
+                    # Add to batch processing lists
+                    texts_to_embed.append(question_text)
+                    text_to_cache_key[question_text] = cache_key
+                
+                # BATCH EMBEDDING GENERATION: Process all question texts at once using matrix operations
+                if texts_to_embed:
+                    logger.info(f"🚀 Batch generating embeddings for {len(texts_to_embed)} questions...")
+                    from app.core.performance import optimize_embedding_batch
+                    batch_embeddings = optimize_embedding_batch(texts_to_embed, embeddings_model)
+                    
+                    # Store batch results in cache
+                    for question_text, embedding in zip(texts_to_embed, batch_embeddings):
+                        cache_key = text_to_cache_key[question_text]
+                        if hasattr(embedding, 'tolist'):
+                            embeddings_cache[cache_key] = embedding.tolist()
+                        elif isinstance(embedding, list):
+                            embeddings_cache[cache_key] = embedding
+                        else:
+                            embeddings_cache[cache_key] = embedding.tolist() if hasattr(embedding, 'tolist') else list(embedding)
+                        logger.debug(f"✅ Batch embedded: {question_text[:50]}...")
+                        
+                    logger.info(f"✅ Successfully batch generated {len(batch_embeddings)} question embeddings")
+
+            except Exception as e:
+                logger.error(f"Failed to process question file {question_file}: {e}")
+                # Continue processing other files even if one fails
+                continue
+
+        # Save embeddings to disk
+        cache_file = config.paths['faiss_dir'] / "questions_embeddings.json"
+        cache_file.parent.mkdir(parents=True, exist_ok=True)
+
+        with open(cache_file, 'w', encoding='utf-8') as f:
+            json.dump(embeddings_cache, f, indent=2, ensure_ascii=False)
+
+        logger.info(f"💾 Saved {len(embeddings_cache)} questions embeddings to {cache_file}")
+        
+        # Save parsed question structures to eliminate runtime re-parsing
+        structures_file = config.paths['faiss_dir'] / "questions_structures.json"
+        with open(structures_file, 'w', encoding='utf-8') as f:
+            json.dump(all_parsed_questions, f, indent=2, ensure_ascii=False)
+        
+        logger.info(f"💾 Saved {len(all_parsed_questions)} parsed question structures to {structures_file}")
+        
+        if not embeddings_cache:
+            raise RuntimeError("No questions embeddings were successfully generated. All question files failed to process.")
+        
+        return len(embeddings_cache)
+
+    except Exception as e:
+        error_msg = f"Failed to generate questions embeddings: {e}"
+        logger.error(error_msg)
+        raise RuntimeError(error_msg)
+
+
+def load_prebuilt_questions(questions_filename: str) -> list:
+    """
+    Load pre-parsed questions structure from build artifacts.
+    
+    This function loads question structures that were parsed during build time,
+    eliminating the need for runtime LLM parsing and ensuring consistency.
+    
+    Args:
+        questions_filename: Name of the questions file (e.g., 'due diligence.md')
+        
+    Returns:
+        List containing parsed question structures
+        
+    Raises:
+        RuntimeError: If structures file doesn't exist or questions not found
+    """
+    from app.core.config import get_config
+    import json
+    
+    config = get_config()
+    structures_file = config.paths['faiss_dir'] / "questions_structures.json"
+    
+    if not structures_file.exists():
+        raise RuntimeError(
+            f"Questions structures file not found: {structures_file}. "
+            f"Run build process first to generate pre-parsed structures."
+        )
+    
+    try:
+        with open(structures_file, 'r', encoding='utf-8') as f:
+            all_structures = json.load(f)
+    except Exception as e:
+        raise RuntimeError(f"Failed to load questions structures: {e}")
+    
+    if questions_filename not in all_structures:
+        available_files = list(all_structures.keys())
+        raise RuntimeError(
+            f"Questions file '{questions_filename}' not found in pre-built structures. "
+            f"Available: {available_files}. Rebuild search indexes."
+        )
+    
+    logger.info(f"✅ Loaded pre-parsed questions structure for: {questions_filename}")
+    return all_structures[questions_filename]
 
 

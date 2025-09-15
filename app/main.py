@@ -20,10 +20,9 @@ from app.ui.session_manager import SessionManager
 from app.ui.sidebar import Sidebar
 from app.ui.tabs.checklist_tab import ChecklistTab
 from app.ui.tabs.graph_tab import GraphTab
-from app.ui.tabs.overview_tab import OverviewTab
 from app.ui.tabs.qa_tab import QATab
 from app.ui.tabs.questions_tab import QuestionsTab
-from app.ui.tabs.strategic_tab import StrategicTab
+from app.ui.tabs.company_analysis_tab import CompanyAnalysisTab
 
 # Enable tokenizers parallelism for better performance
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "true")
@@ -60,8 +59,7 @@ class App:
         # Initialize UI components
         self.sidebar = Sidebar(self.session, self.config)
         self.tabs = {
-            'overview': OverviewTab(self.session, self.config, self.ai_handler, self.export_handler),
-            'strategic': StrategicTab(self.session, self.config, self.ai_handler, self.export_handler),
+            'company_analysis': CompanyAnalysisTab(self.session, self.config, self.ai_handler, self.export_handler),
             'checklist': ChecklistTab(self.session, self.config, self.ai_handler),
             'questions': QuestionsTab(self.session, self.config, self.ai_handler),
             'qa': QATab(self.session, self.config, self.ai_handler),
@@ -90,8 +88,7 @@ class App:
 
         # Main tabs
         tab_names = [
-            "🏢 Target Company Analysis",
-            "🎯 Strategic Assessment",
+            "🏢 Company Analysis",
             "📊 Checklist Matching",
             "❓ Due Diligence Questions",
             "💬 Q&A with Citations",
@@ -101,21 +98,18 @@ class App:
         tabs = st.tabs(tab_names)
 
         with tabs[0]:
-            self.tabs['overview'].render()
+            self.tabs['company_analysis'].render()
 
         with tabs[1]:
-            self.tabs['strategic'].render()
-
-        with tabs[2]:
             self.tabs['checklist'].render()
 
-        with tabs[3]:
+        with tabs[2]:
             self.tabs['questions'].render()
 
-        with tabs[4]:
+        with tabs[3]:
             self.tabs['qa'].render()
 
-        with tabs[5]:
+        with tabs[4]:
             self.tabs['graph'].render()
 
         # Processing trigger
