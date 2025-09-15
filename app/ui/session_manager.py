@@ -49,6 +49,8 @@ class SessionManager:
     question_answers = SessionProperty({})
     overview_summary = SessionProperty("")
     strategic_summary = SessionProperty("")
+    strategic_company_summary = SessionProperty("")
+    # Note: Citations are now inline in the strategic_company_summary content
 
     # User selections
     strategy_path = SessionProperty(None)
@@ -67,6 +69,8 @@ class SessionManager:
     # Cached data
     checklist = SessionProperty({})
     questions = SessionProperty({})
+    analysis_vector_store = SessionProperty(None)
+    document_type_embeddings = SessionProperty({})
 
     def __init__(self) -> None:
         """Initialize session state manager with default values."""
@@ -105,6 +109,8 @@ class SessionManager:
         """Reset analysis results and cached data for fresh analysis."""
         self.overview_summary = ""
         self.strategic_summary = ""
+        # Note: strategic_company_summary and citations are preserved across document reprocessing
+        # They are only cleared when explicitly generating new company analysis
         self.checklist_results = {}
         self.question_answers = {}
 

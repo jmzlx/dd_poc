@@ -34,9 +34,9 @@ STAGES = {
     },
     'classify': {
         'name': 'Document Classification',
-        'description': 'Classify document types using AI',
+        'description': 'Classify document types using AI and generate embeddings',
         'dependencies': ['extract'],
-        'outputs': ['*_document_types.json'],
+        'outputs': ['*_document_types.json', '*_document_type_embeddings.pkl'],
         'estimated_duration': '3-5m'
     },
     'chunk': {

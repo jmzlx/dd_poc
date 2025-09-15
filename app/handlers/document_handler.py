@@ -72,19 +72,20 @@ class DocumentHandler:
             # Don't fail the entire data room processing, but make it very clear this is a problem
             raise  # Re-raise to make this a hard failure
 
-        # Preload document type embeddings into memory for fast search
+        # Load pre-built document type embeddings from disk
         from app.core.search import preload_document_type_embeddings
-        logger.info("Attempting to preload document type embeddings...")
+        logger.info(f"Loading pre-built document type embeddings for {company_name}...")
         try:
             type_embeddings = preload_document_type_embeddings(company_name)
             # Store in session for use during search
             self.session.document_type_embeddings = type_embeddings
-            logger.info(f"✅ Successfully preloaded {len(type_embeddings)} document type embeddings for fast searching")
+            logger.info(f"✅ Loaded {len(type_embeddings)} pre-built document type embeddings")
             logger.info(f"Session ID: {id(self.session)}, Embeddings stored: {bool(self.session.document_type_embeddings)}")
         except RuntimeError as e:
-            logger.error(f"❌ Failed to preload document type embeddings: {e}")
-            logger.error("Checklist processing will fail - embeddings are required")
-            raise  # Make this a hard failure since embeddings are now required
+            logger.error(f"❌ Failed to load pre-built document type embeddings: {e}")
+            logger.error("This indicates the build process did not complete successfully.")
+            logger.error("Please run 'uv run build-indexes' to generate required embeddings.")
+            raise  # Fail fast - embeddings are required for checklist processing
 
         # Clear existing analysis
         self.session.reset()

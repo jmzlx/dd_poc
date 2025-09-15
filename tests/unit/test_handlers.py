@@ -43,15 +43,17 @@ class TestAIHandler:
 
     def test_generate_report_success(self, ai_handler):
         """Test successful report generation"""
-        mock_ai_service = MagicMock()
-        mock_ai_service.is_available = True
-        mock_ai_service.analyze_documents.return_value = "Generated report"
-        ai_handler._ai_service = mock_ai_service
+        with patch.object(ai_handler, '_generate_report_with_rag') as mock_rag:
+            mock_rag.return_value = "Generated report content"
+            
+            result = ai_handler.generate_report("overview", documents={'doc1': 'content'}, data_room_name="TestCompany")
 
-        result = ai_handler.generate_report("overview", documents={'doc1': 'content'})
-
-        assert result == "Generated report"
-        mock_ai_service.analyze_documents.assert_called_once()
+            assert result == "Generated report content"
+            mock_rag.assert_called_once_with(
+                "overview", 
+                documents={'doc1': 'content'}, 
+                data_room_name="TestCompany"
+            )
 
     def test_generate_report_no_ai_service(self, ai_handler):
         """Test report generation without AI service"""

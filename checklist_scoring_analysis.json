@@ -1,0 +1,8422 @@
+{
+  "summary": {
+    "total_items": 205,
+    "matched_items": 205,
+    "match_rate": 100.0,
+    "high_variance_items": 51,
+    "clear_separation_items": 30,
+    "flat_distribution_items": 150
+  },
+  "detailed_analyses": [
+    {
+      "item": "Articles of incorporation; certificates of incorporation",
+      "num_matches": 10,
+      "scores": [
+        0.844,
+        0.514,
+        0.507,
+        0.466,
+        0.459,
+        0.456,
+        0.455,
+        0.45,
+        0.444,
+        0.441
+      ],
+      "mean": 0.5036,
+      "std": 0.11591652168694502,
+      "median": 0.4575,
+      "max_gap": 0.32999999999999996,
+      "adaptive_threshold": 0.514,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 1 high-relevance docs (>0.514), 9 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.844,
+          0.514,
+          0.507
+        ],
+        "bottom_3": [
+          0.45,
+          0.444,
+          0.441
+        ],
+        "gaps": [
+          0.32999999999999996,
+          0.007000000000000006,
+          0.04099999999999998,
+          0.007000000000000006,
+          0.0030000000000000027
+        ]
+      }
+    },
+    {
+      "item": "By-laws; operating agreements; amendments",
+      "num_matches": 10,
+      "scores": [
+        0.683,
+        0.504,
+        0.504,
+        0.504,
+        0.493,
+        0.49,
+        0.49,
+        0.487,
+        0.487,
+        0.487
+      ],
+      "mean": 0.5129,
+      "std": 0.05712171215921317,
+      "median": 0.4915,
+      "max_gap": 0.17900000000000005,
+      "adaptive_threshold": 0.504,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 1 high-relevance docs (>0.504), 9 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.683,
+          0.504,
+          0.504
+        ],
+        "bottom_3": [
+          0.487,
+          0.487,
+          0.487
+        ],
+        "gaps": [
+          0.17900000000000005,
+          0.0,
+          0.0,
+          0.01100000000000001,
+          0.0030000000000000027
+        ]
+      }
+    },
+    {
+      "item": "Board and shareholder meeting minutes; written consents; materials presented",
+      "num_matches": 10,
+      "scores": [
+        0.791,
+        0.741,
+        0.741,
+        0.741,
+        0.741,
+        0.625,
+        0.621,
+        0.598,
+        0.574,
+        0.574
+      ],
+      "mean": 0.6747,
+      "std": 0.07913665396009616,
+      "median": 0.683,
+      "max_gap": 0.11599999999999999,
+      "adaptive_threshold": 0.625,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 5 high-relevance docs (>0.625), 5 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.791,
+          0.741,
+          0.741
+        ],
+        "bottom_3": [
+          0.598,
+          0.574,
+          0.574
+        ],
+        "gaps": [
+          0.050000000000000044,
+          0.0,
+          0.0,
+          0.0,
+          0.11599999999999999
+        ]
+      }
+    },
+    {
+      "item": "Organizational chart of Company and subsidiaries",
+      "num_matches": 10,
+      "scores": [
+        0.786,
+        0.483,
+        0.415,
+        0.411,
+        0.407,
+        0.38,
+        0.38,
+        0.38,
+        0.38,
+        0.38
+      ],
+      "mean": 0.44020000000000004,
+      "std": 0.11921392536109195,
+      "median": 0.39349999999999996,
+      "max_gap": 0.30300000000000005,
+      "adaptive_threshold": 0.483,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 1 high-relevance docs (>0.483), 9 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.786,
+          0.483,
+          0.415
+        ],
+        "bottom_3": [
+          0.38,
+          0.38,
+          0.38
+        ],
+        "gaps": [
+          0.30300000000000005,
+          0.068,
+          0.0040000000000000036,
+          0.0040000000000000036,
+          0.02699999999999997
+        ]
+      }
+    },
+    {
+      "item": "Current officers and directors list",
+      "num_matches": 10,
+      "scores": [
+        0.555,
+        0.531,
+        0.462,
+        0.462,
+        0.462,
+        0.462,
+        0.462,
+        0.462,
+        0.462,
+        0.457
+      ],
+      "mean": 0.4777,
+      "std": 0.033121141284684026,
+      "median": 0.462,
+      "max_gap": 0.069,
+      "adaptive_threshold": 0.462,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.033)",
+      "score_distribution": {
+        "top_3": [
+          0.555,
+          0.531,
+          0.462
+        ],
+        "bottom_3": [
+          0.462,
+          0.462,
+          0.457
+        ],
+        "gaps": [
+          0.02400000000000002,
+          0.069,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Officer and director biographical information",
+      "num_matches": 10,
+      "scores": [
+        0.478,
+        0.458,
+        0.444,
+        0.416,
+        0.4,
+        0.377,
+        0.367,
+        0.364,
+        0.364,
+        0.364
+      ],
+      "mean": 0.4032,
+      "std": 0.04128389516506407,
+      "median": 0.3885,
+      "max_gap": 0.028000000000000025,
+      "adaptive_threshold": 0.416,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.041)",
+      "score_distribution": {
+        "top_3": [
+          0.478,
+          0.458,
+          0.444
+        ],
+        "bottom_3": [
+          0.364,
+          0.364,
+          0.364
+        ],
+        "gaps": [
+          0.019999999999999962,
+          0.014000000000000012,
+          0.028000000000000025,
+          0.01599999999999996,
+          0.02300000000000002
+        ]
+      }
+    },
+    {
+      "item": "Trade names; fictitious names; aliases used since inception",
+      "num_matches": 10,
+      "scores": [
+        0.425,
+        0.4,
+        0.397,
+        0.394,
+        0.383,
+        0.382,
+        0.37,
+        0.37,
+        0.37,
+        0.37
+      ],
+      "mean": 0.3861,
+      "std": 0.01717818383881137,
+      "median": 0.3825,
+      "max_gap": 0.024999999999999967,
+      "adaptive_threshold": 0.4,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.017)",
+      "score_distribution": {
+        "top_3": [
+          0.425,
+          0.4,
+          0.397
+        ],
+        "bottom_3": [
+          0.37,
+          0.37,
+          0.37
+        ],
+        "gaps": [
+          0.024999999999999967,
+          0.0030000000000000027,
+          0.0030000000000000027,
+          0.01100000000000001,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Company and subsidiary addresses; office and property locations",
+      "num_matches": 10,
+      "scores": [
+        0.556,
+        0.435,
+        0.426,
+        0.39,
+        0.388,
+        0.388,
+        0.388,
+        0.388,
+        0.388,
+        0.388
+      ],
+      "mean": 0.4135,
+      "std": 0.05037707812090733,
+      "median": 0.388,
+      "max_gap": 0.12100000000000005,
+      "adaptive_threshold": 0.435,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 1 high-relevance docs (>0.435), 9 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.556,
+          0.435,
+          0.426
+        ],
+        "bottom_3": [
+          0.388,
+          0.388,
+          0.388
+        ],
+        "gaps": [
+          0.12100000000000005,
+          0.009000000000000008,
+          0.035999999999999976,
+          0.0020000000000000018,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Jurisdictions of registration or qualification; certificates of authority",
+      "num_matches": 10,
+      "scores": [
+        0.631,
+        0.559,
+        0.558,
+        0.549,
+        0.509,
+        0.503,
+        0.47,
+        0.468,
+        0.459,
+        0.454
+      ],
+      "mean": 0.5159999999999999,
+      "std": 0.05445915900929798,
+      "median": 0.506,
+      "max_gap": 0.07199999999999995,
+      "adaptive_threshold": 0.559,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.054)",
+      "score_distribution": {
+        "top_3": [
+          0.631,
+          0.559,
+          0.558
+        ],
+        "bottom_3": [
+          0.468,
+          0.459,
+          0.454
+        ],
+        "gaps": [
+          0.07199999999999995,
+          0.0010000000000000009,
+          0.009000000000000008,
+          0.040000000000000036,
+          0.006000000000000005
+        ]
+      }
+    },
+    {
+      "item": "Equity structure; authorized and outstanding shares; classes or series",
+      "num_matches": 10,
+      "scores": [
+        0.556,
+        0.515,
+        0.502,
+        0.501,
+        0.472,
+        0.471,
+        0.452,
+        0.451,
+        0.446,
+        0.446
+      ],
+      "mean": 0.4812,
+      "std": 0.03463177731506139,
+      "median": 0.4715,
+      "max_gap": 0.041000000000000036,
+      "adaptive_threshold": 0.515,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.035)",
+      "score_distribution": {
+        "top_3": [
+          0.556,
+          0.515,
+          0.502
+        ],
+        "bottom_3": [
+          0.451,
+          0.446,
+          0.446
+        ],
+        "gaps": [
+          0.041000000000000036,
+          0.013000000000000012,
+          0.0010000000000000009,
+          0.029000000000000026,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Shareholder and securities holders schedule; rights to acquire securities; consideration paid",
+      "num_matches": 10,
+      "scores": [
+        0.68,
+        0.637,
+        0.581,
+        0.581,
+        0.579,
+        0.548,
+        0.545,
+        0.543,
+        0.529,
+        0.527
+      ],
+      "mean": 0.575,
+      "std": 0.04693612681080534,
+      "median": 0.5635,
+      "max_gap": 0.05600000000000005,
+      "adaptive_threshold": 0.581,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.047)",
+      "score_distribution": {
+        "top_3": [
+          0.68,
+          0.637,
+          0.581
+        ],
+        "bottom_3": [
+          0.543,
+          0.529,
+          0.527
+        ],
+        "gaps": [
+          0.04300000000000004,
+          0.05600000000000005,
+          0.0,
+          0.0020000000000000018,
+          0.030999999999999917
+        ]
+      }
+    },
+    {
+      "item": "Certificates evidencing shares, options, warrants, bonds, or securities",
+      "num_matches": 10,
+      "scores": [
+        0.651,
+        0.552,
+        0.523,
+        0.511,
+        0.509,
+        0.499,
+        0.488,
+        0.48,
+        0.475,
+        0.474
+      ],
+      "mean": 0.5162,
+      "std": 0.05045552497001693,
+      "median": 0.504,
+      "max_gap": 0.09899999999999998,
+      "adaptive_threshold": 0.552,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.050)",
+      "score_distribution": {
+        "top_3": [
+          0.651,
+          0.552,
+          0.523
+        ],
+        "bottom_3": [
+          0.48,
+          0.475,
+          0.474
+        ],
+        "gaps": [
+          0.09899999999999998,
+          0.029000000000000026,
+          0.01200000000000001,
+          0.0020000000000000018,
+          0.010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Shareholder agreements; voting trusts; proxies; restrictive agreements",
+      "num_matches": 10,
+      "scores": [
+        0.687,
+        0.596,
+        0.595,
+        0.562,
+        0.554,
+        0.545,
+        0.542,
+        0.541,
+        0.516,
+        0.504
+      ],
+      "mean": 0.5641999999999999,
+      "std": 0.04949302981228771,
+      "median": 0.5495000000000001,
+      "max_gap": 0.09100000000000008,
+      "adaptive_threshold": 0.596,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.049)",
+      "score_distribution": {
+        "top_3": [
+          0.687,
+          0.596,
+          0.595
+        ],
+        "bottom_3": [
+          0.541,
+          0.516,
+          0.504
+        ],
+        "gaps": [
+          0.09100000000000008,
+          0.0010000000000000009,
+          0.03299999999999992,
+          0.008000000000000007,
+          0.009000000000000008
+        ]
+      }
+    },
+    {
+      "item": "Applications or permits for issuance or transfer of securities",
+      "num_matches": 10,
+      "scores": [
+        0.534,
+        0.497,
+        0.474,
+        0.464,
+        0.464,
+        0.464,
+        0.464,
+        0.464,
+        0.464,
+        0.464
+      ],
+      "mean": 0.4753000000000001,
+      "std": 0.021936499264923744,
+      "median": 0.464,
+      "max_gap": 0.03700000000000003,
+      "adaptive_threshold": 0.497,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.022)",
+      "score_distribution": {
+        "top_3": [
+          0.534,
+          0.497,
+          0.474
+        ],
+        "bottom_3": [
+          0.464,
+          0.464,
+          0.464
+        ],
+        "gaps": [
+          0.03700000000000003,
+          0.02300000000000002,
+          0.009999999999999953,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Agreements, memoranda, or offering materials relating to securities sales; investor correspondence; ...",
+      "num_matches": 10,
+      "scores": [
+        0.601,
+        0.567,
+        0.531,
+        0.514,
+        0.486,
+        0.484,
+        0.477,
+        0.462,
+        0.462,
+        0.457
+      ],
+      "mean": 0.5041,
+      "std": 0.04625678328634622,
+      "median": 0.485,
+      "max_gap": 0.03599999999999992,
+      "adaptive_threshold": 0.531,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.046)",
+      "score_distribution": {
+        "top_3": [
+          0.601,
+          0.567,
+          0.531
+        ],
+        "bottom_3": [
+          0.462,
+          0.462,
+          0.457
+        ],
+        "gaps": [
+          0.03400000000000003,
+          0.03599999999999992,
+          0.017000000000000015,
+          0.028000000000000025,
+          0.0020000000000000018
+        ]
+      }
+    },
+    {
+      "item": "Agreements granting rights over issued/unissued securities (purchase, repurchase, preemptive, regist...",
+      "num_matches": 10,
+      "scores": [
+        0.647,
+        0.604,
+        0.555,
+        0.551,
+        0.549,
+        0.536,
+        0.532,
+        0.518,
+        0.487,
+        0.483
+      ],
+      "mean": 0.5462,
+      "std": 0.047127062289092456,
+      "median": 0.5425,
+      "max_gap": 0.04899999999999993,
+      "adaptive_threshold": 0.555,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.047)",
+      "score_distribution": {
+        "top_3": [
+          0.647,
+          0.604,
+          0.555
+        ],
+        "bottom_3": [
+          0.518,
+          0.487,
+          0.483
+        ],
+        "gaps": [
+          0.04300000000000004,
+          0.04899999999999993,
+          0.0040000000000000036,
+          0.0020000000000000018,
+          0.013000000000000012
+        ]
+      }
+    },
+    {
+      "item": "Agreements to issue securities or equity interests; amendments",
+      "num_matches": 10,
+      "scores": [
+        0.648,
+        0.541,
+        0.538,
+        0.52,
+        0.506,
+        0.504,
+        0.5,
+        0.497,
+        0.481,
+        0.478
+      ],
+      "mean": 0.5212999999999999,
+      "std": 0.046688435398929376,
+      "median": 0.505,
+      "max_gap": 0.10699999999999998,
+      "adaptive_threshold": 0.541,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 1 high-relevance docs (>0.541), 9 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.648,
+          0.541,
+          0.538
+        ],
+        "bottom_3": [
+          0.497,
+          0.481,
+          0.478
+        ],
+        "gaps": [
+          0.10699999999999998,
+          0.0030000000000000027,
+          0.018000000000000016,
+          0.014000000000000012,
+          0.0020000000000000018
+        ]
+      }
+    },
+    {
+      "item": "Directors' and officers' questionnaires (most recent)",
+      "num_matches": 10,
+      "scores": [
+        0.529,
+        0.449,
+        0.447,
+        0.447,
+        0.447,
+        0.447,
+        0.447,
+        0.447,
+        0.447,
+        0.433
+      ],
+      "mean": 0.454,
+      "std": 0.025365330670030703,
+      "median": 0.447,
+      "max_gap": 0.08000000000000002,
+      "adaptive_threshold": 0.449,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.025)",
+      "score_distribution": {
+        "top_3": [
+          0.529,
+          0.449,
+          0.447
+        ],
+        "bottom_3": [
+          0.447,
+          0.447,
+          0.433
+        ],
+        "gaps": [
+          0.08000000000000002,
+          0.0020000000000000018,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Indemnification agreements for directors and officers",
+      "num_matches": 10,
+      "scores": [
+        0.849,
+        0.736,
+        0.526,
+        0.477,
+        0.477,
+        0.474,
+        0.466,
+        0.462,
+        0.461,
+        0.461
+      ],
+      "mean": 0.5389000000000002,
+      "std": 0.13054382405920242,
+      "median": 0.4755,
+      "max_gap": 0.20999999999999996,
+      "adaptive_threshold": 0.526,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 2 high-relevance docs (>0.526), 8 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.849,
+          0.736,
+          0.526
+        ],
+        "bottom_3": [
+          0.462,
+          0.461,
+          0.461
+        ],
+        "gaps": [
+          0.11299999999999999,
+          0.20999999999999996,
+          0.049000000000000044,
+          0.0,
+          0.0030000000000000027
+        ]
+      }
+    },
+    {
+      "item": "Other organizational documents not covered above",
+      "num_matches": 10,
+      "scores": [
+        0.574,
+        0.525,
+        0.52,
+        0.505,
+        0.503,
+        0.499,
+        0.481,
+        0.481,
+        0.481,
+        0.481
+      ],
+      "mean": 0.5049999999999999,
+      "std": 0.027802877548915687,
+      "median": 0.501,
+      "max_gap": 0.04899999999999993,
+      "adaptive_threshold": 0.525,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.028)",
+      "score_distribution": {
+        "top_3": [
+          0.574,
+          0.525,
+          0.52
+        ],
+        "bottom_3": [
+          0.481,
+          0.481,
+          0.481
+        ],
+        "gaps": [
+          0.04899999999999993,
+          0.0050000000000000044,
+          0.015000000000000013,
+          0.0020000000000000018,
+          0.0040000000000000036
+        ]
+      }
+    },
+    {
+      "item": "Audited financial statements",
+      "num_matches": 10,
+      "scores": [
+        0.775,
+        0.775,
+        0.732,
+        0.732,
+        0.732,
+        0.732,
+        0.732,
+        0.732,
+        0.732,
+        0.726
+      ],
+      "mean": 0.74,
+      "std": 0.017589769754036026,
+      "median": 0.732,
+      "max_gap": 0.04300000000000004,
+      "adaptive_threshold": 0.732,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.018)",
+      "score_distribution": {
+        "top_3": [
+          0.775,
+          0.775,
+          0.732
+        ],
+        "bottom_3": [
+          0.732,
+          0.732,
+          0.726
+        ],
+        "gaps": [
+          0.0,
+          0.04300000000000004,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Unaudited financial statements",
+      "num_matches": 10,
+      "scores": [
+        0.731,
+        0.731,
+        0.731,
+        0.731,
+        0.731,
+        0.731,
+        0.731,
+        0.703,
+        0.679,
+        0.662
+      ],
+      "mean": 0.7161000000000001,
+      "std": 0.024553818440315938,
+      "median": 0.731,
+      "max_gap": 0.028000000000000025,
+      "adaptive_threshold": 0.703,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.025)",
+      "score_distribution": {
+        "top_3": [
+          0.731,
+          0.731,
+          0.731
+        ],
+        "bottom_3": [
+          0.703,
+          0.679,
+          0.662
+        ],
+        "gaps": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Independent auditor reports",
+      "num_matches": 10,
+      "scores": [
+        0.645,
+        0.637,
+        0.637,
+        0.613,
+        0.588,
+        0.588,
+        0.588,
+        0.532,
+        0.528,
+        0.524
+      ],
+      "mean": 0.588,
+      "std": 0.04416786161905509,
+      "median": 0.588,
+      "max_gap": 0.05599999999999994,
+      "adaptive_threshold": 0.532,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.044)",
+      "score_distribution": {
+        "top_3": [
+          0.645,
+          0.637,
+          0.637
+        ],
+        "bottom_3": [
+          0.532,
+          0.528,
+          0.524
+        ],
+        "gaps": [
+          0.008000000000000007,
+          0.0,
+          0.02400000000000002,
+          0.025000000000000022,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Audit correspondence; management letters; special reports; counsel letters to auditors",
+      "num_matches": 10,
+      "scores": [
+        0.666,
+        0.61,
+        0.61,
+        0.558,
+        0.532,
+        0.532,
+        0.531,
+        0.531,
+        0.531,
+        0.502
+      ],
+      "mean": 0.5603,
+      "std": 0.048676585747153625,
+      "median": 0.532,
+      "max_gap": 0.05600000000000005,
+      "adaptive_threshold": 0.61,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.049)",
+      "score_distribution": {
+        "top_3": [
+          0.666,
+          0.61,
+          0.61
+        ],
+        "bottom_3": [
+          0.531,
+          0.531,
+          0.502
+        ],
+        "gaps": [
+          0.05600000000000005,
+          0.0,
+          0.051999999999999935,
+          0.026000000000000023,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Unrecorded liabilities not in financial statements",
+      "num_matches": 10,
+      "scores": [
+        0.511,
+        0.511,
+        0.491,
+        0.491,
+        0.491,
+        0.491,
+        0.491,
+        0.491,
+        0.491,
+        0.475
+      ],
+      "mean": 0.49339999999999995,
+      "std": 0.009991996797437447,
+      "median": 0.491,
+      "max_gap": 0.020000000000000018,
+      "adaptive_threshold": 0.491,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.010)",
+      "score_distribution": {
+        "top_3": [
+          0.511,
+          0.511,
+          0.491
+        ],
+        "bottom_3": [
+          0.491,
+          0.491,
+          0.475
+        ],
+        "gaps": [
+          0.0,
+          0.020000000000000018,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Budgets; projected financial statements; cash flow forecasts",
+      "num_matches": 10,
+      "scores": [
+        0.812,
+        0.718,
+        0.715,
+        0.657,
+        0.657,
+        0.657,
+        0.654,
+        0.648,
+        0.644,
+        0.644
+      ],
+      "mean": 0.6806000000000001,
+      "std": 0.05095919936576712,
+      "median": 0.657,
+      "max_gap": 0.09400000000000008,
+      "adaptive_threshold": 0.718,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.051)",
+      "score_distribution": {
+        "top_3": [
+          0.812,
+          0.718,
+          0.715
+        ],
+        "bottom_3": [
+          0.648,
+          0.644,
+          0.644
+        ],
+        "gaps": [
+          0.09400000000000008,
+          0.0030000000000000027,
+          0.05799999999999994,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Accounting policies and changes in methods or principles",
+      "num_matches": 10,
+      "scores": [
+        0.504,
+        0.504,
+        0.504,
+        0.504,
+        0.504,
+        0.504,
+        0.504,
+        0.497,
+        0.497,
+        0.497
+      ],
+      "mean": 0.5019,
+      "std": 0.0032078029864690905,
+      "median": 0.504,
+      "max_gap": 0.007000000000000006,
+      "adaptive_threshold": 0.497,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.003)",
+      "score_distribution": {
+        "top_3": [
+          0.504,
+          0.504,
+          0.504
+        ],
+        "bottom_3": [
+          0.497,
+          0.497,
+          0.497
+        ],
+        "gaps": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Write-downs and write-offs outside ordinary course",
+      "num_matches": 10,
+      "scores": [
+        0.381,
+        0.381,
+        0.367,
+        0.356,
+        0.351,
+        0.351,
+        0.351,
+        0.312,
+        0.31,
+        0.305
+      ],
+      "mean": 0.3465,
+      "std": 0.026826293072282646,
+      "median": 0.351,
+      "max_gap": 0.03899999999999998,
+      "adaptive_threshold": 0.312,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.027)",
+      "score_distribution": {
+        "top_3": [
+          0.381,
+          0.381,
+          0.367
+        ],
+        "bottom_3": [
+          0.312,
+          0.31,
+          0.305
+        ],
+        "gaps": [
+          0.0,
+          0.014000000000000012,
+          0.01100000000000001,
+          0.0050000000000000044,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Accounts receivable aging schedules",
+      "num_matches": 10,
+      "scores": [
+        0.822,
+        0.822,
+        0.533,
+        0.533,
+        0.463,
+        0.442,
+        0.442,
+        0.437,
+        0.437,
+        0.414
+      ],
+      "mean": 0.5345,
+      "std": 0.14868574242340787,
+      "median": 0.4525,
+      "max_gap": 0.2889999999999999,
+      "adaptive_threshold": 0.533,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 2 high-relevance docs (>0.533), 8 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.822,
+          0.822,
+          0.533
+        ],
+        "bottom_3": [
+          0.437,
+          0.437,
+          0.414
+        ],
+        "gaps": [
+          0.0,
+          0.2889999999999999,
+          0.0,
+          0.07,
+          0.02100000000000002
+        ]
+      }
+    },
+    {
+      "item": "General and administrative (G&A) expense breakdown",
+      "num_matches": 10,
+      "scores": [
+        0.697,
+        0.632,
+        0.632,
+        0.632,
+        0.592,
+        0.577,
+        0.564,
+        0.559,
+        0.559,
+        0.559
+      ],
+      "mean": 0.6003000000000001,
+      "std": 0.044059164767389754,
+      "median": 0.5845,
+      "max_gap": 0.06499999999999995,
+      "adaptive_threshold": 0.632,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.044)",
+      "score_distribution": {
+        "top_3": [
+          0.697,
+          0.632,
+          0.632
+        ],
+        "bottom_3": [
+          0.559,
+          0.559,
+          0.559
+        ],
+        "gaps": [
+          0.06499999999999995,
+          0.0,
+          0.0,
+          0.040000000000000036,
+          0.015000000000000013
+        ]
+      }
+    },
+    {
+      "item": "Revenue, gross margin, and average selling price breakdown",
+      "num_matches": 10,
+      "scores": [
+        0.566,
+        0.495,
+        0.495,
+        0.475,
+        0.453,
+        0.453,
+        0.453,
+        0.453,
+        0.453,
+        0.453
+      ],
+      "mean": 0.47490000000000004,
+      "std": 0.03461921431806329,
+      "median": 0.453,
+      "max_gap": 0.07099999999999995,
+      "adaptive_threshold": 0.495,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.035)",
+      "score_distribution": {
+        "top_3": [
+          0.566,
+          0.495,
+          0.495
+        ],
+        "bottom_3": [
+          0.453,
+          0.453,
+          0.453
+        ],
+        "gaps": [
+          0.07099999999999995,
+          0.0,
+          0.020000000000000018,
+          0.021999999999999964,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Valuations of equity securities",
+      "num_matches": 10,
+      "scores": [
+        0.527,
+        0.52,
+        0.429,
+        0.403,
+        0.403,
+        0.403,
+        0.403,
+        0.403,
+        0.403,
+        0.403
+      ],
+      "mean": 0.4297000000000001,
+      "std": 0.04755218186371684,
+      "median": 0.403,
+      "max_gap": 0.09100000000000003,
+      "adaptive_threshold": 0.429,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.048)",
+      "score_distribution": {
+        "top_3": [
+          0.527,
+          0.52,
+          0.429
+        ],
+        "bottom_3": [
+          0.403,
+          0.403,
+          0.403
+        ],
+        "gaps": [
+          0.007000000000000006,
+          0.09100000000000003,
+          0.025999999999999968,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Contingent liabilities (recorded)",
+      "num_matches": 10,
+      "scores": [
+        0.548,
+        0.488,
+        0.488,
+        0.48,
+        0.452,
+        0.45,
+        0.45,
+        0.45,
+        0.44,
+        0.434
+      ],
+      "mean": 0.4680000000000001,
+      "std": 0.03242221460665512,
+      "median": 0.451,
+      "max_gap": 0.06000000000000005,
+      "adaptive_threshold": 0.488,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.032)",
+      "score_distribution": {
+        "top_3": [
+          0.548,
+          0.488,
+          0.488
+        ],
+        "bottom_3": [
+          0.45,
+          0.44,
+          0.434
+        ],
+        "gaps": [
+          0.06000000000000005,
+          0.0,
+          0.008000000000000007,
+          0.02799999999999997,
+          0.0020000000000000018
+        ]
+      }
+    },
+    {
+      "item": "Other financial and accounting documents not covered above",
+      "num_matches": 10,
+      "scores": [
+        0.679,
+        0.679,
+        0.679,
+        0.679,
+        0.679,
+        0.679,
+        0.679,
+        0.676,
+        0.676,
+        0.676
+      ],
+      "mean": 0.6781,
+      "std": 0.0013747727084867532,
+      "median": 0.679,
+      "max_gap": 0.0030000000000000027,
+      "adaptive_threshold": 0.676,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.001)",
+      "score_distribution": {
+        "top_3": [
+          0.679,
+          0.679,
+          0.679
+        ],
+        "bottom_3": [
+          0.676,
+          0.676,
+          0.676
+        ],
+        "gaps": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "State and local jurisdictions for tax filings and payments; schedule of taxes paid",
+      "num_matches": 10,
+      "scores": [
+        0.579,
+        0.532,
+        0.528,
+        0.503,
+        0.493,
+        0.482,
+        0.477,
+        0.472,
+        0.466,
+        0.458
+      ],
+      "mean": 0.4990000000000001,
+      "std": 0.03557246125867592,
+      "median": 0.4875,
+      "max_gap": 0.04699999999999993,
+      "adaptive_threshold": 0.532,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.036)",
+      "score_distribution": {
+        "top_3": [
+          0.579,
+          0.532,
+          0.528
+        ],
+        "bottom_3": [
+          0.472,
+          0.466,
+          0.458
+        ],
+        "gaps": [
+          0.04699999999999993,
+          0.0040000000000000036,
+          0.025000000000000022,
+          0.010000000000000009,
+          0.01100000000000001
+        ]
+      }
+    },
+    {
+      "item": "Federal, state, local tax returns (last 3 closed years + open years)",
+      "num_matches": 10,
+      "scores": [
+        0.597,
+        0.562,
+        0.552,
+        0.492,
+        0.476,
+        0.472,
+        0.451,
+        0.438,
+        0.429,
+        0.427
+      ],
+      "mean": 0.4896,
+      "std": 0.05737107285034855,
+      "median": 0.474,
+      "max_gap": 0.06000000000000005,
+      "adaptive_threshold": 0.492,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.057)",
+      "score_distribution": {
+        "top_3": [
+          0.597,
+          0.562,
+          0.552
+        ],
+        "bottom_3": [
+          0.438,
+          0.429,
+          0.427
+        ],
+        "gaps": [
+          0.03499999999999992,
+          0.010000000000000009,
+          0.06000000000000005,
+          0.016000000000000014,
+          0.0040000000000000036
+        ]
+      }
+    },
+    {
+      "item": "Evidence Company is current on all taxes (income, property, payroll, VAT, etc.)",
+      "num_matches": 10,
+      "scores": [
+        0.552,
+        0.54,
+        0.495,
+        0.495,
+        0.494,
+        0.489,
+        0.489,
+        0.489,
+        0.489,
+        0.489
+      ],
+      "mean": 0.5020999999999999,
+      "std": 0.022250617968946413,
+      "median": 0.4915,
+      "max_gap": 0.04500000000000004,
+      "adaptive_threshold": 0.495,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.022)",
+      "score_distribution": {
+        "top_3": [
+          0.552,
+          0.54,
+          0.495
+        ],
+        "bottom_3": [
+          0.489,
+          0.489,
+          0.489
+        ],
+        "gaps": [
+          0.01200000000000001,
+          0.04500000000000004,
+          0.0,
+          0.0010000000000000009,
+          0.0050000000000000044
+        ]
+      }
+    },
+    {
+      "item": "Tax audits (3 closed + open years); correspondence",
+      "num_matches": 10,
+      "scores": [
+        0.604,
+        0.574,
+        0.531,
+        0.531,
+        0.52,
+        0.495,
+        0.463,
+        0.45,
+        0.449,
+        0.448
+      ],
+      "mean": 0.5065000000000001,
+      "std": 0.05233593411796525,
+      "median": 0.5075000000000001,
+      "max_gap": 0.04299999999999993,
+      "adaptive_threshold": 0.531,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.052)",
+      "score_distribution": {
+        "top_3": [
+          0.604,
+          0.574,
+          0.531
+        ],
+        "bottom_3": [
+          0.45,
+          0.449,
+          0.448
+        ],
+        "gaps": [
+          0.030000000000000027,
+          0.04299999999999993,
+          0.0,
+          0.01100000000000001,
+          0.025000000000000022
+        ]
+      }
+    },
+    {
+      "item": "Tax sharing or tax benefit agreements; state unitary filings",
+      "num_matches": 10,
+      "scores": [
+        0.532,
+        0.506,
+        0.475,
+        0.459,
+        0.457,
+        0.417,
+        0.407,
+        0.399,
+        0.379,
+        0.376
+      ],
+      "mean": 0.4407000000000001,
+      "std": 0.0507997047235513,
+      "median": 0.437,
+      "max_gap": 0.040000000000000036,
+      "adaptive_threshold": 0.417,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.051)",
+      "score_distribution": {
+        "top_3": [
+          0.532,
+          0.506,
+          0.475
+        ],
+        "bottom_3": [
+          0.399,
+          0.379,
+          0.376
+        ],
+        "gaps": [
+          0.026000000000000023,
+          0.031000000000000028,
+          0.01599999999999996,
+          0.0020000000000000018,
+          0.040000000000000036
+        ]
+      }
+    },
+    {
+      "item": "Consents and agreements with tax authorities",
+      "num_matches": 10,
+      "scores": [
+        0.589,
+        0.555,
+        0.52,
+        0.516,
+        0.494,
+        0.491,
+        0.485,
+        0.469,
+        0.454,
+        0.449
+      ],
+      "mean": 0.5022,
+      "std": 0.04192087785340379,
+      "median": 0.4925,
+      "max_gap": 0.03500000000000003,
+      "adaptive_threshold": 0.52,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.042)",
+      "score_distribution": {
+        "top_3": [
+          0.589,
+          0.555,
+          0.52
+        ],
+        "bottom_3": [
+          0.469,
+          0.454,
+          0.449
+        ],
+        "gaps": [
+          0.03399999999999992,
+          0.03500000000000003,
+          0.0040000000000000036,
+          0.02200000000000002,
+          0.0030000000000000027
+        ]
+      }
+    },
+    {
+      "item": "Tax deficiency assessments and resolutions",
+      "num_matches": 10,
+      "scores": [
+        0.554,
+        0.532,
+        0.532,
+        0.524,
+        0.49,
+        0.471,
+        0.461,
+        0.448,
+        0.447,
+        0.436
+      ],
+      "mean": 0.48950000000000005,
+      "std": 0.040630653452781204,
+      "median": 0.4805,
+      "max_gap": 0.03400000000000003,
+      "adaptive_threshold": 0.49,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.041)",
+      "score_distribution": {
+        "top_3": [
+          0.554,
+          0.532,
+          0.532
+        ],
+        "bottom_3": [
+          0.448,
+          0.447,
+          0.436
+        ],
+        "gaps": [
+          0.02200000000000002,
+          0.0,
+          0.008000000000000007,
+          0.03400000000000003,
+          0.019000000000000017
+        ]
+      }
+    },
+    {
+      "item": "Pending or threatened disputes with tax authorities",
+      "num_matches": 10,
+      "scores": [
+        0.509,
+        0.488,
+        0.458,
+        0.443,
+        0.439,
+        0.435,
+        0.42,
+        0.405,
+        0.403,
+        0.396
+      ],
+      "mean": 0.4396,
+      "std": 0.03514598127809209,
+      "median": 0.437,
+      "max_gap": 0.02999999999999997,
+      "adaptive_threshold": 0.458,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.035)",
+      "score_distribution": {
+        "top_3": [
+          0.509,
+          0.488,
+          0.458
+        ],
+        "bottom_3": [
+          0.405,
+          0.403,
+          0.396
+        ],
+        "gaps": [
+          0.02100000000000002,
+          0.02999999999999997,
+          0.015000000000000013,
+          0.0040000000000000036,
+          0.0040000000000000036
+        ]
+      }
+    },
+    {
+      "item": "Real estate taxes payable",
+      "num_matches": 10,
+      "scores": [
+        0.592,
+        0.538,
+        0.429,
+        0.423,
+        0.408,
+        0.407,
+        0.405,
+        0.401,
+        0.396,
+        0.361
+      ],
+      "mean": 0.43599999999999994,
+      "std": 0.06781887642832193,
+      "median": 0.4075,
+      "max_gap": 0.10900000000000004,
+      "adaptive_threshold": 0.429,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 2 high-relevance docs (>0.429), 8 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.592,
+          0.538,
+          0.429
+        ],
+        "bottom_3": [
+          0.401,
+          0.396,
+          0.361
+        ],
+        "gaps": [
+          0.05399999999999994,
+          0.10900000000000004,
+          0.006000000000000005,
+          0.015000000000000013,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Notices of assessment; revenue agent reports for open years",
+      "num_matches": 10,
+      "scores": [
+        0.577,
+        0.529,
+        0.522,
+        0.521,
+        0.516,
+        0.516,
+        0.507,
+        0.507,
+        0.507,
+        0.498
+      ],
+      "mean": 0.52,
+      "std": 0.020875823337056662,
+      "median": 0.516,
+      "max_gap": 0.04799999999999993,
+      "adaptive_threshold": 0.529,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.021)",
+      "score_distribution": {
+        "top_3": [
+          0.577,
+          0.529,
+          0.522
+        ],
+        "bottom_3": [
+          0.507,
+          0.507,
+          0.498
+        ],
+        "gaps": [
+          0.04799999999999993,
+          0.007000000000000006,
+          0.0010000000000000009,
+          0.0050000000000000044,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "IRS Form 3115 filings; Section 481(a) depreciation adjustments",
+      "num_matches": 10,
+      "scores": [
+        0.591,
+        0.508,
+        0.426,
+        0.418,
+        0.417,
+        0.415,
+        0.414,
+        0.41,
+        0.406,
+        0.396
+      ],
+      "mean": 0.4401,
+      "std": 0.058246802487346885,
+      "median": 0.416,
+      "max_gap": 0.08299999999999996,
+      "adaptive_threshold": 0.508,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.058)",
+      "score_distribution": {
+        "top_3": [
+          0.591,
+          0.508,
+          0.426
+        ],
+        "bottom_3": [
+          0.41,
+          0.406,
+          0.396
+        ],
+        "gaps": [
+          0.08299999999999996,
+          0.08200000000000002,
+          0.008000000000000007,
+          0.0010000000000000009,
+          0.0020000000000000018
+        ]
+      }
+    },
+    {
+      "item": "Tax shelters; reportable transactions",
+      "num_matches": 10,
+      "scores": [
+        0.493,
+        0.473,
+        0.417,
+        0.415,
+        0.387,
+        0.387,
+        0.387,
+        0.364,
+        0.363,
+        0.362
+      ],
+      "mean": 0.4048,
+      "std": 0.043448360153174936,
+      "median": 0.387,
+      "max_gap": 0.055999999999999994,
+      "adaptive_threshold": 0.417,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.043)",
+      "score_distribution": {
+        "top_3": [
+          0.493,
+          0.473,
+          0.417
+        ],
+        "bottom_3": [
+          0.364,
+          0.363,
+          0.362
+        ],
+        "gaps": [
+          0.020000000000000018,
+          0.055999999999999994,
+          0.0020000000000000018,
+          0.02799999999999997,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Acquisitions lacking pre-closing tax indemnities",
+      "num_matches": 10,
+      "scores": [
+        0.341,
+        0.341,
+        0.34,
+        0.328,
+        0.32,
+        0.319,
+        0.312,
+        0.311,
+        0.311,
+        0.308
+      ],
+      "mean": 0.3231,
+      "std": 0.012731457104353777,
+      "median": 0.3195,
+      "max_gap": 0.01200000000000001,
+      "adaptive_threshold": 0.328,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.013)",
+      "score_distribution": {
+        "top_3": [
+          0.341,
+          0.341,
+          0.34
+        ],
+        "bottom_3": [
+          0.311,
+          0.311,
+          0.308
+        ],
+        "gaps": [
+          0.0,
+          0.0010000000000000009,
+          0.01200000000000001,
+          0.008000000000000007,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "ASC 740 (FIN 48) reserves; underlying issues and assessments",
+      "num_matches": 10,
+      "scores": [
+        0.419,
+        0.374,
+        0.372,
+        0.363,
+        0.357,
+        0.351,
+        0.339,
+        0.339,
+        0.329,
+        0.324
+      ],
+      "mean": 0.3567,
+      "std": 0.026363042313056348,
+      "median": 0.354,
+      "max_gap": 0.044999999999999984,
+      "adaptive_threshold": 0.374,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.026)",
+      "score_distribution": {
+        "top_3": [
+          0.419,
+          0.374,
+          0.372
+        ],
+        "bottom_3": [
+          0.339,
+          0.329,
+          0.324
+        ],
+        "gaps": [
+          0.044999999999999984,
+          0.0020000000000000018,
+          0.009000000000000008,
+          0.006000000000000005,
+          0.006000000000000005
+        ]
+      }
+    },
+    {
+      "item": "Other tax documents not covered above",
+      "num_matches": 10,
+      "scores": [
+        0.629,
+        0.624,
+        0.586,
+        0.538,
+        0.512,
+        0.502,
+        0.501,
+        0.489,
+        0.489,
+        0.484
+      ],
+      "mean": 0.5354,
+      "std": 0.05382601601456306,
+      "median": 0.507,
+      "max_gap": 0.04799999999999993,
+      "adaptive_threshold": 0.538,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.054)",
+      "score_distribution": {
+        "top_3": [
+          0.629,
+          0.624,
+          0.586
+        ],
+        "bottom_3": [
+          0.489,
+          0.489,
+          0.484
+        ],
+        "gaps": [
+          0.0050000000000000044,
+          0.038000000000000034,
+          0.04799999999999993,
+          0.026000000000000023,
+          0.010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Banks, creditors, guarantors, lenders list and relationships",
+      "num_matches": 10,
+      "scores": [
+        0.445,
+        0.445,
+        0.42,
+        0.42,
+        0.42,
+        0.407,
+        0.399,
+        0.399,
+        0.399,
+        0.399
+      ],
+      "mean": 0.41530000000000006,
+      "std": 0.017210752453045153,
+      "median": 0.4135,
+      "max_gap": 0.025000000000000022,
+      "adaptive_threshold": 0.42,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.017)",
+      "score_distribution": {
+        "top_3": [
+          0.445,
+          0.445,
+          0.42
+        ],
+        "bottom_3": [
+          0.399,
+          0.399,
+          0.399
+        ],
+        "gaps": [
+          0.0,
+          0.025000000000000022,
+          0.0,
+          0.0,
+          0.013000000000000012
+        ]
+      }
+    },
+    {
+      "item": "Debt instruments; lines of credit; amendments, consents, waivers",
+      "num_matches": 10,
+      "scores": [
+        0.486,
+        0.42,
+        0.415,
+        0.399,
+        0.386,
+        0.381,
+        0.38,
+        0.38,
+        0.374,
+        0.373
+      ],
+      "mean": 0.3994,
+      "std": 0.03283351945801728,
+      "median": 0.3835,
+      "max_gap": 0.066,
+      "adaptive_threshold": 0.42,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.033)",
+      "score_distribution": {
+        "top_3": [
+          0.486,
+          0.42,
+          0.415
+        ],
+        "bottom_3": [
+          0.38,
+          0.374,
+          0.373
+        ],
+        "gaps": [
+          0.066,
+          0.0050000000000000044,
+          0.01599999999999996,
+          0.013000000000000012,
+          0.0050000000000000044
+        ]
+      }
+    },
+    {
+      "item": "Security agreements; trust indentures; mortgages; deeds of trust; guaranties; installment purchases;...",
+      "num_matches": 10,
+      "scores": [
+        0.402,
+        0.4,
+        0.398,
+        0.383,
+        0.379,
+        0.377,
+        0.373,
+        0.368,
+        0.367,
+        0.359
+      ],
+      "mean": 0.3806,
+      "std": 0.014235167719419408,
+      "median": 0.378,
+      "max_gap": 0.015000000000000013,
+      "adaptive_threshold": 0.383,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.014)",
+      "score_distribution": {
+        "top_3": [
+          0.402,
+          0.4,
+          0.398
+        ],
+        "bottom_3": [
+          0.368,
+          0.367,
+          0.359
+        ],
+        "gaps": [
+          0.0020000000000000018,
+          0.0020000000000000018,
+          0.015000000000000013,
+          0.0040000000000000036,
+          0.0020000000000000018
+        ]
+      }
+    },
+    {
+      "item": "Debt, guaranty, indemnification, or similar arrangements with insiders",
+      "num_matches": 10,
+      "scores": [
+        0.499,
+        0.47,
+        0.455,
+        0.446,
+        0.396,
+        0.377,
+        0.372,
+        0.372,
+        0.364,
+        0.35
+      ],
+      "mean": 0.4101,
+      "std": 0.04973017192811623,
+      "median": 0.3865,
+      "max_gap": 0.04999999999999999,
+      "adaptive_threshold": 0.396,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.050)",
+      "score_distribution": {
+        "top_3": [
+          0.499,
+          0.47,
+          0.455
+        ],
+        "bottom_3": [
+          0.372,
+          0.364,
+          0.35
+        ],
+        "gaps": [
+          0.029000000000000026,
+          0.014999999999999958,
+          0.009000000000000008,
+          0.04999999999999999,
+          0.019000000000000017
+        ]
+      }
+    },
+    {
+      "item": "Outstanding letters of credit; performance and other bonds",
+      "num_matches": 10,
+      "scores": [
+        0.498,
+        0.43,
+        0.419,
+        0.419,
+        0.417,
+        0.399,
+        0.399,
+        0.366,
+        0.366,
+        0.357
+      ],
+      "mean": 0.40700000000000003,
+      "std": 0.038971784665319094,
+      "median": 0.40800000000000003,
+      "max_gap": 0.068,
+      "adaptive_threshold": 0.43,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.039)",
+      "score_distribution": {
+        "top_3": [
+          0.498,
+          0.43,
+          0.419
+        ],
+        "bottom_3": [
+          0.366,
+          0.366,
+          0.357
+        ],
+        "gaps": [
+          0.068,
+          0.01100000000000001,
+          0.0,
+          0.0020000000000000018,
+          0.01799999999999996
+        ]
+      }
+    },
+    {
+      "item": "Mortgages, liens, security interests, encumbrances",
+      "num_matches": 10,
+      "scores": [
+        0.331,
+        0.331,
+        0.33,
+        0.323,
+        0.317,
+        0.311,
+        0.302,
+        0.302,
+        0.302,
+        0.302
+      ],
+      "mean": 0.3151,
+      "std": 0.01223478647136926,
+      "median": 0.314,
+      "max_gap": 0.009000000000000008,
+      "adaptive_threshold": 0.302,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.012)",
+      "score_distribution": {
+        "top_3": [
+          0.331,
+          0.331,
+          0.33
+        ],
+        "bottom_3": [
+          0.302,
+          0.302,
+          0.302
+        ],
+        "gaps": [
+          0.0,
+          0.0010000000000000009,
+          0.007000000000000006,
+          0.006000000000000005,
+          0.006000000000000005
+        ]
+      }
+    },
+    {
+      "item": "Compliance reports (past 3 years) related to debt instruments",
+      "num_matches": 10,
+      "scores": [
+        0.706,
+        0.706,
+        0.572,
+        0.564,
+        0.564,
+        0.564,
+        0.533,
+        0.516,
+        0.513,
+        0.512
+      ],
+      "mean": 0.575,
+      "std": 0.06910282193948376,
+      "median": 0.564,
+      "max_gap": 0.134,
+      "adaptive_threshold": 0.572,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 2 high-relevance docs (>0.572), 8 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.706,
+          0.706,
+          0.572
+        ],
+        "bottom_3": [
+          0.516,
+          0.513,
+          0.512
+        ],
+        "gaps": [
+          0.0,
+          0.134,
+          0.008000000000000007,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Compliance certificates for covenants or restrictions",
+      "num_matches": 10,
+      "scores": [
+        0.563,
+        0.534,
+        0.518,
+        0.517,
+        0.512,
+        0.502,
+        0.485,
+        0.478,
+        0.468,
+        0.458
+      ],
+      "mean": 0.5035000000000001,
+      "std": 0.030431069649290994,
+      "median": 0.507,
+      "max_gap": 0.028999999999999915,
+      "adaptive_threshold": 0.534,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.030)",
+      "score_distribution": {
+        "top_3": [
+          0.563,
+          0.534,
+          0.518
+        ],
+        "bottom_3": [
+          0.478,
+          0.468,
+          0.458
+        ],
+        "gaps": [
+          0.028999999999999915,
+          0.016000000000000014,
+          0.0010000000000000009,
+          0.0050000000000000044,
+          0.010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Material correspondence with lenders",
+      "num_matches": 10,
+      "scores": [
+        0.382,
+        0.371,
+        0.367,
+        0.356,
+        0.351,
+        0.35,
+        0.35,
+        0.345,
+        0.337,
+        0.337
+      ],
+      "mean": 0.3546,
+      "std": 0.013937001112147473,
+      "median": 0.3505,
+      "max_gap": 0.01100000000000001,
+      "adaptive_threshold": 0.371,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.014)",
+      "score_distribution": {
+        "top_3": [
+          0.382,
+          0.371,
+          0.367
+        ],
+        "bottom_3": [
+          0.345,
+          0.337,
+          0.337
+        ],
+        "gaps": [
+          0.01100000000000001,
+          0.0040000000000000036,
+          0.01100000000000001,
+          0.0050000000000000044,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Other loan and obligation documents not covered above",
+      "num_matches": 10,
+      "scores": [
+        0.414,
+        0.406,
+        0.406,
+        0.392,
+        0.392,
+        0.377,
+        0.377,
+        0.377,
+        0.374,
+        0.37
+      ],
+      "mean": 0.3885,
+      "std": 0.014954932296737425,
+      "median": 0.3845,
+      "max_gap": 0.015000000000000013,
+      "adaptive_threshold": 0.377,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.015)",
+      "score_distribution": {
+        "top_3": [
+          0.414,
+          0.406,
+          0.406
+        ],
+        "bottom_3": [
+          0.377,
+          0.374,
+          0.37
+        ],
+        "gaps": [
+          0.007999999999999952,
+          0.0,
+          0.014000000000000012,
+          0.0,
+          0.015000000000000013
+        ]
+      }
+    },
+    {
+      "item": "Physical assets and equipment schedules; ownership and lease terms",
+      "num_matches": 10,
+      "scores": [
+        0.492,
+        0.484,
+        0.449,
+        0.439,
+        0.427,
+        0.423,
+        0.414,
+        0.413,
+        0.413,
+        0.413
+      ],
+      "mean": 0.4367,
+      "std": 0.02816753450339593,
+      "median": 0.425,
+      "max_gap": 0.034999999999999976,
+      "adaptive_threshold": 0.449,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.028)",
+      "score_distribution": {
+        "top_3": [
+          0.492,
+          0.484,
+          0.449
+        ],
+        "bottom_3": [
+          0.413,
+          0.413,
+          0.413
+        ],
+        "gaps": [
+          0.008000000000000007,
+          0.034999999999999976,
+          0.010000000000000009,
+          0.01200000000000001,
+          0.0040000000000000036
+        ]
+      }
+    },
+    {
+      "item": "Inventories: descriptions, locations, quantities",
+      "num_matches": 10,
+      "scores": [
+        0.567,
+        0.39,
+        0.384,
+        0.384,
+        0.375,
+        0.375,
+        0.375,
+        0.375,
+        0.375,
+        0.372
+      ],
+      "mean": 0.3972,
+      "std": 0.05686088286335341,
+      "median": 0.375,
+      "max_gap": 0.17699999999999994,
+      "adaptive_threshold": 0.39,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 1 high-relevance docs (>0.390), 9 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.567,
+          0.39,
+          0.384
+        ],
+        "bottom_3": [
+          0.375,
+          0.375,
+          0.372
+        ],
+        "gaps": [
+          0.17699999999999994,
+          0.006000000000000005,
+          0.0,
+          0.009000000000000008,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Real property owned or leased",
+      "num_matches": 10,
+      "scores": [
+        0.395,
+        0.393,
+        0.369,
+        0.326,
+        0.302,
+        0.287,
+        0.286,
+        0.286,
+        0.28,
+        0.264
+      ],
+      "mean": 0.3188000000000001,
+      "std": 0.04673071794868982,
+      "median": 0.2945,
+      "max_gap": 0.04299999999999998,
+      "adaptive_threshold": 0.326,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.047)",
+      "score_distribution": {
+        "top_3": [
+          0.395,
+          0.393,
+          0.369
+        ],
+        "bottom_3": [
+          0.286,
+          0.28,
+          0.264
+        ],
+        "gaps": [
+          0.0020000000000000018,
+          0.02400000000000002,
+          0.04299999999999998,
+          0.02400000000000002,
+          0.015000000000000013
+        ]
+      }
+    },
+    {
+      "item": "Title insurance policies; abstracts of title; deeds; certificates",
+      "num_matches": 10,
+      "scores": [
+        0.585,
+        0.478,
+        0.468,
+        0.466,
+        0.466,
+        0.445,
+        0.428,
+        0.423,
+        0.417,
+        0.407
+      ],
+      "mean": 0.45830000000000004,
+      "std": 0.048303312515809924,
+      "median": 0.4555,
+      "max_gap": 0.10699999999999998,
+      "adaptive_threshold": 0.478,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 1 high-relevance docs (>0.478), 9 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.585,
+          0.478,
+          0.468
+        ],
+        "bottom_3": [
+          0.423,
+          0.417,
+          0.407
+        ],
+        "gaps": [
+          0.10699999999999998,
+          0.009999999999999953,
+          0.0020000000000000018,
+          0.0,
+          0.02100000000000002
+        ]
+      }
+    },
+    {
+      "item": "Leases, subleases, financing and security agreements; lessor/lessee correspondence on defaults",
+      "num_matches": 10,
+      "scores": [
+        0.445,
+        0.422,
+        0.42,
+        0.416,
+        0.392,
+        0.377,
+        0.373,
+        0.373,
+        0.373,
+        0.373
+      ],
+      "mean": 0.39640000000000003,
+      "std": 0.025582024939398363,
+      "median": 0.3845,
+      "max_gap": 0.023999999999999966,
+      "adaptive_threshold": 0.392,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.026)",
+      "score_distribution": {
+        "top_3": [
+          0.445,
+          0.422,
+          0.42
+        ],
+        "bottom_3": [
+          0.373,
+          0.373,
+          0.373
+        ],
+        "gaps": [
+          0.02300000000000002,
+          0.0020000000000000018,
+          0.0040000000000000036,
+          0.023999999999999966,
+          0.015000000000000013
+        ]
+      }
+    },
+    {
+      "item": "Appraisal reports and surveys of real property",
+      "num_matches": 10,
+      "scores": [
+        0.643,
+        0.551,
+        0.484,
+        0.403,
+        0.403,
+        0.403,
+        0.4,
+        0.395,
+        0.393,
+        0.376
+      ],
+      "mean": 0.44510000000000005,
+      "std": 0.08321231879956237,
+      "median": 0.403,
+      "max_gap": 0.09199999999999997,
+      "adaptive_threshold": 0.551,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.083)",
+      "score_distribution": {
+        "top_3": [
+          0.643,
+          0.551,
+          0.484
+        ],
+        "bottom_3": [
+          0.395,
+          0.393,
+          0.376
+        ],
+        "gaps": [
+          0.09199999999999997,
+          0.06700000000000006,
+          0.08099999999999996,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Warranties and guaranties for real and personal property",
+      "num_matches": 10,
+      "scores": [
+        0.555,
+        0.504,
+        0.504,
+        0.504,
+        0.483,
+        0.473,
+        0.47,
+        0.469,
+        0.464,
+        0.451
+      ],
+      "mean": 0.48769999999999997,
+      "std": 0.028523849670056826,
+      "median": 0.478,
+      "max_gap": 0.051000000000000045,
+      "adaptive_threshold": 0.504,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.029)",
+      "score_distribution": {
+        "top_3": [
+          0.555,
+          0.504,
+          0.504
+        ],
+        "bottom_3": [
+          0.469,
+          0.464,
+          0.451
+        ],
+        "gaps": [
+          0.051000000000000045,
+          0.0,
+          0.0,
+          0.02100000000000002,
+          0.010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Other property and equipment documents not covered above",
+      "num_matches": 10,
+      "scores": [
+        0.473,
+        0.447,
+        0.439,
+        0.433,
+        0.426,
+        0.426,
+        0.426,
+        0.425,
+        0.425,
+        0.424
+      ],
+      "mean": 0.43439999999999995,
+      "std": 0.01472548810735997,
+      "median": 0.426,
+      "max_gap": 0.025999999999999968,
+      "adaptive_threshold": 0.447,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.015)",
+      "score_distribution": {
+        "top_3": [
+          0.473,
+          0.447,
+          0.439
+        ],
+        "bottom_3": [
+          0.425,
+          0.425,
+          0.424
+        ],
+        "gaps": [
+          0.025999999999999968,
+          0.008000000000000007,
+          0.006000000000000005,
+          0.007000000000000006,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Registered copyrights, trademarks, service marks, patents; certificates of registration",
+      "num_matches": 10,
+      "scores": [
+        0.742,
+        0.735,
+        0.734,
+        0.695,
+        0.667,
+        0.664,
+        0.602,
+        0.572,
+        0.554,
+        0.554
+      ],
+      "mean": 0.6519,
+      "std": 0.07213799276386888,
+      "median": 0.6655,
+      "max_gap": 0.062000000000000055,
+      "adaptive_threshold": 0.602,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.072)",
+      "score_distribution": {
+        "top_3": [
+          0.742,
+          0.735,
+          0.734
+        ],
+        "bottom_3": [
+          0.572,
+          0.554,
+          0.554
+        ],
+        "gaps": [
+          0.007000000000000006,
+          0.0010000000000000009,
+          0.039000000000000035,
+          0.027999999999999914,
+          0.0030000000000000027
+        ]
+      }
+    },
+    {
+      "item": "Unregistered IP and pending applications",
+      "num_matches": 10,
+      "scores": [
+        0.412,
+        0.369,
+        0.338,
+        0.338,
+        0.338,
+        0.338,
+        0.338,
+        0.338,
+        0.338,
+        0.338
+      ],
+      "mean": 0.34850000000000003,
+      "std": 0.023096536536892264,
+      "median": 0.338,
+      "max_gap": 0.04299999999999998,
+      "adaptive_threshold": 0.369,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.023)",
+      "score_distribution": {
+        "top_3": [
+          0.412,
+          0.369,
+          0.338
+        ],
+        "bottom_3": [
+          0.338,
+          0.338,
+          0.338
+        ],
+        "gaps": [
+          0.04299999999999998,
+          0.030999999999999972,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "IP acquisition, assignment, licensing agreements; related correspondence",
+      "num_matches": 10,
+      "scores": [
+        0.561,
+        0.561,
+        0.561,
+        0.561,
+        0.555,
+        0.547,
+        0.545,
+        0.545,
+        0.545,
+        0.545
+      ],
+      "mean": 0.5526,
+      "std": 0.007418894796396569,
+      "median": 0.551,
+      "max_gap": 0.008000000000000007,
+      "adaptive_threshold": 0.547,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.007)",
+      "score_distribution": {
+        "top_3": [
+          0.561,
+          0.561,
+          0.561
+        ],
+        "bottom_3": [
+          0.545,
+          0.545,
+          0.545
+        ],
+        "gaps": [
+          0.0,
+          0.0,
+          0.0,
+          0.006000000000000005,
+          0.008000000000000007
+        ]
+      }
+    },
+    {
+      "item": "Software owned, licensed, or used",
+      "num_matches": 10,
+      "scores": [
+        0.601,
+        0.601,
+        0.601,
+        0.601,
+        0.601,
+        0.601,
+        0.601,
+        0.601,
+        0.584,
+        0.497
+      ],
+      "mean": 0.5889,
+      "std": 0.031049798711102777,
+      "median": 0.601,
+      "max_gap": 0.08699999999999997,
+      "adaptive_threshold": 0.497,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.031)",
+      "score_distribution": {
+        "top_3": [
+          0.601,
+          0.601,
+          0.601
+        ],
+        "bottom_3": [
+          0.601,
+          0.584,
+          0.497
+        ],
+        "gaps": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Royalty, fee, and license agreements; concessions or special rights",
+      "num_matches": 10,
+      "scores": [
+        0.606,
+        0.606,
+        0.606,
+        0.606,
+        0.606,
+        0.606,
+        0.606,
+        0.606,
+        0.602,
+        0.602
+      ],
+      "mean": 0.6052000000000001,
+      "std": 0.0016000000000000014,
+      "median": 0.606,
+      "max_gap": 0.0040000000000000036,
+      "adaptive_threshold": 0.602,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.002)",
+      "score_distribution": {
+        "top_3": [
+          0.606,
+          0.606,
+          0.606
+        ],
+        "bottom_3": [
+          0.606,
+          0.602,
+          0.602
+        ],
+        "gaps": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Internet domain names held, assigned, or used",
+      "num_matches": 10,
+      "scores": [
+        0.383,
+        0.343,
+        0.33,
+        0.319,
+        0.313,
+        0.276,
+        0.276,
+        0.264,
+        0.236,
+        0.224
+      ],
+      "mean": 0.29640000000000005,
+      "std": 0.047284669820143614,
+      "median": 0.2945,
+      "max_gap": 0.03999999999999998,
+      "adaptive_threshold": 0.343,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.047)",
+      "score_distribution": {
+        "top_3": [
+          0.383,
+          0.343,
+          0.33
+        ],
+        "bottom_3": [
+          0.264,
+          0.236,
+          0.224
+        ],
+        "gaps": [
+          0.03999999999999998,
+          0.013000000000000012,
+          0.01100000000000001,
+          0.006000000000000005,
+          0.03699999999999998
+        ]
+      }
+    },
+    {
+      "item": "Claims for infringement or violation of proprietary rights",
+      "num_matches": 10,
+      "scores": [
+        0.489,
+        0.489,
+        0.489,
+        0.489,
+        0.489,
+        0.489,
+        0.489,
+        0.489,
+        0.489,
+        0.467
+      ],
+      "mean": 0.48679999999999995,
+      "std": 0.0065999999999999896,
+      "median": 0.489,
+      "max_gap": 0.021999999999999964,
+      "adaptive_threshold": 0.467,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.007)",
+      "score_distribution": {
+        "top_3": [
+          0.489,
+          0.489,
+          0.489
+        ],
+        "bottom_3": [
+          0.489,
+          0.489,
+          0.467
+        ],
+        "gaps": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Company IP policies (registration, use, maintenance, monitoring)",
+      "num_matches": 10,
+      "scores": [
+        0.554,
+        0.554,
+        0.554,
+        0.554,
+        0.554,
+        0.554,
+        0.554,
+        0.525,
+        0.518,
+        0.518
+      ],
+      "mean": 0.5439,
+      "std": 0.015533512159199556,
+      "median": 0.554,
+      "max_gap": 0.029000000000000026,
+      "adaptive_threshold": 0.525,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.016)",
+      "score_distribution": {
+        "top_3": [
+          0.554,
+          0.554,
+          0.554
+        ],
+        "bottom_3": [
+          0.525,
+          0.518,
+          0.518
+        ],
+        "gaps": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Other intellectual property documents not covered above",
+      "num_matches": 10,
+      "scores": [
+        0.622,
+        0.622,
+        0.586,
+        0.555,
+        0.548,
+        0.548,
+        0.548,
+        0.548,
+        0.517,
+        0.517
+      ],
+      "mean": 0.5611,
+      "std": 0.0355681036885578,
+      "median": 0.548,
+      "max_gap": 0.03600000000000003,
+      "adaptive_threshold": 0.586,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.036)",
+      "score_distribution": {
+        "top_3": [
+          0.622,
+          0.622,
+          0.586
+        ],
+        "bottom_3": [
+          0.548,
+          0.517,
+          0.517
+        ],
+        "gaps": [
+          0.0,
+          0.03600000000000003,
+          0.030999999999999917,
+          0.007000000000000006,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Joint venture, partnership, teaming, subcontract, alliance agreements",
+      "num_matches": 10,
+      "scores": [
+        0.57,
+        0.565,
+        0.54,
+        0.501,
+        0.496,
+        0.488,
+        0.487,
+        0.475,
+        0.471,
+        0.471
+      ],
+      "mean": 0.5064,
+      "std": 0.035989442896493966,
+      "median": 0.492,
+      "max_gap": 0.039000000000000035,
+      "adaptive_threshold": 0.501,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.036)",
+      "score_distribution": {
+        "top_3": [
+          0.57,
+          0.565,
+          0.54
+        ],
+        "bottom_3": [
+          0.475,
+          0.471,
+          0.471
+        ],
+        "gaps": [
+          0.0050000000000000044,
+          0.02499999999999991,
+          0.039000000000000035,
+          0.0050000000000000044,
+          0.008000000000000007
+        ]
+      }
+    },
+    {
+      "item": "Customer agreements comprising top 10% of revenues; other major agreements",
+      "num_matches": 10,
+      "scores": [
+        0.553,
+        0.553,
+        0.553,
+        0.545,
+        0.539,
+        0.524,
+        0.524,
+        0.522,
+        0.509,
+        0.509
+      ],
+      "mean": 0.5331000000000001,
+      "std": 0.01677766372293832,
+      "median": 0.5315000000000001,
+      "max_gap": 0.015000000000000013,
+      "adaptive_threshold": 0.524,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.017)",
+      "score_distribution": {
+        "top_3": [
+          0.553,
+          0.553,
+          0.553
+        ],
+        "bottom_3": [
+          0.522,
+          0.509,
+          0.509
+        ],
+        "gaps": [
+          0.0,
+          0.0,
+          0.008000000000000007,
+          0.006000000000000005,
+          0.015000000000000013
+        ]
+      }
+    },
+    {
+      "item": "Brokers, finders, financial advisory agreements",
+      "num_matches": 10,
+      "scores": [
+        0.624,
+        0.512,
+        0.506,
+        0.45,
+        0.442,
+        0.432,
+        0.432,
+        0.432,
+        0.432,
+        0.432
+      ],
+      "mean": 0.4694000000000001,
+      "std": 0.059309695666054464,
+      "median": 0.437,
+      "max_gap": 0.11199999999999999,
+      "adaptive_threshold": 0.512,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 1 high-relevance docs (>0.512), 9 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.624,
+          0.512,
+          0.506
+        ],
+        "bottom_3": [
+          0.432,
+          0.432,
+          0.432
+        ],
+        "gaps": [
+          0.11199999999999999,
+          0.006000000000000005,
+          0.055999999999999994,
+          0.008000000000000007,
+          0.010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Affiliates and associates list (per SEC Rule 12b-2)",
+      "num_matches": 10,
+      "scores": [
+        0.433,
+        0.433,
+        0.396,
+        0.393,
+        0.381,
+        0.371,
+        0.369,
+        0.369,
+        0.367,
+        0.367
+      ],
+      "mean": 0.3879,
+      "std": 0.024659480935331952,
+      "median": 0.376,
+      "max_gap": 0.03699999999999998,
+      "adaptive_threshold": 0.396,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.025)",
+      "score_distribution": {
+        "top_3": [
+          0.433,
+          0.433,
+          0.396
+        ],
+        "bottom_3": [
+          0.369,
+          0.367,
+          0.367
+        ],
+        "gaps": [
+          0.0,
+          0.03699999999999998,
+          0.0030000000000000027,
+          0.01200000000000001,
+          0.010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Agreements with affiliates/associates (tax sharing, indemnification, leases, consulting, facilities,...",
+      "num_matches": 10,
+      "scores": [
+        0.62,
+        0.594,
+        0.573,
+        0.573,
+        0.573,
+        0.573,
+        0.555,
+        0.554,
+        0.537,
+        0.534
+      ],
+      "mean": 0.5686,
+      "std": 0.024409834083827752,
+      "median": 0.573,
+      "max_gap": 0.026000000000000023,
+      "adaptive_threshold": 0.594,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.024)",
+      "score_distribution": {
+        "top_3": [
+          0.62,
+          0.594,
+          0.573
+        ],
+        "bottom_3": [
+          0.554,
+          0.537,
+          0.534
+        ],
+        "gaps": [
+          0.026000000000000023,
+          0.02100000000000002,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Insurance policies (general liability, property, casualty, D&O, workers comp, key man, cyber, excess...",
+      "num_matches": 10,
+      "scores": [
+        0.667,
+        0.667,
+        0.594,
+        0.575,
+        0.574,
+        0.57,
+        0.569,
+        0.543,
+        0.529,
+        0.527
+      ],
+      "mean": 0.5815,
+      "std": 0.04729957716512908,
+      "median": 0.572,
+      "max_gap": 0.07300000000000006,
+      "adaptive_threshold": 0.594,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.047)",
+      "score_distribution": {
+        "top_3": [
+          0.667,
+          0.667,
+          0.594
+        ],
+        "bottom_3": [
+          0.543,
+          0.529,
+          0.527
+        ],
+        "gaps": [
+          0.0,
+          0.07300000000000006,
+          0.019000000000000017,
+          0.0010000000000000009,
+          0.0040000000000000036
+        ]
+      }
+    },
+    {
+      "item": "Insurance cancellations, non-renewals, or declinations",
+      "num_matches": 10,
+      "scores": [
+        0.561,
+        0.551,
+        0.511,
+        0.511,
+        0.494,
+        0.493,
+        0.474,
+        0.471,
+        0.464,
+        0.455
+      ],
+      "mean": 0.4985000000000001,
+      "std": 0.03385926756443502,
+      "median": 0.4935,
+      "max_gap": 0.040000000000000036,
+      "adaptive_threshold": 0.511,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.034)",
+      "score_distribution": {
+        "top_3": [
+          0.561,
+          0.551,
+          0.511
+        ],
+        "bottom_3": [
+          0.471,
+          0.464,
+          0.455
+        ],
+        "gaps": [
+          0.010000000000000009,
+          0.040000000000000036,
+          0.0,
+          0.017000000000000015,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Insurance claims experience",
+      "num_matches": 10,
+      "scores": [
+        0.741,
+        0.639,
+        0.63,
+        0.63,
+        0.604,
+        0.599,
+        0.598,
+        0.598,
+        0.569,
+        0.562
+      ],
+      "mean": 0.617,
+      "std": 0.04768857305476858,
+      "median": 0.6014999999999999,
+      "max_gap": 0.10199999999999998,
+      "adaptive_threshold": 0.639,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 1 high-relevance docs (>0.639), 9 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.741,
+          0.639,
+          0.63
+        ],
+        "bottom_3": [
+          0.598,
+          0.569,
+          0.562
+        ],
+        "gaps": [
+          0.10199999999999998,
+          0.009000000000000008,
+          0.0,
+          0.026000000000000023,
+          0.0050000000000000044
+        ]
+      }
+    },
+    {
+      "item": "Self-insurance or captive programs; actuarial reports",
+      "num_matches": 10,
+      "scores": [
+        0.656,
+        0.65,
+        0.625,
+        0.617,
+        0.592,
+        0.592,
+        0.558,
+        0.55,
+        0.546,
+        0.539
+      ],
+      "mean": 0.5925,
+      "std": 0.041251060592425975,
+      "median": 0.592,
+      "max_gap": 0.03399999999999992,
+      "adaptive_threshold": 0.558,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.041)",
+      "score_distribution": {
+        "top_3": [
+          0.656,
+          0.65,
+          0.625
+        ],
+        "bottom_3": [
+          0.55,
+          0.546,
+          0.539
+        ],
+        "gaps": [
+          0.006000000000000005,
+          0.025000000000000022,
+          0.008000000000000007,
+          0.025000000000000022,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Documents on insurance and liability exposure; reserve funds, accounts",
+      "num_matches": 10,
+      "scores": [
+        0.628,
+        0.606,
+        0.584,
+        0.559,
+        0.559,
+        0.555,
+        0.555,
+        0.541,
+        0.537,
+        0.532
+      ],
+      "mean": 0.5656,
+      "std": 0.029543865691544137,
+      "median": 0.557,
+      "max_gap": 0.02499999999999991,
+      "adaptive_threshold": 0.559,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.030)",
+      "score_distribution": {
+        "top_3": [
+          0.628,
+          0.606,
+          0.584
+        ],
+        "bottom_3": [
+          0.541,
+          0.537,
+          0.532
+        ],
+        "gaps": [
+          0.02200000000000002,
+          0.02200000000000002,
+          0.02499999999999991,
+          0.0,
+          0.0040000000000000036
+        ]
+      }
+    },
+    {
+      "item": "Contemplated JVs, partnerships, alliances, acquisitions, divestitures",
+      "num_matches": 10,
+      "scores": [
+        0.423,
+        0.418,
+        0.395,
+        0.391,
+        0.388,
+        0.388,
+        0.388,
+        0.388,
+        0.388,
+        0.388
+      ],
+      "mean": 0.3955,
+      "std": 0.012729886095327003,
+      "median": 0.388,
+      "max_gap": 0.022999999999999965,
+      "adaptive_threshold": 0.395,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.013)",
+      "score_distribution": {
+        "top_3": [
+          0.423,
+          0.418,
+          0.395
+        ],
+        "bottom_3": [
+          0.388,
+          0.388,
+          0.388
+        ],
+        "gaps": [
+          0.0050000000000000044,
+          0.022999999999999965,
+          0.0040000000000000036,
+          0.0030000000000000027,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Other contracts (acquisition, purchase, agency, land, construction, supply, government agreements, d...",
+      "num_matches": 10,
+      "scores": [
+        0.456,
+        0.456,
+        0.417,
+        0.411,
+        0.41,
+        0.406,
+        0.406,
+        0.406,
+        0.392,
+        0.388
+      ],
+      "mean": 0.41480000000000006,
+      "std": 0.022153103620034822,
+      "median": 0.40800000000000003,
+      "max_gap": 0.039000000000000035,
+      "adaptive_threshold": 0.417,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.022)",
+      "score_distribution": {
+        "top_3": [
+          0.456,
+          0.456,
+          0.417
+        ],
+        "bottom_3": [
+          0.406,
+          0.392,
+          0.388
+        ],
+        "gaps": [
+          0.0,
+          0.039000000000000035,
+          0.006000000000000005,
+          0.0010000000000000009,
+          0.003999999999999948
+        ]
+      }
+    },
+    {
+      "item": "Trade associations or advocacy group memberships",
+      "num_matches": 10,
+      "scores": [
+        0.381,
+        0.381,
+        0.381,
+        0.381,
+        0.381,
+        0.381,
+        0.381,
+        0.374,
+        0.371,
+        0.371
+      ],
+      "mean": 0.37829999999999997,
+      "std": 0.004196427051671461,
+      "median": 0.381,
+      "max_gap": 0.007000000000000006,
+      "adaptive_threshold": 0.374,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.004)",
+      "score_distribution": {
+        "top_3": [
+          0.381,
+          0.381,
+          0.381
+        ],
+        "bottom_3": [
+          0.374,
+          0.371,
+          0.371
+        ],
+        "gaps": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Material consents, approvals, notices, filings for the Transaction",
+      "num_matches": 10,
+      "scores": [
+        0.522,
+        0.52,
+        0.51,
+        0.503,
+        0.496,
+        0.479,
+        0.475,
+        0.469,
+        0.467,
+        0.461
+      ],
+      "mean": 0.4902,
+      "std": 0.021646246787838306,
+      "median": 0.4875,
+      "max_gap": 0.017000000000000015,
+      "adaptive_threshold": 0.479,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.022)",
+      "score_distribution": {
+        "top_3": [
+          0.522,
+          0.52,
+          0.51
+        ],
+        "bottom_3": [
+          0.469,
+          0.467,
+          0.461
+        ],
+        "gaps": [
+          0.0020000000000000018,
+          0.010000000000000009,
+          0.007000000000000006,
+          0.007000000000000006,
+          0.017000000000000015
+        ]
+      }
+    },
+    {
+      "item": "Hedging or swap agreements; commodities trading policies; hedge identification for tax purposes",
+      "num_matches": 10,
+      "scores": [
+        0.426,
+        0.401,
+        0.379,
+        0.374,
+        0.364,
+        0.363,
+        0.356,
+        0.352,
+        0.341,
+        0.341
+      ],
+      "mean": 0.36970000000000003,
+      "std": 0.025456040540508255,
+      "median": 0.3635,
+      "max_gap": 0.024999999999999967,
+      "adaptive_threshold": 0.401,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.025)",
+      "score_distribution": {
+        "top_3": [
+          0.426,
+          0.401,
+          0.379
+        ],
+        "bottom_3": [
+          0.352,
+          0.341,
+          0.341
+        ],
+        "gaps": [
+          0.024999999999999967,
+          0.02200000000000002,
+          0.0050000000000000044,
+          0.010000000000000009,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Agreements with government entities",
+      "num_matches": 10,
+      "scores": [
+        0.588,
+        0.57,
+        0.57,
+        0.536,
+        0.533,
+        0.529,
+        0.524,
+        0.507,
+        0.506,
+        0.504
+      ],
+      "mean": 0.5367,
+      "std": 0.02824553061990514,
+      "median": 0.531,
+      "max_gap": 0.03399999999999992,
+      "adaptive_threshold": 0.536,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.028)",
+      "score_distribution": {
+        "top_3": [
+          0.588,
+          0.57,
+          0.57
+        ],
+        "bottom_3": [
+          0.507,
+          0.506,
+          0.504
+        ],
+        "gaps": [
+          0.018000000000000016,
+          0.0,
+          0.03399999999999992,
+          0.0030000000000000027,
+          0.0040000000000000036
+        ]
+      }
+    },
+    {
+      "item": "Pending bids or recompetes for government contracts",
+      "num_matches": 10,
+      "scores": [
+        0.328,
+        0.317,
+        0.311,
+        0.311,
+        0.301,
+        0.292,
+        0.287,
+        0.273,
+        0.273,
+        0.272
+      ],
+      "mean": 0.2965,
+      "std": 0.019153328692423147,
+      "median": 0.2965,
+      "max_gap": 0.013999999999999957,
+      "adaptive_threshold": 0.273,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.019)",
+      "score_distribution": {
+        "top_3": [
+          0.328,
+          0.317,
+          0.311
+        ],
+        "bottom_3": [
+          0.273,
+          0.273,
+          0.272
+        ],
+        "gaps": [
+          0.01100000000000001,
+          0.006000000000000005,
+          0.0,
+          0.010000000000000009,
+          0.009000000000000008
+        ]
+      }
+    },
+    {
+      "item": "Other material contracts not covered above",
+      "num_matches": 10,
+      "scores": [
+        0.533,
+        0.474,
+        0.47,
+        0.467,
+        0.458,
+        0.456,
+        0.454,
+        0.454,
+        0.45,
+        0.45
+      ],
+      "mean": 0.4666,
+      "std": 0.023516802503741874,
+      "median": 0.457,
+      "max_gap": 0.05900000000000005,
+      "adaptive_threshold": 0.474,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.024)",
+      "score_distribution": {
+        "top_3": [
+          0.533,
+          0.474,
+          0.47
+        ],
+        "bottom_3": [
+          0.454,
+          0.45,
+          0.45
+        ],
+        "gaps": [
+          0.05900000000000005,
+          0.0040000000000000036,
+          0.002999999999999947,
+          0.009000000000000008,
+          0.0020000000000000018
+        ]
+      }
+    },
+    {
+      "item": "Customers or clients list",
+      "num_matches": 10,
+      "scores": [
+        0.427,
+        0.385,
+        0.35,
+        0.35,
+        0.35,
+        0.35,
+        0.35,
+        0.35,
+        0.35,
+        0.343
+      ],
+      "mean": 0.3605,
+      "std": 0.024699190270128294,
+      "median": 0.35,
+      "max_gap": 0.04199999999999998,
+      "adaptive_threshold": 0.385,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.025)",
+      "score_distribution": {
+        "top_3": [
+          0.427,
+          0.385,
+          0.35
+        ],
+        "bottom_3": [
+          0.35,
+          0.35,
+          0.343
+        ],
+        "gaps": [
+          0.04199999999999998,
+          0.03500000000000003,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Suppliers and third-party service providers list",
+      "num_matches": 10,
+      "scores": [
+        0.532,
+        0.519,
+        0.487,
+        0.459,
+        0.443,
+        0.429,
+        0.425,
+        0.422,
+        0.417,
+        0.417
+      ],
+      "mean": 0.45499999999999996,
+      "std": 0.04094142156789382,
+      "median": 0.436,
+      "max_gap": 0.03200000000000003,
+      "adaptive_threshold": 0.487,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.041)",
+      "score_distribution": {
+        "top_3": [
+          0.532,
+          0.519,
+          0.487
+        ],
+        "bottom_3": [
+          0.422,
+          0.417,
+          0.417
+        ],
+        "gaps": [
+          0.013000000000000012,
+          0.03200000000000003,
+          0.02799999999999997,
+          0.016000000000000014,
+          0.014000000000000012
+        ]
+      }
+    },
+    {
+      "item": "Purchase and supply contract forms; pricing terms, rebates, concessions",
+      "num_matches": 10,
+      "scores": [
+        0.583,
+        0.518,
+        0.479,
+        0.479,
+        0.473,
+        0.473,
+        0.473,
+        0.472,
+        0.466,
+        0.462
+      ],
+      "mean": 0.4878,
+      "std": 0.03489641815430345,
+      "median": 0.473,
+      "max_gap": 0.06499999999999995,
+      "adaptive_threshold": 0.518,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.035)",
+      "score_distribution": {
+        "top_3": [
+          0.583,
+          0.518,
+          0.479
+        ],
+        "bottom_3": [
+          0.472,
+          0.466,
+          0.462
+        ],
+        "gaps": [
+          0.06499999999999995,
+          0.039000000000000035,
+          0.0,
+          0.006000000000000005,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Marketing, sales, franchise, distribution, agency, promotion, influencer agreements; independent sal...",
+      "num_matches": 10,
+      "scores": [
+        0.467,
+        0.467,
+        0.426,
+        0.414,
+        0.414,
+        0.414,
+        0.41,
+        0.41,
+        0.406,
+        0.405
+      ],
+      "mean": 0.42329999999999995,
+      "std": 0.02252576302814181,
+      "median": 0.414,
+      "max_gap": 0.041000000000000036,
+      "adaptive_threshold": 0.426,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.023)",
+      "score_distribution": {
+        "top_3": [
+          0.467,
+          0.467,
+          0.426
+        ],
+        "bottom_3": [
+          0.41,
+          0.406,
+          0.405
+        ],
+        "gaps": [
+          0.0,
+          0.041000000000000036,
+          0.01200000000000001,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Business plans, marketing plans, sales forecasts, consultant studies, industry trend reports",
+      "num_matches": 10,
+      "scores": [
+        0.533,
+        0.498,
+        0.492,
+        0.492,
+        0.492,
+        0.486,
+        0.486,
+        0.484,
+        0.482,
+        0.48
+      ],
+      "mean": 0.49250000000000005,
+      "std": 0.014472387501722042,
+      "median": 0.489,
+      "max_gap": 0.03500000000000003,
+      "adaptive_threshold": 0.498,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.014)",
+      "score_distribution": {
+        "top_3": [
+          0.533,
+          0.498,
+          0.492
+        ],
+        "bottom_3": [
+          0.484,
+          0.482,
+          0.48
+        ],
+        "gaps": [
+          0.03500000000000003,
+          0.006000000000000005,
+          0.0,
+          0.0,
+          0.006000000000000005
+        ]
+      }
+    },
+    {
+      "item": "Advertising, promotion, PR agreements; advertising materials, brochures, marketing collateral",
+      "num_matches": 10,
+      "scores": [
+        0.393,
+        0.384,
+        0.383,
+        0.383,
+        0.383,
+        0.383,
+        0.382,
+        0.378,
+        0.378,
+        0.378
+      ],
+      "mean": 0.3825,
+      "std": 0.004177319714841088,
+      "median": 0.383,
+      "max_gap": 0.009000000000000008,
+      "adaptive_threshold": 0.384,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.004)",
+      "score_distribution": {
+        "top_3": [
+          0.393,
+          0.384,
+          0.383
+        ],
+        "bottom_3": [
+          0.378,
+          0.378,
+          0.378
+        ],
+        "gaps": [
+          0.009000000000000008,
+          0.0010000000000000009,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Credit and collection policies",
+      "num_matches": 10,
+      "scores": [
+        0.581,
+        0.46,
+        0.46,
+        0.426,
+        0.42,
+        0.409,
+        0.409,
+        0.4,
+        0.395,
+        0.392
+      ],
+      "mean": 0.43520000000000003,
+      "std": 0.05375648798052194,
+      "median": 0.4145,
+      "max_gap": 0.12099999999999994,
+      "adaptive_threshold": 0.46,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 1 high-relevance docs (>0.460), 9 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.581,
+          0.46,
+          0.46
+        ],
+        "bottom_3": [
+          0.4,
+          0.395,
+          0.392
+        ],
+        "gaps": [
+          0.12099999999999994,
+          0.0,
+          0.03400000000000003,
+          0.006000000000000005,
+          0.01100000000000001
+        ]
+      }
+    },
+    {
+      "item": "Internal policy manuals (including social media and online privacy)",
+      "num_matches": 10,
+      "scores": [
+        0.739,
+        0.688,
+        0.672,
+        0.651,
+        0.641,
+        0.641,
+        0.641,
+        0.6,
+        0.6,
+        0.569
+      ],
+      "mean": 0.6441999999999999,
+      "std": 0.04617098656082628,
+      "median": 0.641,
+      "max_gap": 0.051000000000000045,
+      "adaptive_threshold": 0.688,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.046)",
+      "score_distribution": {
+        "top_3": [
+          0.739,
+          0.688,
+          0.672
+        ],
+        "bottom_3": [
+          0.6,
+          0.6,
+          0.569
+        ],
+        "gaps": [
+          0.051000000000000045,
+          0.015999999999999903,
+          0.02100000000000002,
+          0.010000000000000009,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Press releases",
+      "num_matches": 10,
+      "scores": [
+        0.374,
+        0.36,
+        0.36,
+        0.36,
+        0.36,
+        0.353,
+        0.349,
+        0.342,
+        0.338,
+        0.334
+      ],
+      "mean": 0.353,
+      "std": 0.01166190378969059,
+      "median": 0.3565,
+      "max_gap": 0.014000000000000012,
+      "adaptive_threshold": 0.36,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.012)",
+      "score_distribution": {
+        "top_3": [
+          0.374,
+          0.36,
+          0.36
+        ],
+        "bottom_3": [
+          0.342,
+          0.338,
+          0.334
+        ],
+        "gaps": [
+          0.014000000000000012,
+          0.0,
+          0.0,
+          0.0,
+          0.007000000000000006
+        ]
+      }
+    },
+    {
+      "item": "Significant operational changes (past 2 years)",
+      "num_matches": 10,
+      "scores": [
+        0.429,
+        0.426,
+        0.392,
+        0.38,
+        0.336,
+        0.322,
+        0.313,
+        0.309,
+        0.308,
+        0.297
+      ],
+      "mean": 0.3512,
+      "std": 0.04823857377659501,
+      "median": 0.329,
+      "max_gap": 0.043999999999999984,
+      "adaptive_threshold": 0.336,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.048)",
+      "score_distribution": {
+        "top_3": [
+          0.429,
+          0.426,
+          0.392
+        ],
+        "bottom_3": [
+          0.309,
+          0.308,
+          0.297
+        ],
+        "gaps": [
+          0.0030000000000000027,
+          0.033999999999999975,
+          0.01200000000000001,
+          0.043999999999999984,
+          0.014000000000000012
+        ]
+      }
+    },
+    {
+      "item": "Competitor analyses and reports",
+      "num_matches": 10,
+      "scores": [
+        0.539,
+        0.539,
+        0.539,
+        0.539,
+        0.539,
+        0.539,
+        0.539,
+        0.495,
+        0.495,
+        0.495
+      ],
+      "mean": 0.5258,
+      "std": 0.020163333057805717,
+      "median": 0.539,
+      "max_gap": 0.04400000000000004,
+      "adaptive_threshold": 0.495,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.020)",
+      "score_distribution": {
+        "top_3": [
+          0.539,
+          0.539,
+          0.539
+        ],
+        "bottom_3": [
+          0.495,
+          0.495,
+          0.495
+        ],
+        "gaps": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Customer satisfaction surveys",
+      "num_matches": 10,
+      "scores": [
+        0.374,
+        0.338,
+        0.338,
+        0.338,
+        0.338,
+        0.336,
+        0.335,
+        0.306,
+        0.295,
+        0.289
+      ],
+      "mean": 0.3287,
+      "std": 0.0239125490067454,
+      "median": 0.337,
+      "max_gap": 0.035999999999999976,
+      "adaptive_threshold": 0.338,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.024)",
+      "score_distribution": {
+        "top_3": [
+          0.374,
+          0.338,
+          0.338
+        ],
+        "bottom_3": [
+          0.306,
+          0.295,
+          0.289
+        ],
+        "gaps": [
+          0.035999999999999976,
+          0.0,
+          0.0,
+          0.0,
+          0.0020000000000000018
+        ]
+      }
+    },
+    {
+      "item": "Social media platforms used; company accounts; access lists",
+      "num_matches": 10,
+      "scores": [
+        0.49,
+        0.482,
+        0.415,
+        0.407,
+        0.393,
+        0.393,
+        0.393,
+        0.393,
+        0.393,
+        0.393
+      ],
+      "mean": 0.4152,
+      "std": 0.0361684945774634,
+      "median": 0.393,
+      "max_gap": 0.067,
+      "adaptive_threshold": 0.415,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.036)",
+      "score_distribution": {
+        "top_3": [
+          0.49,
+          0.482,
+          0.415
+        ],
+        "bottom_3": [
+          0.393,
+          0.393,
+          0.393
+        ],
+        "gaps": [
+          0.008000000000000007,
+          0.067,
+          0.008000000000000007,
+          0.013999999999999957,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Other operational documents not covered above",
+      "num_matches": 10,
+      "scores": [
+        0.688,
+        0.641,
+        0.603,
+        0.566,
+        0.566,
+        0.566,
+        0.566,
+        0.566,
+        0.566,
+        0.566
+      ],
+      "mean": 0.5894,
+      "std": 0.040499876543021715,
+      "median": 0.566,
+      "max_gap": 0.04699999999999993,
+      "adaptive_threshold": 0.641,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.040)",
+      "score_distribution": {
+        "top_3": [
+          0.688,
+          0.641,
+          0.603
+        ],
+        "bottom_3": [
+          0.566,
+          0.566,
+          0.566
+        ],
+        "gaps": [
+          0.04699999999999993,
+          0.038000000000000034,
+          0.03700000000000003,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Pending or threatened litigation; governmental investigations involving Company or subsidiaries",
+      "num_matches": 10,
+      "scores": [
+        0.447,
+        0.397,
+        0.397,
+        0.397,
+        0.397,
+        0.397,
+        0.397,
+        0.397,
+        0.383,
+        0.373
+      ],
+      "mean": 0.3982,
+      "std": 0.018048822676285565,
+      "median": 0.397,
+      "max_gap": 0.04999999999999999,
+      "adaptive_threshold": 0.397,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.018)",
+      "score_distribution": {
+        "top_3": [
+          0.447,
+          0.397,
+          0.397
+        ],
+        "bottom_3": [
+          0.397,
+          0.383,
+          0.373
+        ],
+        "gaps": [
+          0.04999999999999999,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Litigation or investigations involving officers, directors, or >5% shareholders",
+      "num_matches": 10,
+      "scores": [
+        0.525,
+        0.483,
+        0.483,
+        0.483,
+        0.483,
+        0.483,
+        0.483,
+        0.483,
+        0.475,
+        0.465
+      ],
+      "mean": 0.4845999999999999,
+      "std": 0.014582180906846555,
+      "median": 0.483,
+      "max_gap": 0.04200000000000004,
+      "adaptive_threshold": 0.483,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.015)",
+      "score_distribution": {
+        "top_3": [
+          0.525,
+          0.483,
+          0.483
+        ],
+        "bottom_3": [
+          0.483,
+          0.475,
+          0.465
+        ],
+        "gaps": [
+          0.04200000000000004,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Court or agency orders, writs, decrees, injunctions, judgments, rulings binding Company",
+      "num_matches": 10,
+      "scores": [
+        0.445,
+        0.444,
+        0.444,
+        0.426,
+        0.418,
+        0.413,
+        0.413,
+        0.413,
+        0.413,
+        0.413
+      ],
+      "mean": 0.4242,
+      "std": 0.01373171511501751,
+      "median": 0.4155,
+      "max_gap": 0.018000000000000016,
+      "adaptive_threshold": 0.426,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.014)",
+      "score_distribution": {
+        "top_3": [
+          0.445,
+          0.444,
+          0.444
+        ],
+        "bottom_3": [
+          0.413,
+          0.413,
+          0.413
+        ],
+        "gaps": [
+          0.0010000000000000009,
+          0.0,
+          0.018000000000000016,
+          0.008000000000000007,
+          0.0050000000000000044
+        ]
+      }
+    },
+    {
+      "item": "Settlements of litigation; waiver agreements cancelling material claims",
+      "num_matches": 10,
+      "scores": [
+        0.395,
+        0.395,
+        0.394,
+        0.386,
+        0.38,
+        0.373,
+        0.373,
+        0.359,
+        0.35,
+        0.35
+      ],
+      "mean": 0.3755,
+      "std": 0.016788388844674776,
+      "median": 0.3765,
+      "max_gap": 0.014000000000000012,
+      "adaptive_threshold": 0.359,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.017)",
+      "score_distribution": {
+        "top_3": [
+          0.395,
+          0.395,
+          0.394
+        ],
+        "bottom_3": [
+          0.359,
+          0.35,
+          0.35
+        ],
+        "gaps": [
+          0.0,
+          0.0010000000000000009,
+          0.008000000000000007,
+          0.006000000000000005,
+          0.007000000000000006
+        ]
+      }
+    },
+    {
+      "item": "Settlement documents; tolling agreements; statute extensions",
+      "num_matches": 10,
+      "scores": [
+        0.403,
+        0.392,
+        0.383,
+        0.378,
+        0.371,
+        0.367,
+        0.358,
+        0.356,
+        0.351,
+        0.347
+      ],
+      "mean": 0.3706,
+      "std": 0.017442476888332132,
+      "median": 0.369,
+      "max_gap": 0.01100000000000001,
+      "adaptive_threshold": 0.392,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.017)",
+      "score_distribution": {
+        "top_3": [
+          0.403,
+          0.392,
+          0.383
+        ],
+        "bottom_3": [
+          0.356,
+          0.351,
+          0.347
+        ],
+        "gaps": [
+          0.01100000000000001,
+          0.009000000000000008,
+          0.0050000000000000044,
+          0.007000000000000006,
+          0.0040000000000000036
+        ]
+      }
+    },
+    {
+      "item": "Disputes with suppliers, competitors, customers, clients; resolutions",
+      "num_matches": 10,
+      "scores": [
+        0.449,
+        0.419,
+        0.419,
+        0.406,
+        0.404,
+        0.4,
+        0.4,
+        0.4,
+        0.394,
+        0.394
+      ],
+      "mean": 0.4085,
+      "std": 0.015888675212238423,
+      "median": 0.402,
+      "max_gap": 0.030000000000000027,
+      "adaptive_threshold": 0.419,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.016)",
+      "score_distribution": {
+        "top_3": [
+          0.449,
+          0.419,
+          0.419
+        ],
+        "bottom_3": [
+          0.4,
+          0.394,
+          0.394
+        ],
+        "gaps": [
+          0.030000000000000027,
+          0.0,
+          0.012999999999999956,
+          0.0020000000000000018,
+          0.0040000000000000036
+        ]
+      }
+    },
+    {
+      "item": "Auditor/accountant correspondence on threatened or pending litigation, assessments, or claims",
+      "num_matches": 10,
+      "scores": [
+        0.521,
+        0.475,
+        0.475,
+        0.443,
+        0.422,
+        0.409,
+        0.403,
+        0.385,
+        0.384,
+        0.37
+      ],
+      "mean": 0.42869999999999997,
+      "std": 0.04632288851097263,
+      "median": 0.4155,
+      "max_gap": 0.04600000000000004,
+      "adaptive_threshold": 0.475,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.046)",
+      "score_distribution": {
+        "top_3": [
+          0.521,
+          0.475,
+          0.475
+        ],
+        "bottom_3": [
+          0.385,
+          0.384,
+          0.37
+        ],
+        "gaps": [
+          0.04600000000000004,
+          0.0,
+          0.03199999999999997,
+          0.02100000000000002,
+          0.013000000000000012
+        ]
+      }
+    },
+    {
+      "item": "Other litigation documents not covered above",
+      "num_matches": 10,
+      "scores": [
+        0.47,
+        0.466,
+        0.466,
+        0.433,
+        0.412,
+        0.386,
+        0.357,
+        0.357,
+        0.357,
+        0.357
+      ],
+      "mean": 0.4061,
+      "std": 0.04697329028288311,
+      "median": 0.399,
+      "max_gap": 0.03300000000000003,
+      "adaptive_threshold": 0.433,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.047)",
+      "score_distribution": {
+        "top_3": [
+          0.47,
+          0.466,
+          0.466
+        ],
+        "bottom_3": [
+          0.357,
+          0.357,
+          0.357
+        ],
+        "gaps": [
+          0.003999999999999948,
+          0.0,
+          0.03300000000000003,
+          0.02100000000000002,
+          0.025999999999999968
+        ]
+      }
+    },
+    {
+      "item": "Regulatory filings, reports, licenses, permits, consents, approvals required for business",
+      "num_matches": 10,
+      "scores": [
+        0.511,
+        0.511,
+        0.493,
+        0.483,
+        0.483,
+        0.483,
+        0.483,
+        0.48,
+        0.48,
+        0.48
+      ],
+      "mean": 0.4887,
+      "std": 0.011705127081753544,
+      "median": 0.483,
+      "max_gap": 0.018000000000000016,
+      "adaptive_threshold": 0.493,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.012)",
+      "score_distribution": {
+        "top_3": [
+          0.511,
+          0.511,
+          0.493
+        ],
+        "bottom_3": [
+          0.48,
+          0.48,
+          0.48
+        ],
+        "gaps": [
+          0.0,
+          0.018000000000000016,
+          0.010000000000000009,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Regulatory filings, reports, permits, certificates obtained by Company",
+      "num_matches": 10,
+      "scores": [
+        0.616,
+        0.616,
+        0.566,
+        0.537,
+        0.537,
+        0.537,
+        0.537,
+        0.535,
+        0.529,
+        0.529
+      ],
+      "mean": 0.5539,
+      "std": 0.032555951836799345,
+      "median": 0.537,
+      "max_gap": 0.050000000000000044,
+      "adaptive_threshold": 0.566,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.033)",
+      "score_distribution": {
+        "top_3": [
+          0.616,
+          0.616,
+          0.566
+        ],
+        "bottom_3": [
+          0.535,
+          0.529,
+          0.529
+        ],
+        "gaps": [
+          0.0,
+          0.050000000000000044,
+          0.028999999999999915,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Violations or alleged violations of laws/regulations",
+      "num_matches": 10,
+      "scores": [
+        0.479,
+        0.426,
+        0.388,
+        0.388,
+        0.382,
+        0.372,
+        0.356,
+        0.356,
+        0.356,
+        0.356
+      ],
+      "mean": 0.3859,
+      "std": 0.037508532362650504,
+      "median": 0.377,
+      "max_gap": 0.05299999999999999,
+      "adaptive_threshold": 0.426,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.038)",
+      "score_distribution": {
+        "top_3": [
+          0.479,
+          0.426,
+          0.388
+        ],
+        "bottom_3": [
+          0.356,
+          0.356,
+          0.356
+        ],
+        "gaps": [
+          0.05299999999999999,
+          0.03799999999999998,
+          0.0,
+          0.006000000000000005,
+          0.010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Correspondence with regulatory bodies; notices of violations",
+      "num_matches": 10,
+      "scores": [
+        0.515,
+        0.471,
+        0.463,
+        0.463,
+        0.46,
+        0.46,
+        0.429,
+        0.417,
+        0.417,
+        0.417
+      ],
+      "mean": 0.45119999999999993,
+      "std": 0.029828845100003464,
+      "median": 0.46,
+      "max_gap": 0.04400000000000004,
+      "adaptive_threshold": 0.471,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.030)",
+      "score_distribution": {
+        "top_3": [
+          0.515,
+          0.471,
+          0.463
+        ],
+        "bottom_3": [
+          0.417,
+          0.417,
+          0.417
+        ],
+        "gaps": [
+          0.04400000000000004,
+          0.007999999999999952,
+          0.0,
+          0.0030000000000000027,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Minutes/transcripts of meetings with regulatory agencies; related correspondence",
+      "num_matches": 10,
+      "scores": [
+        0.64,
+        0.64,
+        0.64,
+        0.64,
+        0.637,
+        0.562,
+        0.512,
+        0.453,
+        0.451,
+        0.451
+      ],
+      "mean": 0.5626,
+      "std": 0.08305443997764357,
+      "median": 0.5995,
+      "max_gap": 0.07499999999999996,
+      "adaptive_threshold": 0.562,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.083)",
+      "score_distribution": {
+        "top_3": [
+          0.64,
+          0.64,
+          0.64
+        ],
+        "bottom_3": [
+          0.453,
+          0.451,
+          0.451
+        ],
+        "gaps": [
+          0.0,
+          0.0,
+          0.0,
+          0.0030000000000000027,
+          0.07499999999999996
+        ]
+      }
+    },
+    {
+      "item": "Governmental filings and consents required for share purchase",
+      "num_matches": 10,
+      "scores": [
+        0.555,
+        0.535,
+        0.518,
+        0.514,
+        0.512,
+        0.512,
+        0.504,
+        0.502,
+        0.481,
+        0.476
+      ],
+      "mean": 0.5109,
+      "std": 0.021970207099615627,
+      "median": 0.512,
+      "max_gap": 0.02100000000000002,
+      "adaptive_threshold": 0.481,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.022)",
+      "score_distribution": {
+        "top_3": [
+          0.555,
+          0.535,
+          0.518
+        ],
+        "bottom_3": [
+          0.502,
+          0.481,
+          0.476
+        ],
+        "gaps": [
+          0.020000000000000018,
+          0.017000000000000015,
+          0.0040000000000000036,
+          0.0020000000000000018,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Antitrust compliance program; manuals and policies",
+      "num_matches": 10,
+      "scores": [
+        0.611,
+        0.548,
+        0.548,
+        0.548,
+        0.521,
+        0.521,
+        0.521,
+        0.521,
+        0.521,
+        0.521
+      ],
+      "mean": 0.5381,
+      "std": 0.027134664177026396,
+      "median": 0.521,
+      "max_gap": 0.06299999999999994,
+      "adaptive_threshold": 0.548,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.027)",
+      "score_distribution": {
+        "top_3": [
+          0.611,
+          0.548,
+          0.548
+        ],
+        "bottom_3": [
+          0.521,
+          0.521,
+          0.521
+        ],
+        "gaps": [
+          0.06299999999999994,
+          0.0,
+          0.0,
+          0.027000000000000024,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Other regulatory documents not covered above",
+      "num_matches": 10,
+      "scores": [
+        0.556,
+        0.556,
+        0.554,
+        0.538,
+        0.532,
+        0.532,
+        0.529,
+        0.529,
+        0.529,
+        0.52
+      ],
+      "mean": 0.5375,
+      "std": 0.012411688039908199,
+      "median": 0.532,
+      "max_gap": 0.016000000000000014,
+      "adaptive_threshold": 0.538,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.012)",
+      "score_distribution": {
+        "top_3": [
+          0.556,
+          0.556,
+          0.554
+        ],
+        "bottom_3": [
+          0.529,
+          0.529,
+          0.52
+        ],
+        "gaps": [
+          0.0,
+          0.0020000000000000018,
+          0.016000000000000014,
+          0.006000000000000005,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Officers, directors, managers, key employees, consultants, contractors: titles, tenure, compensation",
+      "num_matches": 10,
+      "scores": [
+        0.589,
+        0.532,
+        0.508,
+        0.489,
+        0.483,
+        0.473,
+        0.473,
+        0.461,
+        0.461,
+        0.461
+      ],
+      "mean": 0.49300000000000005,
+      "std": 0.038665229858362404,
+      "median": 0.478,
+      "max_gap": 0.05699999999999994,
+      "adaptive_threshold": 0.532,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.039)",
+      "score_distribution": {
+        "top_3": [
+          0.589,
+          0.532,
+          0.508
+        ],
+        "bottom_3": [
+          0.461,
+          0.461,
+          0.461
+        ],
+        "gaps": [
+          0.05699999999999994,
+          0.02400000000000002,
+          0.019000000000000017,
+          0.006000000000000005,
+          0.010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Employment, consultant, contractor, non-compete, confidentiality, nondisclosure agreements",
+      "num_matches": 10,
+      "scores": [
+        0.648,
+        0.568,
+        0.559,
+        0.559,
+        0.541,
+        0.541,
+        0.541,
+        0.541,
+        0.541,
+        0.541
+      ],
+      "mean": 0.558,
+      "std": 0.03152142128775287,
+      "median": 0.541,
+      "max_gap": 0.08000000000000007,
+      "adaptive_threshold": 0.568,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.032)",
+      "score_distribution": {
+        "top_3": [
+          0.648,
+          0.568,
+          0.559
+        ],
+        "bottom_3": [
+          0.541,
+          0.541,
+          0.541
+        ],
+        "gaps": [
+          0.08000000000000007,
+          0.008999999999999897,
+          0.0,
+          0.018000000000000016,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Loans or transactions between Company and insiders",
+      "num_matches": 10,
+      "scores": [
+        0.46,
+        0.456,
+        0.422,
+        0.405,
+        0.404,
+        0.391,
+        0.385,
+        0.378,
+        0.378,
+        0.378
+      ],
+      "mean": 0.40570000000000006,
+      "std": 0.029485759274605772,
+      "median": 0.3975,
+      "max_gap": 0.03400000000000003,
+      "adaptive_threshold": 0.422,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.029)",
+      "score_distribution": {
+        "top_3": [
+          0.46,
+          0.456,
+          0.422
+        ],
+        "bottom_3": [
+          0.378,
+          0.378,
+          0.378
+        ],
+        "gaps": [
+          0.0040000000000000036,
+          0.03400000000000003,
+          0.01699999999999996,
+          0.0010000000000000009,
+          0.013000000000000012
+        ]
+      }
+    },
+    {
+      "item": "Benefit and compensation plans (pension, retirement, incentive, stock options, welfare, insurance)",
+      "num_matches": 10,
+      "scores": [
+        0.666,
+        0.6,
+        0.6,
+        0.58,
+        0.573,
+        0.573,
+        0.566,
+        0.559,
+        0.55,
+        0.502
+      ],
+      "mean": 0.5769,
+      "std": 0.039772980778412875,
+      "median": 0.573,
+      "max_gap": 0.06600000000000006,
+      "adaptive_threshold": 0.6,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.040)",
+      "score_distribution": {
+        "top_3": [
+          0.666,
+          0.6,
+          0.6
+        ],
+        "bottom_3": [
+          0.559,
+          0.55,
+          0.502
+        ],
+        "gaps": [
+          0.06600000000000006,
+          0.0,
+          0.020000000000000018,
+          0.007000000000000006,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "IRS determination letters; Form 5500s (last 3 years); actuarial reports",
+      "num_matches": 10,
+      "scores": [
+        0.599,
+        0.567,
+        0.547,
+        0.528,
+        0.528,
+        0.528,
+        0.524,
+        0.524,
+        0.51,
+        0.5
+      ],
+      "mean": 0.5355000000000001,
+      "std": 0.02738704073097346,
+      "median": 0.528,
+      "max_gap": 0.03200000000000003,
+      "adaptive_threshold": 0.567,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.027)",
+      "score_distribution": {
+        "top_3": [
+          0.599,
+          0.567,
+          0.547
+        ],
+        "bottom_3": [
+          0.524,
+          0.51,
+          0.5
+        ],
+        "gaps": [
+          0.03200000000000003,
+          0.019999999999999907,
+          0.019000000000000017,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Welfare plan data: premiums, claims, reserves, admin expenses (last 3 years)",
+      "num_matches": 10,
+      "scores": [
+        0.536,
+        0.525,
+        0.525,
+        0.495,
+        0.494,
+        0.491,
+        0.485,
+        0.466,
+        0.459,
+        0.44
+      ],
+      "mean": 0.4915999999999999,
+      "std": 0.02940136051273819,
+      "median": 0.4925,
+      "max_gap": 0.030000000000000027,
+      "adaptive_threshold": 0.495,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.029)",
+      "score_distribution": {
+        "top_3": [
+          0.536,
+          0.525,
+          0.525
+        ],
+        "bottom_3": [
+          0.466,
+          0.459,
+          0.44
+        ],
+        "gaps": [
+          0.01100000000000001,
+          0.0,
+          0.030000000000000027,
+          0.0010000000000000009,
+          0.0030000000000000027
+        ]
+      }
+    },
+    {
+      "item": "Collective bargaining agreements",
+      "num_matches": 10,
+      "scores": [
+        0.635,
+        0.635,
+        0.515,
+        0.508,
+        0.481,
+        0.46,
+        0.442,
+        0.442,
+        0.435,
+        0.432
+      ],
+      "mean": 0.49850000000000005,
+      "std": 0.0736576540489853,
+      "median": 0.47050000000000003,
+      "max_gap": 0.12,
+      "adaptive_threshold": 0.515,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 2 high-relevance docs (>0.515), 8 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.635,
+          0.635,
+          0.515
+        ],
+        "bottom_3": [
+          0.442,
+          0.435,
+          0.432
+        ],
+        "gaps": [
+          0.0,
+          0.12,
+          0.007000000000000006,
+          0.027000000000000024,
+          0.020999999999999963
+        ]
+      }
+    },
+    {
+      "item": "Current labor negotiations",
+      "num_matches": 10,
+      "scores": [
+        0.5,
+        0.5,
+        0.417,
+        0.386,
+        0.384,
+        0.384,
+        0.379,
+        0.324,
+        0.316,
+        0.289
+      ],
+      "mean": 0.3879,
+      "std": 0.06717655841139825,
+      "median": 0.384,
+      "max_gap": 0.08300000000000002,
+      "adaptive_threshold": 0.417,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.067)",
+      "score_distribution": {
+        "top_3": [
+          0.5,
+          0.5,
+          0.417
+        ],
+        "bottom_3": [
+          0.324,
+          0.316,
+          0.289
+        ],
+        "gaps": [
+          0.0,
+          0.08300000000000002,
+          0.030999999999999972,
+          0.0020000000000000018,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Multiemployer plans (past 6 years)",
+      "num_matches": 10,
+      "scores": [
+        0.51,
+        0.486,
+        0.485,
+        0.454,
+        0.448,
+        0.445,
+        0.437,
+        0.433,
+        0.408,
+        0.397
+      ],
+      "mean": 0.45030000000000003,
+      "std": 0.03346057381456571,
+      "median": 0.4465,
+      "max_gap": 0.030999999999999972,
+      "adaptive_threshold": 0.454,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.033)",
+      "score_distribution": {
+        "top_3": [
+          0.51,
+          0.486,
+          0.485
+        ],
+        "bottom_3": [
+          0.433,
+          0.408,
+          0.397
+        ],
+        "gaps": [
+          0.02400000000000002,
+          0.0010000000000000009,
+          0.030999999999999972,
+          0.006000000000000005,
+          0.0030000000000000027
+        ]
+      }
+    },
+    {
+      "item": "Multiemployer contributions, withdrawal liabilities, pending claims",
+      "num_matches": 10,
+      "scores": [
+        0.537,
+        0.537,
+        0.504,
+        0.482,
+        0.397,
+        0.397,
+        0.396,
+        0.394,
+        0.382,
+        0.37
+      ],
+      "mean": 0.4396,
+      "std": 0.06378902726958612,
+      "median": 0.397,
+      "max_gap": 0.08499999999999996,
+      "adaptive_threshold": 0.397,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.064)",
+      "score_distribution": {
+        "top_3": [
+          0.537,
+          0.537,
+          0.504
+        ],
+        "bottom_3": [
+          0.394,
+          0.382,
+          0.37
+        ],
+        "gaps": [
+          0.0,
+          0.03300000000000003,
+          0.02200000000000002,
+          0.08499999999999996,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Pending/threatened employment claims; union activity; strikes; disputes",
+      "num_matches": 10,
+      "scores": [
+        0.463,
+        0.463,
+        0.448,
+        0.448,
+        0.433,
+        0.426,
+        0.401,
+        0.393,
+        0.387,
+        0.377
+      ],
+      "mean": 0.4239,
+      "std": 0.03057270024057411,
+      "median": 0.4295,
+      "max_gap": 0.024999999999999967,
+      "adaptive_threshold": 0.401,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.031)",
+      "score_distribution": {
+        "top_3": [
+          0.463,
+          0.463,
+          0.448
+        ],
+        "bottom_3": [
+          0.393,
+          0.387,
+          0.377
+        ],
+        "gaps": [
+          0.0,
+          0.015000000000000013,
+          0.0,
+          0.015000000000000013,
+          0.007000000000000006
+        ]
+      }
+    },
+    {
+      "item": "Audits/investigations by IRS, DOL, PBGC, OSHA, or other agencies (last 6 years)",
+      "num_matches": 10,
+      "scores": [
+        0.556,
+        0.556,
+        0.546,
+        0.528,
+        0.451,
+        0.43,
+        0.426,
+        0.42,
+        0.411,
+        0.411
+      ],
+      "mean": 0.4734999999999999,
+      "std": 0.06096597411671533,
+      "median": 0.4405,
+      "max_gap": 0.07700000000000001,
+      "adaptive_threshold": 0.451,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.061)",
+      "score_distribution": {
+        "top_3": [
+          0.556,
+          0.556,
+          0.546
+        ],
+        "bottom_3": [
+          0.42,
+          0.411,
+          0.411
+        ],
+        "gaps": [
+          0.0,
+          0.010000000000000009,
+          0.018000000000000016,
+          0.07700000000000001,
+          0.02100000000000002
+        ]
+      }
+    },
+    {
+      "item": "Reports/correspondence submitted to government agencies (last 3 years)",
+      "num_matches": 10,
+      "scores": [
+        0.588,
+        0.521,
+        0.517,
+        0.51,
+        0.481,
+        0.477,
+        0.477,
+        0.477,
+        0.474,
+        0.469
+      ],
+      "mean": 0.49910000000000004,
+      "std": 0.03485814108640907,
+      "median": 0.479,
+      "max_gap": 0.06699999999999995,
+      "adaptive_threshold": 0.521,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.035)",
+      "score_distribution": {
+        "top_3": [
+          0.588,
+          0.521,
+          0.517
+        ],
+        "bottom_3": [
+          0.477,
+          0.474,
+          0.469
+        ],
+        "gaps": [
+          0.06699999999999995,
+          0.0040000000000000036,
+          0.007000000000000006,
+          0.029000000000000026,
+          0.0040000000000000036
+        ]
+      }
+    },
+    {
+      "item": "Correspondence on reportable events for plans (last 6 years)",
+      "num_matches": 10,
+      "scores": [
+        0.526,
+        0.505,
+        0.487,
+        0.476,
+        0.451,
+        0.45,
+        0.448,
+        0.442,
+        0.442,
+        0.442
+      ],
+      "mean": 0.46690000000000004,
+      "std": 0.028612759391572148,
+      "median": 0.4505,
+      "max_gap": 0.024999999999999967,
+      "adaptive_threshold": 0.451,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.029)",
+      "score_distribution": {
+        "top_3": [
+          0.526,
+          0.505,
+          0.487
+        ],
+        "bottom_3": [
+          0.442,
+          0.442,
+          0.442
+        ],
+        "gaps": [
+          0.02100000000000002,
+          0.018000000000000016,
+          0.01100000000000001,
+          0.024999999999999967,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Employee handbooks, personnel policies, procedures, manuals",
+      "num_matches": 10,
+      "scores": [
+        0.86,
+        0.766,
+        0.766,
+        0.647,
+        0.623,
+        0.614,
+        0.609,
+        0.602,
+        0.598,
+        0.589
+      ],
+      "mean": 0.6674,
+      "std": 0.08968188222824051,
+      "median": 0.6185,
+      "max_gap": 0.119,
+      "adaptive_threshold": 0.647,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 3 high-relevance docs (>0.647), 7 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.86,
+          0.766,
+          0.766
+        ],
+        "bottom_3": [
+          0.602,
+          0.598,
+          0.589
+        ],
+        "gaps": [
+          0.09399999999999997,
+          0.0,
+          0.119,
+          0.02400000000000002,
+          0.009000000000000008
+        ]
+      }
+    },
+    {
+      "item": "Policies on sexual harassment and misconduct",
+      "num_matches": 10,
+      "scores": [
+        0.639,
+        0.639,
+        0.617,
+        0.517,
+        0.517,
+        0.517,
+        0.517,
+        0.517,
+        0.517,
+        0.517
+      ],
+      "mean": 0.5514000000000001,
+      "std": 0.05285300369893844,
+      "median": 0.517,
+      "max_gap": 0.09999999999999998,
+      "adaptive_threshold": 0.517,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.053)",
+      "score_distribution": {
+        "top_3": [
+          0.639,
+          0.639,
+          0.617
+        ],
+        "bottom_3": [
+          0.517,
+          0.517,
+          0.517
+        ],
+        "gaps": [
+          0.0,
+          0.02200000000000002,
+          0.09999999999999998,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Other employment and compensation documents not covered above",
+      "num_matches": 10,
+      "scores": [
+        0.666,
+        0.58,
+        0.542,
+        0.516,
+        0.516,
+        0.498,
+        0.493,
+        0.488,
+        0.486,
+        0.483
+      ],
+      "mean": 0.5267999999999999,
+      "std": 0.05452669071198069,
+      "median": 0.507,
+      "max_gap": 0.08600000000000008,
+      "adaptive_threshold": 0.58,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.055)",
+      "score_distribution": {
+        "top_3": [
+          0.666,
+          0.58,
+          0.542
+        ],
+        "bottom_3": [
+          0.488,
+          0.486,
+          0.483
+        ],
+        "gaps": [
+          0.08600000000000008,
+          0.03799999999999992,
+          0.026000000000000023,
+          0.0,
+          0.018000000000000016
+        ]
+      }
+    },
+    {
+      "item": "Privacy policies for employees, customers, consumers (websites, apps, disclosures)",
+      "num_matches": 10,
+      "scores": [
+        0.761,
+        0.605,
+        0.605,
+        0.605,
+        0.582,
+        0.582,
+        0.557,
+        0.536,
+        0.521,
+        0.514
+      ],
+      "mean": 0.5868,
+      "std": 0.06669602686817258,
+      "median": 0.582,
+      "max_gap": 0.15600000000000003,
+      "adaptive_threshold": 0.605,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 1 high-relevance docs (>0.605), 9 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.761,
+          0.605,
+          0.605
+        ],
+        "bottom_3": [
+          0.536,
+          0.521,
+          0.514
+        ],
+        "gaps": [
+          0.15600000000000003,
+          0.0,
+          0.0,
+          0.02300000000000002,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Information security policies (physical, administrative, IT)",
+      "num_matches": 10,
+      "scores": [
+        0.823,
+        0.696,
+        0.58,
+        0.571,
+        0.571,
+        0.571,
+        0.571,
+        0.548,
+        0.548,
+        0.546
+      ],
+      "mean": 0.6025,
+      "std": 0.08424399088362325,
+      "median": 0.571,
+      "max_gap": 0.127,
+      "adaptive_threshold": 0.696,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 1 high-relevance docs (>0.696), 9 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.823,
+          0.696,
+          0.58
+        ],
+        "bottom_3": [
+          0.548,
+          0.548,
+          0.546
+        ],
+        "gaps": [
+          0.127,
+          0.11599999999999999,
+          0.009000000000000008,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Breach response and incident response policies",
+      "num_matches": 10,
+      "scores": [
+        0.736,
+        0.736,
+        0.557,
+        0.544,
+        0.542,
+        0.521,
+        0.502,
+        0.472,
+        0.453,
+        0.451
+      ],
+      "mean": 0.5513999999999999,
+      "std": 0.0988738590326078,
+      "median": 0.5315000000000001,
+      "max_gap": 0.17899999999999994,
+      "adaptive_threshold": 0.557,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 2 high-relevance docs (>0.557), 8 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.736,
+          0.736,
+          0.557
+        ],
+        "bottom_3": [
+          0.472,
+          0.453,
+          0.451
+        ],
+        "gaps": [
+          0.0,
+          0.17899999999999994,
+          0.013000000000000012,
+          0.0020000000000000018,
+          0.02100000000000002
+        ]
+      }
+    },
+    {
+      "item": "Internal system audits (last 3 years); compliance with privacy laws",
+      "num_matches": 10,
+      "scores": [
+        0.631,
+        0.631,
+        0.562,
+        0.542,
+        0.511,
+        0.504,
+        0.447,
+        0.43,
+        0.418,
+        0.413
+      ],
+      "mean": 0.5089,
+      "std": 0.07827956310557693,
+      "median": 0.5075000000000001,
+      "max_gap": 0.06899999999999995,
+      "adaptive_threshold": 0.562,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.078)",
+      "score_distribution": {
+        "top_3": [
+          0.631,
+          0.631,
+          0.562
+        ],
+        "bottom_3": [
+          0.43,
+          0.418,
+          0.413
+        ],
+        "gaps": [
+          0.0,
+          0.06899999999999995,
+          0.020000000000000018,
+          0.031000000000000028,
+          0.007000000000000006
+        ]
+      }
+    },
+    {
+      "item": "Privacy officer; security officer; designated personnel",
+      "num_matches": 10,
+      "scores": [
+        0.502,
+        0.47,
+        0.451,
+        0.438,
+        0.436,
+        0.436,
+        0.436,
+        0.436,
+        0.436,
+        0.436
+      ],
+      "mean": 0.44770000000000004,
+      "std": 0.020909567188251408,
+      "median": 0.436,
+      "max_gap": 0.03200000000000003,
+      "adaptive_threshold": 0.47,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.021)",
+      "score_distribution": {
+        "top_3": [
+          0.502,
+          0.47,
+          0.451
+        ],
+        "bottom_3": [
+          0.436,
+          0.436,
+          0.436
+        ],
+        "gaps": [
+          0.03200000000000003,
+          0.01899999999999996,
+          0.013000000000000012,
+          0.0020000000000000018,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Privacy/security training materials (last 3 years)",
+      "num_matches": 10,
+      "scores": [
+        0.596,
+        0.586,
+        0.574,
+        0.568,
+        0.558,
+        0.519,
+        0.473,
+        0.473,
+        0.466,
+        0.466
+      ],
+      "mean": 0.5279,
+      "std": 0.05140321001649604,
+      "median": 0.5385,
+      "max_gap": 0.04600000000000004,
+      "adaptive_threshold": 0.473,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.051)",
+      "score_distribution": {
+        "top_3": [
+          0.596,
+          0.586,
+          0.574
+        ],
+        "bottom_3": [
+          0.473,
+          0.466,
+          0.466
+        ],
+        "gaps": [
+          0.010000000000000009,
+          0.01200000000000001,
+          0.006000000000000005,
+          0.009999999999999898,
+          0.039000000000000035
+        ]
+      }
+    },
+    {
+      "item": "Certifications (SOC, PCI DSS, HIPAA/HITECH, ISO, CSA, NIST, etc.)",
+      "num_matches": 10,
+      "scores": [
+        0.565,
+        0.497,
+        0.482,
+        0.471,
+        0.459,
+        0.45,
+        0.448,
+        0.438,
+        0.435,
+        0.435
+      ],
+      "mean": 0.46799999999999986,
+      "std": 0.037865551626775476,
+      "median": 0.4545,
+      "max_gap": 0.06799999999999995,
+      "adaptive_threshold": 0.497,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.038)",
+      "score_distribution": {
+        "top_3": [
+          0.565,
+          0.497,
+          0.482
+        ],
+        "bottom_3": [
+          0.438,
+          0.435,
+          0.435
+        ],
+        "gaps": [
+          0.06799999999999995,
+          0.015000000000000013,
+          0.01100000000000001,
+          0.011999999999999955,
+          0.009000000000000008
+        ]
+      }
+    },
+    {
+      "item": "Background checks for employees/contractors with access to personal data",
+      "num_matches": 10,
+      "scores": [
+        0.583,
+        0.336,
+        0.333,
+        0.327,
+        0.319,
+        0.301,
+        0.301,
+        0.3,
+        0.285,
+        0.282
+      ],
+      "mean": 0.33670000000000005,
+      "std": 0.08405123437523092,
+      "median": 0.31,
+      "max_gap": 0.24699999999999994,
+      "adaptive_threshold": 0.336,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 1 high-relevance docs (>0.336), 9 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.583,
+          0.336,
+          0.333
+        ],
+        "bottom_3": [
+          0.3,
+          0.285,
+          0.282
+        ],
+        "gaps": [
+          0.24699999999999994,
+          0.0030000000000000027,
+          0.006000000000000005,
+          0.008000000000000007,
+          0.018000000000000016
+        ]
+      }
+    },
+    {
+      "item": "Incidents, investigations, claims, regulatory actions on data privacy/security (last 3 years)",
+      "num_matches": 10,
+      "scores": [
+        0.448,
+        0.438,
+        0.425,
+        0.408,
+        0.402,
+        0.384,
+        0.361,
+        0.352,
+        0.351,
+        0.349
+      ],
+      "mean": 0.39180000000000004,
+      "std": 0.0358491283018151,
+      "median": 0.393,
+      "max_gap": 0.02300000000000002,
+      "adaptive_threshold": 0.361,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.036)",
+      "score_distribution": {
+        "top_3": [
+          0.448,
+          0.438,
+          0.425
+        ],
+        "bottom_3": [
+          0.352,
+          0.351,
+          0.349
+        ],
+        "gaps": [
+          0.010000000000000009,
+          0.013000000000000012,
+          0.017000000000000015,
+          0.00599999999999995,
+          0.018000000000000016
+        ]
+      }
+    },
+    {
+      "item": "Cross-border data transfer compliance (e.g., GDPR)",
+      "num_matches": 10,
+      "scores": [
+        0.463,
+        0.414,
+        0.413,
+        0.411,
+        0.376,
+        0.342,
+        0.292,
+        0.292,
+        0.284,
+        0.282
+      ],
+      "mean": 0.3569,
+      "std": 0.06366074143457648,
+      "median": 0.359,
+      "max_gap": 0.050000000000000044,
+      "adaptive_threshold": 0.292,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.064)",
+      "score_distribution": {
+        "top_3": [
+          0.463,
+          0.414,
+          0.413
+        ],
+        "bottom_3": [
+          0.292,
+          0.284,
+          0.282
+        ],
+        "gaps": [
+          0.049000000000000044,
+          0.0010000000000000009,
+          0.0020000000000000018,
+          0.034999999999999976,
+          0.033999999999999975
+        ]
+      }
+    },
+    {
+      "item": "Sharing of personal information with affiliates/unaffiliated entities for marketing",
+      "num_matches": 10,
+      "scores": [
+        0.481,
+        0.399,
+        0.391,
+        0.39,
+        0.371,
+        0.362,
+        0.323,
+        0.32,
+        0.316,
+        0.312
+      ],
+      "mean": 0.36649999999999994,
+      "std": 0.04993445704120553,
+      "median": 0.3665,
+      "max_gap": 0.08199999999999996,
+      "adaptive_threshold": 0.399,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.050)",
+      "score_distribution": {
+        "top_3": [
+          0.481,
+          0.399,
+          0.391
+        ],
+        "bottom_3": [
+          0.32,
+          0.316,
+          0.312
+        ],
+        "gaps": [
+          0.08199999999999996,
+          0.008000000000000007,
+          0.0010000000000000009,
+          0.019000000000000017,
+          0.009000000000000008
+        ]
+      }
+    },
+    {
+      "item": "Use of cookies, identifiers, web beacons, tracking technologies; third-party trackers",
+      "num_matches": 10,
+      "scores": [
+        0.337,
+        0.314,
+        0.269,
+        0.268,
+        0.264,
+        0.258,
+        0.25,
+        0.243,
+        0.235,
+        0.231
+      ],
+      "mean": 0.2669,
+      "std": 0.03223181657927459,
+      "median": 0.261,
+      "max_gap": 0.044999999999999984,
+      "adaptive_threshold": 0.269,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.032)",
+      "score_distribution": {
+        "top_3": [
+          0.337,
+          0.314,
+          0.269
+        ],
+        "bottom_3": [
+          0.243,
+          0.235,
+          0.231
+        ],
+        "gaps": [
+          0.02300000000000002,
+          0.044999999999999984,
+          0.0010000000000000009,
+          0.0040000000000000036,
+          0.006000000000000005
+        ]
+      }
+    },
+    {
+      "item": "Global/regional databases or applications for storing personal data",
+      "num_matches": 10,
+      "scores": [
+        0.331,
+        0.305,
+        0.283,
+        0.258,
+        0.247,
+        0.243,
+        0.242,
+        0.239,
+        0.231,
+        0.228
+      ],
+      "mean": 0.26070000000000004,
+      "std": 0.03268348206663421,
+      "median": 0.245,
+      "max_gap": 0.026000000000000023,
+      "adaptive_threshold": 0.305,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.033)",
+      "score_distribution": {
+        "top_3": [
+          0.331,
+          0.305,
+          0.283
+        ],
+        "bottom_3": [
+          0.239,
+          0.231,
+          0.228
+        ],
+        "gaps": [
+          0.026000000000000023,
+          0.02200000000000002,
+          0.024999999999999967,
+          0.01100000000000001,
+          0.0040000000000000036
+        ]
+      }
+    },
+    {
+      "item": "Other data privacy and security documents not covered above",
+      "num_matches": 10,
+      "scores": [
+        0.658,
+        0.614,
+        0.608,
+        0.589,
+        0.563,
+        0.539,
+        0.515,
+        0.515,
+        0.512,
+        0.512
+      ],
+      "mean": 0.5625,
+      "std": 0.04970965700947855,
+      "median": 0.5509999999999999,
+      "max_gap": 0.04400000000000004,
+      "adaptive_threshold": 0.614,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.050)",
+      "score_distribution": {
+        "top_3": [
+          0.658,
+          0.614,
+          0.608
+        ],
+        "bottom_3": [
+          0.515,
+          0.512,
+          0.512
+        ],
+        "gaps": [
+          0.04400000000000004,
+          0.006000000000000005,
+          0.019000000000000017,
+          0.026000000000000023,
+          0.02399999999999991
+        ]
+      }
+    },
+    {
+      "item": "Environmental investigations, reviews, assessments (Phase I/II)",
+      "num_matches": 10,
+      "scores": [
+        0.478,
+        0.39,
+        0.378,
+        0.36,
+        0.36,
+        0.36,
+        0.325,
+        0.318,
+        0.309,
+        0.302
+      ],
+      "mean": 0.358,
+      "std": 0.04905303252603247,
+      "median": 0.36,
+      "max_gap": 0.08799999999999997,
+      "adaptive_threshold": 0.39,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.049)",
+      "score_distribution": {
+        "top_3": [
+          0.478,
+          0.39,
+          0.378
+        ],
+        "bottom_3": [
+          0.318,
+          0.309,
+          0.302
+        ],
+        "gaps": [
+          0.08799999999999997,
+          0.01200000000000001,
+          0.018000000000000016,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Hazardous substances used",
+      "num_matches": 10,
+      "scores": [
+        0.455,
+        0.398,
+        0.392,
+        0.351,
+        0.342,
+        0.333,
+        0.324,
+        0.324,
+        0.321,
+        0.321
+      ],
+      "mean": 0.3561,
+      "std": 0.042554553222892616,
+      "median": 0.3375,
+      "max_gap": 0.056999999999999995,
+      "adaptive_threshold": 0.398,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.043)",
+      "score_distribution": {
+        "top_3": [
+          0.455,
+          0.398,
+          0.392
+        ],
+        "bottom_3": [
+          0.324,
+          0.321,
+          0.321
+        ],
+        "gaps": [
+          0.056999999999999995,
+          0.006000000000000005,
+          0.041000000000000036,
+          0.008999999999999952,
+          0.009000000000000008
+        ]
+      }
+    },
+    {
+      "item": "Records of handling, storage, transportation, disposal of hazardous substances",
+      "num_matches": 10,
+      "scores": [
+        0.408,
+        0.408,
+        0.407,
+        0.405,
+        0.405,
+        0.405,
+        0.405,
+        0.4,
+        0.367,
+        0.367
+      ],
+      "mean": 0.39770000000000005,
+      "std": 0.01549870962370739,
+      "median": 0.405,
+      "max_gap": 0.03300000000000003,
+      "adaptive_threshold": 0.367,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.015)",
+      "score_distribution": {
+        "top_3": [
+          0.408,
+          0.408,
+          0.407
+        ],
+        "bottom_3": [
+          0.4,
+          0.367,
+          0.367
+        ],
+        "gaps": [
+          0.0,
+          0.0010000000000000009,
+          0.0019999999999999463,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Off-site hazardous storage or disposal locations",
+      "num_matches": 10,
+      "scores": [
+        0.422,
+        0.36,
+        0.355,
+        0.351,
+        0.338,
+        0.336,
+        0.336,
+        0.336,
+        0.336,
+        0.335
+      ],
+      "mean": 0.3505,
+      "std": 0.02541751364708986,
+      "median": 0.337,
+      "max_gap": 0.062,
+      "adaptive_threshold": 0.36,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.025)",
+      "score_distribution": {
+        "top_3": [
+          0.422,
+          0.36,
+          0.355
+        ],
+        "bottom_3": [
+          0.336,
+          0.336,
+          0.335
+        ],
+        "gaps": [
+          0.062,
+          0.0050000000000000044,
+          0.0040000000000000036,
+          0.012999999999999956,
+          0.0020000000000000018
+        ]
+      }
+    },
+    {
+      "item": "Studies/reports: pollution, contamination, biodiversity impacts, climate change risks, energy/water ...",
+      "num_matches": 10,
+      "scores": [
+        0.333,
+        0.333,
+        0.333,
+        0.325,
+        0.306,
+        0.296,
+        0.295,
+        0.279,
+        0.273,
+        0.272
+      ],
+      "mean": 0.3045,
+      "std": 0.023917566765873154,
+      "median": 0.301,
+      "max_gap": 0.019000000000000017,
+      "adaptive_threshold": 0.306,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.024)",
+      "score_distribution": {
+        "top_3": [
+          0.333,
+          0.333,
+          0.333
+        ],
+        "bottom_3": [
+          0.279,
+          0.273,
+          0.272
+        ],
+        "gaps": [
+          0.0,
+          0.0,
+          0.008000000000000007,
+          0.019000000000000017,
+          0.010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Policies/statements on responsible sourcing, supply chain risks",
+      "num_matches": 10,
+      "scores": [
+        0.562,
+        0.562,
+        0.562,
+        0.503,
+        0.484,
+        0.476,
+        0.462,
+        0.457,
+        0.455,
+        0.455
+      ],
+      "mean": 0.49779999999999996,
+      "std": 0.04434816794412145,
+      "median": 0.48,
+      "max_gap": 0.05900000000000005,
+      "adaptive_threshold": 0.503,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.044)",
+      "score_distribution": {
+        "top_3": [
+          0.562,
+          0.562,
+          0.562
+        ],
+        "bottom_3": [
+          0.457,
+          0.455,
+          0.455
+        ],
+        "gaps": [
+          0.0,
+          0.0,
+          0.05900000000000005,
+          0.019000000000000017,
+          0.008000000000000007
+        ]
+      }
+    },
+    {
+      "item": "Environmental legal actions, investigations, complaints, settlements, fines",
+      "num_matches": 10,
+      "scores": [
+        0.369,
+        0.359,
+        0.34,
+        0.34,
+        0.34,
+        0.34,
+        0.34,
+        0.34,
+        0.34,
+        0.337
+      ],
+      "mean": 0.3445,
+      "std": 0.01004241006930108,
+      "median": 0.34,
+      "max_gap": 0.01899999999999996,
+      "adaptive_threshold": 0.34,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.010)",
+      "score_distribution": {
+        "top_3": [
+          0.369,
+          0.359,
+          0.34
+        ],
+        "bottom_3": [
+          0.34,
+          0.34,
+          0.337
+        ],
+        "gaps": [
+          0.010000000000000009,
+          0.01899999999999996,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Environmental licenses, permits, authorizations",
+      "num_matches": 10,
+      "scores": [
+        0.455,
+        0.455,
+        0.455,
+        0.455,
+        0.386,
+        0.385,
+        0.373,
+        0.373,
+        0.372,
+        0.372
+      ],
+      "mean": 0.40809999999999996,
+      "std": 0.03858872892438932,
+      "median": 0.3855,
+      "max_gap": 0.069,
+      "adaptive_threshold": 0.386,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.039)",
+      "score_distribution": {
+        "top_3": [
+          0.455,
+          0.455,
+          0.455
+        ],
+        "bottom_3": [
+          0.373,
+          0.372,
+          0.372
+        ],
+        "gaps": [
+          0.0,
+          0.0,
+          0.0,
+          0.069,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Known contaminations or hazardous material concerns (asbestos, lead paint, petroleum, mercury, radia...",
+      "num_matches": 10,
+      "scores": [
+        0.486,
+        0.409,
+        0.4,
+        0.391,
+        0.344,
+        0.339,
+        0.329,
+        0.325,
+        0.321,
+        0.32
+      ],
+      "mean": 0.3664,
+      "std": 0.05141244985409662,
+      "median": 0.3415,
+      "max_gap": 0.07700000000000001,
+      "adaptive_threshold": 0.409,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.051)",
+      "score_distribution": {
+        "top_3": [
+          0.486,
+          0.409,
+          0.4
+        ],
+        "bottom_3": [
+          0.325,
+          0.321,
+          0.32
+        ],
+        "gaps": [
+          0.07700000000000001,
+          0.008999999999999952,
+          0.009000000000000008,
+          0.04700000000000004,
+          0.004999999999999949
+        ]
+      }
+    },
+    {
+      "item": "Customer satisfaction reports",
+      "num_matches": 10,
+      "scores": [
+        0.578,
+        0.5,
+        0.499,
+        0.499,
+        0.499,
+        0.492,
+        0.49,
+        0.473,
+        0.473,
+        0.473
+      ],
+      "mean": 0.49759999999999993,
+      "std": 0.028948920532551808,
+      "median": 0.4955,
+      "max_gap": 0.07799999999999996,
+      "adaptive_threshold": 0.5,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.029)",
+      "score_distribution": {
+        "top_3": [
+          0.578,
+          0.5,
+          0.499
+        ],
+        "bottom_3": [
+          0.473,
+          0.473,
+          0.473
+        ],
+        "gaps": [
+          0.07799999999999996,
+          0.0010000000000000009,
+          0.0,
+          0.0,
+          0.007000000000000006
+        ]
+      }
+    },
+    {
+      "item": "Employee satisfaction reports",
+      "num_matches": 10,
+      "scores": [
+        0.583,
+        0.549,
+        0.524,
+        0.495,
+        0.476,
+        0.476,
+        0.476,
+        0.458,
+        0.455,
+        0.455
+      ],
+      "mean": 0.49470000000000003,
+      "std": 0.041415093866850036,
+      "median": 0.476,
+      "max_gap": 0.03399999999999992,
+      "adaptive_threshold": 0.549,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.041)",
+      "score_distribution": {
+        "top_3": [
+          0.583,
+          0.549,
+          0.524
+        ],
+        "bottom_3": [
+          0.458,
+          0.455,
+          0.455
+        ],
+        "gaps": [
+          0.03399999999999992,
+          0.025000000000000022,
+          0.029000000000000026,
+          0.019000000000000017,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Workplace safety violation investigations, litigation, fines, penalties",
+      "num_matches": 10,
+      "scores": [
+        0.602,
+        0.502,
+        0.502,
+        0.462,
+        0.412,
+        0.409,
+        0.409,
+        0.407,
+        0.399,
+        0.399
+      ],
+      "mean": 0.45030000000000003,
+      "std": 0.0636491162546661,
+      "median": 0.4105,
+      "max_gap": 0.09999999999999998,
+      "adaptive_threshold": 0.502,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.064)",
+      "score_distribution": {
+        "top_3": [
+          0.602,
+          0.502,
+          0.502
+        ],
+        "bottom_3": [
+          0.407,
+          0.399,
+          0.399
+        ],
+        "gaps": [
+          0.09999999999999998,
+          0.0,
+          0.03999999999999998,
+          0.050000000000000044,
+          0.0030000000000000027
+        ]
+      }
+    },
+    {
+      "item": "Product safety violation investigations, litigation, fines, penalties",
+      "num_matches": 10,
+      "scores": [
+        0.507,
+        0.437,
+        0.427,
+        0.419,
+        0.409,
+        0.409,
+        0.409,
+        0.404,
+        0.393,
+        0.393
+      ],
+      "mean": 0.42069999999999996,
+      "std": 0.031591296269700614,
+      "median": 0.409,
+      "max_gap": 0.07,
+      "adaptive_threshold": 0.437,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.032)",
+      "score_distribution": {
+        "top_3": [
+          0.507,
+          0.437,
+          0.427
+        ],
+        "bottom_3": [
+          0.404,
+          0.393,
+          0.393
+        ],
+        "gaps": [
+          0.07,
+          0.010000000000000009,
+          0.008000000000000007,
+          0.010000000000000009,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Workplace safety, child labor, human trafficking policies",
+      "num_matches": 10,
+      "scores": [
+        0.639,
+        0.639,
+        0.586,
+        0.485,
+        0.467,
+        0.467,
+        0.467,
+        0.465,
+        0.465,
+        0.457
+      ],
+      "mean": 0.5136999999999999,
+      "std": 0.07207780518301038,
+      "median": 0.467,
+      "max_gap": 0.10099999999999998,
+      "adaptive_threshold": 0.485,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 3 high-relevance docs (>0.485), 7 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.639,
+          0.639,
+          0.586
+        ],
+        "bottom_3": [
+          0.465,
+          0.465,
+          0.457
+        ],
+        "gaps": [
+          0.0,
+          0.05300000000000005,
+          0.10099999999999998,
+          0.01799999999999996,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Diversity and inclusion policies (board, management, workforce)",
+      "num_matches": 10,
+      "scores": [
+        0.497,
+        0.497,
+        0.476,
+        0.476,
+        0.476,
+        0.476,
+        0.476,
+        0.476,
+        0.476,
+        0.467
+      ],
+      "mean": 0.47929999999999995,
+      "std": 0.009241753080449618,
+      "median": 0.476,
+      "max_gap": 0.02100000000000002,
+      "adaptive_threshold": 0.476,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.009)",
+      "score_distribution": {
+        "top_3": [
+          0.497,
+          0.497,
+          0.476
+        ],
+        "bottom_3": [
+          0.476,
+          0.476,
+          0.467
+        ],
+        "gaps": [
+          0.0,
+          0.02100000000000002,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Subcontractor, contractor, supplier vetting policies",
+      "num_matches": 10,
+      "scores": [
+        0.61,
+        0.588,
+        0.476,
+        0.475,
+        0.475,
+        0.475,
+        0.439,
+        0.436,
+        0.436,
+        0.428
+      ],
+      "mean": 0.4838,
+      "std": 0.060636292762668124,
+      "median": 0.475,
+      "max_gap": 0.11199999999999999,
+      "adaptive_threshold": 0.476,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 2 high-relevance docs (>0.476), 8 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.61,
+          0.588,
+          0.476
+        ],
+        "bottom_3": [
+          0.436,
+          0.436,
+          0.428
+        ],
+        "gaps": [
+          0.02200000000000002,
+          0.11199999999999999,
+          0.0010000000000000009,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Responsible persons/systems for supply chain risk monitoring (internal or external)",
+      "num_matches": 10,
+      "scores": [
+        0.446,
+        0.445,
+        0.425,
+        0.412,
+        0.412,
+        0.388,
+        0.381,
+        0.379,
+        0.377,
+        0.361
+      ],
+      "mean": 0.40259999999999996,
+      "std": 0.028253141418256484,
+      "median": 0.4,
+      "max_gap": 0.023999999999999966,
+      "adaptive_threshold": 0.388,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.028)",
+      "score_distribution": {
+        "top_3": [
+          0.446,
+          0.445,
+          0.425
+        ],
+        "bottom_3": [
+          0.379,
+          0.377,
+          0.361
+        ],
+        "gaps": [
+          0.0010000000000000009,
+          0.020000000000000018,
+          0.013000000000000012,
+          0.0,
+          0.023999999999999966
+        ]
+      }
+    },
+    {
+      "item": "Suppliers, subcontractors, contractors list; projects and locations",
+      "num_matches": 10,
+      "scores": [
+        0.442,
+        0.436,
+        0.398,
+        0.394,
+        0.394,
+        0.386,
+        0.367,
+        0.367,
+        0.367,
+        0.367
+      ],
+      "mean": 0.39180000000000004,
+      "std": 0.02648697793256151,
+      "median": 0.39,
+      "max_gap": 0.03799999999999998,
+      "adaptive_threshold": 0.398,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.026)",
+      "score_distribution": {
+        "top_3": [
+          0.442,
+          0.436,
+          0.398
+        ],
+        "bottom_3": [
+          0.367,
+          0.367,
+          0.367
+        ],
+        "gaps": [
+          0.006000000000000005,
+          0.03799999999999998,
+          0.0040000000000000036,
+          0.0,
+          0.008000000000000007
+        ]
+      }
+    },
+    {
+      "item": "Consumer protection and product safety policies",
+      "num_matches": 10,
+      "scores": [
+        0.615,
+        0.602,
+        0.602,
+        0.602,
+        0.561,
+        0.561,
+        0.561,
+        0.561,
+        0.561,
+        0.561
+      ],
+      "mean": 0.5787000000000001,
+      "std": 0.0219683863767915,
+      "median": 0.561,
+      "max_gap": 0.040999999999999925,
+      "adaptive_threshold": 0.561,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.022)",
+      "score_distribution": {
+        "top_3": [
+          0.615,
+          0.602,
+          0.602
+        ],
+        "bottom_3": [
+          0.561,
+          0.561,
+          0.561
+        ],
+        "gaps": [
+          0.013000000000000012,
+          0.0,
+          0.0,
+          0.040999999999999925,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Recruitment and retention policies",
+      "num_matches": 10,
+      "scores": [
+        0.703,
+        0.543,
+        0.513,
+        0.513,
+        0.509,
+        0.487,
+        0.466,
+        0.466,
+        0.466,
+        0.466
+      ],
+      "mean": 0.5132000000000001,
+      "std": 0.06821114278473861,
+      "median": 0.498,
+      "max_gap": 0.15999999999999992,
+      "adaptive_threshold": 0.543,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 1 high-relevance docs (>0.543), 9 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.703,
+          0.543,
+          0.513
+        ],
+        "bottom_3": [
+          0.466,
+          0.466,
+          0.466
+        ],
+        "gaps": [
+          0.15999999999999992,
+          0.030000000000000027,
+          0.0,
+          0.0040000000000000036,
+          0.02200000000000002
+        ]
+      }
+    },
+    {
+      "item": "Workplace safety records/policies",
+      "num_matches": 10,
+      "scores": [
+        0.758,
+        0.641,
+        0.641,
+        0.617,
+        0.617,
+        0.606,
+        0.573,
+        0.565,
+        0.559,
+        0.559
+      ],
+      "mean": 0.6136,
+      "std": 0.056926619432388574,
+      "median": 0.6114999999999999,
+      "max_gap": 0.11699999999999999,
+      "adaptive_threshold": 0.641,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 1 high-relevance docs (>0.641), 9 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.758,
+          0.641,
+          0.641
+        ],
+        "bottom_3": [
+          0.565,
+          0.559,
+          0.559
+        ],
+        "gaps": [
+          0.11699999999999999,
+          0.0,
+          0.02400000000000002,
+          0.0,
+          0.01100000000000001
+        ]
+      }
+    },
+    {
+      "item": "Sexual harassment/misconduct investigation processes",
+      "num_matches": 10,
+      "scores": [
+        0.43,
+        0.346,
+        0.346,
+        0.345,
+        0.333,
+        0.333,
+        0.325,
+        0.32,
+        0.32,
+        0.32
+      ],
+      "mean": 0.3418,
+      "std": 0.031124909638423043,
+      "median": 0.333,
+      "max_gap": 0.08400000000000002,
+      "adaptive_threshold": 0.346,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.031)",
+      "score_distribution": {
+        "top_3": [
+          0.43,
+          0.346,
+          0.346
+        ],
+        "bottom_3": [
+          0.32,
+          0.32,
+          0.32
+        ],
+        "gaps": [
+          0.08400000000000002,
+          0.0,
+          0.0010000000000000009,
+          0.011999999999999955,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Corrective actions taken to prevent further sexual harassment/misconduct",
+      "num_matches": 10,
+      "scores": [
+        0.483,
+        0.414,
+        0.414,
+        0.405,
+        0.394,
+        0.35,
+        0.35,
+        0.35,
+        0.35,
+        0.35
+      ],
+      "mean": 0.386,
+      "std": 0.04228711387645177,
+      "median": 0.372,
+      "max_gap": 0.069,
+      "adaptive_threshold": 0.414,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.042)",
+      "score_distribution": {
+        "top_3": [
+          0.483,
+          0.414,
+          0.414
+        ],
+        "bottom_3": [
+          0.35,
+          0.35,
+          0.35
+        ],
+        "gaps": [
+          0.069,
+          0.0,
+          0.008999999999999952,
+          0.01100000000000001,
+          0.04400000000000004
+        ]
+      }
+    },
+    {
+      "item": "Reports of sexual harassment (last 5 years); including against executives/directors",
+      "num_matches": 10,
+      "scores": [
+        0.398,
+        0.398,
+        0.38,
+        0.353,
+        0.337,
+        0.337,
+        0.337,
+        0.326,
+        0.317,
+        0.315
+      ],
+      "mean": 0.3498,
+      "std": 0.02985565273109935,
+      "median": 0.337,
+      "max_gap": 0.027000000000000024,
+      "adaptive_threshold": 0.353,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.030)",
+      "score_distribution": {
+        "top_3": [
+          0.398,
+          0.398,
+          0.38
+        ],
+        "bottom_3": [
+          0.326,
+          0.317,
+          0.315
+        ],
+        "gaps": [
+          0.0,
+          0.018000000000000016,
+          0.027000000000000024,
+          0.01599999999999996,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Settlement agreements relating to sexual harassment/misconduct",
+      "num_matches": 10,
+      "scores": [
+        0.494,
+        0.494,
+        0.451,
+        0.419,
+        0.393,
+        0.386,
+        0.379,
+        0.379,
+        0.379,
+        0.379
+      ],
+      "mean": 0.41530000000000006,
+      "std": 0.045057851702006387,
+      "median": 0.3895,
+      "max_gap": 0.04299999999999998,
+      "adaptive_threshold": 0.451,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.045)",
+      "score_distribution": {
+        "top_3": [
+          0.494,
+          0.494,
+          0.451
+        ],
+        "bottom_3": [
+          0.379,
+          0.379,
+          0.379
+        ],
+        "gaps": [
+          0.0,
+          0.04299999999999998,
+          0.03200000000000003,
+          0.025999999999999968,
+          0.007000000000000006
+        ]
+      }
+    },
+    {
+      "item": "Whistleblower and grievance mechanism reports and policies",
+      "num_matches": 10,
+      "scores": [
+        0.501,
+        0.481,
+        0.481,
+        0.437,
+        0.437,
+        0.429,
+        0.429,
+        0.429,
+        0.429,
+        0.425
+      ],
+      "mean": 0.4478,
+      "std": 0.02683579698835121,
+      "median": 0.433,
+      "max_gap": 0.043999999999999984,
+      "adaptive_threshold": 0.437,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.027)",
+      "score_distribution": {
+        "top_3": [
+          0.501,
+          0.481,
+          0.481
+        ],
+        "bottom_3": [
+          0.429,
+          0.429,
+          0.425
+        ],
+        "gaps": [
+          0.020000000000000018,
+          0.0,
+          0.043999999999999984,
+          0.0,
+          0.008000000000000007
+        ]
+      }
+    },
+    {
+      "item": "Compliance with accounting/disclosure standards: reports, policies, disclosures",
+      "num_matches": 10,
+      "scores": [
+        0.712,
+        0.712,
+        0.662,
+        0.604,
+        0.604,
+        0.604,
+        0.565,
+        0.563,
+        0.559,
+        0.549
+      ],
+      "mean": 0.6134000000000001,
+      "std": 0.05836128853957903,
+      "median": 0.604,
+      "max_gap": 0.05800000000000005,
+      "adaptive_threshold": 0.604,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.058)",
+      "score_distribution": {
+        "top_3": [
+          0.712,
+          0.712,
+          0.662
+        ],
+        "bottom_3": [
+          0.563,
+          0.559,
+          0.549
+        ],
+        "gaps": [
+          0.0,
+          0.04999999999999993,
+          0.05800000000000005,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Internal controls for accounting/disclosure compliance",
+      "num_matches": 10,
+      "scores": [
+        0.644,
+        0.644,
+        0.624,
+        0.536,
+        0.516,
+        0.513,
+        0.492,
+        0.486,
+        0.451,
+        0.445
+      ],
+      "mean": 0.5351,
+      "std": 0.07206587264440777,
+      "median": 0.5145,
+      "max_gap": 0.08799999999999997,
+      "adaptive_threshold": 0.536,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.072)",
+      "score_distribution": {
+        "top_3": [
+          0.644,
+          0.644,
+          0.624
+        ],
+        "bottom_3": [
+          0.486,
+          0.451,
+          0.445
+        ],
+        "gaps": [
+          0.0,
+          0.020000000000000018,
+          0.08799999999999997,
+          0.020000000000000018,
+          0.0030000000000000027
+        ]
+      }
+    },
+    {
+      "item": "Responsible persons/systems for monitoring disclosure compliance",
+      "num_matches": 10,
+      "scores": [
+        0.612,
+        0.612,
+        0.559,
+        0.519,
+        0.502,
+        0.501,
+        0.494,
+        0.472,
+        0.46,
+        0.451
+      ],
+      "mean": 0.5182,
+      "std": 0.05517571929753159,
+      "median": 0.5015000000000001,
+      "max_gap": 0.052999999999999936,
+      "adaptive_threshold": 0.559,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.055)",
+      "score_distribution": {
+        "top_3": [
+          0.612,
+          0.612,
+          0.559
+        ],
+        "bottom_3": [
+          0.472,
+          0.46,
+          0.451
+        ],
+        "gaps": [
+          0.0,
+          0.052999999999999936,
+          0.040000000000000036,
+          0.017000000000000015,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Integration of ESG data/issues into executive compensation",
+      "num_matches": 10,
+      "scores": [
+        0.622,
+        0.49,
+        0.477,
+        0.451,
+        0.45,
+        0.426,
+        0.426,
+        0.426,
+        0.424,
+        0.41
+      ],
+      "mean": 0.46020000000000005,
+      "std": 0.05905726034959631,
+      "median": 0.438,
+      "max_gap": 0.132,
+      "adaptive_threshold": 0.49,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 1 high-relevance docs (>0.490), 9 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.622,
+          0.49,
+          0.477
+        ],
+        "bottom_3": [
+          0.426,
+          0.424,
+          0.41
+        ],
+        "gaps": [
+          0.132,
+          0.013000000000000012,
+          0.025999999999999968,
+          0.0010000000000000009,
+          0.02400000000000002
+        ]
+      }
+    },
+    {
+      "item": "Management succession plans or policies",
+      "num_matches": 10,
+      "scores": [
+        0.566,
+        0.563,
+        0.558,
+        0.558,
+        0.558,
+        0.558,
+        0.558,
+        0.558,
+        0.558,
+        0.544
+      ],
+      "mean": 0.5579000000000001,
+      "std": 0.005337602458032984,
+      "median": 0.558,
+      "max_gap": 0.014000000000000012,
+      "adaptive_threshold": 0.544,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.005)",
+      "score_distribution": {
+        "top_3": [
+          0.566,
+          0.563,
+          0.558
+        ],
+        "bottom_3": [
+          0.558,
+          0.558,
+          0.544
+        ],
+        "gaps": [
+          0.0030000000000000027,
+          0.004999999999999893,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Investor initiatives or activist campaigns related to ESG",
+      "num_matches": 10,
+      "scores": [
+        0.409,
+        0.385,
+        0.364,
+        0.364,
+        0.364,
+        0.364,
+        0.364,
+        0.364,
+        0.364,
+        0.353
+      ],
+      "mean": 0.36949999999999994,
+      "std": 0.015114562514343574,
+      "median": 0.364,
+      "max_gap": 0.023999999999999966,
+      "adaptive_threshold": 0.385,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.015)",
+      "score_distribution": {
+        "top_3": [
+          0.409,
+          0.385,
+          0.364
+        ],
+        "bottom_3": [
+          0.364,
+          0.364,
+          0.353
+        ],
+        "gaps": [
+          0.023999999999999966,
+          0.02100000000000002,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Shareholder matters (proxies, activist investors, no-action requests, proposals)",
+      "num_matches": 10,
+      "scores": [
+        0.499,
+        0.477,
+        0.453,
+        0.433,
+        0.432,
+        0.43,
+        0.43,
+        0.43,
+        0.43,
+        0.43
+      ],
+      "mean": 0.4444,
+      "std": 0.023320377355437457,
+      "median": 0.431,
+      "max_gap": 0.023999999999999966,
+      "adaptive_threshold": 0.453,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.023)",
+      "score_distribution": {
+        "top_3": [
+          0.499,
+          0.477,
+          0.453
+        ],
+        "bottom_3": [
+          0.43,
+          0.43,
+          0.43
+        ],
+        "gaps": [
+          0.02200000000000002,
+          0.023999999999999966,
+          0.020000000000000018,
+          0.0010000000000000009,
+          0.0020000000000000018
+        ]
+      }
+    },
+    {
+      "item": "Voluntary ESG standards/frameworks used; related disclosures",
+      "num_matches": 10,
+      "scores": [
+        0.539,
+        0.492,
+        0.487,
+        0.487,
+        0.485,
+        0.476,
+        0.464,
+        0.445,
+        0.445,
+        0.445
+      ],
+      "mean": 0.47650000000000003,
+      "std": 0.027518175811634033,
+      "median": 0.4805,
+      "max_gap": 0.04700000000000004,
+      "adaptive_threshold": 0.492,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.028)",
+      "score_distribution": {
+        "top_3": [
+          0.539,
+          0.492,
+          0.487
+        ],
+        "bottom_3": [
+          0.445,
+          0.445,
+          0.445
+        ],
+        "gaps": [
+          0.04700000000000004,
+          0.0050000000000000044,
+          0.0,
+          0.0020000000000000018,
+          0.009000000000000008
+        ]
+      }
+    },
+    {
+      "item": "Mandatory ESG standards/frameworks applicable; related disclosures",
+      "num_matches": 10,
+      "scores": [
+        0.539,
+        0.508,
+        0.492,
+        0.492,
+        0.485,
+        0.472,
+        0.472,
+        0.456,
+        0.456,
+        0.456
+      ],
+      "mean": 0.4828,
+      "std": 0.02521031534907884,
+      "median": 0.4785,
+      "max_gap": 0.031000000000000028,
+      "adaptive_threshold": 0.508,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.025)",
+      "score_distribution": {
+        "top_3": [
+          0.539,
+          0.508,
+          0.492
+        ],
+        "bottom_3": [
+          0.456,
+          0.456,
+          0.456
+        ],
+        "gaps": [
+          0.031000000000000028,
+          0.016000000000000014,
+          0.0,
+          0.007000000000000006,
+          0.013000000000000012
+        ]
+      }
+    },
+    {
+      "item": "Persons/systems monitoring ESG commitments and priorities",
+      "num_matches": 10,
+      "scores": [
+        0.489,
+        0.463,
+        0.414,
+        0.414,
+        0.414,
+        0.405,
+        0.395,
+        0.391,
+        0.38,
+        0.374
+      ],
+      "mean": 0.41389999999999993,
+      "std": 0.034282502825785634,
+      "median": 0.4095,
+      "max_gap": 0.049000000000000044,
+      "adaptive_threshold": 0.414,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.034)",
+      "score_distribution": {
+        "top_3": [
+          0.489,
+          0.463,
+          0.414
+        ],
+        "bottom_3": [
+          0.391,
+          0.38,
+          0.374
+        ],
+        "gaps": [
+          0.025999999999999968,
+          0.049000000000000044,
+          0.0,
+          0.0,
+          0.008999999999999952
+        ]
+      }
+    },
+    {
+      "item": "ESG importance measurement systems (shareholder/stakeholder perception surveys)",
+      "num_matches": 10,
+      "scores": [
+        0.369,
+        0.369,
+        0.369,
+        0.363,
+        0.358,
+        0.357,
+        0.355,
+        0.353,
+        0.352,
+        0.346
+      ],
+      "mean": 0.3591,
+      "std": 0.007687002016391053,
+      "median": 0.3575,
+      "max_gap": 0.006000000000000005,
+      "adaptive_threshold": 0.363,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.008)",
+      "score_distribution": {
+        "top_3": [
+          0.369,
+          0.369,
+          0.369
+        ],
+        "bottom_3": [
+          0.353,
+          0.352,
+          0.346
+        ],
+        "gaps": [
+          0.0,
+          0.0,
+          0.006000000000000005,
+          0.0050000000000000044,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "item": "Other ESG documents not covered above",
+      "num_matches": 10,
+      "scores": [
+        0.446,
+        0.446,
+        0.443,
+        0.443,
+        0.443,
+        0.443,
+        0.443,
+        0.443,
+        0.443,
+        0.427
+      ],
+      "mean": 0.442,
+      "std": 0.005138093031466056,
+      "median": 0.443,
+      "max_gap": 0.016000000000000014,
+      "adaptive_threshold": 0.427,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.005)",
+      "score_distribution": {
+        "top_3": [
+          0.446,
+          0.446,
+          0.443
+        ],
+        "bottom_3": [
+          0.443,
+          0.443,
+          0.427
+        ],
+        "gaps": [
+          0.0,
+          0.0030000000000000027,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Major vendors and suppliers; goods/services; spend; relationship length",
+      "num_matches": 10,
+      "scores": [
+        0.552,
+        0.551,
+        0.529,
+        0.492,
+        0.456,
+        0.451,
+        0.451,
+        0.451,
+        0.451,
+        0.451
+      ],
+      "mean": 0.4835,
+      "std": 0.04174745501225196,
+      "median": 0.4535,
+      "max_gap": 0.03700000000000003,
+      "adaptive_threshold": 0.492,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.042)",
+      "score_distribution": {
+        "top_3": [
+          0.552,
+          0.551,
+          0.529
+        ],
+        "bottom_3": [
+          0.451,
+          0.451,
+          0.451
+        ],
+        "gaps": [
+          0.0010000000000000009,
+          0.02200000000000002,
+          0.03700000000000003,
+          0.035999999999999976,
+          0.0050000000000000044
+        ]
+      }
+    },
+    {
+      "item": "Significant purchase/master supply/procurement contracts",
+      "num_matches": 10,
+      "scores": [
+        0.555,
+        0.515,
+        0.515,
+        0.515,
+        0.515,
+        0.515,
+        0.515,
+        0.515,
+        0.498,
+        0.497
+      ],
+      "mean": 0.5155000000000001,
+      "std": 0.014867750334196508,
+      "median": 0.515,
+      "max_gap": 0.040000000000000036,
+      "adaptive_threshold": 0.515,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.015)",
+      "score_distribution": {
+        "top_3": [
+          0.555,
+          0.515,
+          0.515
+        ],
+        "bottom_3": [
+          0.515,
+          0.498,
+          0.497
+        ],
+        "gaps": [
+          0.040000000000000036,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Standard forms: purchase orders; supply agreements",
+      "num_matches": 10,
+      "scores": [
+        0.56,
+        0.499,
+        0.49,
+        0.485,
+        0.484,
+        0.481,
+        0.481,
+        0.475,
+        0.47,
+        0.468
+      ],
+      "mean": 0.48929999999999996,
+      "std": 0.025115931199141333,
+      "median": 0.4825,
+      "max_gap": 0.061000000000000054,
+      "adaptive_threshold": 0.499,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.025)",
+      "score_distribution": {
+        "top_3": [
+          0.56,
+          0.499,
+          0.49
+        ],
+        "bottom_3": [
+          0.475,
+          0.47,
+          0.468
+        ],
+        "gaps": [
+          0.061000000000000054,
+          0.009000000000000008,
+          0.0050000000000000044,
+          0.0010000000000000009,
+          0.0030000000000000027
+        ]
+      }
+    },
+    {
+      "item": "Vendors/suppliers >5% annual purchases; sole/primary source providers",
+      "num_matches": 10,
+      "scores": [
+        0.543,
+        0.487,
+        0.459,
+        0.459,
+        0.411,
+        0.4,
+        0.392,
+        0.392,
+        0.392,
+        0.392
+      ],
+      "mean": 0.4327,
+      "std": 0.049662964067804086,
+      "median": 0.40549999999999997,
+      "max_gap": 0.05600000000000005,
+      "adaptive_threshold": 0.487,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.050)",
+      "score_distribution": {
+        "top_3": [
+          0.543,
+          0.487,
+          0.459
+        ],
+        "bottom_3": [
+          0.392,
+          0.392,
+          0.392
+        ],
+        "gaps": [
+          0.05600000000000005,
+          0.02799999999999997,
+          0.0,
+          0.04800000000000004,
+          0.010999999999999954
+        ]
+      }
+    },
+    {
+      "item": "Vendor qualification, selection, management policies/procedures",
+      "num_matches": 10,
+      "scores": [
+        0.803,
+        0.693,
+        0.509,
+        0.503,
+        0.496,
+        0.489,
+        0.486,
+        0.485,
+        0.485,
+        0.485
+      ],
+      "mean": 0.5434000000000001,
+      "std": 0.10550848307126778,
+      "median": 0.4925,
+      "max_gap": 0.18399999999999994,
+      "adaptive_threshold": 0.509,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 2 high-relevance docs (>0.509), 8 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.803,
+          0.693,
+          0.509
+        ],
+        "bottom_3": [
+          0.485,
+          0.485,
+          0.485
+        ],
+        "gaps": [
+          0.1100000000000001,
+          0.18399999999999994,
+          0.006000000000000005,
+          0.007000000000000006,
+          0.007000000000000006
+        ]
+      }
+    },
+    {
+      "item": "Vendor/supplier disputes (last 3 years)",
+      "num_matches": 10,
+      "scores": [
+        0.576,
+        0.509,
+        0.371,
+        0.371,
+        0.344,
+        0.324,
+        0.324,
+        0.324,
+        0.318,
+        0.317
+      ],
+      "mean": 0.3778,
+      "std": 0.0858414818138643,
+      "median": 0.33399999999999996,
+      "max_gap": 0.138,
+      "adaptive_threshold": 0.371,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 2 high-relevance docs (>0.371), 8 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.576,
+          0.509,
+          0.371
+        ],
+        "bottom_3": [
+          0.324,
+          0.318,
+          0.317
+        ],
+        "gaps": [
+          0.06699999999999995,
+          0.138,
+          0.0,
+          0.027000000000000024,
+          0.019999999999999962
+        ]
+      }
+    },
+    {
+      "item": "Vendor/supplier audits, performance reviews, quality assessments (last 2 years)",
+      "num_matches": 10,
+      "scores": [
+        0.635,
+        0.522,
+        0.493,
+        0.49,
+        0.486,
+        0.484,
+        0.482,
+        0.478,
+        0.478,
+        0.464
+      ],
+      "mean": 0.5012000000000001,
+      "std": 0.04677991021795575,
+      "median": 0.485,
+      "max_gap": 0.11299999999999999,
+      "adaptive_threshold": 0.522,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 1 high-relevance docs (>0.522), 9 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.635,
+          0.522,
+          0.493
+        ],
+        "bottom_3": [
+          0.478,
+          0.478,
+          0.464
+        ],
+        "gaps": [
+          0.11299999999999999,
+          0.029000000000000026,
+          0.0030000000000000027,
+          0.0040000000000000036,
+          0.0020000000000000018
+        ]
+      }
+    },
+    {
+      "item": "Vendor compliance programs (anti-corruption, modern slavery, ethics)",
+      "num_matches": 10,
+      "scores": [
+        0.607,
+        0.589,
+        0.535,
+        0.498,
+        0.489,
+        0.464,
+        0.464,
+        0.464,
+        0.464,
+        0.464
+      ],
+      "mean": 0.5038000000000001,
+      "std": 0.0520149978371623,
+      "median": 0.47650000000000003,
+      "max_gap": 0.05399999999999994,
+      "adaptive_threshold": 0.535,
+      "analysis": "\ud83d\udcc8 HIGH VARIANCE: scores spread widely (std=0.052)",
+      "score_distribution": {
+        "top_3": [
+          0.607,
+          0.589,
+          0.535
+        ],
+        "bottom_3": [
+          0.464,
+          0.464,
+          0.464
+        ],
+        "gaps": [
+          0.018000000000000016,
+          0.05399999999999994,
+          0.03700000000000003,
+          0.009000000000000008,
+          0.024999999999999967
+        ]
+      }
+    },
+    {
+      "item": "Vendor rebate programs; volume discounts; special pricing",
+      "num_matches": 10,
+      "scores": [
+        0.436,
+        0.423,
+        0.412,
+        0.412,
+        0.342,
+        0.342,
+        0.331,
+        0.331,
+        0.331,
+        0.331
+      ],
+      "mean": 0.3691,
+      "std": 0.04282160669568575,
+      "median": 0.342,
+      "max_gap": 0.06999999999999995,
+      "adaptive_threshold": 0.342,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.043)",
+      "score_distribution": {
+        "top_3": [
+          0.436,
+          0.423,
+          0.412
+        ],
+        "bottom_3": [
+          0.331,
+          0.331,
+          0.331
+        ],
+        "gaps": [
+          0.013000000000000012,
+          0.01100000000000001,
+          0.0,
+          0.06999999999999995,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Anticipated material changes to vendor relationships (next 12 months)",
+      "num_matches": 10,
+      "scores": [
+        0.599,
+        0.577,
+        0.464,
+        0.443,
+        0.443,
+        0.419,
+        0.419,
+        0.419,
+        0.405,
+        0.4
+      ],
+      "mean": 0.4588000000000001,
+      "std": 0.06727376903370286,
+      "median": 0.431,
+      "max_gap": 0.11299999999999993,
+      "adaptive_threshold": 0.464,
+      "analysis": "\ud83d\udcca CLEAR SEPARATION: 2 high-relevance docs (>0.464), 8 low-relevance",
+      "score_distribution": {
+        "top_3": [
+          0.599,
+          0.577,
+          0.464
+        ],
+        "bottom_3": [
+          0.419,
+          0.405,
+          0.4
+        ],
+        "gaps": [
+          0.02200000000000002,
+          0.11299999999999993,
+          0.02100000000000002,
+          0.0,
+          0.02400000000000002
+        ]
+      }
+    },
+    {
+      "item": "Other vendor documents not covered above",
+      "num_matches": 10,
+      "scores": [
+        0.609,
+        0.544,
+        0.5,
+        0.499,
+        0.499,
+        0.499,
+        0.499,
+        0.499,
+        0.499,
+        0.499
+      ],
+      "mean": 0.5146,
+      "std": 0.03419415154671921,
+      "median": 0.499,
+      "max_gap": 0.06499999999999995,
+      "adaptive_threshold": 0.544,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.034)",
+      "score_distribution": {
+        "top_3": [
+          0.609,
+          0.544,
+          0.5
+        ],
+        "bottom_3": [
+          0.499,
+          0.499,
+          0.499
+        ],
+        "gaps": [
+          0.06499999999999995,
+          0.04400000000000004,
+          0.0010000000000000009,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "item": "Documents, records, or materials not relevant to or not included within Categories A\u2013N",
+      "num_matches": 10,
+      "scores": [
+        0.335,
+        0.311,
+        0.286,
+        0.284,
+        0.284,
+        0.284,
+        0.26,
+        0.26,
+        0.26,
+        0.26
+      ],
+      "mean": 0.2824,
+      "std": 0.023690504426879557,
+      "median": 0.284,
+      "max_gap": 0.025000000000000022,
+      "adaptive_threshold": 0.286,
+      "analysis": "\ud83d\udcc9 FLAT DISTRIBUTION: all scores similar (std=0.024)",
+      "score_distribution": {
+        "top_3": [
+          0.335,
+          0.311,
+          0.286
+        ],
+        "bottom_3": [
+          0.26,
+          0.26,
+          0.26
+        ],
+        "gaps": [
+          0.02400000000000002,
+          0.025000000000000022,
+          0.0020000000000000018,
+          0.0,
+          0.0
+        ]
+      }
+    }
+  ],
+  "config": {
+    "similarity_threshold": 0.2,
+    "store_name": "summit-digital-solutions-inc",
+    "checklist": "bloomberg"
+  }
+}

@@ -30,14 +30,20 @@ CRITICAL PARSING RULES:
 - Do NOT offer to continue or ask questions
 - Do NOT provide partial results or examples
 - Parse the COMPLETE document - every single category and item
+- NEVER leave empty objects {} - each item must have at least a "text" field
 
 JSON Structure Required:
 - Top-level object with "categories" field
 - Categories keyed by letter (A, B, C, D, E, etc.)
 - Each category has "name" and "items" fields
-- Each item has "text" and "original" fields
+- Each item must have "text" field (required) and "original" field (optional)
+- If an item is incomplete, skip it rather than include empty objects
 
-You must process the ENTIRE checklist. Do not stop after a few categories.
+COMPLETION REQUIREMENTS:
+- Process EVERY category from start to finish
+- If you approach token limits, prioritize completing all items rather than adding extra formatting
+- Count categories as you go: A, B, C, D, E, F, G, H, I, J, K, L, M, N, O...
+- Ensure the final JSON is syntactically valid and complete
 
 Output format:
 {
@@ -53,14 +59,14 @@ Output format:
 
 Return ONLY the JSON. No other text.
 """),
-        HumanMessagePromptTemplate.from_template("""Parse this complete checklist into the exact JSON format:
+        HumanMessagePromptTemplate.from_template("""Parse this complete checklist into the exact JSON format. Process ALL categories from A through the end:
 
 {checklist_text}
 
 Required JSON schema:
 {format_instructions}
 
-Return the complete JSON with all categories found in the checklist:""")
+Return the complete JSON with ALL categories found in the checklist. Ensure every item has a "text" field:""")
     ])
 
 

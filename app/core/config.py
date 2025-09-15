@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 from app.core.constants import (
     CHUNK_SIZE, CHUNK_OVERLAP, SIMILARITY_THRESHOLD,
     RELEVANCY_THRESHOLD, CLASSIFICATION_MAX_TOKENS, CHECKLIST_PARSING_MAX_TOKENS,
-    TEMPERATURE
+    TEMPERATURE, STATISTICAL_CANDIDATE_POOL_SIZE, STATISTICAL_STD_MULTIPLIER,
+    STATISTICAL_MIN_CANDIDATES, STATISTICAL_MIN_STD_DEV
 )
 
 load_dotenv()
@@ -42,7 +43,12 @@ class AppConfig:
                 '.pdf', '.docx', '.doc', '.txt', '.md',
                 '.xls', '.xlsx', '.ppt', '.pptx'
             ],
-            'faiss_store_name': 'default'
+            'faiss_store_name': 'default',
+            # Statistical filtering configuration
+            'statistical_candidate_pool_size': STATISTICAL_CANDIDATE_POOL_SIZE,
+            'statistical_std_multiplier': STATISTICAL_STD_MULTIPLIER,
+            'statistical_min_candidates': STATISTICAL_MIN_CANDIDATES,
+            'statistical_min_std_dev': STATISTICAL_MIN_STD_DEV
         }
 
         self._config['paths'] = {

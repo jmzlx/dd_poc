@@ -59,6 +59,47 @@ def vdr_ingest(vdr_path: Path, store_name: str, llm=None) -> Tuple[List[Document
     return processor.documents, metadata
 
 
+def _generate_document_type_embeddings(classifications: Dict[str, str], embeddings) -> Dict[str, Any]:
+    """
+    Generate embeddings for all unique document types from classifications.
+    
+    Args:
+        classifications: Dictionary mapping document paths to document types
+        embeddings: HuggingFace embeddings model
+        
+    Returns:
+        Dictionary mapping normalized document types to their embeddings
+    """
+    import numpy as np
+    import unidecode
+    
+    # Collect all unique document types
+    unique_types = set()
+    for doc_path, doc_type in classifications.items():
+        if doc_type and doc_type != 'not classified':
+            normalized_type = unidecode.unidecode(doc_type.lower().strip())
+            unique_types.add(normalized_type)
+    
+    logger.info(f"🧮 Batch generating embeddings for {len(unique_types)} unique document types...")
+    
+    # BATCH EMBEDDING GENERATION: Process all document types at once using matrix operations
+    type_embeddings = {}
+    if unique_types:
+        unique_types_list = list(unique_types)
+        logger.info(f"🚀 Batch processing {len(unique_types_list)} document types...")
+        batch_embeddings = embeddings.embed_documents(unique_types_list)
+        
+        # Store batch results with consistent dtype
+        for doc_type, embedding in zip(unique_types_list, batch_embeddings):
+            embedding_array = np.array(embedding, dtype=np.float32)
+            type_embeddings[doc_type] = embedding_array
+            
+        logger.info(f"✅ Successfully batch generated {len(type_embeddings)} document type embeddings")
+    
+    logger.info(f"✅ Generated {len(type_embeddings)} document type embeddings")
+    return type_embeddings
+
+
 def classify_vdr_documents(documents: List[Document], store_name: str, classifier=None) -> Dict[str, str]:
     """Classify VDR documents using fast Haiku classifier"""
     if not classifier or not documents:
@@ -95,7 +136,7 @@ def classify_vdr_documents(documents: List[Document], store_name: str, classifie
 
     except Exception as e:
         logger.error(f"⚠️ Failed to classify document types for {store_name}: {e}")
-        return {}
+        raise RuntimeError(f"Document type classification failed for {store_name}: {e}. This is required for checklist processing.")
 
 
 def process_content(content_source: Any, content_type: str, store_name: str, classifier=None, llm=None) -> Dict[str, Any]:
@@ -137,6 +178,20 @@ def process_content(content_source: Any, content_type: str, store_name: str, cla
             classifications_file.write_text(
                 json.dumps(classifications, indent=2, ensure_ascii=False)
             )
+            
+            # Generate and save document type embeddings
+            try:
+                embeddings_file = faiss_dir / f"{store_name}_document_type_embeddings.pkl"
+                doc_type_embeddings = _generate_document_type_embeddings(classifications, embeddings)
+                
+                import pickle
+                with open(embeddings_file, 'wb') as f:
+                    pickle.dump(doc_type_embeddings, f)
+                
+                logger.info(f"✅ Generated and saved {len(doc_type_embeddings)} document type embeddings to {embeddings_file.name}")
+            except Exception as e:
+                logger.error(f"❌ Failed to generate document type embeddings for {store_name}: {e}")
+                raise RuntimeError(f"Document type embeddings generation failed for {store_name}: {e}. This is required for checklist processing to work.")
 
         # Save enhanced checklists
         if 'enhanced_checklists' in ingestion_metadata:

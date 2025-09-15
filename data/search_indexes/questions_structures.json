@@ -1,0 +1,656 @@
+{
+  "expanded.md": [
+    {
+      "category": "Organizational and Corporate Documents",
+      "question": "Are all jurisdictions of qualification valid and properly maintained?",
+      "id": "A.1"
+    },
+    {
+      "category": "Organizational and Corporate Documents",
+      "question": "Are equity issuances and transfers compliant with securities laws?",
+      "id": "A.2"
+    },
+    {
+      "category": "Organizational and Corporate Documents",
+      "question": "Are restrictive agreements over shares enforceable and disclosed?",
+      "id": "A.3"
+    },
+    {
+      "category": "Organizational and Corporate Documents",
+      "question": "Are officer/director biographical disclosures consistent with filings?",
+      "id": "A.4"
+    },
+    {
+      "category": "Organizational and Corporate Documents",
+      "question": "Are all historical names and addresses of the company/subsidiaries documented?",
+      "id": "A.5"
+    },
+    {
+      "category": "Financial and Accounting Records",
+      "question": "Do management letters from auditors indicate recurring issues?",
+      "id": "B.1"
+    },
+    {
+      "category": "Financial and Accounting Records",
+      "question": "Are changes in accounting policies clearly disclosed and justified?",
+      "id": "B.2"
+    },
+    {
+      "category": "Financial and Accounting Records",
+      "question": "Are equity valuations consistent with financing rounds and 409A reports?",
+      "id": "B.3"
+    },
+    {
+      "category": "Financial and Accounting Records",
+      "question": "Do aging schedules reveal collectability risks in accounts receivable?",
+      "id": "B.4"
+    },
+    {
+      "category": "Financial and Accounting Records",
+      "question": "Are margins and ASPs consistent across product lines and reporting periods?",
+      "id": "B.5"
+    },
+    {
+      "category": "Tax Matters",
+      "question": "Do consents and agreements with tax authorities impose future obligations?",
+      "id": "C.1"
+    },
+    {
+      "category": "Tax Matters",
+      "question": "Are tax shelters or structured transactions disclosed and compliant?",
+      "id": "C.2"
+    },
+    {
+      "category": "Tax Matters",
+      "question": "Are there material real estate tax liabilities outstanding?",
+      "id": "C.3"
+    },
+    {
+      "category": "Tax Matters",
+      "question": "Have IRS Form 3115 filings or method changes been reviewed and approved?",
+      "id": "C.4"
+    },
+    {
+      "category": "Tax Matters",
+      "question": "Are pending/threatened disputes likely to affect closing timing or valuation?",
+      "id": "C.5"
+    },
+    {
+      "category": "Loans and Obligations",
+      "question": "Are indentures or security agreements enforceable and complete?",
+      "id": "D.1"
+    },
+    {
+      "category": "Loans and Obligations",
+      "question": "Do insider debt arrangements comply with governance requirements?",
+      "id": "D.2"
+    },
+    {
+      "category": "Loans and Obligations",
+      "question": "Are outstanding letters of credit or bonds fully disclosed?",
+      "id": "D.3"
+    },
+    {
+      "category": "Loans and Obligations",
+      "question": "Do mortgages or liens restrict asset transfers in an acquisition?",
+      "id": "D.4"
+    },
+    {
+      "category": "Loans and Obligations",
+      "question": "Has lender correspondence identified risk of default or acceleration?",
+      "id": "D.5"
+    },
+    {
+      "category": "Property and Equipment",
+      "question": "Are leases or subleases subject to landlord consent on change of control?",
+      "id": "E.1"
+    },
+    {
+      "category": "Property and Equipment",
+      "question": "Are title insurance policies up to date and covering all real property?",
+      "id": "E.2"
+    },
+    {
+      "category": "Property and Equipment",
+      "question": "Are property surveys consistent with company records?",
+      "id": "E.3"
+    },
+    {
+      "category": "Property and Equipment",
+      "question": "Do appraisals reflect fair market value in line with balance sheet?",
+      "id": "E.4"
+    },
+    {
+      "category": "Property and Equipment",
+      "question": "Are warranty claims or guaranties enforceable with suppliers?",
+      "id": "E.5"
+    },
+    {
+      "category": "Intellectual Property",
+      "question": "Are IP registrations renewed on time and free of defects?",
+      "id": "F.1"
+    },
+    {
+      "category": "Intellectual Property",
+      "question": "Are royalty obligations material compared to total revenue?",
+      "id": "F.2"
+    },
+    {
+      "category": "Intellectual Property",
+      "question": "Are IP ownership chains for acquisitions and spin-offs clean?",
+      "id": "F.3"
+    },
+    {
+      "category": "Intellectual Property",
+      "question": "Do internet domains align with brand and trademark strategy?",
+      "id": "F.4"
+    },
+    {
+      "category": "Intellectual Property",
+      "question": "Are IP policies enforced for trade secret protection and employee exits?",
+      "id": "F.5"
+    },
+    {
+      "category": "Material Contracts",
+      "question": "Are brokers', finders', or advisory fee agreements fully disclosed?",
+      "id": "G.1"
+    },
+    {
+      "category": "Material Contracts",
+      "question": "Do affiliate agreements involve tax, indemnity, or lease arrangements?",
+      "id": "G.2"
+    },
+    {
+      "category": "Material Contracts",
+      "question": "Are claims experience and loss histories consistent with insurance disclosures?",
+      "id": "G.3"
+    },
+    {
+      "category": "Material Contracts",
+      "question": "Do planned JVs or alliances impact integration risk?",
+      "id": "G.4"
+    },
+    {
+      "category": "Material Contracts",
+      "question": "Are trade association memberships material to regulatory exposure?",
+      "id": "G.5"
+    },
+    {
+      "category": "Operational Matters",
+      "question": "Are supplier agreements assignable without penalties?",
+      "id": "H.1"
+    },
+    {
+      "category": "Operational Matters",
+      "question": "Do sales and distribution agreements comply with antitrust rules?",
+      "id": "H.2"
+    },
+    {
+      "category": "Operational Matters",
+      "question": "Are forecasts and marketing plans aligned with internal budgets?",
+      "id": "H.3"
+    },
+    {
+      "category": "Operational Matters",
+      "question": "Are advertising agreements consistent with brand/IP protections?",
+      "id": "H.4"
+    },
+    {
+      "category": "Operational Matters",
+      "question": "Are competitor benchmarking reports used in decision-making?",
+      "id": "H.5"
+    },
+    {
+      "category": "Litigation",
+      "question": "Are there regulatory agency investigations disclosed beyond litigation matters?",
+      "id": "I.1"
+    },
+    {
+      "category": "Litigation",
+      "question": "Are settlement documents complete and fully executed?",
+      "id": "I.2"
+    },
+    {
+      "category": "Litigation",
+      "question": "Have waivers or releases been granted in prior disputes?",
+      "id": "I.3"
+    },
+    {
+      "category": "Litigation",
+      "question": "Are there patterns of litigation with customers or suppliers?",
+      "id": "I.4"
+    },
+    {
+      "category": "Litigation",
+      "question": "Are disclosure controls for litigation consistent with auditor requirements?",
+      "id": "I.5"
+    },
+    {
+      "category": "Regulatory Matters",
+      "question": "Are copies of approvals and consents complete and available?",
+      "id": "J.1"
+    },
+    {
+      "category": "Regulatory Matters",
+      "question": "Are there unresolved violations or deficiency notices?",
+      "id": "J.2"
+    },
+    {
+      "category": "Regulatory Matters",
+      "question": "Is correspondence with regulators properly documented?",
+      "id": "J.3"
+    },
+    {
+      "category": "Regulatory Matters",
+      "question": "Do regulators require consents or filings before change of control?",
+      "id": "J.4"
+    },
+    {
+      "category": "Regulatory Matters",
+      "question": "Are minutes from regulatory meetings consistent with compliance policies?",
+      "id": "J.5"
+    },
+    {
+      "category": "Employment and Compensation",
+      "question": "Are service, pay, and tenure records complete for all employees/contractors?",
+      "id": "K.1"
+    },
+    {
+      "category": "Employment and Compensation",
+      "question": "Do consultant agreements include valid non-compete/confidentiality clauses?",
+      "id": "K.2"
+    },
+    {
+      "category": "Employment and Compensation",
+      "question": "Are benefit plans accompanied by actuarial and IRS determinations?",
+      "id": "K.3"
+    },
+    {
+      "category": "Employment and Compensation",
+      "question": "Are collective bargaining agreements current and disputes documented?",
+      "id": "K.4"
+    },
+    {
+      "category": "Employment and Compensation",
+      "question": "Are harassment/misconduct investigations tracked and closed properly?",
+      "id": "K.5"
+    },
+    {
+      "category": "Data Privacy & Security",
+      "question": "Are breach response plans tested regularly and updated?",
+      "id": "L.1"
+    },
+    {
+      "category": "Data Privacy & Security",
+      "question": "Do security audit reports show remediation of identified weaknesses?",
+      "id": "L.2"
+    },
+    {
+      "category": "Data Privacy & Security",
+      "question": "Are privacy/security officers formally appointed and resourced?",
+      "id": "L.3"
+    },
+    {
+      "category": "Data Privacy & Security",
+      "question": "Are cookie/tracking disclosures compliant with regional laws?",
+      "id": "L.4"
+    },
+    {
+      "category": "Data Privacy & Security",
+      "question": "Are background checks documented for sensitive data handlers?",
+      "id": "L.5"
+    },
+    {
+      "category": "ESG Matters",
+      "question": "Are hazardous substance lists complete and tracked against regulations?",
+      "id": "M.1"
+    },
+    {
+      "category": "ESG Matters",
+      "question": "Are biodiversity, energy, and climate impact studies disclosed?",
+      "id": "M.2"
+    },
+    {
+      "category": "ESG Matters",
+      "question": "Are workplace safety investigations documented with corrective actions?",
+      "id": "M.3"
+    },
+    {
+      "category": "ESG Matters",
+      "question": "Are diversity and inclusion metrics tied to workforce planning?",
+      "id": "M.4"
+    },
+    {
+      "category": "ESG Matters",
+      "question": "Are whistleblower protections and reporting mechanisms active and monitored?",
+      "id": "M.5"
+    }
+  ],
+  "due diligence.md": [
+    {
+      "category": "Organizational and Corporate Documents",
+      "question": "Do incorporation documents, bylaws, and amendments reflect the current structure?",
+      "id": "A.1"
+    },
+    {
+      "category": "Organizational and Corporate Documents",
+      "question": "Are board/shareholder minutes complete and authorizing all key actions?",
+      "id": "A.2"
+    },
+    {
+      "category": "Organizational and Corporate Documents",
+      "question": "Does the organizational chart align with subsidiaries, affiliates, and management roles?",
+      "id": "A.3"
+    },
+    {
+      "category": "Organizational and Corporate Documents",
+      "question": "Are shareholder agreements, voting trusts, or restrictions enforceable and disclosed?",
+      "id": "A.4"
+    },
+    {
+      "category": "Organizational and Corporate Documents",
+      "question": "Are indemnification agreements and D&O protections consistent with market practice?",
+      "id": "A.5"
+    },
+    {
+      "category": "Financial and Accounting Records",
+      "question": "Do audited and unaudited financials reconcile with management reporting?",
+      "id": "B.1"
+    },
+    {
+      "category": "Financial and Accounting Records",
+      "question": "Have auditors identified deficiencies in controls or governance?",
+      "id": "B.2"
+    },
+    {
+      "category": "Financial and Accounting Records",
+      "question": "Are there liabilities or commitments excluded from financial statements?",
+      "id": "B.3"
+    },
+    {
+      "category": "Financial and Accounting Records",
+      "question": "Are forecasts and budgets based on defensible assumptions?",
+      "id": "B.4"
+    },
+    {
+      "category": "Financial and Accounting Records",
+      "question": "Are revenue recognition and accounting policies consistently applied?",
+      "id": "B.5"
+    },
+    {
+      "category": "Tax Matters",
+      "question": "Are all tax returns filed and payments current across jurisdictions?",
+      "id": "C.1"
+    },
+    {
+      "category": "Tax Matters",
+      "question": "Are there ongoing audits, assessments, or material disputes?",
+      "id": "C.2"
+    },
+    {
+      "category": "Tax Matters",
+      "question": "Do tax sharing or intercompany agreements create post-closing obligations?",
+      "id": "C.3"
+    },
+    {
+      "category": "Tax Matters",
+      "question": "Are uncertain tax positions (ASC 740) adequately disclosed/reserved?",
+      "id": "C.4"
+    },
+    {
+      "category": "Tax Matters",
+      "question": "Have prior acquisitions created contingent or unindemnified tax exposures?",
+      "id": "C.5"
+    },
+    {
+      "category": "Loans and Obligations",
+      "question": "What debt instruments, credit facilities, or bonds are outstanding and compliant?",
+      "id": "D.1"
+    },
+    {
+      "category": "Loans and Obligations",
+      "question": "Are there guarantees, insider loans, or related-party financings?",
+      "id": "D.2"
+    },
+    {
+      "category": "Loans and Obligations",
+      "question": "Are liens or encumbrances recorded on company assets?",
+      "id": "D.3"
+    },
+    {
+      "category": "Loans and Obligations",
+      "question": "Have lenders issued waivers or identified covenant breaches?",
+      "id": "D.4"
+    },
+    {
+      "category": "Loans and Obligations",
+      "question": "Do compliance reports or certificates indicate defaults?",
+      "id": "D.5"
+    },
+    {
+      "category": "Property and Equipment",
+      "question": "Are titles, deeds, and leases valid, assignable, and unrestricted?",
+      "id": "E.1"
+    },
+    {
+      "category": "Property and Equipment",
+      "question": "Are equipment and inventory schedules accurate vs. insurance/depreciation records?",
+      "id": "E.2"
+    },
+    {
+      "category": "Property and Equipment",
+      "question": "Do appraisals or valuations reveal impairments or risks?",
+      "id": "E.3"
+    },
+    {
+      "category": "Property and Equipment",
+      "question": "Are warranties/service contracts current and transferrable?",
+      "id": "E.4"
+    },
+    {
+      "category": "Property and Equipment",
+      "question": "Are environmental or zoning issues tied to property?",
+      "id": "E.5"
+    },
+    {
+      "category": "Intellectual Property",
+      "question": "Is there a complete and current IP register (patents, trademarks, copyrights, domains)?",
+      "id": "F.1"
+    },
+    {
+      "category": "Intellectual Property",
+      "question": "Do license agreements impose royalties or restrictions impacting value?",
+      "id": "F.2"
+    },
+    {
+      "category": "Intellectual Property",
+      "question": "Are trade secrets and confidential know-how adequately protected?",
+      "id": "F.3"
+    },
+    {
+      "category": "Intellectual Property",
+      "question": "Are there pending/threatened infringement or opposition claims?",
+      "id": "F.4"
+    },
+    {
+      "category": "Intellectual Property",
+      "question": "Do employee/contractor agreements assign IP rights fully to the company?",
+      "id": "F.5"
+    },
+    {
+      "category": "Material Contracts",
+      "question": "Do top customer/supplier agreements contain change-of-control clauses?",
+      "id": "G.1"
+    },
+    {
+      "category": "Material Contracts",
+      "question": "Are government or regulated contracts subject to special restrictions?",
+      "id": "G.2"
+    },
+    {
+      "category": "Material Contracts",
+      "question": "Are JV/partnership/alliance agreements material to operations?",
+      "id": "G.3"
+    },
+    {
+      "category": "Material Contracts",
+      "question": "Are insurance policies adequate with no pending cancellations?",
+      "id": "G.4"
+    },
+    {
+      "category": "Material Contracts",
+      "question": "Are hedging, swap, or financial derivative agreements outstanding?",
+      "id": "G.5"
+    },
+    {
+      "category": "Operational Matters",
+      "question": "Are customer and supplier concentration risks material?",
+      "id": "H.1"
+    },
+    {
+      "category": "Operational Matters",
+      "question": "Do business/marketing plans align with strategic and financial goals?",
+      "id": "H.2"
+    },
+    {
+      "category": "Operational Matters",
+      "question": "Are internal operating policies documented and enforced?",
+      "id": "H.3"
+    },
+    {
+      "category": "Operational Matters",
+      "question": "Are customer satisfaction or churn reports available/reliable?",
+      "id": "H.4"
+    },
+    {
+      "category": "Operational Matters",
+      "question": "Are social media accounts and reputational assets secure and transferrable?",
+      "id": "H.5"
+    },
+    {
+      "category": "Litigation",
+      "question": "Are there pending/threatened claims that could materially impact the company?",
+      "id": "I.1"
+    },
+    {
+      "category": "Litigation",
+      "question": "Are directors/officers/shareholders personally involved in litigation?",
+      "id": "I.2"
+    },
+    {
+      "category": "Litigation",
+      "question": "Do settlements create ongoing obligations or indemnities?",
+      "id": "I.3"
+    },
+    {
+      "category": "Litigation",
+      "question": "Are disputes with suppliers/customers likely to escalate?",
+      "id": "I.4"
+    },
+    {
+      "category": "Litigation",
+      "question": "Do auditor letters highlight litigation or contingent liabilities?",
+      "id": "I.5"
+    },
+    {
+      "category": "Regulatory Matters",
+      "question": "Are licenses, permits, and consents valid and transferrable?",
+      "id": "J.1"
+    },
+    {
+      "category": "Regulatory Matters",
+      "question": "Are there material past or ongoing regulatory violations?",
+      "id": "J.2"
+    },
+    {
+      "category": "Regulatory Matters",
+      "question": "Are regulatory filings accurate, complete, and timely?",
+      "id": "J.3"
+    },
+    {
+      "category": "Regulatory Matters",
+      "question": "Is there an antitrust/competition compliance program in place?",
+      "id": "J.4"
+    },
+    {
+      "category": "Regulatory Matters",
+      "question": "Are regulatory consents required for change of control?",
+      "id": "J.5"
+    },
+    {
+      "category": "Employment and Compensation",
+      "question": "Are key employees under enforceable non-compete/confidentiality agreements?",
+      "id": "K.1"
+    },
+    {
+      "category": "Employment and Compensation",
+      "question": "Are compensation, equity, and benefit plans compliant and fully funded?",
+      "id": "K.2"
+    },
+    {
+      "category": "Employment and Compensation",
+      "question": "Are there outstanding labor disputes, claims, or investigations?",
+      "id": "K.3"
+    },
+    {
+      "category": "Employment and Compensation",
+      "question": "Are employee manuals/handbooks consistent with laws and practices?",
+      "id": "K.4"
+    },
+    {
+      "category": "Employment and Compensation",
+      "question": "Are harassment/misconduct policies enforced and documented?",
+      "id": "K.5"
+    },
+    {
+      "category": "Data Privacy & Security",
+      "question": "Are privacy/security policies compliant with GDPR, CCPA, HIPAA, etc.?",
+      "id": "L.1"
+    },
+    {
+      "category": "Data Privacy & Security",
+      "question": "Have there been breaches/incidents in the last 3 years, and were they managed properly?",
+      "id": "L.2"
+    },
+    {
+      "category": "Data Privacy & Security",
+      "question": "Are SOC/ISO/PCI certifications current and verified?",
+      "id": "L.3"
+    },
+    {
+      "category": "Data Privacy & Security",
+      "question": "Are cross-border data transfers legally compliant?",
+      "id": "L.4"
+    },
+    {
+      "category": "Data Privacy & Security",
+      "question": "Are employee training and enforcement mechanisms effective?",
+      "id": "L.5"
+    },
+    {
+      "category": "ESG Matters",
+      "question": "Are environmental investigations, permits, or compliance issues outstanding?",
+      "id": "M.1"
+    },
+    {
+      "category": "ESG Matters",
+      "question": "Are workplace health, safety, and labor standards documented/enforced?",
+      "id": "M.2"
+    },
+    {
+      "category": "ESG Matters",
+      "question": "Are diversity/equity/inclusion policies implemented and monitored?",
+      "id": "M.3"
+    },
+    {
+      "category": "ESG Matters",
+      "question": "Are whistleblower/anti-corruption mechanisms functioning?",
+      "id": "M.4"
+    },
+    {
+      "category": "ESG Matters",
+      "question": "Are ESG metrics reported and tied to executive incentives?",
+      "id": "M.5"
+    }
+  ]
+}

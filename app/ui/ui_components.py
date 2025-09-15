@@ -8,7 +8,7 @@ Separates UI logic from business logic for better maintainability.
 
 import streamlit as st
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Optional, Tuple, List, Dict
 
 from app.core import get_config, format_document_title, count_documents_in_directory
 from functools import wraps
@@ -294,6 +294,132 @@ def progress_indicator():
     return st.empty()
 
 
+def compact_status_display(status_items: list, title: str = "Status"):
+    """
+    Display a compact list of status items with minimal vertical spacing.
+    
+    Args:
+        status_items: List of dict with keys: 'icon', 'message', 'status' (pending/in_progress/completed/error)
+        title: Optional title for the status section
+    """
+    # Create a compact container with custom styling
+    with st.container():
+        if title:
+            st.markdown(f"**{title}**")
+        
+        # Use columns for compact layout
+        for item in status_items:
+            icon = item.get('icon', '•')
+            message = item.get('message', '')
+            status = item.get('status', 'pending')
+            
+            # Determine styling based on status
+            if status == 'completed':
+                color = '#28a745'  # green
+                icon = item.get('icon', '✅')
+            elif status == 'in_progress':
+                color = '#ffc107'  # yellow
+                icon = item.get('icon', '🔄')
+            elif status == 'error':
+                color = '#dc3545'  # red
+                icon = item.get('icon', '❌')
+            else:  # pending
+                color = '#6c757d'  # gray
+                icon = item.get('icon', '⏳')
+            
+            # Use minimal spacing with custom CSS
+            st.markdown(f"""
+                <div style="
+                    display: flex; 
+                    align-items: center; 
+                    padding: 2px 8px; 
+                    margin: 1px 0;
+                    border-left: 3px solid {color};
+                    background-color: rgba(128,128,128,0.1);
+                    border-radius: 4px;
+                ">
+                    <span style="margin-right: 8px; font-size: 14px;">{icon}</span>
+                    <span style="font-size: 14px;">{message}</span>
+                </div>
+            """, unsafe_allow_html=True)
+
+
+def progress_status_tracker():
+    """
+    Create a progress status tracker that can be updated dynamically.
+    
+    Returns:
+        A class instance that can track and update progress
+    """
+    return ProgressTracker()
+
+
+class ProgressTracker:
+    """A class to track and display progress with real indicators"""
+    
+    def __init__(self):
+        self.container = st.empty()
+        self.progress_bar = None
+        self.status_items = []
+        self.current_step = 0
+        self.total_steps = 0
+    
+    def initialize(self, steps: list, title: str = "Progress"):
+        """Initialize progress tracker with steps"""
+        self.status_items = [
+            {'message': step, 'status': 'pending', 'icon': '⏳'}
+            for step in steps
+        ]
+        self.total_steps = len(steps)
+        self.current_step = 0
+        self._render(title)
+    
+    def start_step(self, step_index: int, message: str = None):
+        """Mark a step as in progress"""
+        if step_index < len(self.status_items):
+            self.status_items[step_index]['status'] = 'in_progress'
+            self.status_items[step_index]['icon'] = '🔄'
+            if message:
+                self.status_items[step_index]['message'] = message
+            self.current_step = step_index
+            self._render()
+    
+    def complete_step(self, step_index: int, message: str = None):
+        """Mark a step as completed"""
+        if step_index < len(self.status_items):
+            self.status_items[step_index]['status'] = 'completed'
+            self.status_items[step_index]['icon'] = '✅'
+            if message:
+                self.status_items[step_index]['message'] = message
+            self._render()
+    
+    def error_step(self, step_index: int, message: str = None):
+        """Mark a step as error"""
+        if step_index < len(self.status_items):
+            self.status_items[step_index]['status'] = 'error'
+            self.status_items[step_index]['icon'] = '❌'
+            if message:
+                self.status_items[step_index]['message'] = message
+            self._render()
+    
+    def _render(self, title: str = "Progress"):
+        """Internal method to render current progress"""
+        with self.container.container():
+            # Show subtle AI indicator if this is an AI process
+            if "AI Agent" in title:
+                st.markdown("**🤖 AI Agent Processing**")
+            
+            # Progress bar
+            if self.total_steps > 0:
+                completed_steps = sum(1 for item in self.status_items if item['status'] == 'completed')
+                progress = completed_steps / self.total_steps
+                st.progress(progress)
+                st.caption(f"{completed_steps}/{self.total_steps} steps completed")
+            
+            # Compact status list
+            compact_status_display(self.status_items, title)
+
+
 def processing_guard(session_attr: str = "processing_active", message: str = "⚠️ Another operation is currently running. Please wait.") -> Callable:
     """
     Decorator to guard against concurrent processing operations.
@@ -483,13 +609,25 @@ def render_checklist_results(results: dict, relevancy_threshold: float):
                     expanded_default = False
 
                 with st.expander(f"**{item_status} Item {item_idx + 1}:** {item_text} ({item_summary})", expanded=expanded_default):
+                    # Display statistical filtering information
+                    if 'statistics' in item:
+                        stats = item['statistics']
+                        method = stats.get('method', 'unknown')
+                        
+                        if method == 'statistical_filtering':
+                            st.info(f"📊 **Statistical Filter Applied**: {stats.get('significant_matches', 0)}/{stats.get('total_candidates', 0)} documents above adaptive threshold ({stats.get('adaptive_threshold', 0):.3f}) | μ={stats.get('mean', 0):.3f}, σ={stats.get('std', 0):.3f}")
+                        elif method == 'fallback_top_n':
+                            st.info(f"📉 **Flat Distribution**: No clear separation found, showing top {stats.get('significant_matches', 0)} matches")
+                        elif method == 'insufficient_data':
+                            st.info(f"📋 **Insufficient Data**: Only {stats.get('total_candidates', 0)} candidates found, showing all")
+                    
                     if relevant_matches:
                         for match in relevant_matches:
                             score = match['score']
                             doc_name = match['name']
                             doc_path = match['path']
 
-                            col1, col2, col3 = st.columns([3, 1, 1])
+                            col1, col2 = st.columns([4, 1])
                             with col1:
                                 resolved_path = _resolve_document_path(doc_path)
                                 if resolved_path and resolved_path.exists():
@@ -508,11 +646,6 @@ def render_checklist_results(results: dict, relevancy_threshold: float):
                                     st.write(f"📄 {doc_name} (unavailable)")
                             with col2:
                                 st.caption(f"{score:.3f}")
-                            with col3:
-                                if score >= 0.5:
-                                    st.caption("🔹 PRIMARY")
-                                else:
-                                    st.caption("🔸 ANCILLARY")
                     else:
                         st.info("No documents found matching the relevancy threshold for this checklist item.")
 
@@ -596,6 +729,70 @@ def create_document_link(doc_path: str, doc_name: str, doc_title: str, unique_ke
             st.error(f"Error reading document: {doc_name}")
     else:
         st.write(f"📄 {doc_title} (unavailable)")
+
+
+def render_content_with_clickable_citations(content: str, citations: List[Dict[str, Any]]):
+    """
+    Simple approach: render content with clickable citation downloads at the end of each paragraph.
+    
+    Args:
+        content: Markdown content to render
+        citations: List of citation info with name, path, etc.
+    """
+    # Escape LaTeX/math notation
+    from app.core.document_processor import escape_markdown_math
+    escaped_content = escape_markdown_math(content)
+    
+    # Create a mapping of clean document names to paths for easy lookup
+    doc_paths = {}
+    for citation in citations:
+        doc_name = citation.get('name', '')
+        doc_path = citation.get('path', '')
+        if doc_name and doc_path:
+            clean_name = doc_name.replace('.pdf', '').replace('.docx', '').replace('.doc', '')
+            doc_paths[clean_name] = doc_path
+    
+    # Split into paragraphs and render each one
+    paragraphs = escaped_content.split('\n\n')
+    
+    for para_idx, paragraph in enumerate(paragraphs):
+        if paragraph.strip():
+            # Render the paragraph text
+            st.markdown(paragraph)
+            
+            # Check if this paragraph mentions any documents and add download buttons
+            mentioned_docs = []
+            for clean_name in doc_paths:
+                if clean_name.lower() in paragraph.lower():
+                    mentioned_docs.append((clean_name, doc_paths[clean_name]))
+            
+            # Add inline download buttons for mentioned documents
+            if mentioned_docs:
+                cols = st.columns(len(mentioned_docs))
+                for i, (doc_name, doc_path) in enumerate(mentioned_docs):
+                    with cols[i]:
+                        _render_simple_download_button(doc_name, doc_path, f"para_{para_idx}_{i}")
+        else:
+            st.markdown("")
+
+
+def _render_simple_download_button(doc_name: str, doc_path: str, unique_key: str):
+    """Simple inline download button"""
+    resolved_path = _resolve_document_path(doc_path)
+    
+    if resolved_path and resolved_path.exists():
+        try:
+            with open(resolved_path, 'rb') as f:
+                st.download_button(
+                    label=f"📄 {doc_name}",
+                    data=f.read(),
+                    file_name=resolved_path.name,
+                    mime="application/pdf" if doc_path.lower().endswith('.pdf') else "application/octet-stream",
+                    key=f"simple_download_{unique_key}",
+                    help=f"Download: {doc_name}"
+                )
+        except Exception:
+            st.caption(f"📄 {doc_name} (unavailable)")
 
 
 # =============================================================================

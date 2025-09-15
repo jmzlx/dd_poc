@@ -23,8 +23,7 @@ from app.ui.session_manager import SessionManager
 from app.core.config import init_app_config
 from app.handlers.ai_handler import AIHandler
 from app.handlers.export_handler import ExportHandler
-from app.ui.tabs.overview_tab import OverviewTab
-from app.ui.tabs.strategic_tab import StrategicTab
+# Tab modules removed - now using unified company analysis approach
 from app.ui.tabs.qa_tab import QATab
 from app.ui.tabs.questions_tab import QuestionsTab
 from app.core.parsers import parse_questions
@@ -68,9 +67,9 @@ class TestUserWorkflows:
 2. What is the revenue growth rate?
 """
 
-    def test_overview_workflow_end_to_end(self):
-        """Test complete overview generation workflow"""
-        print("🧪 Testing overview workflow...")
+    def test_company_overview_generation_workflow(self):
+        """Test company overview generation workflow"""
+        print("🧪 Testing company overview generation workflow...")
 
         # Setup documents
         self.session.documents = self.test_documents
@@ -80,7 +79,7 @@ class TestUserWorkflows:
             with patch.object(self.ai_handler, 'generate_report') as mock_generate:
                 mock_generate.return_value = "# Test Company Overview\n\nGenerated overview content..."
 
-                # Test overview generation
+                # Test overview generation using AI handler
                 result = self.ai_handler.generate_report(
                     "overview",
                     documents=self.test_documents,
@@ -90,11 +89,11 @@ class TestUserWorkflows:
                 assert result is not None
                 assert "Test Company Overview" in result
 
-        print("✅ Overview workflow test passed")
+        print("✅ Company overview generation workflow test passed")
 
-    def test_strategic_workflow_end_to_end(self):
-        """Test complete strategic analysis workflow"""
-        print("🧪 Testing strategic workflow...")
+    def test_strategic_analysis_generation_workflow(self):
+        """Test strategic analysis generation workflow"""
+        print("🧪 Testing strategic analysis generation workflow...")
 
         # Setup documents and strategy
         self.session.documents = self.test_documents
@@ -105,7 +104,7 @@ class TestUserWorkflows:
             with patch.object(self.ai_handler, 'generate_report') as mock_generate:
                 mock_generate.return_value = "# Strategic Analysis\n\nAnalysis results..."
 
-                # Test strategic generation
+                # Test strategic generation using AI handler
                 result = self.ai_handler.generate_report(
                     "strategic",
                     documents=self.test_documents,
@@ -115,7 +114,7 @@ class TestUserWorkflows:
                 assert result is not None
                 assert "Strategic Analysis" in result
 
-        print("✅ Strategic workflow test passed")
+        print("✅ Strategic analysis generation workflow test passed")
 
     def test_qa_workflow_end_to_end(self):
         """Test complete Q&A workflow"""
@@ -314,8 +313,8 @@ def run_workflow_tests():
     test_suite.setup_method()
 
     tests = [
-        test_suite.test_overview_workflow_end_to_end,
-        test_suite.test_strategic_workflow_end_to_end,
+        test_suite.test_company_overview_generation_workflow,
+        test_suite.test_strategic_analysis_generation_workflow,
         test_suite.test_qa_workflow_end_to_end,
         test_suite.test_questions_workflow_end_to_end,
         test_suite.test_export_functionality,
