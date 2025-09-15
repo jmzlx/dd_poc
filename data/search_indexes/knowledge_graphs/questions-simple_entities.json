@@ -1,65 +1,947 @@
 {
   "companies": [
     {
-      "name": "Are all historical names and addresses of the company",
-      "source": "doc_4",
-      "context": "Are all historical names and addresses of the company/subsidiaries documented?",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "name": "IRS",
+      "source": "doc_13",
+      "context": "Have IRS Form 3115 filings or method changes been reviewed",
+      "confidence": 0.9698728919029236,
+      "extraction_method": "transformer"
     },
     {
-      "name": "Are property surveys consistent with company",
-      "source": "doc_22",
-      "context": "Are property surveys consistent with company records?",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "name": "IRS",
+      "source": "doc_52",
+      "context": "Are benefit plans accompanied by actuarial and IRS determinations?",
+      "confidence": 0.9562437534332275,
+      "extraction_method": "transformer"
     },
     {
-      "name": "Do incorporation",
-      "source": "doc_65",
-      "context": "Do incorporation documents, bylaws, and amendments reflect the cur",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "name": "D \\ & O",
+      "source": "doc_69",
+      "context": "Are indemnification agreements and D\\&O protections consistent with market practice?",
+      "confidence": 0.8986681699752808,
+      "extraction_method": "transformer"
     },
     {
-      "name": "Do tax sharing or intercompany",
-      "source": "doc_77",
-      "context": "Do tax sharing or intercompany agreements create post-closing obligations?",
-      "chunk_id": null,
-      "document_type": "unknown"
-    },
-    {
-      "name": "Are liens or encumbrances recorded on company",
-      "source": "doc_82",
-      "context": "Are liens or encumbrances recorded on company assets?",
-      "chunk_id": null,
-      "document_type": "unknown"
-    },
-    {
-      "name": "contractor agreements assign IP rights fully to the company",
-      "source": "doc_94",
-      "context": "Do employee/contractor agreements assign IP rights fully to the company?",
-      "chunk_id": null,
-      "document_type": "unknown"
-    },
-    {
-      "name": "threatened claims that could materially impact the company",
-      "source": "doc_105",
-      "context": "Are there pending/threatened claims that could materially impact the company?",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "name": "PCI",
+      "source": "doc_122",
+      "context": "Are SOC/ISO/PCI certifications current and verified?",
+      "confidence": 0.8538246154785156,
+      "extraction_method": "transformer"
     }
   ],
-  "people": [
+  "people": [],
+  "financial_metrics": [],
+  "documents": [
     {
-      "name": "biographical disclosures",
+      "name": "doc 0",
+      "source": "doc_0",
+      "context": "Are all jurisdictions of qualification valid and properly maintained?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 1",
+      "source": "doc_1",
+      "context": "Are equity issuances and transfers compliant with securities laws?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 2",
+      "source": "doc_2",
+      "context": "Are restrictive agreements over shares enforceable and disclosed?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 3",
       "source": "doc_3",
       "context": "Are officer/director biographical disclosures consistent with filings?",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 4",
+      "source": "doc_4",
+      "context": "Are all historical names and addresses of the company/subsidiaries documented?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 5",
+      "source": "doc_5",
+      "context": "Do management letters from auditors indicate recurring issues?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 6",
+      "source": "doc_6",
+      "context": "Are changes in accounting policies clearly disclosed and justified?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 7",
+      "source": "doc_7",
+      "context": "Are equity valuations consistent with financing rounds and 409A reports?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 8",
+      "source": "doc_8",
+      "context": "Do aging schedules reveal collectability risks in accounts receivable?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 9",
+      "source": "doc_9",
+      "context": "Are margins and ASPs consistent across product lines and reporting periods?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 10",
+      "source": "doc_10",
+      "context": "Do consents and agreements with tax authorities impose future obligations?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 11",
+      "source": "doc_11",
+      "context": "Are tax shelters or structured transactions disclosed and compliant?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 12",
+      "source": "doc_12",
+      "context": "Are there material real estate tax liabilities outstanding?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 13",
+      "source": "doc_13",
+      "context": "Have IRS Form 3115 filings or method changes been reviewed and approved?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 14",
+      "source": "doc_14",
+      "context": "Are pending/threatened disputes likely to affect closing timing or valuation?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 15",
+      "source": "doc_15",
+      "context": "Are indentures or security agreements enforceable and complete?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 16",
+      "source": "doc_16",
+      "context": "Do insider debt arrangements comply with governance requirements?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 17",
+      "source": "doc_17",
+      "context": "Are outstanding letters of credit or bonds fully disclosed?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 18",
+      "source": "doc_18",
+      "context": "Do mortgages or liens restrict asset transfers in an acquisition?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 19",
+      "source": "doc_19",
+      "context": "Has lender correspondence identified risk of default or acceleration?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 20",
+      "source": "doc_20",
+      "context": "Are leases or subleases subject to landlord consent on change of control?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 21",
+      "source": "doc_21",
+      "context": "Are title insurance policies up to date and covering all real property?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 22",
+      "source": "doc_22",
+      "context": "Are property surveys consistent with company records?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 23",
+      "source": "doc_23",
+      "context": "Do appraisals reflect fair market value in line with balance sheet?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 24",
+      "source": "doc_24",
+      "context": "Are warranty claims or guaranties enforceable with suppliers?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 25",
+      "source": "doc_25",
+      "context": "Are IP registrations renewed on time and free of defects?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 26",
+      "source": "doc_26",
+      "context": "Are royalty obligations material compared to total revenue?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 27",
+      "source": "doc_27",
+      "context": "Are IP ownership chains for acquisitions and spin-offs clean?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 28",
+      "source": "doc_28",
+      "context": "Do internet domains align with brand and trademark strategy?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 29",
+      "source": "doc_29",
+      "context": "Are IP policies enforced for trade secret protection and employee exits?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 30",
+      "source": "doc_30",
+      "context": "Are brokers\u2019, finders\u2019, or advisory fee agreements fully disclosed?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 31",
+      "source": "doc_31",
+      "context": "Do affiliate agreements involve tax, indemnity, or lease arrangements?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 32",
+      "source": "doc_32",
+      "context": "Are claims experience and loss histories consistent with insurance disclosures?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 33",
+      "source": "doc_33",
+      "context": "Do planned JVs or alliances impact integration risk?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 34",
+      "source": "doc_34",
+      "context": "Are trade association memberships material to regulatory exposure?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 35",
+      "source": "doc_35",
+      "context": "Are supplier agreements assignable without penalties?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 36",
+      "source": "doc_36",
+      "context": "Do sales and distribution agreements comply with antitrust rules?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 37",
+      "source": "doc_37",
+      "context": "Are forecasts and marketing plans aligned with internal budgets?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 38",
+      "source": "doc_38",
+      "context": "Are advertising agreements consistent with brand/IP protections?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 39",
+      "source": "doc_39",
+      "context": "Are competitor benchmarking reports used in decision-making?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 40",
+      "source": "doc_40",
+      "context": "Are there regulatory agency investigations disclosed beyond litigation matters?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 41",
+      "source": "doc_41",
+      "context": "Are settlement documents complete and fully executed?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 42",
+      "source": "doc_42",
+      "context": "Have waivers or releases been granted in prior disputes?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 43",
+      "source": "doc_43",
+      "context": "Are there patterns of litigation with customers or suppliers?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 44",
+      "source": "doc_44",
+      "context": "Are disclosure controls for litigation consistent with auditor requirements?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 45",
+      "source": "doc_45",
+      "context": "Are copies of approvals and consents complete and available?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 46",
+      "source": "doc_46",
+      "context": "Are there unresolved violations or deficiency notices?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 47",
+      "source": "doc_47",
+      "context": "Is correspondence with regulators properly documented?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 48",
+      "source": "doc_48",
+      "context": "Do regulators require consents or filings before change of control?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 49",
+      "source": "doc_49",
+      "context": "Are minutes from regulatory meetings consistent with compliance policies?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 50",
+      "source": "doc_50",
+      "context": "Are service, pay, and tenure records complete for all employees/contractors?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 51",
+      "source": "doc_51",
+      "context": "Do consultant agreements include valid non-compete/confidentiality clauses?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 52",
+      "source": "doc_52",
+      "context": "Are benefit plans accompanied by actuarial and IRS determinations?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 53",
+      "source": "doc_53",
+      "context": "Are collective bargaining agreements current and disputes documented?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 54",
+      "source": "doc_54",
+      "context": "Are harassment/misconduct investigations tracked and closed properly?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 55",
+      "source": "doc_55",
+      "context": "Are breach response plans tested regularly and updated?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 56",
+      "source": "doc_56",
+      "context": "Do security audit reports show remediation of identified weaknesses?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 57",
+      "source": "doc_57",
+      "context": "Are privacy/security officers formally appointed and resourced?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 58",
+      "source": "doc_58",
+      "context": "Are cookie/tracking disclosures compliant with regional laws?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 59",
+      "source": "doc_59",
+      "context": "Are background checks documented for sensitive data handlers?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 60",
+      "source": "doc_60",
+      "context": "Are hazardous substance lists complete and tracked against regulations?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 61",
+      "source": "doc_61",
+      "context": "Are biodiversity, energy, and climate impact studies disclosed?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 62",
+      "source": "doc_62",
+      "context": "Are workplace safety investigations documented with corrective actions?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 63",
+      "source": "doc_63",
+      "context": "Are diversity and inclusion metrics tied to workforce planning?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 64",
+      "source": "doc_64",
+      "context": "Are whistleblower protections and reporting mechanisms active and monitored?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 65",
+      "source": "doc_65",
+      "context": "Do incorporation documents, bylaws, and amendments reflect the current structure?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 66",
+      "source": "doc_66",
+      "context": "Are board/shareholder minutes complete and authorizing all key actions?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 67",
+      "source": "doc_67",
+      "context": "Does the organizational chart align with subsidiaries, affiliates, and management roles?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 68",
+      "source": "doc_68",
+      "context": "Are shareholder agreements, voting trusts, or restrictions enforceable and disclosed?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 69",
+      "source": "doc_69",
+      "context": "Are indemnification agreements and D\\&O protections consistent with market practice?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 70",
+      "source": "doc_70",
+      "context": "Do audited and unaudited financials reconcile with management reporting?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 71",
+      "source": "doc_71",
+      "context": "Have auditors identified deficiencies in controls or governance?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 72",
+      "source": "doc_72",
+      "context": "Are there liabilities or commitments excluded from financial statements?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 73",
+      "source": "doc_73",
+      "context": "Are forecasts and budgets based on defensible assumptions?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 74",
+      "source": "doc_74",
+      "context": "Are revenue recognition and accounting policies consistently applied?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 75",
+      "source": "doc_75",
+      "context": "Are all tax returns filed and payments current across jurisdictions?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 76",
+      "source": "doc_76",
+      "context": "Are there ongoing audits, assessments, or material disputes?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 77",
+      "source": "doc_77",
+      "context": "Do tax sharing or intercompany agreements create post-closing obligations?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 78",
+      "source": "doc_78",
+      "context": "Are uncertain tax positions (ASC 740) adequately disclosed/reserved?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 79",
+      "source": "doc_79",
+      "context": "Have prior acquisitions created contingent or unindemnified tax exposures?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 80",
+      "source": "doc_80",
+      "context": "What debt instruments, credit facilities, or bonds are outstanding and compliant?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 81",
+      "source": "doc_81",
+      "context": "Are there guarantees, insider loans, or related-party financings?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 82",
+      "source": "doc_82",
+      "context": "Are liens or encumbrances recorded on company assets?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 83",
+      "source": "doc_83",
+      "context": "Have lenders issued waivers or identified covenant breaches?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 84",
+      "source": "doc_84",
+      "context": "Do compliance reports or certificates indicate defaults?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 85",
+      "source": "doc_85",
+      "context": "Are titles, deeds, and leases valid, assignable, and unrestricted?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 86",
+      "source": "doc_86",
+      "context": "Are equipment and inventory schedules accurate vs. insurance/depreciation records?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 87",
+      "source": "doc_87",
+      "context": "Do appraisals or valuations reveal impairments or risks?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 88",
+      "source": "doc_88",
+      "context": "Are warranties/service contracts current and transferrable?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 89",
+      "source": "doc_89",
+      "context": "Are environmental or zoning issues tied to property?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 90",
+      "source": "doc_90",
+      "context": "Is there a complete and current IP register (patents, trademarks, copyrights, domains)?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 91",
+      "source": "doc_91",
+      "context": "Do license agreements impose royalties or restrictions impacting value?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 92",
+      "source": "doc_92",
+      "context": "Are trade secrets and confidential know-how adequately protected?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 93",
+      "source": "doc_93",
+      "context": "Are there pending/threatened infringement or opposition claims?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 94",
+      "source": "doc_94",
+      "context": "Do employee/contractor agreements assign IP rights fully to the company?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 95",
+      "source": "doc_95",
+      "context": "Do top customer/supplier agreements contain change-of-control clauses?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 96",
+      "source": "doc_96",
+      "context": "Are government or regulated contracts subject to special restrictions?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 97",
+      "source": "doc_97",
+      "context": "Are JV/partnership/alliance agreements material to operations?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 98",
+      "source": "doc_98",
+      "context": "Are insurance policies adequate with no pending cancellations?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 99",
+      "source": "doc_99",
+      "context": "Are hedging, swap, or financial derivative agreements outstanding?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 100",
+      "source": "doc_100",
+      "context": "Are customer and supplier concentration risks material?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 101",
+      "source": "doc_101",
+      "context": "Do business/marketing plans align with strategic and financial goals?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 102",
+      "source": "doc_102",
+      "context": "Are internal operating policies documented and enforced?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 103",
+      "source": "doc_103",
+      "context": "Are customer satisfaction or churn reports available/reliable?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 104",
+      "source": "doc_104",
+      "context": "Are social media accounts and reputational assets secure and transferrable?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 105",
+      "source": "doc_105",
+      "context": "Are there pending/threatened claims that could materially impact the company?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 106",
+      "source": "doc_106",
+      "context": "Are directors/officers/shareholders personally involved in litigation?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 107",
+      "source": "doc_107",
+      "context": "Do settlements create ongoing obligations or indemnities?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 108",
+      "source": "doc_108",
+      "context": "Are disputes with suppliers/customers likely to escalate?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 109",
+      "source": "doc_109",
+      "context": "Do auditor letters highlight litigation or contingent liabilities?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 110",
+      "source": "doc_110",
+      "context": "Are licenses, permits, and consents valid and transferrable?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 111",
+      "source": "doc_111",
+      "context": "Are there material past or ongoing regulatory violations?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 112",
+      "source": "doc_112",
+      "context": "Are regulatory filings accurate, complete, and timely?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 113",
+      "source": "doc_113",
+      "context": "Is there an antitrust/competition compliance program in place?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 114",
+      "source": "doc_114",
+      "context": "Are regulatory consents required for change of control?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 115",
+      "source": "doc_115",
+      "context": "Are key employees under enforceable non-compete/confidentiality agreements?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 116",
+      "source": "doc_116",
+      "context": "Are compensation, equity, and benefit plans compliant and fully funded?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 117",
+      "source": "doc_117",
+      "context": "Are there outstanding labor disputes, claims, or investigations?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 118",
+      "source": "doc_118",
+      "context": "Are employee manuals/handbooks consistent with laws and practices?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 119",
+      "source": "doc_119",
+      "context": "Are harassment/misconduct policies enforced and documented?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 120",
+      "source": "doc_120",
+      "context": "Are privacy/security policies compliant with GDPR, CCPA, HIPAA, etc.?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 121",
+      "source": "doc_121",
+      "context": "Have there been breaches/incidents in the last 3 years, and were they managed properly?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 122",
+      "source": "doc_122",
+      "context": "Are SOC/ISO/PCI certifications current and verified?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 123",
+      "source": "doc_123",
+      "context": "Are cross-border data transfers legally compliant?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 124",
+      "source": "doc_124",
+      "context": "Are employee training and enforcement mechanisms effective?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 125",
+      "source": "doc_125",
+      "context": "Are environmental investigations, permits, or compliance issues outstanding?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 126",
+      "source": "doc_126",
+      "context": "Are workplace health, safety, and labor standards documented/enforced?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 127",
+      "source": "doc_127",
+      "context": "Are diversity/equity/inclusion policies implemented and monitored?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 128",
+      "source": "doc_128",
+      "context": "Are whistleblower/anti-corruption mechanisms functioning?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 129",
+      "source": "doc_129",
+      "context": "Are ESG metrics reported and tied to executive incentives?",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
     }
   ],
-  "financial_metrics": [],
-  "contracts": [],
-  "dates": []
+  "legal_keywords": []
 }

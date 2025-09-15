@@ -20,9 +20,8 @@ Run this after build_indexes.py to generate knowledge graphs.
 import sys
 import json
 import pickle
-import re
 from pathlib import Path
-from typing import Dict, List, Any, Set, Tuple, Optional
+from typing import Dict, List, Any, Optional
 from collections import defaultdict
 from datetime import datetime
 
@@ -45,149 +44,15 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from app.core.config import get_config
 from app.core.logging import setup_logging
 from app.core.utils import create_document_processor
+from app.core.entity_resolution import EntityResolver
+from app.core.legal_coreference import LegalCoreferenceResolver
+from scripts.transformer_extractors import TransformerEntityExtractor
 
 # Set up logging
 logger = setup_logging("build_knowledge_graphs", log_level="INFO")
 
-class EntityExtractor:
-    """Extract entities from document chunks using pattern matching and NER"""
-    
-    def __init__(self):
-        # Common business entity patterns
-        self.company_patterns = [
-            r'\b([A-Z][a-zA-Z\s&]+(?:Inc|LLC|Corp|Corporation|Company|Co|Ltd|Limited|Group|Holdings|Ventures|Partners|Associates|Solutions|Systems|Technologies|Services|Enterprises)\.?)\b',
-            r'\b([A-Z][a-zA-Z\s&]+(?:AG|GmbH|SA|SAS|PLC|Pty|AB|AS))\b',
-        ]
-        
-        self.person_patterns = [
-            r'\b([A-Z][a-z]+\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)\b(?=\s+(?:CEO|CFO|CTO|President|Director|Manager|VP|Vice President|Chairman|Founder))',
-            r'(?:CEO|CFO|CTO|President|Director|Manager|VP|Vice President|Chairman|Founder)\s+([A-Z][a-z]+\s+[A-Z][a-z]+)',
-        ]
-        
-        self.financial_patterns = [
-            r'\$[\d,]+(?:\.\d{2})?(?:\s*(?:million|billion|thousand|M|B|K))?',
-            r'(?:revenue|profit|loss|EBITDA|earnings)\s*of\s*\$[\d,]+',
-            r'(?:valuation|market cap)\s*[:=]\s*\$[\d,]+',
-        ]
-        
-        self.contract_patterns = [
-            r'(?:contract|agreement|deal|acquisition|merger|partnership|joint venture|MOU|LOI)',
-            r'(?:signed|executed|entered into|agreed to)\s+(?:on\s+)?(\d{1,2}[/-]\d{1,2}[/-]\d{2,4})',
-        ]
-
-    def extract_entities(self, chunks: List[Dict[str, Any]]) -> Dict[str, List[Dict[str, Any]]]:
-        """Extract entities from document chunks"""
-        entities = {
-            'companies': [],
-            'people': [],
-            'financial_metrics': [],
-            'contracts': [],
-            'dates': []
-        }
-        
-        for chunk in tqdm(chunks, desc="Extracting entities"):
-            text = chunk.get('text', '')
-            source = chunk.get('source', 'unknown')
-            metadata = chunk.get('metadata', {})
-            
-            # Extract companies
-            for pattern in self.company_patterns:
-                matches = re.finditer(pattern, text, re.IGNORECASE)
-                for match in matches:
-                    company_name = match.group(1).strip()
-                    if len(company_name) > 3:  # Filter out short matches
-                        entities['companies'].append({
-                            'name': company_name,
-                            'source': source,
-                            'context': text[max(0, match.start()-50):match.end()+50],
-                            'chunk_id': metadata.get('chunk_id'),
-                            'document_type': metadata.get('document_type', 'unknown')
-                        })
-            
-            # Extract people
-            for pattern in self.person_patterns:
-                matches = re.finditer(pattern, text, re.IGNORECASE)
-                for match in matches:
-                    person_name = match.group(1).strip()
-                    entities['people'].append({
-                        'name': person_name,
-                        'source': source,
-                        'context': text[max(0, match.start()-50):match.end()+50],
-                        'chunk_id': metadata.get('chunk_id'),
-                        'document_type': metadata.get('document_type', 'unknown')
-                    })
-            
-            # Extract financial metrics
-            for pattern in self.financial_patterns:
-                matches = re.finditer(pattern, text, re.IGNORECASE)
-                for match in matches:
-                    entities['financial_metrics'].append({
-                        'value': match.group(0),
-                        'source': source,
-                        'context': text[max(0, match.start()-100):match.end()+100],
-                        'chunk_id': metadata.get('chunk_id'),
-                        'document_type': metadata.get('document_type', 'unknown')
-                    })
-        
-        return entities
-
-class RelationshipExtractor:
-    """Extract relationships between entities"""
-    
-    def __init__(self):
-        self.relationship_patterns = [
-            # Company relationships
-            (r'(.+?)\s+(?:acquired|purchased|bought)\s+(.+)', 'ACQUIRED'),
-            (r'(.+?)\s+(?:merged with|combined with)\s+(.+)', 'MERGED_WITH'),
-            (r'(.+?)\s+(?:partnered with|partnership with)\s+(.+)', 'PARTNERSHIP'),
-            (r'(.+?)\s+(?:invested in|investment in)\s+(.+)', 'INVESTED_IN'),
-            (r'(.+?)\s+(?:subsidiary of|owned by)\s+(.+)', 'SUBSIDIARY_OF'),
-            
-            # Person-company relationships
-            (r'(.+?)\s+(?:CEO|CFO|CTO|President|Director)\s+(?:of|at)\s+(.+)', 'EXECUTIVE_OF'),
-            (r'(.+?)\s+(?:founded|established|started)\s+(.+)', 'FOUNDED'),
-            (r'(.+?)\s+(?:joined|hired by)\s+(.+)', 'EMPLOYED_BY'),
-            
-            # Contract relationships
-            (r'(.+?)\s+(?:signed|executed|entered into).+?(?:with|and)\s+(.+)', 'CONTRACT_WITH'),
-        ]
-
-    def extract_relationships(self, entities: Dict[str, List[Dict]], chunks: List[Dict]) -> List[Dict[str, Any]]:
-        """Extract relationships from text using pattern matching"""
-        relationships = []
-        
-        # Create entity lookup for quick matching
-        entity_names = set()
-        for entity_type in entities:
-            for entity in entities[entity_type]:
-                if 'name' in entity and entity['name']:
-                    entity_names.add(entity['name'].lower())
-        
-        for chunk in tqdm(chunks, desc="Extracting relationships"):
-            text = chunk.get('text', '')
-            source = chunk.get('source', 'unknown')
-            
-            for pattern, relationship_type in self.relationship_patterns:
-                matches = re.finditer(pattern, text, re.IGNORECASE)
-                for match in matches:
-                    entity1 = match.group(1).strip()
-                    entity2 = match.group(2).strip()
-                    
-                    # Validate that both entities exist in our entity list
-                    if (entity1.lower() in entity_names and 
-                        entity2.lower() in entity_names and 
-                        entity1 != entity2):
-                        
-                        relationships.append({
-                            'source_entity': entity1,
-                            'target_entity': entity2,
-                            'relationship_type': relationship_type,
-                            'source_document': source,
-                            'context': text[max(0, match.start()-100):match.end()+100],
-                            'confidence': 0.8  # Pattern-based confidence
-                        })
-        
-        return relationships
+# Old regex-based extractors have been removed
+# Now using transformer-based extractors from scripts.transformer_extractors
 
 class KnowledgeGraphBuilder:
     """Build NetworkX knowledge graphs from extracted entities and relationships"""
@@ -280,7 +145,16 @@ class KnowledgeGraphBuilder:
 
 def process_company_knowledge_graph(store_name: str, config) -> Optional[Dict[str, Any]]:
     """Process a single company's knowledge graph"""
-    print(f"\n{GREEN}Processing knowledge graph for: {store_name}{NC}")
+    # Determine what type of data store this is
+    store_type = "unknown"
+    if "summit-digital-solutions" in store_name or "deepshield-systems" in store_name:
+        store_type = "company data room"
+    elif "questions" in store_name:
+        store_type = "due diligence questions"
+    elif "checklist" in store_name:
+        store_type = "due diligence checklist"
+    
+    print(f"\n{GREEN}Processing knowledge graph for: {store_name} ({store_type}){NC}")
     
     try:
         # Load existing FAISS index and document processor
@@ -309,18 +183,54 @@ def process_company_knowledge_graph(store_name: str, config) -> Optional[Dict[st
         
         print(f"📄 Processing {len(chunks)} document chunks")
         
-        # Extract entities
-        entity_extractor = EntityExtractor()
-        entities = entity_extractor.extract_entities(chunks)
+        # Apply legal coreference resolution (hybrid approach)
+        print(f"{BLUE}Applying legal coreference resolution...{NC}")
+        coreference_resolver = LegalCoreferenceResolver()
+        processed_chunks, legal_definitions = coreference_resolver.process_document_chunks(
+            chunks, use_preprocessing=True
+        )
         
+        total_definitions = sum(len(defs) for defs in legal_definitions.values())
+        if total_definitions > 0:
+            print(f"📋 Found {total_definitions} legal keyword definitions across {len(legal_definitions)} documents")
+        
+        # Extract entities using transformer-based extraction (on processed chunks)
+        print(f"{BLUE}Initializing transformer-based entity extraction...{NC}")
+        entity_extractor = TransformerEntityExtractor()
+        raw_entities = entity_extractor.extract_entities(processed_chunks)
+        
+        total_raw_entities = sum(len(entity_list) for entity_list in raw_entities.values())
+        print(f"🏷️ Extracted {total_raw_entities} raw entities")
+        
+        # Add legal keyword entities to the collection (Strategy 2)
+        print(f"{BLUE}Adding legal keyword entities to knowledge graph...{NC}")
+        entities_with_keywords = coreference_resolver.enhance_entities_with_keywords(raw_entities, legal_definitions)
+        
+        # Resolve duplicate entities using semantic embeddings
+        print(f"{BLUE}Resolving duplicate entities using semantic embeddings...{NC}")
+        entity_resolver = EntityResolver()
+        entities = entity_resolver.resolve_entities(entities_with_keywords)
+        
+        # Get resolution statistics
+        resolution_stats = entity_resolver.get_resolution_stats(raw_entities, entities)
         total_entities = sum(len(entity_list) for entity_list in entities.values())
-        print(f"🏷️ Extracted {total_entities} entities")
+        print(f"✨ Entity resolution complete: {total_raw_entities} → {total_entities} entities "
+              f"({resolution_stats['overall_reduction_percentage']:.1f}% reduction)")
         
-        # Extract relationships
-        relationship_extractor = RelationshipExtractor()
-        relationships = relationship_extractor.extract_relationships(entities, chunks)
+        # Print per-type statistics
+        for entity_type, stats in resolution_stats['by_type'].items():
+            if stats['duplicates_removed'] > 0:
+                print(f"   • {entity_type}: {stats['before']} → {stats['after']} "
+                      f"({stats['duplicates_removed']} duplicates removed)")
         
-        print(f"🔗 Extracted {len(relationships)} relationships")
+        # Extract high-quality legal keyword relationships only
+        print(f"{BLUE}Extracting legal keyword relationships...{NC}")
+        relationships = coreference_resolver.create_all_keyword_relationships(legal_definitions)
+        
+        print(f"🔗 Extracted {len(relationships)} high-quality legal relationships")
+        
+        # Removed: Base transformer relationship extraction (low yield: 59 relationships from 3,091 chunks)
+        # Legal keyword relationships provide 98% of the value with much higher precision
         
         # Build knowledge graph
         graph_builder = KnowledgeGraphBuilder(store_name)
@@ -376,6 +286,7 @@ def process_company_knowledge_graph(store_name: str, config) -> Optional[Dict[st
 def main():
     """Main function to build knowledge graphs for all companies"""
     print(f"{GREEN}🧠 Building Knowledge Graphs for Due Diligence Analysis{NC}")
+    print(f"{GREEN}Using transformer-based entity and relationship extraction{NC}")
     print("=" * 60)
     
     # Load configuration
@@ -413,13 +324,25 @@ def main():
     successful = [r for r in results if r.get('success', False)]
     failed = [r for r in results if not r.get('success', False)]
     
-    print(f"✅ Successfully processed: {len(successful)} companies")
+    print(f"✅ Successfully processed: {len(successful)} data stores")
     for result in successful:
         metrics = result.get('metrics', {})
-        print(f"   • {result['store_name']}: {metrics.get('num_nodes', 0)} entities, {metrics.get('num_edges', 0)} relationships")
+        store_name = result['store_name']
+        
+        # Determine store type for clearer output
+        if "summit-digital-solutions" in store_name or "deepshield-systems" in store_name:
+            store_type = "company"
+        elif "questions" in store_name:
+            store_type = "questions"
+        elif "checklist" in store_name:
+            store_type = "checklist"
+        else:
+            store_type = "unknown"
+            
+        print(f"   • {store_name} ({store_type}): {metrics.get('num_nodes', 0)} entities, {metrics.get('num_edges', 0)} relationships")
     
     if failed:
-        print(f"❌ Failed to process: {len(failed)} companies")
+        print(f"❌ Failed to process: {len(failed)} data stores")
         for result in failed:
             print(f"   • {result['store_name']}: {result.get('error', 'Unknown error')}")
     

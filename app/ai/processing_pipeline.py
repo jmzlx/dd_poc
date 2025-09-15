@@ -36,7 +36,7 @@ logger = logging.getLogger(__name__)
 class ChecklistItem(BaseModel):
     """Individual checklist item"""
     text: str = Field(description="The checklist item text")
-    original: str = Field(description="The original text before any cleanup")
+    original: Optional[str] = Field(default=None, description="The original text before any cleanup")
 
 class ChecklistCategory(BaseModel):
     """Checklist category with items"""
@@ -112,7 +112,7 @@ def parse_checklist_node(state: AgentState, llm: "ChatAnthropic") -> AgentState:
                 'items': [
                     {
                         'text': item.text,
-                        'original': item.original
+                        'original': item.original or item.text  # Use text as fallback if original is None
                     }
                     for item in category.items
                 ]

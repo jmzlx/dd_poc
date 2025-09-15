@@ -44,6 +44,12 @@ dependencies = [
     "scikit-learn>=1.7.1",
     "unidecode>=1.4.0",
     "ftfy>=6.3.1",
+    "transformers>=4.56.0",
+    "torch>=2.8.0",
+    "spacy>=3.8.7",
+    "hdbscan>=0.8.40",
+    "blackstone>=0.1.14",
+    "yake>=0.6.0",
 ]
 
 [build-system]
@@ -55,10 +61,12 @@ dev = [
     "autoflake>=2.3.1",
     "flake8>=7.3.0",
     # Testing dependencies
+    "playwright>=1.55.0",
     "pytest>=7.4.0",
     "pytest-asyncio>=0.21.0",
     "pytest-cov>=4.1.0",
     "pytest-mock>=3.12.0",
+    "pytest-playwright>=0.7.1",
     "pytest-xdist>=3.5.0",
 ]
 
@@ -72,4 +80,5 @@ build-indexes = "scripts.build_indexes:main"
 build-graphs = "scripts.build_knowledge_graphs:main"
 build = "scripts.build:main"
 start = "scripts.start:main"
+e2e-test = "scripts.run_e2e_tests:main"
 

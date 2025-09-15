@@ -1,170 +1,3246 @@
 {
   "companies": [
     {
-      "name": "certificates of incorporation",
-      "source": "doc_0",
-      "context": "Articles/certificates of incorporation, bylaws, amendments.",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "name": "G & A",
+      "source": "doc_25",
+      "context": "G&A breakdown.",
+      "confidence": 0.9944491386413574,
+      "extraction_method": "transformer"
     },
     {
-      "name": "All names used by company",
-      "source": "doc_4",
-      "context": "All names used by company/subsidiaries.",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "name": "IRS",
+      "source": "doc_40",
+      "context": "IRS Form 3115 filings.",
+      "confidence": 0.9772292971611023,
+      "extraction_method": "transformer"
     },
     {
-      "name": "ERISA",
-      "source": "doc_131",
-      "context": "Reportable events (ERISA).",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "name": "IRS",
+      "source": "doc_122",
+      "context": "IRS determination letters, Form 5500s, actuarial repo",
+      "confidence": 0.9929676055908203,
+      "extraction_method": "transformer",
+      "sources": [
+        "doc_122",
+        "doc_317"
+      ],
+      "merged_contexts": [
+        "IRS determination letters, Form 5500s, actuarial repo",
+        "IRS determination letters; Form 5500s (last 3 years);"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 0.9922464191913605,
+      "resolution_method": "embedding_clustering"
     },
     {
-      "name": "ESG compliance monitoring systems",
+      "name": "CSA",
+      "source": "doc_336",
+      "context": "Certifications (SOC, PCI DSS, HIPAA/HITECH, ISO, CSA, NIST, etc.)",
+      "confidence": 0.9927753210067749,
+      "extraction_method": "transformer",
+      "sources": [
+        "doc_336",
+        "doc_141"
+      ],
+      "merged_contexts": [
+        "Certifications (SOC, PCI DSS, HIPAA, ISO, NIST, etc.).",
+        "Certifications (SOC, PCI DSS, HIPAA, ISO, NIST, etc.).",
+        "Certifications (SOC, PCI DSS, HIPAA, ISO, NIST, etc.)."
+      ],
+      "cluster_size": 11,
+      "merged_confidence": 0.8909002650867809,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "ESG",
+      "source": "doc_373",
+      "context": "Integration of ESG data/issues into executive compensation",
+      "confidence": 0.9935397505760193,
+      "extraction_method": "transformer",
+      "sources": [
+        "doc_178",
+        "doc_373"
+      ],
+      "merged_contexts": [
+        "ESG in executive compensation.",
+        "Integration of ESG data/issues into executive compensation"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 0.9932345151901245,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "ESG",
+      "source": "doc_180",
+      "context": "Investor initiatives/activism related to ESG.",
+      "confidence": 0.9846148490905762,
+      "extraction_method": "transformer",
+      "sources": [
+        "doc_375",
+        "doc_180"
+      ],
+      "merged_contexts": [
+        "Investor initiatives/activism related to ESG.",
+        "stor initiatives or activist campaigns related to ESG"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 0.9643342196941376,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "ESG",
+      "source": "doc_377",
+      "context": "Voluntary ESG standards/frameworks used; related disclosures",
+      "confidence": 0.8241416811943054,
+      "extraction_method": "transformer",
+      "sources": [
+        "doc_182",
+        "doc_378",
+        "doc_377"
+      ],
+      "merged_contexts": [
+        "Voluntary ESG standards/frameworks.",
+        "Voluntary ESG standards/frameworks used; related disclosures",
+        "Mandatory ESG standards/frameworks applicable; related disclosu"
+      ],
+      "cluster_size": 3,
+      "merged_confidence": 0.7859839002291361,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "ESG",
       "source": "doc_184",
       "context": "ESG compliance monitoring systems.",
-      "chunk_id": null,
-      "document_type": "unknown"
-    },
-    {
-      "name": "Articles of incorporation",
-      "source": "doc_189",
-      "context": "Articles of incorporation; certificates of incorporation",
-      "chunk_id": null,
-      "document_type": "unknown"
-    },
-    {
-      "name": "certificates of incorporation",
-      "source": "doc_189",
-      "context": "Articles of incorporation; certificates of incorporation",
-      "chunk_id": null,
-      "document_type": "unknown"
-    },
-    {
-      "name": "Organizational chart of Company",
-      "source": "doc_192",
-      "context": "Organizational chart of Company and subsidiaries",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "confidence": 0.9773297905921936,
+      "extraction_method": "transformer"
     },
     {
       "name": "Evidence Company",
       "source": "doc_225",
       "context": "Evidence Company is current on all taxes (income, property, payrol",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "confidence": 0.9970669150352478,
+      "extraction_method": "transformer"
     },
     {
-      "name": "Tax deficiency assessments and resolutions",
-      "source": "doc_229",
-      "context": "Tax deficiency assessments and resolutions",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "name": "IRS",
+      "source": "doc_233",
+      "context": "IRS Form 3115 filings; Section 481(a) depreciation ad",
+      "confidence": 0.9774503707885742,
+      "extraction_method": "transformer"
     },
     {
-      "name": "Affiliates and associates",
+      "name": "Internet",
+      "source": "doc_261",
+      "context": "Internet domain names held, assigned, or used",
+      "confidence": 0.8240970969200134,
+      "extraction_method": "transformer"
+    },
+    {
+      "name": "SEC",
       "source": "doc_268",
       "context": "Affiliates and associates list (per SEC Rule 12b-2)",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "confidence": 0.9814173579216003,
+      "extraction_method": "transformer"
     },
     {
-      "name": "Trade associations or advocacy group",
-      "source": "doc_277",
-      "context": "Trade associations or advocacy group memberships",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "name": "D & O",
+      "source": "doc_270",
+      "context": "Insurance policies (general liability, property, casualty, D&O, workers comp, key man, cyber, excess",
+      "confidence": 0.9743032455444336,
+      "extraction_method": "transformer"
     },
     {
-      "name": "governmental investigations involving Company",
-      "source": "doc_297",
-      "context": "Pending or threatened litigation; governmental investigations involving Company or subsidiaries",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "name": "DOL",
+      "source": "doc_324",
+      "context": "Audits/investigations by IRS, DOL, PBGC, OSHA, or other agencies (last 6 years)",
+      "confidence": 0.9985257387161255,
+      "extraction_method": "transformer",
+      "sources": [
+        "doc_324"
+      ],
+      "merged_contexts": [
+        "Audits/investigations by IRS, DOL, PBGC, OSHA, or other agencies (last 6 years",
+        "Audits/investigations by IRS, DOL, PBGC, OSHA, or other agencies (last 6 years)",
+        "Audits/investigations by IRS, DOL, PBGC, OSHA, or other agencies (last 6 years)"
+      ],
+      "cluster_size": 4,
+      "merged_confidence": 0.9977279305458069,
+      "resolution_method": "embedding_clustering"
     },
     {
-      "name": "rulings binding Company",
-      "source": "doc_299",
-      "context": "y orders, writs, decrees, injunctions, judgments, rulings binding Company",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "name": "NIST",
+      "source": "doc_336",
+      "context": "ifications (SOC, PCI DSS, HIPAA/HITECH, ISO, CSA, NIST, etc.)",
+      "confidence": 0.9562816023826599,
+      "extraction_method": "transformer"
     },
     {
-      "name": "resolutions",
-      "source": "doc_302",
-      "context": " with suppliers, competitors, customers, clients; resolutions",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "name": "ESG",
+      "source": "doc_379",
+      "context": "Persons/systems monitoring ESG commitments and priorities",
+      "confidence": 0.9152961373329163,
+      "extraction_method": "transformer"
     },
     {
-      "name": "certificates obtained by Company",
-      "source": "doc_306",
-      "context": "Regulatory filings, reports, permits, certificates obtained by Company",
-      "chunk_id": null,
-      "document_type": "unknown"
-    },
-    {
-      "name": "Loans or transactions between Company",
-      "source": "doc_315",
-      "context": "Loans or transactions between Company and insiders",
-      "chunk_id": null,
-      "document_type": "unknown"
-    },
-    {
-      "name": "tracking technologies",
-      "source": "doc_341",
-      "context": "Use of cookies, identifiers, web beacons, tracking technologies; third-party trackers",
-      "chunk_id": null,
-      "document_type": "unknown"
-    },
-    {
-      "name": "ESG importance measurement systems",
+      "name": "ESG",
       "source": "doc_380",
-      "context": "ESG importance measurement systems (shareholder/stakeholder perception surveys)",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "context": "ESG importance measurement systems (shareholder/stake",
+      "confidence": 0.9351081848144531,
+      "extraction_method": "transformer"
+    },
+    {
+      "name": "ESG",
+      "source": "doc_381",
+      "context": "Other ESG documents not covered above",
+      "confidence": 0.9949285387992859,
+      "extraction_method": "transformer"
     }
   ],
-  "people": [
+  "people": [],
+  "financial_metrics": [],
+  "documents": [
     {
-      "name": "for officers and",
-      "source": "doc_3",
-      "context": "Biographical info for officers and directors.",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "name": "doc 0",
+      "source": "doc_0",
+      "context": "Articles/certificates of incorporation, bylaws, amendments.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_189",
+        "doc_0"
+      ],
+      "merged_contexts": [
+        "Articles/certificates of incorporation, bylaws, amendments.",
+        "Articles of incorporation; certificates of incorporation"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
     },
     {
-      "name": "Current officers and",
-      "source": "doc_193",
-      "context": "Current officers and directors list",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "name": "doc 1",
+      "source": "doc_1",
+      "context": "Minutes and consents of shareholders, directors, committees.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
     },
     {
-      "name": "Officer and",
+      "name": "doc 192",
+      "source": "doc_192",
+      "context": "Organizational chart of Company and subsidiaries",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_192",
+        "doc_2"
+      ],
+      "merged_contexts": [
+        "Organizational chart, officers, directors.",
+        "Organizational chart of Company and subsidiaries"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 194",
       "source": "doc_194",
       "context": "Officer and director biographical information",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_3",
+        "doc_194"
+      ],
+      "merged_contexts": [
+        "Biographical info for officers and directors.",
+        "Officer and director biographical information"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
     },
     {
-      "name": "biographical information",
-      "source": "doc_194",
-      "context": "Officer and director biographical information",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "name": "doc 4",
+      "source": "doc_4",
+      "context": "All names used by company/subsidiaries.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
     },
     {
-      "name": "Indemnification agreements for",
+      "name": "doc 5",
+      "source": "doc_5",
+      "context": "Schedule of all addresses used.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 197",
+      "source": "doc_197",
+      "context": "Jurisdictions of registration or qualification; certificates of authority",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_6",
+        "doc_197"
+      ],
+      "merged_contexts": [
+        "Jurisdictions of qualification and copies.",
+        "Jurisdictions of registration or qualification; certificates of authority"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 198",
+      "source": "doc_198",
+      "context": "Equity structure; authorized and outstanding shares; classes or series",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_198",
+        "doc_7"
+      ],
+      "merged_contexts": [
+        "Equity structure details.",
+        "Equity structure; authorized and outstanding shares; classes or series"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 13",
+      "source": "doc_13",
+      "context": "Agreements granting rights over securities.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_13",
+        "doc_8"
+      ],
+      "merged_contexts": [
+        "Holders of all securities and rights.",
+        "Agreements granting rights over securities."
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 9",
+      "source": "doc_9",
+      "context": "Sample certificates of securities.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 201",
+      "source": "doc_201",
+      "context": "Shareholder agreements; voting trusts; proxies; restrictive agreements",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_201",
+        "doc_10"
+      ],
+      "merged_contexts": [
+        "Shareholder agreements, voting trusts, restrictive agreements.",
+        "Shareholder agreements; voting trusts; proxies; restrictive agreements"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 202",
+      "source": "doc_202",
+      "context": "Applications or permits for issuance or transfer of securities",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_202",
+        "doc_11"
+      ],
+      "merged_contexts": [
+        "Applications/permits for issuance or transfer of securities.",
+        "Applications or permits for issuance or transfer of securities"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 12",
+      "source": "doc_12",
+      "context": "Agreements and offering materials re: sales of securities.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 205",
+      "source": "doc_205",
+      "context": "Agreements to issue securities or equity interests; amendments",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_205",
+        "doc_14"
+      ],
+      "merged_contexts": [
+        "Agreements to issue equity.",
+        "Agreements to issue securities or equity interests; amendments"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 206",
+      "source": "doc_206",
+      "context": "Directors\u2019 and officers\u2019 questionnaires (most recent)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_15",
+        "doc_206"
+      ],
+      "merged_contexts": [
+        "Latest directors\u2019 and officers\u2019 questionnaire.",
+        "Directors\u2019 and officers\u2019 questionnaires (most recent)"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 207",
       "source": "doc_207",
       "context": "Indemnification agreements for directors and officers",
-      "chunk_id": null,
-      "document_type": "unknown"
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_16",
+        "doc_207"
+      ],
+      "merged_contexts": [
+        "Indemnification agreements.",
+        "Indemnification agreements for directors and officers"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 188",
+      "source": "doc_188",
+      "context": "[Other Requests.]",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_62",
+        "doc_134",
+        "doc_29",
+        "doc_101",
+        "doc_117",
+        "doc_109",
+        "doc_188",
+        "doc_54",
+        "doc_44",
+        "doc_148",
+        "doc_87",
+        "doc_17",
+        "doc_187",
+        "doc_69",
+        "doc_186"
+      ],
+      "merged_contexts": [
+        "[Other Requests.]",
+        "[Other Requests.]",
+        "[Other Requests.]"
+      ],
+      "cluster_size": 15,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 18",
+      "source": "doc_18",
+      "context": "Audited and unaudited financials.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_210",
+        "doc_18",
+        "doc_209"
+      ],
+      "merged_contexts": [
+        "Audited and unaudited financials.",
+        "Audited financial statements",
+        "Unaudited financial statements"
+      ],
+      "cluster_size": 3,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 212",
+      "source": "doc_212",
+      "context": "Audit correspondence; management letters; special reports; counsel letters to auditors",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_212",
+        "doc_19"
+      ],
+      "merged_contexts": [
+        "Auditor correspondence and management letters.",
+        "Audit correspondence; management letters; special reports; counsel letters to auditors"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 213",
+      "source": "doc_213",
+      "context": "Unrecorded liabilities not in financial statements",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_20",
+        "doc_213"
+      ],
+      "merged_contexts": [
+        "Liabilities not on statements.",
+        "Unrecorded liabilities not in financial statements"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 21",
+      "source": "doc_21",
+      "context": "Budgets and projections.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 215",
+      "source": "doc_215",
+      "context": "Accounting policies and changes in methods or principles",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_22",
+        "doc_215"
+      ],
+      "merged_contexts": [
+        "Summary of accounting policies and changes.",
+        "Accounting policies and changes in methods or principles"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 216",
+      "source": "doc_216",
+      "context": "Write-downs and write-offs outside ordinary course",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_216",
+        "doc_23"
+      ],
+      "merged_contexts": [
+        "Write-downs/write-offs.",
+        "Write-downs and write-offs outside ordinary course"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 24",
+      "source": "doc_24",
+      "context": "Aging schedules for A/R.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 25",
+      "source": "doc_25",
+      "context": "G&A breakdown.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 26",
+      "source": "doc_26",
+      "context": "Revenue, margin, ASP breakdown.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 220",
+      "source": "doc_220",
+      "context": "Valuations of equity securities",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_220",
+        "doc_27"
+      ],
+      "merged_contexts": [
+        "Equity valuations.",
+        "Valuations of equity securities"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 221",
+      "source": "doc_221",
+      "context": "Contingent liabilities (recorded)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_28",
+        "doc_221"
+      ],
+      "merged_contexts": [
+        "Contingent liabilities.",
+        "Contingent liabilities (recorded)"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 223",
+      "source": "doc_223",
+      "context": "State and local jurisdictions for tax filings and payments; schedule of taxes paid",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_223",
+        "doc_30"
+      ],
+      "merged_contexts": [
+        "Tax jurisdictions, returns, and payments.",
+        "State and local jurisdictions for tax filings and payments; schedule of taxes paid"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 31",
+      "source": "doc_31",
+      "context": "Federal, state, local tax filings.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_40",
+        "doc_31"
+      ],
+      "merged_contexts": [
+        "Federal, state, local tax filings.",
+        "IRS Form 3115 filings."
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 32",
+      "source": "doc_32",
+      "context": "Proof of current tax payments.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 226",
+      "source": "doc_226",
+      "context": "Tax audits (3 closed + open years); correspondence",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_33",
+        "doc_226"
+      ],
+      "merged_contexts": [
+        "Tax audits and correspondence.",
+        "Tax audits (3 closed + open years); correspondence"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 227",
+      "source": "doc_227",
+      "context": "Tax sharing or tax benefit agreements; state unitary filings",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_227",
+        "doc_34"
+      ],
+      "merged_contexts": [
+        "Tax sharing/benefit agreements.",
+        "Tax sharing or tax benefit agreements; state unitary filings"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 35",
+      "source": "doc_35",
+      "context": "Consents and agreements with tax authorities.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_35",
+        "doc_228"
+      ],
+      "merged_contexts": [
+        "Consents and agreements with tax authorities.",
+        "Consents and agreements with tax authorities"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 36",
+      "source": "doc_36",
+      "context": "Deficiency assessments.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 230",
+      "source": "doc_230",
+      "context": "Pending or threatened disputes with tax authorities",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_37",
+        "doc_230"
+      ],
+      "merged_contexts": [
+        "Pending/threatened tax disputes.",
+        "Pending or threatened disputes with tax authorities"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 38",
+      "source": "doc_38",
+      "context": "Real estate taxes payable.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_38",
+        "doc_231"
+      ],
+      "merged_contexts": [
+        "Real estate taxes payable.",
+        "Real estate taxes payable"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 39",
+      "source": "doc_39",
+      "context": "Notices of assessment.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 234",
+      "source": "doc_234",
+      "context": "Tax shelters; reportable transactions",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_41",
+        "doc_234"
+      ],
+      "merged_contexts": [
+        "Tax shelters/transactions.",
+        "Tax shelters; reportable transactions"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 42",
+      "source": "doc_42",
+      "context": "Acquisitions without indemnity.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 43",
+      "source": "doc_43",
+      "context": "ASC 740 tax reserves.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 238",
+      "source": "doc_238",
+      "context": "Banks, creditors, guarantors, lenders list and relationships",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_238",
+        "doc_45"
+      ],
+      "merged_contexts": [
+        "List of banks, creditors, guarantors.",
+        "Banks, creditors, guarantors, lenders list and relationships"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 239",
+      "source": "doc_239",
+      "context": "Debt instruments; lines of credit; amendments, consents, waivers",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_239",
+        "doc_46"
+      ],
+      "merged_contexts": [
+        "Debt instruments and amendments.",
+        "Debt instruments; lines of credit; amendments, consents, waivers"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 47",
+      "source": "doc_47",
+      "context": "Security agreements, indentures, guarantees.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 48",
+      "source": "doc_48",
+      "context": "Debt/guarantee agreements with insiders.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 49",
+      "source": "doc_49",
+      "context": "Letters of credit, bonds.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 50",
+      "source": "doc_50",
+      "context": "Mortgages, liens, encumbrances.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 51",
+      "source": "doc_51",
+      "context": "Compliance reports (3 years).",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 52",
+      "source": "doc_52",
+      "context": "Compliance certificates.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 246",
+      "source": "doc_246",
+      "context": "Material correspondence with lenders",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_53",
+        "doc_246"
+      ],
+      "merged_contexts": [
+        "Correspondence with lenders.",
+        "Material correspondence with lenders"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 248",
+      "source": "doc_248",
+      "context": "Physical assets and equipment schedules; ownership and lease terms",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_248",
+        "doc_55"
+      ],
+      "merged_contexts": [
+        "Schedule of physical assets and equipment.",
+        "Physical assets and equipment schedules; ownership and lease terms"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 56",
+      "source": "doc_56",
+      "context": "Inventory schedule.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 57",
+      "source": "doc_57",
+      "context": "Real property schedule.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 251",
+      "source": "doc_251",
+      "context": "Title insurance policies; abstracts of title; deeds; certificates",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_58",
+        "doc_251"
+      ],
+      "merged_contexts": [
+        "Title insurance policies, deeds.",
+        "Title insurance policies; abstracts of title; deeds; certificates"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 252",
+      "source": "doc_252",
+      "context": "Leases, subleases, financing and security agreements; lessor/lessee correspondence on defaults",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_252",
+        "doc_59"
+      ],
+      "merged_contexts": [
+        "Leases, subleases, related correspondence.",
+        "Leases, subleases, financing and security agreements; lessor/lessee correspondence on defaults"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 60",
+      "source": "doc_60",
+      "context": "Appraisals, surveys.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 254",
+      "source": "doc_254",
+      "context": "Warranties and guaranties for real and personal property",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_61",
+        "doc_254"
+      ],
+      "merged_contexts": [
+        "Warranties and guaranties.",
+        "Warranties and guaranties for real and personal property"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 63",
+      "source": "doc_63",
+      "context": "IP list (copyrights, patents, trademarks), agreements, certificates.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 64",
+      "source": "doc_64",
+      "context": "Software list.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 260",
+      "source": "doc_260",
+      "context": "Royalty, fee, and license agreements; concessions or special rights",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_260",
+        "doc_65"
+      ],
+      "merged_contexts": [
+        "Royalty and license agreements.",
+        "Royalty, fee, and license agreements; concessions or special rights"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 66",
+      "source": "doc_66",
+      "context": "Internet domains.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 67",
+      "source": "doc_67",
+      "context": "Pending/threatened IP claims.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 68",
+      "source": "doc_68",
+      "context": "IP policies.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 275",
+      "source": "doc_275",
+      "context": "Contemplated JVs, partnerships, alliances, acquisitions, divestitures",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_70",
+        "doc_275"
+      ],
+      "merged_contexts": [
+        "JV, partnership, alliance agreements.",
+        "Contemplated JVs, partnerships, alliances, acquisitions, divestitures"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 266",
+      "source": "doc_266",
+      "context": "Customer agreements comprising top 10% of revenues; other major agreements",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_71",
+        "doc_266"
+      ],
+      "merged_contexts": [
+        "Top revenue customer agreements.",
+        "Customer agreements comprising top 10% of revenues; other major agreements"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 267",
+      "source": "doc_267",
+      "context": "Brokers, finders, financial advisory agreements",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_267",
+        "doc_72"
+      ],
+      "merged_contexts": [
+        "Brokers, finders, advisory agreements.",
+        "Brokers, finders, financial advisory agreements"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 73",
+      "source": "doc_73",
+      "context": "Affiliates/Associates list.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 74",
+      "source": "doc_74",
+      "context": "Affiliate agreements (tax, indemnity, leases, etc.).",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 75",
+      "source": "doc_75",
+      "context": "Insurance policies.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 271",
+      "source": "doc_271",
+      "context": "Insurance cancellations, non-renewals, or declinations",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_76",
+        "doc_271"
+      ],
+      "merged_contexts": [
+        "Insurance cancellation/non-renewal correspondence.",
+        "Insurance cancellations, non-renewals, or declinations"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 77",
+      "source": "doc_77",
+      "context": "Claims experience.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 273",
+      "source": "doc_273",
+      "context": "Self-insurance or captive programs; actuarial reports",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_273",
+        "doc_78"
+      ],
+      "merged_contexts": [
+        "Self-insurance/captive reports.",
+        "Self-insurance or captive programs; actuarial reports"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 274",
+      "source": "doc_274",
+      "context": "Documents on insurance and liability exposure; reserve funds, accounts",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_79",
+        "doc_274"
+      ],
+      "merged_contexts": [
+        "Insurance exposure docs.",
+        "Documents on insurance and liability exposure; reserve funds, accounts"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 80",
+      "source": "doc_80",
+      "context": "Planned JV/alliances/acquisitions/divestitures.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 276",
+      "source": "doc_276",
+      "context": "Other contracts (acquisition, purchase, agency, land, construction, supply, government agreements, divestitures)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_276",
+        "doc_81"
+      ],
+      "merged_contexts": [
+        "Other contracts (acquisitions, suppliers, government).",
+        "Other contracts (acquisition, purchase, agency, land, construction, supply, government agreements, divestitures)"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 277",
+      "source": "doc_277",
+      "context": "Trade associations or advocacy group memberships",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_277",
+        "doc_82"
+      ],
+      "merged_contexts": [
+        "Trade association memberships.",
+        "Trade associations or advocacy group memberships"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 83",
+      "source": "doc_83",
+      "context": "Consents/approvals needed.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 279",
+      "source": "doc_279",
+      "context": "Hedging or swap agreements; commodities trading policies; hedge identification for tax purposes",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_279",
+        "doc_84"
+      ],
+      "merged_contexts": [
+        "Hedging/swap agreements.",
+        "Hedging or swap agreements; commodities trading policies; hedge identification for tax purposes"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 280",
+      "source": "doc_280",
+      "context": "Agreements with government entities",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_280",
+        "doc_85"
+      ],
+      "merged_contexts": [
+        "Government agreements.",
+        "Agreements with government entities"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 86",
+      "source": "doc_86",
+      "context": "Government contract bids.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 89",
+      "source": "doc_89",
+      "context": "Suppliers and service providers.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_89",
+        "doc_88"
+      ],
+      "merged_contexts": [
+        "Customers list.",
+        "Suppliers and service providers."
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 90",
+      "source": "doc_90",
+      "context": "Purchase/supply contracts.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 286",
+      "source": "doc_286",
+      "context": "Marketing, sales, franchise, distribution, agency, promotion, influencer agreements; independent salespersons/distributors list",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_286",
+        "doc_91"
+      ],
+      "merged_contexts": [
+        "Marketing, sales, distribution agreements.",
+        "Marketing, sales, franchise, distribution, agency, promotion, influencer agreements; independent salespersons/distributors list"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 287",
+      "source": "doc_287",
+      "context": "Business plans, marketing plans, sales forecasts, consultant studies, industry trend reports",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_287",
+        "doc_92"
+      ],
+      "merged_contexts": [
+        "Business/marketing plans, forecasts.",
+        "Business plans, marketing plans, sales forecasts, consultant studies, industry trend reports"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 288",
+      "source": "doc_288",
+      "context": "Advertising, promotion, PR agreements; advertising materials, brochures, marketing collateral",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_93",
+        "doc_288"
+      ],
+      "merged_contexts": [
+        "Advertising agreements, materials.",
+        "Advertising, promotion, PR agreements; advertising materials, brochures, marketing collateral"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 289",
+      "source": "doc_289",
+      "context": "Credit and collection policies",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_94",
+        "doc_289"
+      ],
+      "merged_contexts": [
+        "Credit/collection policies.",
+        "Credit and collection policies"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 95",
+      "source": "doc_95",
+      "context": "Internal policy manuals.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 96",
+      "source": "doc_96",
+      "context": "Press releases.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 292",
+      "source": "doc_292",
+      "context": "Significant operational changes (past 2 years)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_97",
+        "doc_292"
+      ],
+      "merged_contexts": [
+        "Operational changes (last 2 years).",
+        "Significant operational changes (past 2 years)"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 98",
+      "source": "doc_98",
+      "context": "Competitor info.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 99",
+      "source": "doc_99",
+      "context": "Customer satisfaction surveys.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 100",
+      "source": "doc_100",
+      "context": "Social media accounts and access.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 297",
+      "source": "doc_297",
+      "context": "Pending or threatened litigation; governmental investigations involving Company or subsidiaries",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_298",
+        "doc_297",
+        "doc_102"
+      ],
+      "merged_contexts": [
+        "Pending/threatened litigation and investigations.",
+        "Pending or threatened litigation; governmental investigations involving Company or subsidiaries",
+        "Litigation or investigations involving officers, directors, or >5% shareholders"
+      ],
+      "cluster_size": 3,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 103",
+      "source": "doc_103",
+      "context": "Litigation involving officers/directors/major holders.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 104",
+      "source": "doc_104",
+      "context": "Court or agency orders.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 300",
+      "source": "doc_300",
+      "context": "Settlements of litigation; waiver agreements cancelling material claims",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_300",
+        "doc_105"
+      ],
+      "merged_contexts": [
+        "Settlements/waivers.",
+        "Settlements of litigation; waiver agreements cancelling material claims"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 106",
+      "source": "doc_106",
+      "context": "Settlement documents.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 302",
+      "source": "doc_302",
+      "context": "Disputes with suppliers, competitors, customers, clients; resolutions",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_107",
+        "doc_387",
+        "doc_302"
+      ],
+      "merged_contexts": [
+        "Supplier/competitor/customer disputes.",
+        "Disputes with suppliers, competitors, customers, clients; resolutions",
+        "Vendor/supplier disputes (last 3 years)"
+      ],
+      "cluster_size": 3,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 108",
+      "source": "doc_108",
+      "context": "Auditor correspondence re: litigation.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 305",
+      "source": "doc_305",
+      "context": "Regulatory filings, reports, licenses, permits, consents, approvals required for business",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_110",
+        "doc_306",
+        "doc_305"
+      ],
+      "merged_contexts": [
+        "Regulatory filings, permits, licenses.",
+        "Regulatory filings, reports, licenses, permits, consents, approvals required for business",
+        "Regulatory filings, reports, permits, certificates obtained by Company"
+      ],
+      "cluster_size": 3,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 111",
+      "source": "doc_111",
+      "context": "Copies of filings and approvals.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 307",
+      "source": "doc_307",
+      "context": "Violations or alleged violations of laws/regulations",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_307",
+        "doc_112"
+      ],
+      "merged_contexts": [
+        "Violations or alleged violations.",
+        "Violations or alleged violations of laws/regulations"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 114",
+      "source": "doc_114",
+      "context": "Minutes/correspondence with regulators.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_113",
+        "doc_114"
+      ],
+      "merged_contexts": [
+        "Correspondence with regulators.",
+        "Minutes/correspondence with regulators."
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 115",
+      "source": "doc_115",
+      "context": "Filings/consents for share purchase.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 311",
+      "source": "doc_311",
+      "context": "Antitrust compliance program; manuals and policies",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_116",
+        "doc_311"
+      ],
+      "merged_contexts": [
+        "Antitrust compliance program.",
+        "Antitrust compliance program; manuals and policies"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 118",
+      "source": "doc_118",
+      "context": "Officers, directors, employees, contractors: titles, service, pay.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_118",
+        "doc_193"
+      ],
+      "merged_contexts": [
+        "Officers, directors, employees, contractors: titles, service, pay.",
+        "Current officers and directors list"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 314",
+      "source": "doc_314",
+      "context": "Employment, consultant, contractor, non-compete, confidentiality, nondisclosure agreements",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_314",
+        "doc_119"
+      ],
+      "merged_contexts": [
+        "Employment/consultant/noncompete/confidentiality agreements.",
+        "Employment, consultant, contractor, non-compete, confidentiality, nondisclosure agreements"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 315",
+      "source": "doc_315",
+      "context": "Loans or transactions between Company and insiders",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_315",
+        "doc_120"
+      ],
+      "merged_contexts": [
+        "Insider loan/transaction agreements.",
+        "Loans or transactions between Company and insiders"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 316",
+      "source": "doc_316",
+      "context": "Benefit and compensation plans (pension, retirement, incentive, stock options, welfare, insurance)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_121",
+        "doc_316"
+      ],
+      "merged_contexts": [
+        "Benefit and compensation plans.",
+        "Benefit and compensation plans (pension, retirement, incentive, stock options, welfare, insurance)"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 317",
+      "source": "doc_317",
+      "context": "IRS determination letters; Form 5500s (last 3 years); actuarial reports",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_122",
+        "doc_317"
+      ],
+      "merged_contexts": [
+        "IRS determination letters, Form 5500s, actuarial reports.",
+        "IRS determination letters; Form 5500s (last 3 years); actuarial reports"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 318",
+      "source": "doc_318",
+      "context": "Welfare plan data: premiums, claims, reserves, admin expenses (last 3 years)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_123",
+        "doc_318"
+      ],
+      "merged_contexts": [
+        "Welfare plan premiums, claims, expenses.",
+        "Welfare plan data: premiums, claims, reserves, admin expenses (last 3 years)"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 124",
+      "source": "doc_124",
+      "context": "Collective bargaining agreements.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_319",
+        "doc_124",
+        "doc_320",
+        "doc_125"
+      ],
+      "merged_contexts": [
+        "Collective bargaining agreements.",
+        "Union negotiations.",
+        "Collective bargaining agreements"
+      ],
+      "cluster_size": 4,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 321",
+      "source": "doc_321",
+      "context": "Multiemployer plans (past 6 years)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_321",
+        "doc_126"
+      ],
+      "merged_contexts": [
+        "Multiemployer plans.",
+        "Multiemployer plans (past 6 years)"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 322",
+      "source": "doc_322",
+      "context": "Multiemployer contributions, withdrawal liabilities, pending claims",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_127",
+        "doc_322"
+      ],
+      "merged_contexts": [
+        "Multiemployer contributions, liabilities.",
+        "Multiemployer contributions, withdrawal liabilities, pending claims"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 323",
+      "source": "doc_323",
+      "context": "Pending/threatened employment claims; union activity; strikes; disputes",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_128",
+        "doc_323"
+      ],
+      "merged_contexts": [
+        "Employment claims/disputes.",
+        "Pending/threatened employment claims; union activity; strikes; disputes"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 129",
+      "source": "doc_129",
+      "context": "Agency audits/investigations (last 6 years).",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_138",
+        "doc_130",
+        "doc_129"
+      ],
+      "merged_contexts": [
+        "Agency audits/investigations (last 6 years).",
+        "Agency reports (last 3 years).",
+        "Audit reports (3 years)."
+      ],
+      "cluster_size": 3,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 131",
+      "source": "doc_131",
+      "context": "Reportable events (ERISA).",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 327",
+      "source": "doc_327",
+      "context": "Employee handbooks, personnel policies, procedures, manuals",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_327",
+        "doc_140",
+        "doc_132"
+      ],
+      "merged_contexts": [
+        "Employee handbooks, manuals.",
+        "Employee training materials.",
+        "Employee handbooks, personnel policies, procedures, manuals"
+      ],
+      "cluster_size": 3,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 365",
+      "source": "doc_365",
+      "context": "Sexual harassment/misconduct investigation processes",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_133",
+        "doc_170",
+        "doc_365",
+        "doc_328"
+      ],
+      "merged_contexts": [
+        "Harassment/misconduct policies.",
+        "Sexual harassment investigation processes.",
+        "Policies on sexual harassment and misconduct"
+      ],
+      "cluster_size": 4,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 330",
+      "source": "doc_330",
+      "context": "Privacy policies for employees, customers, consumers (websites, apps, disclosures)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_135",
+        "doc_330"
+      ],
+      "merged_contexts": [
+        "Privacy policies (employees, customers).",
+        "Privacy policies for employees, customers, consumers (websites, apps, disclosures)"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 331",
+      "source": "doc_331",
+      "context": "Information security policies (physical, administrative, IT)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_331",
+        "doc_136"
+      ],
+      "merged_contexts": [
+        "Information security policies.",
+        "Information security policies (physical, administrative, IT)"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 332",
+      "source": "doc_332",
+      "context": "Breach response and incident response policies",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_137",
+        "doc_332"
+      ],
+      "merged_contexts": [
+        "Breach response policies.",
+        "Breach response and incident response policies"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 334",
+      "source": "doc_334",
+      "context": "Privacy officer; security officer; designated personnel",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_139",
+        "doc_334"
+      ],
+      "merged_contexts": [
+        "Privacy/security officer details.",
+        "Privacy officer; security officer; designated personnel"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 336",
+      "source": "doc_336",
+      "context": "Certifications (SOC, PCI DSS, HIPAA/HITECH, ISO, CSA, NIST, etc.)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_336",
+        "doc_141"
+      ],
+      "merged_contexts": [
+        "Certifications (SOC, PCI DSS, HIPAA, ISO, NIST, etc.).",
+        "Certifications (SOC, PCI DSS, HIPAA/HITECH, ISO, CSA, NIST, etc.)"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 142",
+      "source": "doc_142",
+      "context": "Background checks description.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 143",
+      "source": "doc_143",
+      "context": "Data privacy/security incidents (3 years).",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 144",
+      "source": "doc_144",
+      "context": "Cross-border data transfer compliance (e.g., GDPR).",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_339",
+        "doc_144"
+      ],
+      "merged_contexts": [
+        "Cross-border data transfer compliance (e.g., GDPR).",
+        "Cross-border data transfer compliance (e.g., GDPR)"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 145",
+      "source": "doc_145",
+      "context": "Data sharing for marketing.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 341",
+      "source": "doc_341",
+      "context": "Use of cookies, identifiers, web beacons, tracking technologies; third-party trackers",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_146",
+        "doc_341"
+      ],
+      "merged_contexts": [
+        "Use of cookies/tracking.",
+        "Use of cookies, identifiers, web beacons, tracking technologies; third-party trackers"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 147",
+      "source": "doc_147",
+      "context": "Global/regional personal data databases.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 344",
+      "source": "doc_344",
+      "context": "Environmental investigations, reviews, assessments (Phase I/II)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_149",
+        "doc_344"
+      ],
+      "merged_contexts": [
+        "Environmental investigations, Phase I/II.",
+        "Environmental investigations, reviews, assessments (Phase I/II)"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 151",
+      "source": "doc_151",
+      "context": "Records on hazardous substances.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_345",
+        "doc_151",
+        "doc_150"
+      ],
+      "merged_contexts": [
+        "Hazardous substances list.",
+        "Records on hazardous substances.",
+        "Hazardous substances used"
+      ],
+      "cluster_size": 3,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 347",
+      "source": "doc_347",
+      "context": "Off-site hazardous storage or disposal locations",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_152",
+        "doc_347"
+      ],
+      "merged_contexts": [
+        "Off-site storage/disposal.",
+        "Off-site hazardous storage or disposal locations"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 348",
+      "source": "doc_348",
+      "context": "Studies/reports: pollution, contamination, biodiversity impacts, climate change risks, energy/water usage",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_348",
+        "doc_153"
+      ],
+      "merged_contexts": [
+        "Studies on pollution, biodiversity, climate, energy/water.",
+        "Studies/reports: pollution, contamination, biodiversity impacts, climate change risks, energy/water usage"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 349",
+      "source": "doc_349",
+      "context": "Policies/statements on responsible sourcing, supply chain risks",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_349",
+        "doc_154"
+      ],
+      "merged_contexts": [
+        "Responsible sourcing policies.",
+        "Policies/statements on responsible sourcing, supply chain risks"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 350",
+      "source": "doc_350",
+      "context": "Environmental legal actions, investigations, complaints, settlements, fines",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_350",
+        "doc_155"
+      ],
+      "merged_contexts": [
+        "Environmental litigation/investigations.",
+        "Environmental legal actions, investigations, complaints, settlements, fines"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 351",
+      "source": "doc_351",
+      "context": "Environmental licenses, permits, authorizations",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_156",
+        "doc_351"
+      ],
+      "merged_contexts": [
+        "Environmental permits/licenses.",
+        "Environmental licenses, permits, authorizations"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 352",
+      "source": "doc_352",
+      "context": "Known contaminations or hazardous material concerns (asbestos, lead paint, petroleum, mercury, radiation, radon)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_157",
+        "doc_352"
+      ],
+      "merged_contexts": [
+        "Known contamination issues.",
+        "Known contaminations or hazardous material concerns (asbestos, lead paint, petroleum, mercury, radiation, radon)"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 158",
+      "source": "doc_158",
+      "context": "Customer satisfaction reports.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_158",
+        "doc_353",
+        "doc_294"
+      ],
+      "merged_contexts": [
+        "Customer satisfaction reports.",
+        "Customer satisfaction surveys",
+        "Customer satisfaction reports"
+      ],
+      "cluster_size": 3,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 159",
+      "source": "doc_159",
+      "context": "Employee satisfaction reports.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_159",
+        "doc_354"
+      ],
+      "merged_contexts": [
+        "Employee satisfaction reports.",
+        "Employee satisfaction reports"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 355",
+      "source": "doc_355",
+      "context": "Workplace safety violation investigations, litigation, fines, penalties",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_169",
+        "doc_160",
+        "doc_355",
+        "doc_364"
+      ],
+      "merged_contexts": [
+        "Workplace safety investigations.",
+        "Workplace safety policies.",
+        "Workplace safety violation investigations, litigation, fines, penalties"
+      ],
+      "cluster_size": 4,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 356",
+      "source": "doc_356",
+      "context": "Product safety violation investigations, litigation, fines, penalties",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_161",
+        "doc_356"
+      ],
+      "merged_contexts": [
+        "Product safety violations.",
+        "Product safety violation investigations, litigation, fines, penalties"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 357",
+      "source": "doc_357",
+      "context": "Workplace safety, child labor, human trafficking policies",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_357",
+        "doc_162"
+      ],
+      "merged_contexts": [
+        "Policies on safety, child labor, trafficking.",
+        "Workplace safety, child labor, human trafficking policies"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 358",
+      "source": "doc_358",
+      "context": "Diversity and inclusion policies (board, management, workforce)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_358",
+        "doc_163"
+      ],
+      "merged_contexts": [
+        "Diversity & inclusion policies.",
+        "Diversity and inclusion policies (board, management, workforce)"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 164",
+      "source": "doc_164",
+      "context": "Policies on subcontractors/suppliers.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 360",
+      "source": "doc_360",
+      "context": "Responsible persons/systems for supply chain risk monitoring (internal or external)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_165",
+        "doc_360"
+      ],
+      "merged_contexts": [
+        "Responsible persons/systems for supply chain risks.",
+        "Responsible persons/systems for supply chain risk monitoring (internal or external)"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 361",
+      "source": "doc_361",
+      "context": "Suppliers, subcontractors, contractors list; projects and locations",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_361",
+        "doc_166"
+      ],
+      "merged_contexts": [
+        "Supplier/subcontractor lists.",
+        "Suppliers, subcontractors, contractors list; projects and locations"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 362",
+      "source": "doc_362",
+      "context": "Consumer protection and product safety policies",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_362",
+        "doc_167"
+      ],
+      "merged_contexts": [
+        "Consumer protection policies.",
+        "Consumer protection and product safety policies"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 168",
+      "source": "doc_168",
+      "context": "Employee recruitment/retention policies.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_363",
+        "doc_168"
+      ],
+      "merged_contexts": [
+        "Employee recruitment/retention policies.",
+        "Recruitment and retention policies"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 368",
+      "source": "doc_368",
+      "context": "Settlement agreements relating to sexual harassment/misconduct",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_368",
+        "doc_173",
+        "doc_171"
+      ],
+      "merged_contexts": [
+        "Corrective actions for harassment.",
+        "Settlement agreements re: harassment.",
+        "Settlement agreements relating to sexual harassment/misconduct"
+      ],
+      "cluster_size": 3,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 367",
+      "source": "doc_367",
+      "context": "Reports of sexual harassment (last 5 years); including against executives/directors",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_367",
+        "doc_172"
+      ],
+      "merged_contexts": [
+        "Reports of harassment (5 years).",
+        "Reports of sexual harassment (last 5 years); including against executives/directors"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 369",
+      "source": "doc_369",
+      "context": "Whistleblower and grievance mechanism reports and policies",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_369",
+        "doc_174"
+      ],
+      "merged_contexts": [
+        "Whistleblower mechanisms.",
+        "Whistleblower and grievance mechanism reports and policies"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 370",
+      "source": "doc_370",
+      "context": "Compliance with accounting/disclosure standards: reports, policies, disclosures",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_175",
+        "doc_370",
+        "doc_176"
+      ],
+      "merged_contexts": [
+        "Compliance with accounting/disclosure standards.",
+        "Internal controls for disclosure compliance.",
+        "Compliance with accounting/disclosure standards: reports, policies, disclosures"
+      ],
+      "cluster_size": 3,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 177",
+      "source": "doc_177",
+      "context": "Responsible persons/systems for compliance.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 178",
+      "source": "doc_178",
+      "context": "ESG in executive compensation.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 374",
+      "source": "doc_374",
+      "context": "Management succession plans or policies",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_374",
+        "doc_179"
+      ],
+      "merged_contexts": [
+        "Succession planning policies.",
+        "Management succession plans or policies"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 375",
+      "source": "doc_375",
+      "context": "Investor initiatives or activist campaigns related to ESG",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_375",
+        "doc_180"
+      ],
+      "merged_contexts": [
+        "Investor initiatives/activism related to ESG.",
+        "Investor initiatives or activist campaigns related to ESG"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 199",
+      "source": "doc_199",
+      "context": "Shareholder and securities holders schedule; rights to acquire securities; consideration paid",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_181",
+        "doc_199"
+      ],
+      "merged_contexts": [
+        "Shareholder matters (last 5 years).",
+        "Shareholder and securities holders schedule; rights to acquire securities; consideration paid"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 378",
+      "source": "doc_378",
+      "context": "Mandatory ESG standards/frameworks applicable; related disclosures",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_182",
+        "doc_378",
+        "doc_377",
+        "doc_183"
+      ],
+      "merged_contexts": [
+        "Voluntary ESG standards/frameworks.",
+        "Mandatory ESG standards/frameworks.",
+        "Voluntary ESG standards/frameworks used; related disclosures"
+      ],
+      "cluster_size": 4,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 184",
+      "source": "doc_184",
+      "context": "ESG compliance monitoring systems.",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 380",
+      "source": "doc_380",
+      "context": "ESG importance measurement systems (shareholder/stakeholder perception surveys)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_185",
+        "doc_380"
+      ],
+      "merged_contexts": [
+        "Shareholder/stakeholder ESG importance measures.",
+        "ESG importance measurement systems (shareholder/stakeholder perception surveys)"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 190",
+      "source": "doc_190",
+      "context": "By-laws; operating agreements; amendments",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 191",
+      "source": "doc_191",
+      "context": "Board and shareholder meeting minutes; written consents; materials presented",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 195",
+      "source": "doc_195",
+      "context": "Trade names; fictitious names; aliases used since inception",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 196",
+      "source": "doc_196",
+      "context": "Company and subsidiary addresses; office and property locations",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 200",
+      "source": "doc_200",
+      "context": "Certificates evidencing shares, options, warrants, bonds, or securities",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 203",
+      "source": "doc_203",
+      "context": "Agreements, memoranda, or offering materials relating to securities sales; investor correspondence; acquisition proposals; financial projections; placement memoranda; appraisals; fairness opinions",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 204",
+      "source": "doc_204",
+      "context": "Agreements granting rights over issued/unissued securities (purchase, repurchase, preemptive, registration, options, warrants, convertible)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 208",
+      "source": "doc_208",
+      "context": "Other organizational documents not covered above",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_296",
+        "doc_208"
+      ],
+      "merged_contexts": [
+        "Other organizational documents not covered above",
+        "Other operational documents not covered above"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 211",
+      "source": "doc_211",
+      "context": "Independent auditor reports",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 214",
+      "source": "doc_214",
+      "context": "Budgets; projected financial statements; cash flow forecasts",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 217",
+      "source": "doc_217",
+      "context": "Accounts receivable aging schedules",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 218",
+      "source": "doc_218",
+      "context": "General and administrative (G&A) expense breakdown",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 219",
+      "source": "doc_219",
+      "context": "Revenue, gross margin, and average selling price breakdown",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 222",
+      "source": "doc_222",
+      "context": "Other financial and accounting documents not covered above",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_237",
+        "doc_222"
+      ],
+      "merged_contexts": [
+        "Other financial and accounting documents not covered above",
+        "Other tax documents not covered above"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 224",
+      "source": "doc_224",
+      "context": "Federal, state, local tax returns (last 3 closed years + open years)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 225",
+      "source": "doc_225",
+      "context": "Evidence Company is current on all taxes (income, property, payroll, VAT, etc.)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 229",
+      "source": "doc_229",
+      "context": "Tax deficiency assessments and resolutions",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 232",
+      "source": "doc_232",
+      "context": "Notices of assessment; revenue agent reports for open years",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 233",
+      "source": "doc_233",
+      "context": "IRS Form 3115 filings; Section 481(a) depreciation adjustments",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 235",
+      "source": "doc_235",
+      "context": "Acquisitions lacking pre-closing tax indemnities",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 236",
+      "source": "doc_236",
+      "context": "ASC 740 (FIN 48) reserves; underlying issues and assessments",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 240",
+      "source": "doc_240",
+      "context": "Security agreements; trust indentures; mortgages; deeds of trust; guaranties; installment purchases; leases; letters of credit; contingent obligations; indemnities",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_243",
+        "doc_240"
+      ],
+      "merged_contexts": [
+        "Security agreements; trust indentures; mortgages; deeds of trust; guaranties; installment purchases; leases; letters of credit; contingent obligations; indemnities",
+        "Mortgages, liens, security interests, encumbrances"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 241",
+      "source": "doc_241",
+      "context": "Debt, guaranty, indemnification, or similar arrangements with insiders",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 242",
+      "source": "doc_242",
+      "context": "Outstanding letters of credit; performance and other bonds",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 244",
+      "source": "doc_244",
+      "context": "Compliance reports (past 3 years) related to debt instruments",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 245",
+      "source": "doc_245",
+      "context": "Compliance certificates for covenants or restrictions",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 247",
+      "source": "doc_247",
+      "context": "Other loan and obligation documents not covered above",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 249",
+      "source": "doc_249",
+      "context": "Inventories: descriptions, locations, quantities",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 250",
+      "source": "doc_250",
+      "context": "Real property owned or leased",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 253",
+      "source": "doc_253",
+      "context": "Appraisal reports and surveys of real property",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 255",
+      "source": "doc_255",
+      "context": "Other property and equipment documents not covered above",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_264",
+        "doc_255"
+      ],
+      "merged_contexts": [
+        "Other property and equipment documents not covered above",
+        "Other intellectual property documents not covered above"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 256",
+      "source": "doc_256",
+      "context": "Registered copyrights, trademarks, service marks, patents; certificates of registration",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 257",
+      "source": "doc_257",
+      "context": "Unregistered IP and pending applications",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 258",
+      "source": "doc_258",
+      "context": "IP acquisition, assignment, licensing agreements; related correspondence",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 259",
+      "source": "doc_259",
+      "context": "Software owned, licensed, or used",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 261",
+      "source": "doc_261",
+      "context": "Internet domain names held, assigned, or used",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 262",
+      "source": "doc_262",
+      "context": "Claims for infringement or violation of proprietary rights",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 263",
+      "source": "doc_263",
+      "context": "Company IP policies (registration, use, maintenance, monitoring)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 265",
+      "source": "doc_265",
+      "context": "Joint venture, partnership, teaming, subcontract, alliance agreements",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 268",
+      "source": "doc_268",
+      "context": "Affiliates and associates list (per SEC Rule 12b-2)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 269",
+      "source": "doc_269",
+      "context": "Agreements with affiliates/associates (tax sharing, indemnification, leases, consulting, facilities, supply, licenses)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 270",
+      "source": "doc_270",
+      "context": "Insurance policies (general liability, property, casualty, D&O, workers comp, key man, cyber, excess)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 272",
+      "source": "doc_272",
+      "context": "Insurance claims experience",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 278",
+      "source": "doc_278",
+      "context": "Material consents, approvals, notices, filings for the Transaction",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 281",
+      "source": "doc_281",
+      "context": "Pending bids or recompetes for government contracts",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 282",
+      "source": "doc_282",
+      "context": "Other material contracts not covered above",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 283",
+      "source": "doc_283",
+      "context": "Customers or clients list",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 284",
+      "source": "doc_284",
+      "context": "Suppliers and third-party service providers list",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 285",
+      "source": "doc_285",
+      "context": "Purchase and supply contract forms; pricing terms, rebates, concessions",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_285",
+        "doc_384"
+      ],
+      "merged_contexts": [
+        "Purchase and supply contract forms; pricing terms, rebates, concessions",
+        "Standard forms: purchase orders; supply agreements"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 290",
+      "source": "doc_290",
+      "context": "Internal policy manuals (including social media and online privacy)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 291",
+      "source": "doc_291",
+      "context": "Press releases",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 293",
+      "source": "doc_293",
+      "context": "Competitor analyses and reports",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 295",
+      "source": "doc_295",
+      "context": "Social media platforms used; company accounts; access lists",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 299",
+      "source": "doc_299",
+      "context": "Court or agency orders, writs, decrees, injunctions, judgments, rulings binding Company",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 301",
+      "source": "doc_301",
+      "context": "Settlement documents; tolling agreements; statute extensions",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 303",
+      "source": "doc_303",
+      "context": "Auditor/accountant correspondence on threatened or pending litigation, assessments, or claims",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 304",
+      "source": "doc_304",
+      "context": "Other litigation documents not covered above",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 308",
+      "source": "doc_308",
+      "context": "Correspondence with regulatory bodies; notices of violations",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata",
+      "sources": [
+        "doc_312",
+        "doc_308"
+      ],
+      "merged_contexts": [
+        "Correspondence with regulatory bodies; notices of violations",
+        "Other regulatory documents not covered above"
+      ],
+      "cluster_size": 2,
+      "merged_confidence": 1.0,
+      "resolution_method": "embedding_clustering"
+    },
+    {
+      "name": "doc 309",
+      "source": "doc_309",
+      "context": "Minutes/transcripts of meetings with regulatory agencies; related correspondence",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 310",
+      "source": "doc_310",
+      "context": "Governmental filings and consents required for share purchase",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 313",
+      "source": "doc_313",
+      "context": "Officers, directors, managers, key employees, consultants, contractors: titles, tenure, compensation",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 324",
+      "source": "doc_324",
+      "context": "Audits/investigations by IRS, DOL, PBGC, OSHA, or other agencies (last 6 years)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 325",
+      "source": "doc_325",
+      "context": "Reports/correspondence submitted to government agencies (last 3 years)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 326",
+      "source": "doc_326",
+      "context": "Correspondence on reportable events for plans (last 6 years)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 329",
+      "source": "doc_329",
+      "context": "Other employment and compensation documents not covered above",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 333",
+      "source": "doc_333",
+      "context": "Internal system audits (last 3 years); compliance with privacy laws",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 335",
+      "source": "doc_335",
+      "context": "Privacy/security training materials (last 3 years)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 337",
+      "source": "doc_337",
+      "context": "Background checks for employees/contractors with access to personal data",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 338",
+      "source": "doc_338",
+      "context": "Incidents, investigations, claims, regulatory actions on data privacy/security (last 3 years)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 340",
+      "source": "doc_340",
+      "context": "Sharing of personal information with affiliates/unaffiliated entities for marketing",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 342",
+      "source": "doc_342",
+      "context": "Global/regional databases or applications for storing personal data",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 343",
+      "source": "doc_343",
+      "context": "Other data privacy and security documents not covered above",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 346",
+      "source": "doc_346",
+      "context": "Records of handling, storage, transportation, disposal of hazardous substances",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 359",
+      "source": "doc_359",
+      "context": "Subcontractor, contractor, supplier vetting policies",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 366",
+      "source": "doc_366",
+      "context": "Corrective actions taken to prevent further sexual harassment/misconduct",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 371",
+      "source": "doc_371",
+      "context": "Internal controls for accounting/disclosure compliance",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 372",
+      "source": "doc_372",
+      "context": "Responsible persons/systems for monitoring disclosure compliance",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 373",
+      "source": "doc_373",
+      "context": "Integration of ESG data/issues into executive compensation",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 376",
+      "source": "doc_376",
+      "context": "Shareholder matters (proxies, activist investors, no-action requests, proposals)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 379",
+      "source": "doc_379",
+      "context": "Persons/systems monitoring ESG commitments and priorities",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 381",
+      "source": "doc_381",
+      "context": "Other ESG documents not covered above",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 382",
+      "source": "doc_382",
+      "context": "Major vendors and suppliers; goods/services; spend; relationship length",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 383",
+      "source": "doc_383",
+      "context": "Significant purchase/master supply/procurement contracts",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 385",
+      "source": "doc_385",
+      "context": "Vendors/suppliers >5% annual purchases; sole/primary source providers",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 386",
+      "source": "doc_386",
+      "context": "Vendor qualification, selection, management policies/procedures",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 388",
+      "source": "doc_388",
+      "context": "Vendor/supplier audits, performance reviews, quality assessments (last 2 years)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 389",
+      "source": "doc_389",
+      "context": "Vendor compliance programs (anti-corruption, modern slavery, ethics)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 390",
+      "source": "doc_390",
+      "context": "Vendor rebate programs; volume discounts; special pricing",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 391",
+      "source": "doc_391",
+      "context": "Anticipated material changes to vendor relationships (next 12 months)",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 392",
+      "source": "doc_392",
+      "context": "Other vendor documents not covered above",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
+    },
+    {
+      "name": "doc 393",
+      "source": "doc_393",
+      "context": "Documents, records, or materials not relevant to or not included within Categories A\u2013N",
+      "confidence": 1.0,
+      "extraction_method": "document_metadata"
     }
   ],
-  "financial_metrics": [],
-  "contracts": [],
-  "dates": []
+  "legal_keywords": [
+    {
+      "name": "COMPANY",
+      "type": "legal_keyword",
+      "keyword_type": "entity",
+      "canonical_reference": "Company",
+      "source": "doc_315",
+      "context": "between Company and insiders",
+      "confidence": 0.73,
+      "extraction_method": "legal_coreference"
+    }
+  ]
 }

@@ -64,7 +64,7 @@ def parse_checklist(checklist_text: str, llm) -> Dict:
                 'items': [
                     {
                         'text': item.text,
-                        'original': item.original
+                        'original': item.original or item.text  # Use text as fallback if original is None
                     }
                     for item in category.items
                 ]

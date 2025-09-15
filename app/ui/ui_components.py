@@ -47,6 +47,24 @@ def _resolve_document_path(doc_path: str) -> Optional[Path]:
     if fallback_path.exists():
         return fallback_path
         
+    # Enhanced search: Look in the currently selected data room only
+    # This handles cases where files like "company-profile.pdf" are stored with just filename
+    # but should only be resolved within the current data room context
+    
+    # Try using the data room path from session state
+    current_data_room = getattr(st.session_state, 'data_room_path', None)
+    if current_data_room and Path(current_data_room).exists():
+        potential_path = Path(current_data_room) / path_obj
+        if potential_path.exists():
+            return potential_path
+    
+    # Also check for selected_data_room_path as fallback
+    selected_data_room = getattr(st.session_state, 'selected_data_room_path', None)
+    if selected_data_room and Path(selected_data_room).exists():
+        potential_path = Path(selected_data_room) / path_obj
+        if potential_path.exists():
+            return potential_path
+    
     # Last resort: check if original path exists as-is
     if path_obj.exists():
         return path_obj
@@ -432,7 +450,7 @@ def display_download_error(error: Exception = None):
 
 def render_checklist_results(results: dict, relevancy_threshold: float):
     """
-    Render checklist matching results in Streamlit UI.
+    Render checklist matching results in Streamlit UI with nested collapsible elements.
 
     Args:
         results: Dictionary of checklist results by category
@@ -445,46 +463,58 @@ def render_checklist_results(results: dict, relevancy_threshold: float):
 
     for cat_letter, category in results.items():
         with st.expander(f"**{cat_letter}. {category['name']}** ({category['matched_items']}/{category['total_items']} items matched)", expanded=False):
-            for item in category['items']:
+            for item_idx, item in enumerate(category['items']):
                 item_text = item['text']
                 matches = item['matches']
 
                 # Filter matches by relevancy threshold
                 relevant_matches = [m for m in matches if m['score'] >= relevancy_threshold]
 
+                # Create a nested expander for each checklist item
                 if relevant_matches:
-                    st.markdown(f"**✅ {item_text}**")
-                    for match in relevant_matches:
-                        score = match['score']
-                        doc_name = match['name']
-                        doc_path = match['path']
-
-                        col1, col2, col3 = st.columns([3, 1, 1])
-                        with col1:
-                            resolved_path = _resolve_document_path(doc_path)
-                            if resolved_path and resolved_path.exists():
-                                try:
-                                    with open(resolved_path, 'rb') as f:
-                                        st.download_button(
-                                            f"📄 {doc_name}",
-                                            data=f.read(),
-                                            file_name=resolved_path.name,
-                                            mime="application/octet-stream",
-                                            key=f"download_{hash(doc_path) % 10000}"
-                                        )
-                                except Exception:
-                                    st.write(f"📄 {doc_name} (unavailable)")
-                            else:
-                                st.write(f"📄 {doc_name} (unavailable)")
-                        with col2:
-                            st.caption(f"{score:.3f}")
-                        with col3:
-                            if score >= 0.5:
-                                st.caption("🔹 PRIMARY")
-                            else:
-                                st.caption("🔸 ANCILLARY")
+                    # Show item as matched with number of documents found
+                    item_status = "✅"
+                    item_summary = f"{len(relevant_matches)} document(s) found"
+                    expanded_default = False
                 else:
-                    st.markdown(f"**❌ {item_text}** - No relevant documents found")
+                    # Show item as not matched
+                    item_status = "❌"
+                    item_summary = "No relevant documents found"
+                    expanded_default = False
+
+                with st.expander(f"**{item_status} Item {item_idx + 1}:** {item_text} ({item_summary})", expanded=expanded_default):
+                    if relevant_matches:
+                        for match in relevant_matches:
+                            score = match['score']
+                            doc_name = match['name']
+                            doc_path = match['path']
+
+                            col1, col2, col3 = st.columns([3, 1, 1])
+                            with col1:
+                                resolved_path = _resolve_document_path(doc_path)
+                                if resolved_path and resolved_path.exists():
+                                    try:
+                                        with open(resolved_path, 'rb') as f:
+                                            st.download_button(
+                                                f"📄 {doc_name}",
+                                                data=f.read(),
+                                                file_name=resolved_path.name,
+                                                mime="application/octet-stream",
+                                                key=f"download_{hash(doc_path) % 10000}_{item_idx}"
+                                            )
+                                    except Exception:
+                                        st.write(f"📄 {doc_name} (unavailable)")
+                                else:
+                                    st.write(f"📄 {doc_name} (unavailable)")
+                            with col2:
+                                st.caption(f"{score:.3f}")
+                            with col3:
+                                if score >= 0.5:
+                                    st.caption("🔹 PRIMARY")
+                                else:
+                                    st.caption("🔸 ANCILLARY")
+                    else:
+                        st.info("No documents found matching the relevancy threshold for this checklist item.")
 
 
 def render_question_results(answers: dict):

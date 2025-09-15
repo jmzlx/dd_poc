@@ -28,19 +28,19 @@ class OverviewTab(TabBase):
 
         # Generate button row
         button_clicked = self._render_generate_buttons(
-            "🤖 Generate Overview",
+            "🤖 Generate Target Analysis",
             "regenerate_overview_btn",
             "overview_summary",
-            "Use AI to generate company overview analysis"
+            "Use AI to analyze the target company from an acquisition perspective"
         )
 
         # Generate or display content
         if self._should_generate_content(button_clicked, "overview_summary"):
-            self._generate_report("overview", "overview_summary", "✅ Company overview generated successfully!")
+            self._generate_report("overview", "overview_summary", "✅ Target company analysis generated successfully!")
         else:
             self._render_content_or_placeholder(
                 "overview_summary",
-                "👆 Click 'Generate Overview' to create AI-powered company analysis"
+                "👆 Click 'Generate Target Analysis' to create AI-powered target company analysis"
             )
 
     def _generate_report(self, report_type: str, session_attr: str, success_message: str):

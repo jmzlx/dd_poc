@@ -25,26 +25,28 @@ class ResponseParser:
         strategy_text: Optional[str],
         checklist_results: Optional[Dict]
     ) -> str:
-        """Create overview analysis prompt"""
-        prompt = "Based on the following company documents, provide a comprehensive overview analysis:\n\n"
+        """Create overview analysis prompt focused on target company perspective"""
+        prompt = "Analyze the following target company documents from an acquisition perspective:\n\n"
 
         if context_docs:
-            prompt += "Company Documents:\n" + "\n\n".join(context_docs) + "\n\n"
+            prompt += "Target Company Documents:\n" + "\n\n".join(context_docs) + "\n\n"
 
         if strategy_text:
-            prompt += f"Strategic Context:\n{strategy_text[:1000]}\n\n"
+            prompt += f"Acquirer's Strategic Context (for reference):\n{strategy_text[:1000]}\n\n"
 
         if checklist_results:
-            prompt += f"Checklist Findings:\n{str(checklist_results)[:1000]}\n\n"
+            prompt += f"Due Diligence Findings:\n{str(checklist_results)[:1000]}\n\n"
 
-        prompt += """Please provide:
-1. Company overview and business model
-2. Key strengths and competitive advantages
-3. Main risks and challenges
-4. Financial health indicators
-5. Strategic recommendations
+        prompt += """Please provide a comprehensive analysis of the TARGET COMPANY focusing on:
 
-Be specific, factual, and focus on the most important insights."""
+1. **Company Overview**: Business model, market position, and core operations of the target
+2. **Strategic Value**: Why this target company would be attractive for acquisition
+3. **Competitive Strengths**: Key assets, capabilities, and competitive advantages the target brings
+4. **Risk Assessment**: Main operational, financial, and strategic risks associated with the target
+5. **Financial Health**: Target company's financial position and performance indicators
+6. **Acquisition Rationale**: How the target fits acquisition criteria and strategic objectives
+
+Focus on analyzing the target company as a potential acquisition candidate. Be specific, factual, and highlight both opportunities and concerns from an acquirer's due diligence perspective."""
 
         return prompt
 
@@ -54,26 +56,28 @@ Be specific, factual, and focus on the most important insights."""
         strategy_text: Optional[str],
         checklist_results: Optional[Dict]
     ) -> str:
-        """Create strategic analysis prompt"""
-        prompt = "Provide a strategic analysis based on the following company information:\n\n"
+        """Create strategic analysis prompt focused on target company from acquisition perspective"""
+        prompt = "Conduct a strategic analysis of the target company from an acquisition perspective:\n\n"
 
         if strategy_text:
-            prompt += f"Strategic Framework:\n{strategy_text[:1000]}\n\n"
+            prompt += f"Acquirer's Strategic Framework (for context):\n{strategy_text[:1000]}\n\n"
 
         if context_docs:
-            prompt += "Company Documents:\n" + "\n\n".join(context_docs) + "\n\n"
+            prompt += "Target Company Documents:\n" + "\n\n".join(context_docs) + "\n\n"
 
         if checklist_results:
-            prompt += f"Operational Findings:\n{str(checklist_results)[:1000]}\n\n"
+            prompt += f"Due Diligence Findings:\n{str(checklist_results)[:1000]}\n\n"
 
-        prompt += """Please analyze:
-1. Strategic positioning and market opportunities
-2. Operational strengths and weaknesses
-3. Risk mitigation strategies
-4. Growth potential and recommendations
-5. Investment considerations
+        prompt += """Please provide a strategic analysis of the TARGET COMPANY focusing on:
 
-Focus on strategic implications and actionable insights."""
+1. **Strategic Fit Assessment**: How well the target aligns with the acquirer's strategic objectives and portfolio
+2. **Market Position Analysis**: Target's competitive position, market share, and industry dynamics
+3. **Value Creation Opportunities**: Potential synergies, cross-selling opportunities, and operational improvements
+4. **Integration Considerations**: Key challenges and opportunities for successful integration
+5. **Risk-Adjusted Valuation**: Strategic risks, regulatory concerns, and market vulnerabilities
+6. **Post-Acquisition Strategy**: Recommended approach for maximizing value creation after acquisition
+
+Analyze the target company as an acquisition candidate, evaluating both strategic alignment and value creation potential. Consider the acquirer's strategic framework when assessing fit and synergy opportunities."""
 
         return prompt
 

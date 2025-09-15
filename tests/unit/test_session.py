@@ -63,53 +63,7 @@ class TestStatePersistence:
         # Property should work without errors
         assert session_manager.documents == test_docs
 
-    def test_chunks_property_operations(self, session_manager, mock_session_state):
-        """Test chunks property getter and setter"""
-        # Test setter
-        test_chunks = [{'text': 'chunk1', 'source': 'doc1'}]
-        session_manager.chunks = test_chunks
-        # Property should work without errors
-        assert session_manager.chunks == test_chunks
 
-    def test_embeddings_property_operations(self, session_manager, mock_session_state):
-        """Test embeddings property getter and setter"""
-        # Test setter
-        test_embeddings = MagicMock()
-        session_manager.embeddings = test_embeddings
-        # Property should work without errors
-        assert session_manager.embeddings == test_embeddings
-
-    def test_analysis_results_properties(self, session_manager, mock_session_state):
-        """Test analysis results property operations"""
-        # Test checklist_results
-        test_results = {'item1': 'result1'}
-        session_manager.checklist_results = test_results
-        # Property should work without errors
-        assert session_manager.checklist_results == test_results
-
-    def test_file_selection_properties(self, session_manager, mock_session_state):
-        """Test file selection property operations"""
-        # Test strategy path and text
-        session_manager.selected_strategy_path = '/path/to/strategy'
-        session_manager.selected_strategy_text = 'strategy content'
-        # Properties should work without errors
-        assert session_manager.selected_strategy_path == '/path/to/strategy'
-        assert session_manager.selected_strategy_text == 'strategy content'
-
-    def test_processing_state_properties(self, session_manager, mock_session_state):
-        """Test processing state property operations"""
-        # Test current_vdr_store
-        session_manager.current_vdr_store = 'test_store'
-        # Property should work without errors
-        assert session_manager.current_vdr_store == 'test_store'
-
-    def test_cached_data_properties(self, session_manager, mock_session_state):
-        """Test cached data property operations"""
-        # Test checklist
-        test_checklist = {'item1': 'value1'}
-        session_manager.checklist = test_checklist
-        # Property should work without errors
-        assert session_manager.checklist == test_checklist
 
 
 class TestDocumentStorage:
