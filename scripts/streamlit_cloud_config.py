@@ -124,11 +124,8 @@ def initialize_for_streamlit_cloud():
     # Configure caching
     configure_streamlit_cloud_cache()
 
-    # Only preload models if we're on Streamlit Cloud (where dependencies are available)
-    is_cloud = _is_streamlit_cloud()
-    if is_cloud and os.environ.get("PRELOAD_MODELS", "true").lower() == "true":
-        preload_models()
-    elif not is_cloud:
-        logger.info("🏠 Local development: skipping model preloading (dependencies not available)")
+    # Skip model preloading to avoid PyTorch device placement issues in containers
+    # Models will be loaded on-demand via model_cache.py
+    logger.info("⏭️ Skipping model preloading - models loaded on-demand for better compatibility")
 
     logger.info("Application initialization complete")
