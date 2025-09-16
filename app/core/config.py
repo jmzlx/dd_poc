@@ -51,13 +51,16 @@ class AppConfig:
             'statistical_min_std_dev': STATISTICAL_MIN_STD_DEV
         }
 
+        # Use absolute paths to avoid working directory issues
+        project_root = Path(__file__).parent.parent.parent  # Go up from app/core/config.py to project root
+        
         self._config['paths'] = {
-            'data_dir': Path('data'),
-            'strategy_dir': Path('data/strategy'),
-            'checklist_dir': Path('data/checklist'),
-            'questions_dir': Path('data/questions'),
-            'vdrs_dir': Path('data/vdrs'),
-            'faiss_dir': Path('data/search_indexes')
+            'data_dir': project_root / 'data',
+            'strategy_dir': project_root / 'data/strategy',
+            'checklist_dir': project_root / 'data/checklist',
+            'questions_dir': project_root / 'data/questions',
+            'vdrs_dir': project_root / 'data/vdrs',
+            'faiss_dir': project_root / 'data/search_indexes'
         }
 
         self._config['anthropic'] = {
