@@ -34,36 +34,21 @@ def _resolve_document_path(doc_path: str) -> Optional[Path]:
     if path_obj.is_absolute():
         return path_obj if path_obj.exists() else None
     
-    # For relative paths, try to resolve against the data room path
-    data_room_path = getattr(st.session_state, 'data_room_path', None)
-    if data_room_path:
-        resolved_path = Path(data_room_path) / path_obj
-        if resolved_path.exists():
-            return resolved_path
+    # For relative paths, try different resolution strategies
+    resolution_paths = [
+        # Try current data room path
+        getattr(st.session_state, 'data_room_path', None),
+        # Try selected data room path as fallback
+        getattr(st.session_state, 'selected_data_room_path', None),
+        # Try relative to data directory
+        str(Path('data'))
+    ]
     
-    # Fallback: try relative to data directory
-    data_dir = Path('data')
-    fallback_path = data_dir / path_obj
-    if fallback_path.exists():
-        return fallback_path
-        
-    # Enhanced search: Look in the currently selected data room only
-    # This handles cases where files like "company-profile.pdf" are stored with just filename
-    # but should only be resolved within the current data room context
-    
-    # Try using the data room path from session state
-    current_data_room = getattr(st.session_state, 'data_room_path', None)
-    if current_data_room and Path(current_data_room).exists():
-        potential_path = Path(current_data_room) / path_obj
-        if potential_path.exists():
-            return potential_path
-    
-    # Also check for selected_data_room_path as fallback
-    selected_data_room = getattr(st.session_state, 'selected_data_room_path', None)
-    if selected_data_room and Path(selected_data_room).exists():
-        potential_path = Path(selected_data_room) / path_obj
-        if potential_path.exists():
-            return potential_path
+    for base_path in resolution_paths:
+        if base_path and Path(base_path).exists():
+            potential_path = Path(base_path) / path_obj
+            if potential_path.exists():
+                return potential_path
     
     # Last resort: check if original path exists as-is
     if path_obj.exists():
@@ -284,16 +269,6 @@ def status_message(message: str, message_type: str = "info"):
         st.info(message)
 
 
-def progress_indicator():
-    """
-    Create a progress indicator placeholder.
-
-    Returns:
-        A context manager for progress indication
-    """
-    return st.empty()
-
-
 def compact_status_display(status_items: list, title: str = "Status"):
     """
     Display a compact list of status items with minimal vertical spacing.
@@ -344,16 +319,6 @@ def compact_status_display(status_items: list, title: str = "Status"):
             """, unsafe_allow_html=True)
 
 
-def progress_status_tracker():
-    """
-    Create a progress status tracker that can be updated dynamically.
-    
-    Returns:
-        A class instance that can track and update progress
-    """
-    return ProgressTracker()
-
-
 class ProgressTracker:
     """A class to track and display progress with real indicators"""
     
@@ -367,7 +332,7 @@ class ProgressTracker:
     def initialize(self, steps: list, title: str = "Progress"):
         """Initialize progress tracker with steps"""
         self.status_items = [
-            {'message': step, 'status': 'pending', 'icon': '⏳'}
+            {'message': step, 'status': 'pending'}
             for step in steps
         ]
         self.total_steps = len(steps)
@@ -378,7 +343,6 @@ class ProgressTracker:
         """Mark a step as in progress"""
         if step_index < len(self.status_items):
             self.status_items[step_index]['status'] = 'in_progress'
-            self.status_items[step_index]['icon'] = '🔄'
             if message:
                 self.status_items[step_index]['message'] = message
             self.current_step = step_index
@@ -388,7 +352,6 @@ class ProgressTracker:
         """Mark a step as completed"""
         if step_index < len(self.status_items):
             self.status_items[step_index]['status'] = 'completed'
-            self.status_items[step_index]['icon'] = '✅'
             if message:
                 self.status_items[step_index]['message'] = message
             self._render()
@@ -397,10 +360,10 @@ class ProgressTracker:
         """Mark a step as error"""
         if step_index < len(self.status_items):
             self.status_items[step_index]['status'] = 'error'
-            self.status_items[step_index]['icon'] = '❌'
             if message:
                 self.status_items[step_index]['message'] = message
             self._render()
+    
     
     def _render(self, title: str = "Progress"):
         """Internal method to render current progress"""
@@ -515,59 +478,41 @@ def render_file_selector(directory: str, file_type: str, key_suffix: str, icon: 
 # ERROR HANDLING COMPONENTS - Standardized error message patterns
 # =============================================================================
 
-def display_generation_error(operation_type: str, error: Exception = None):
+def display_error(operation_type: str, action: str = "process", error: Exception = None, icon: str = "❌"):
     """
-    Display a standardized error message for generation failures.
+    Display a standardized error message for various operation failures.
 
     Args:
-        operation_type: Type of operation that failed (e.g., "question analysis", "checklist analysis")
+        operation_type: Type of operation that failed (e.g., "question analysis", "data room", "document processor")
+        action: Action that failed (e.g., "generate", "process", "initialize", "download")
         error: The exception that occurred (optional)
+        icon: Icon to display with error message (default: "❌")
     """
     if error:
-        st.error(f"❌ Failed to generate {operation_type}: {str(error)}")
+        st.error(f"{icon} Failed to {action} {operation_type}: {str(error)}")
     else:
-        st.error(f"❌ Failed to generate {operation_type}")
+        st.error(f"{icon} Failed to {action} {operation_type}")
+
+
+# Convenience functions for backward compatibility
+def display_generation_error(operation_type: str, error: Exception = None):
+    """DEPRECATED: Use display_error with action='generate' instead."""
+    display_error(operation_type, "generate", error)
 
 
 def display_processing_error(operation_type: str, error: Exception = None):
-    """
-    Display a standardized error message for processing failures.
-
-    Args:
-        operation_type: Type of operation that failed (e.g., "question", "data room")
-        error: The exception that occurred (optional)
-    """
-    if error:
-        st.error(f"❌ Failed to process {operation_type}: {str(error)}")
-    else:
-        st.error(f"❌ Failed to process {operation_type}")
+    """DEPRECATED: Use display_error with action='process' instead."""
+    display_error(operation_type, "process", error)
 
 
 def display_initialization_error(component_type: str, error: Exception = None):
-    """
-    Display a standardized error message for initialization failures.
-
-    Args:
-        component_type: Type of component that failed to initialize (e.g., "document processor")
-        error: The exception that occurred (optional)
-    """
-    if error:
-        st.error(f"❌ Failed to initialize {component_type}: {str(error)}")
-    else:
-        st.error(f"❌ Failed to initialize {component_type}")
+    """DEPRECATED: Use display_error with action='initialize' instead."""
+    display_error(component_type, "initialize", error)
 
 
 def display_download_error(error: Exception = None):
-    """
-    Display a standardized error message for download failures.
-
-    Args:
-        error: The exception that occurred (optional)
-    """
-    if error:
-        st.error(f"❌ Download failed: {str(error)}")
-    else:
-        st.error("❌ Download failed")
+    """DEPRECATED: Use display_error with action='download' instead."""
+    display_error("download", "complete", error)
 
 
 # =============================================================================
@@ -629,21 +574,9 @@ def render_checklist_results(results: dict, relevancy_threshold: float):
 
                             col1, col2 = st.columns([4, 1])
                             with col1:
-                                resolved_path = _resolve_document_path(doc_path)
-                                if resolved_path and resolved_path.exists():
-                                    try:
-                                        with open(resolved_path, 'rb') as f:
-                                            st.download_button(
-                                                f"📄 {doc_name}",
-                                                data=f.read(),
-                                                file_name=resolved_path.name,
-                                                mime="application/octet-stream",
-                                                key=f"download_{hash(doc_path) % 10000}_{item_idx}"
-                                            )
-                                    except Exception:
-                                        st.write(f"📄 {doc_name} (unavailable)")
-                                else:
-                                    st.write(f"📄 {doc_name} (unavailable)")
+                                render_document_download_button(
+                                    doc_path, doc_name, f"checklist_{hash(doc_path) % 10000}_{item_idx}"
+                                )
                             with col2:
                                 st.caption(f"{score:.3f}")
                     else:
@@ -667,7 +600,7 @@ def render_question_results(answers: dict):
         answer = answer_data.get('answer', 'No answer available')
         sources = answer_data.get('sources', [])
 
-        with st.expander(f"**{question}**", expanded=True):
+        with st.expander(f"**{question}**", expanded=False):
             if answer:
                 st.markdown(f"**Answer:** {answer}")
 
@@ -680,55 +613,64 @@ def render_question_results(answers: dict):
 
                     col1, col2 = st.columns([4, 1])
                     with col1:
-                        resolved_path = _resolve_document_path(doc_path)
-                        if resolved_path and resolved_path.exists():
-                            try:
-                                with open(resolved_path, 'rb') as f:
-                                    st.download_button(
-                                        f"📄 {doc_name}",
-                                        data=f.read(),
-                                        file_name=resolved_path.name,
-                                        mime="application/octet-stream",
-                                        key=f"q_download_{hash(doc_path) % 10000}_{i}"
-                                    )
-                            except Exception:
-                                st.write(f"📄 {doc_name} (unavailable)")
-                        else:
-                            st.write(f"📄 {doc_name} (unavailable)")
+                        render_document_download_button(
+                            doc_path, doc_name, f"question_{hash(doc_path) % 10000}_{i}"
+                        )
                     with col2:
                         st.caption(f"{score:.3f}")
 
 
-def create_document_link(doc_path: str, doc_name: str, doc_title: str, unique_key: str):
+def render_document_download_button(doc_path: str, doc_name: str, unique_key: str, 
+                                   label_prefix: str = "📄", show_unavailable: bool = True,
+                                   button_help: str = None) -> bool:
     """
-    Create a download link for a document.
+    Consolidated function to render a document download button.
 
     Args:
         doc_path: Path to the document file (can be relative or absolute)
         doc_name: Display name for the document
-        doc_title: Title for the document
         unique_key: Unique key for the download button
+        label_prefix: Prefix for the button label (default: "📄")
+        show_unavailable: Whether to show unavailable documents as text/caption
+        button_help: Optional help text for the button
+        
+    Returns:
+        True if document was available and button was rendered, False otherwise
     """
-    import streamlit as st
-    from pathlib import Path
-
-    # Resolve the path - handle both relative and absolute paths
     resolved_path = _resolve_document_path(doc_path)
     
     if resolved_path and resolved_path.exists():
         try:
             with open(resolved_path, 'rb') as f:
+                # Determine MIME type based on file extension
+                mime_type = "application/pdf" if doc_path.lower().endswith('.pdf') else "application/octet-stream"
+                
                 st.download_button(
-                    f"📄 {doc_title}",
+                    label=f"{label_prefix} {doc_name}",
                     data=f.read(),
                     file_name=resolved_path.name,
-                    mime="application/octet-stream",
-                    key=f"link_{unique_key}"
+                    mime=mime_type,
+                    key=f"download_{unique_key}",
+                    help=button_help or f"Download: {doc_name}"
                 )
-        except Exception as e:
-            st.error(f"Error reading document: {doc_name}")
+                return True
+        except Exception:
+            if show_unavailable:
+                st.caption(f"{label_prefix} {doc_name} (unavailable)")
+            return False
     else:
-        st.write(f"📄 {doc_title} (unavailable)")
+        if show_unavailable:
+            st.write(f"{label_prefix} {doc_name} (unavailable)")
+        return False
+
+
+def create_document_link(doc_path: str, doc_name: str, doc_title: str, unique_key: str):
+    """
+    Create a download link for a document.
+    
+    DEPRECATED: Use render_document_download_button instead.
+    """
+    render_document_download_button(doc_path, doc_title, unique_key, "📄", True)
 
 
 def render_content_with_clickable_citations(content: str, citations: List[Dict[str, Any]]):
@@ -771,28 +713,9 @@ def render_content_with_clickable_citations(content: str, citations: List[Dict[s
                 cols = st.columns(len(mentioned_docs))
                 for i, (doc_name, doc_path) in enumerate(mentioned_docs):
                     with cols[i]:
-                        _render_simple_download_button(doc_name, doc_path, f"para_{para_idx}_{i}")
+                        render_document_download_button(doc_path, doc_name, f"para_{para_idx}_{i}")
         else:
             st.markdown("")
-
-
-def _render_simple_download_button(doc_name: str, doc_path: str, unique_key: str):
-    """Simple inline download button"""
-    resolved_path = _resolve_document_path(doc_path)
-    
-    if resolved_path and resolved_path.exists():
-        try:
-            with open(resolved_path, 'rb') as f:
-                st.download_button(
-                    label=f"📄 {doc_name}",
-                    data=f.read(),
-                    file_name=resolved_path.name,
-                    mime="application/pdf" if doc_path.lower().endswith('.pdf') else "application/octet-stream",
-                    key=f"simple_download_{unique_key}",
-                    help=f"Download: {doc_name}"
-                )
-        except Exception:
-            st.caption(f"📄 {doc_name} (unavailable)")
 
 
 # =============================================================================

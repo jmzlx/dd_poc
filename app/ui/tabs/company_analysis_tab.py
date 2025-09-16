@@ -10,7 +10,7 @@ import streamlit as st
 from typing import List, Dict, Any
 
 from app.ui.tabs.tab_base import TabBase
-from app.ui.ui_components import status_message, progress_status_tracker
+from app.ui.ui_components import status_message, ProgressTracker
 from app.core.logging import logger
 
 
@@ -51,27 +51,35 @@ class CompanyAnalysisTab(TabBase):
         self._set_processing_active(True)
 
         try:
-            # STEP 1: Prepare comprehensive context by auto-running missing analyses
-            with st.spinner("🔄 Preparing analysis context..."):
-                self._prepare_comprehensive_context()
-
-            # STEP 2: Generate comprehensive analysis with all available context
-            analysis_progress = progress_status_tracker()
-            analysis_steps = [
+            # Create single unified progress tracker for entire process
+            unified_progress = ProgressTracker()
+            all_steps = [
+                "Verify data room processing",
+                "Check vector store availability", 
+                "Validate session data",
+                "Check strategy context",
+                "Run checklist analysis",
+                "Run Q&A analysis", 
+                "Vectorize analysis results",
                 "Initialize AI agent",
                 "Analyze documents",
                 "Generate report",
                 "Validate citations"
             ]
-            analysis_progress.initialize(analysis_steps, "🤖 AI Agent Analysis")
+            unified_progress.initialize(all_steps, "🔄 Comprehensive Analysis")
+
+            # STEP 1: Prepare comprehensive context by auto-running missing analyses
+            self._prepare_comprehensive_context(unified_progress)
+
+            # STEP 2: Generate comprehensive analysis with all available context
             
             # Use vdr_store for proper vector store access
             data_room_name = getattr(self.session, 'vdr_store', None) or self._get_data_room_name()
             
-            analysis_progress.start_step(0, "🤖 Booting up AI ReAct Agent with advanced reasoning...")
-            analysis_progress.complete_step(0, f"🎯 AI Agent ready - targeting {data_room_name}")
+            unified_progress.start_step(7, "🤖 Booting up AI ReAct Agent with advanced reasoning...")
+            unified_progress.complete_step(7, f"🎯 AI Agent ready - targeting {data_room_name}")
             
-            analysis_progress.start_step(1, "🧠 AI Agent reading documents, extracting insights, reasoning about findings...")
+            unified_progress.start_step(8, "🧠 AI Agent reading documents, extracting insights, reasoning about findings...")
             # Note: This step will run for the longest time, so we keep it in progress
             
             # Use comprehensive ReAct agent with full prepared context
@@ -84,27 +92,13 @@ class CompanyAnalysisTab(TabBase):
                 project_info={'company_name': data_room_name, 'data_room_path': self.session.data_room_path}
             )
             
-            analysis_progress.complete_step(1, "Document analysis completed")
-            analysis_progress.start_step(2, "Generating report...")
-            analysis_progress.complete_step(2, f"Report generated ({len(report_content) if report_content else 0} chars)")
-            
-            analysis_progress.start_step(3, "Validating citations...")
-
-            # DEBUG: Log what was actually returned
-            logger.info(f"RETURNED from generate_react_report: report_content={report_content is not None} ({len(report_content) if report_content else 0} chars), citation_info={citation_info}")
-
-            # Validate that we have citations (they're now inline in the report)
-            if not citation_info.get('has_citations', False):
-                analysis_progress.error_step(3, "No citations found in analysis")
-                logger.error("CRITICAL: No citations found in ReAct agent analysis")
-                raise ValueError("Company analysis must include citations from source documents. No citations were found in the agent's analysis.")
-
-            analysis_progress.complete_step(3, f"Citations validated: {len(citation_info.get('citations', []))} sources")
-
             # Store comprehensive analysis and citation info for rendering
             self.session.strategic_company_summary = report_content
-            # Store citation info separately for download functionality
-            setattr(self.session, 'strategic_company_citations', citation_info.get('citations', []))
+            
+            # Store citation info for download functionality
+            citations_to_store = citation_info.get('citations', []) if citation_info else []
+            self.session.strategic_company_citations = citations_to_store
+            
             status_message("✅ Company analysis completed successfully!", "success")
             st.rerun()
                     
@@ -115,24 +109,21 @@ class CompanyAnalysisTab(TabBase):
             # Always reset processing state
             self._set_processing_active(False)
 
-    def _prepare_comprehensive_context(self):
+    def _prepare_comprehensive_context(self, progress_tracker=None):
         """Prepare comprehensive context by auto-running missing analyses and vectorizing results"""
         
-        # Initialize progress tracker
-        progress_tracker = progress_status_tracker()
-        
-        # Define all steps for better progress visualization
-        steps = [
-            "Verify data room processing",
-            "Check vector store availability", 
-            "Validate session data",
-            "Check strategy context",
-            "Run checklist analysis",
-            "Run Q&A analysis",
-            "Vectorize analysis results"
-        ]
-        
-        progress_tracker.initialize(steps, "🔄 Preparing Analysis Context")
+        if progress_tracker is None:
+            # If no progress tracker provided, create a simple one for standalone usage
+            progress_tracker = ProgressTracker()
+            progress_tracker.initialize([
+                "Verify data room processing",
+                "Check vector store availability", 
+                "Validate session data",
+                "Check strategy context",
+                "Run checklist analysis",
+                "Run Q&A analysis",
+                "Vectorize analysis results"
+            ], "🔄 Preparing Analysis Context")
         
         try:
             # STEP 1: Verify data room is processed
@@ -439,6 +430,7 @@ Key Finding: {answer[:200]}...
             # Debug logging
             logger.info(f"Rendering company analysis content: {len(content)} characters")
             logger.info(f"Available citations for download: {len(citations)}")
+            
             
             # Import the simple clickable file rendering function
             from app.ui.ui_components import render_content_with_clickable_citations

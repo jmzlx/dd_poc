@@ -145,17 +145,33 @@ class QATab:
 
         # Display source documents with download buttons in collapsed expanders
         for i, result in enumerate(results[:3], 1):
-            doc_source = result.get('source', 'Unknown')
-            citation = result.get('citation', '')
-            doc_title = f"{i}. {doc_source} ({citation})" if citation else f"{i}. {doc_source}"
+            # Handle different result formats defensively
+            if not isinstance(result, dict):
+                # Result might be malformed - show debug info
+                st.error(f"Debug - Result {i} is not a dict: {type(result)} = {result}")
+                continue
+                
+            doc_source = result.get('source', result.get('name', 'Unknown Document'))
+            score = result.get('score', 0.0)
+            citation = f"Score: {score:.3f}"
+            doc_title = f"{i}. {doc_source} ({citation})"
             
             # Use expander to show documents collapsed by default
             with st.expander(f"📄 {doc_title}", expanded=False):
                 col1, col2 = st.columns([5, 1])
                 with col1:
-                    text_content = result.get('text', '')
+                    # Handle different result formats defensively
+                    text_content = result.get('text', result.get('document', result.get('content', '')))
+                    if not text_content and isinstance(result, dict):
+                        # Debug: show the actual structure if text is missing
+                        st.error(f"Debug - Result structure: {list(result.keys())}")
+                        text_content = str(result.get('page_content', result))
+                    
                     excerpt = text_content[:500] + "..." if len(text_content) > 500 else text_content
-                    st.markdown(f"\"{excerpt}\"")
+                    if excerpt:
+                        st.markdown(f"\"{excerpt}\"")
+                    else:
+                        st.warning("No text content available for this document")
 
                 with col2:
                     # Only show one download button

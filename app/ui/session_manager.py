@@ -50,6 +50,7 @@ class SessionManager:
     overview_summary = SessionProperty("")
     strategic_summary = SessionProperty("")
     strategic_company_summary = SessionProperty("")
+    strategic_company_citations = SessionProperty([])  # CRITICAL FIX: Make citations persistent across reloads
     # Note: Citations are now inline in the strategic_company_summary content
 
     # User selections
@@ -109,7 +110,7 @@ class SessionManager:
         """Reset analysis results and cached data for fresh analysis."""
         self.overview_summary = ""
         self.strategic_summary = ""
-        # Note: strategic_company_summary and citations are preserved across document reprocessing
+        # Note: strategic_company_summary and strategic_company_citations are preserved across document reprocessing
         # They are only cleared when explicitly generating new company analysis
         self.checklist_results = {}
         self.question_answers = {}
