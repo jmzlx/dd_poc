@@ -759,14 +759,25 @@ def _process_questions_with_rag_batch(queries: List[Dict], vector_store: FAISS, 
         docs_with_scores = vector_store.similarity_search_with_score(question, k=5)
         relevant_docs = [doc for doc, score in docs_with_scores if (1.0 - (score / 2.0) if score <= 2.0 else 0.0) >= threshold]
         
-        # Create context and sources
+        # Create context and sources with full document content (chunks already properly sized)
         if relevant_docs:
-            context = "\n".join([f"- {doc.metadata.get('name', 'Unknown')}: {doc.page_content[:200]}..." 
-                               for doc in relevant_docs[:5]])
-            sources = [{'name': doc.metadata.get('name', ''), 
-                       'path': doc.metadata.get('path', ''),
-                       'score': round(1.0 - (score / 2.0) if score <= 2.0 else 0.0, 3)}
-                      for doc, score in docs_with_scores[:5] if (1.0 - (score / 2.0) if score <= 2.0 else 0.0) >= threshold]
+            context = "\n\n".join([f"- {doc.metadata.get('name', 'Unknown')}: {doc.page_content}" 
+                                 for doc in relevant_docs[:5]])
+            # Deduplicate sources by document name, keeping highest score
+            sources_dict = {}
+            for doc, score in docs_with_scores[:5]:
+                similarity_score = round(1.0 - (score / 2.0) if score <= 2.0 else 0.0, 3)
+                if similarity_score >= threshold:
+                    doc_name = doc.metadata.get('name', '')
+                    doc_path = doc.metadata.get('path', '')
+                    # Keep the highest score for each unique document
+                    if doc_name not in sources_dict or similarity_score > sources_dict[doc_name]['score']:
+                        sources_dict[doc_name] = {
+                            'name': doc_name,
+                            'path': doc_path,
+                            'score': similarity_score
+                        }
+            sources = list(sources_dict.values())
         else:
             context = ""
             sources = []
@@ -822,14 +833,21 @@ def _process_questions_simple_search(queries: List[Dict], vector_store: FAISS, t
         
         # Simple search without RAG
         docs_with_scores = vector_store.similarity_search_with_score(question, k=5)
-        sources = []
+        # Deduplicate sources by document name, keeping highest score
+        sources_dict = {}
         for doc, score in docs_with_scores:
             if score >= threshold:
-                sources.append({
-                    'name': doc.metadata.get('name', ''),
-                    'path': doc.metadata.get('path', ''),
-                    'score': round(score, 3)
-                })
+                doc_name = doc.metadata.get('name', '')
+                doc_path = doc.metadata.get('path', '')
+                score_rounded = round(score, 3)
+                # Keep the highest score for each unique document
+                if doc_name not in sources_dict or score_rounded > sources_dict[doc_name]['score']:
+                    sources_dict[doc_name] = {
+                        'name': doc_name,
+                        'path': doc_path,
+                        'score': score_rounded
+                    }
+        sources = list(sources_dict.values())
 
         answer = f"Based on the following documents: {', '.join([s['name'] for s in sources])}" if sources else "No relevant documents found"
         results.append({
