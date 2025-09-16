@@ -28,6 +28,8 @@ COPY . .
 # Ensure LFS files are pulled
 RUN git lfs pull || echo "LFS pull failed, continuing..."
 
+# Files are now in the correct structure
+
 # HuggingFace Spaces environment variables
 ENV STREAMLIT_SERVER_HEADLESS=true
 ENV STREAMLIT_SERVER_PORT=8501
@@ -45,5 +47,5 @@ ENV PYTHONPATH=/app
 
 EXPOSE 8501
 
-# Run the main application entry point
-CMD ["python", "-m", "streamlit", "run", "main.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# Run the main application entry point (in app subdirectory)
+CMD ["python", "-m", "streamlit", "run", "app/main.py", "--server.port=8501", "--server.address=0.0.0.0"]
