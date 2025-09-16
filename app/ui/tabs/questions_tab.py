@@ -99,7 +99,6 @@ class QuestionsTab:
                     from pathlib import Path
 
                     # Step 1: Load pre-parsed questions (no LLM needed)
-                    st.info("📋 Loading pre-parsed questions...")
                     
                     # Extract filename from questions path
                     if hasattr(self.session, 'questions_path') and self.session.questions_path:
@@ -109,17 +108,13 @@ class QuestionsTab:
                     
                     questions = load_prebuilt_questions(questions_filename)
                     self.session.questions = questions
-                    st.info(f"Found {len(questions)} questions to process")
 
                     # Step 2: Use pre-built FAISS index
-                    st.info("🔍 Setting up document search...")
                     if not document_processor.vector_store:
                         raise ValueError("No pre-built FAISS index loaded. Please ensure data room is processed first.")
                     vector_store = document_processor.vector_store
 
                     # Step 3: Process questions with batch processing
-                    st.info("🤖 **AI Agent Processing:** Running batch analysis with ReAct reasoning...")
-                    st.info("🧠 **Agent Status:** Using concurrent processing for faster results...")
 
                     question_answers = search_and_analyze(
                         questions,

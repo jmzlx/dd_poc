@@ -46,12 +46,8 @@ class CitationManager:
     def format_report_with_citations(self, report_text: str, tool_citations: Dict[str, List[Dict[str, Any]]]) -> Tuple[str, List[Dict[str, Any]]]:
         """Format report text with inline download links instead of numbered citations"""
         
-        # DEBUG: Log input
-        logger.info(f"FORMAT_REPORT_WITH_CITATIONS input: tool_citations keys={list(tool_citations.keys())}, total_citations={sum(len(citations) for citations in tool_citations.values())}")
-        
         # Process citations from tools
         for tool_name, citations_list in tool_citations.items():
-            logger.info(f"Processing {len(citations_list)} citations from tool {tool_name}")
             for citation in citations_list:
                 self.add_citation(citation)
         
@@ -71,21 +67,42 @@ class CitationManager:
             # We'll use a simple format that can be processed by Streamlit
             inline_link = self._create_inline_download_link(clean_doc_name, doc_path, doc_id)
             
-            # Map both full and clean names to the same inline link
+            # Map ALL possible variations to the same inline link for more flexible matching
             doc_replacements[doc_name] = inline_link
             doc_replacements[clean_doc_name] = inline_link
+            
+            # Also map common variations
+            # Remove common prefixes/suffixes from file names
+            base_name = doc_name
+            if '.' in base_name:
+                base_name = base_name.split('.')[0]  # Everything before first dot
+            if base_name != doc_name and base_name != clean_doc_name:
+                doc_replacements[base_name] = inline_link
+            
+            # Also handle path-based names (just the filename part)
+            from pathlib import Path
+            if doc_path:
+                path_filename = Path(doc_path).name
+                path_clean = path_filename.replace('.pdf', '').replace('.docx', '').replace('.doc', '')
+                if path_clean not in doc_replacements:
+                    doc_replacements[path_clean] = inline_link
         
         # Sort by longest document name first to avoid partial matches
         sorted_docs = sorted(doc_replacements.keys(), key=len, reverse=True)
         
+        replacements_made = 0
         for doc_name in sorted_docs:
             inline_link = doc_replacements[doc_name]
             
             # Simple string replacement for {Document Name} format
             citation_marker = f"{{{doc_name}}}"
             
-            # Replace all instances of the citation marker with inline link
+            # Count and replace
+            before_count = formatted_text.count(citation_marker)
             formatted_text = formatted_text.replace(citation_marker, inline_link)
+            actual_replacements = before_count - formatted_text.count(citation_marker)
+            replacements_made += actual_replacements
+        
         
         # For compatibility, still return citation list (but it won't be used for bottom section)
         citation_list = []
@@ -100,9 +117,6 @@ class CitationManager:
             citation_list.append(citation_entry)
         
         citation_list.sort(key=lambda x: x['id'])
-        
-        # DEBUG: Log output
-        logger.info(f"FORMAT_REPORT_WITH_CITATIONS output: formatted_text with inline links, citation_list={len(citation_list)} items for compatibility")
         
         return formatted_text, citation_list
     
@@ -202,7 +216,6 @@ def extract_tool_citations(tools: List[Any]) -> Dict[str, List[Dict[str, Any]]]:
         
         if citations:
             all_citations[tool_name] = citations
-    
     return all_citations
 
 
@@ -212,13 +225,8 @@ def create_comprehensive_report(agent_output: str, tools: List[Any], report_type
     # Extract citations from tools
     tool_citations = extract_tool_citations(tools)
     
-    # Debug logging
-    logger.info(f"Extracted tool citations: {len(tool_citations)} tools with citations")
+    # Calculate total citations
     total_citations = sum(len(citations) for citations in tool_citations.values())
-    for tool_name, citations_list in tool_citations.items():
-        logger.info(f"Tool {tool_name}: {len(citations_list)} citations")
-        for i, citation in enumerate(citations_list[:2]):  # Log first 2 for debugging
-            logger.info(f"  Citation {i+1}: {citation.get('name', 'No name')} - {citation.get('excerpt', 'No excerpt')[:50]}...")
     
     # Create citation manager
     citation_manager = CitationManager()
@@ -242,8 +250,5 @@ def create_comprehensive_report(agent_output: str, tools: List[Any], report_type
         'citations': citation_list,
         'total_count': total_citations
     }
-    
-    # DEBUG: Log exactly what we're returning
-    logger.info(f"CREATE_COMPREHENSIVE_REPORT returning: final_report={final_report is not None} ({len(final_report) if final_report else 0} chars), citation_info={citation_info}")
     
     return final_report, citation_info

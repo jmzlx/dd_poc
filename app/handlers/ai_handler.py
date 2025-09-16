@@ -483,12 +483,8 @@ IMPORTANT: You must provide a FINAL ANALYSIS REPORT in proper format, not just t
 
 Your final response should be a complete, well-structured report following the format specified in your instructions."""
             
-            # Run the comprehensive ReAct agent with progress tracking
+            # Run the comprehensive ReAct agent
             logger.info(f"Starting ReAct AI Agent for comprehensive due diligence analysis...")
-            
-            # Add progress indicator for user
-            progress_placeholder = st.empty()
-            progress_placeholder.info("🧠 **AI Agent Starting:** Initializing comprehensive analysis tools...")
             
             # Configure recursion limit and other settings
             config = {
@@ -498,66 +494,14 @@ Your final response should be a complete, well-structured report following the f
                 }
             }
             
-            # Update progress
-            progress_placeholder.info("🔍 **AI Agent Working:** Analyzing documents and gathering intelligence...")
-            
             result = agent.invoke({
                 "messages": [HumanMessage(content=analysis_request)]
             }, config=config)
             
-            # Final progress update
-            progress_placeholder.info("📊 **AI Agent Finalizing:** Synthesizing findings and generating report...")
-            
-            # Clear progress indicator
-            progress_placeholder.empty()
-            
-            # Debug: Log the complete result structure
-            logger.info(f"ReAct agent result type: {type(result)}")
-            logger.info(f"ReAct agent result keys: {result.keys() if isinstance(result, dict) else 'Not a dict'}")
-            
-            # Extract the agent's final response with enhanced debugging
+            # Extract the agent's final response
             agent_output = ""
             if result and "messages" in result:
-                logger.info(f"Found {len(result['messages'])} messages in result")
-                
-                # Log all messages for debugging with more detail
-                for i, message in enumerate(result["messages"]):
-                    msg_type = type(message).__name__
-                    has_content = hasattr(message, 'content')
-                    
-                    # Handle both string and list content types for debugging
-                    content_text = ""
-                    content_length = 0
-                    
-                    if has_content and message.content:
-                        if isinstance(message.content, list):
-                            # If content is a list, extract text parts for logging
-                            text_parts = []
-                            for item in message.content:
-                                if isinstance(item, dict) and 'text' in item:
-                                    text_parts.append(item['text'])
-                                elif isinstance(item, str):
-                                    text_parts.append(item)
-                            content_text = ' '.join(text_parts)
-                        else:
-                            content_text = str(message.content)
-                        
-                        content_length = len(content_text)
-                    
-                    logger.info(f"Message {i}: Type={msg_type}, Length={content_length}")
-                    
-                    if content_text:
-                        content_preview = content_text[:150]
-                        logger.info(f"Message {i} preview: {content_preview}...")
-                        
-                        # Check if this looks like a final report
-                        if (content_length > 500 and 
-                            ('# Company Analysis' in content_text or '## Executive Summary' in content_text)):
-                            logger.info(f"Message {i} appears to be a FINAL REPORT")
-                        elif 'Analysis - ' in content_text[:50]:
-                            logger.info(f"Message {i} appears to be TOOL OUTPUT")
-                        elif content_text.startswith('I '):
-                            logger.info(f"Message {i} appears to be REASONING")
+                logger.debug(f"Processing {len(result['messages'])} messages from ReAct agent")
                 
                 # Get the final analysis report (not tool outputs)
                 final_report = None
@@ -638,12 +582,8 @@ Your final response should be a complete, well-structured report following the f
                 agent_output, tools, report_type
             )
             
-            logger.info(f"ReAct agent analysis completed with agent output: {len(agent_output)} characters")
-            logger.info(f"Formatted report length: {len(formatted_report)} characters")
-            logger.info(f"Citation info: {citation_info}")
-            
-            # DEBUG: Log exactly what we're about to return
-            logger.info(f"GENERATE_REACT_REPORT about to return: formatted_report={formatted_report is not None} ({len(formatted_report) if formatted_report else 0} chars), citation_info={citation_info}")
+            logger.info(f"ReAct agent analysis completed: {len(agent_output)} chars → {len(formatted_report)} chars formatted")
+            logger.debug(f"Citation count: {citation_info.get('total_count', 0)} citations")
             
             return formatted_report, citation_info
             
