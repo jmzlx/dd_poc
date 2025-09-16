@@ -41,5 +41,5 @@ ENV PYTHONDONTWRITEBYTECODE=1
 
 EXPOSE 8501
 
-# Use UV for optimal performance
-CMD ["uv", "run", "streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# Run Streamlit directly (dependencies already installed system-wide)
+CMD ["python", "-m", "streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
