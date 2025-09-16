@@ -40,6 +40,12 @@ ENV UV_NO_CACHE=1
 # Disable Streamlit metrics to avoid permission issues
 ENV STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
 
+# Configure HuggingFace cache to writable location (50GB ephemeral storage)
+ENV HF_HOME=/tmp/huggingface
+ENV HF_HUB_CACHE=/tmp/huggingface/hub
+ENV TRANSFORMERS_CACHE=/tmp/huggingface/transformers
+ENV SENTENCE_TRANSFORMERS_HOME=/tmp/huggingface/sentence_transformers
+
 # Spaces-specific optimizations
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
