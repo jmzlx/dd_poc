@@ -65,7 +65,7 @@ class AppConfig:
 
         self._config['anthropic'] = {
             'api_key': os.getenv('ANTHROPIC_API_KEY'),
-            'model': os.getenv('CLAUDE_MODEL', 'claude-3-5-sonnet')
+            'model': os.getenv('CLAUDE_MODEL', 'claude-sonnet-4-20250514')
         }
 
     @property
