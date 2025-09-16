@@ -42,4 +42,4 @@ ENV PYTHONDONTWRITEBYTECODE=1
 EXPOSE 8501
 
 # Run the main application entry point
-CMD ["python", "-m", "streamlit", "run", "app/main.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["python", "-m", "streamlit", "run", "main.py", "--server.port=8501", "--server.address=0.0.0.0"]
