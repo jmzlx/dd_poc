@@ -20,7 +20,7 @@ COPY pyproject.toml ./
 
 # Generate requirements.txt and install (avoid package building)
 RUN uv export --no-dev --no-hashes > requirements.txt && \
-    uv pip install -r requirements.txt
+    uv pip install -r requirements.txt --system
 
 # Copy the entire application (Git LFS files will be pulled automatically)
 COPY . .
