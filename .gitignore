@@ -33,10 +33,10 @@ Thumbs.db
 *.log
 .logs/
 
-# Vector stores
+# Vector stores (but allow critical pre-built indexes)
 chroma_db/
-*.faiss
-*.pkl
+# *.faiss  # Commented out - we need pre-built search indexes
+# *.pkl    # Commented out - we need pre-built search indexes
 
 # Temporary files
 temp/
