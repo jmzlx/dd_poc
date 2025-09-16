@@ -37,9 +37,8 @@ ENV STREAMLIT_SERVER_HEADLESS=true
 ENV STREAMLIT_SERVER_PORT=8501
 ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
 
-# Configure uv cache directory to be writable
-ENV UV_CACHE_DIR=/app/.uv-cache
-RUN mkdir -p /app/.uv-cache && chmod 755 /app/.uv-cache
+# Disable uv cache for runtime to avoid permission issues
+ENV UV_NO_CACHE=1
 
 # Run the Streamlit app using uv (HuggingFace Spaces format)
 CMD ["uv", "run", "streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
