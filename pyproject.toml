@@ -47,7 +47,6 @@ dependencies = [
     "transformers>=4.56.0",
     "torch>=2.8.0",
     "spacy>=3.8.7",
-    "hdbscan>=0.8.40",
     "blackstone>=0.1.14",
     "yake>=0.6.0",
 ]
