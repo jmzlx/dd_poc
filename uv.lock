@@ -434,7 +434,6 @@ dependencies = [
     { name = "diskcache" },
     { name = "faiss-cpu" },
     { name = "ftfy" },
-    { name = "hdbscan" },
     { name = "httpx" },
     { name = "huggingface-hub" },
     { name = "joblib" },
@@ -490,7 +489,6 @@ requires-dist = [
     { name = "diskcache", specifier = ">=5.6.0" },
     { name = "faiss-cpu", specifier = "==1.12.0" },
     { name = "ftfy", specifier = ">=6.3.1" },
-    { name = "hdbscan", specifier = ">=0.8.40" },
     { name = "httpx", specifier = ">=0.25.0" },
     { name = "huggingface-hub", specifier = ">=0.20.0" },
     { name = "joblib", specifier = ">=1.4.0" },
@@ -744,18 +742,6 @@ sdist = { url = "https://files.pythonhosted.org/packages/01/ee/02a2c011bdab74c6f
 wheels = [
     { url = "https://files.pythonhosted.org/packages/04/4b/29cac41a4d98d144bf5f6d33995617b185d14b22401f75ca86f384e87ff1/h11-0.16.0-py3-none-any.whl", hash = "sha256:63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86", size = 37515, upload-time = "2025-04-24T03:35:24.344Z" },
 ]
-
-[[package]]
-name = "hdbscan"
-version = "0.8.40"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "joblib" },
-    { name = "numpy" },
-    { name = "scikit-learn" },
-    { name = "scipy" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/c1/84/6b010387b795f774e1ec695df3c8660c15abd041783647d5e7e4076bfc6b/hdbscan-0.8.40.tar.gz", hash = "sha256:c9e383ff17beee0591075ff65d524bda5b5a35dfb01d218245a7ba30c8d48a17", size = 6904096, upload-time = "2024-11-18T16:14:05.384Z" }
 
 [[package]]
 name = "hf-xet"
