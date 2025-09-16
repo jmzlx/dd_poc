@@ -1,10 +1,9 @@
-# Use Python 3.13 base image
+# HuggingFace Spaces Optimized Dockerfile
 FROM python:3.13-slim
 
-# Copy uv from the official image (much more efficient than installing)
+# Copy UV from official image
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# Set working directory
 WORKDIR /app
 
 # Install system dependencies
@@ -16,29 +15,35 @@ RUN apt-get update && apt-get install -y \
 # Initialize Git LFS
 RUN git lfs install
 
-# Copy pyproject.toml and uv.lock for better caching
-COPY pyproject.toml uv.lock* ./
+# Copy Spaces-specific project file
+COPY pyproject.spaces.toml ./pyproject.toml
 
-# Install Python dependencies using uv
-RUN uv sync --frozen --no-dev
+# Generate requirements.txt and install (avoid package building)
+RUN uv export --no-dev --no-hashes > requirements.txt && \
+    uv pip install -r requirements.txt
 
-# Copy the entire application
-COPY . .
+# Copy essential application files only
+COPY app/ ./app/
+COPY models/ ./models/
+COPY data/ ./data/
+COPY .cache/ ./.cache/
+COPY .streamlit/config.toml ./.streamlit/config.toml
+COPY checklist_scoring_analysis.json ./
+COPY .gitattributes ./
+COPY app.py ./
 
-# Download and cache models on build (optional - can be done at runtime too)
-# RUN uv run python -c "from app.core.model_cache import get_cached_embeddings, get_cached_cross_encoder; get_cached_embeddings(); get_cached_cross_encoder()"
-
-# Expose the port Streamlit runs on (HuggingFace Spaces standard)
-EXPOSE 8501
-
-# Set environment variables for better performance
-ENV TOKENIZERS_PARALLELISM=true
+# HuggingFace Spaces environment variables
 ENV STREAMLIT_SERVER_HEADLESS=true
 ENV STREAMLIT_SERVER_PORT=8501
 ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
-
-# Disable uv cache for runtime to avoid permission issues
+ENV TOKENIZERS_PARALLELISM=true
 ENV UV_NO_CACHE=1
 
-# Run the Streamlit app using uv (HuggingFace Spaces format)
+# Spaces-specific optimizations
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+
+EXPOSE 8501
+
+# Use UV for optimal performance
 CMD ["uv", "run", "streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]

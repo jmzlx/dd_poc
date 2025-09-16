@@ -1,25 +1,21 @@
 [project]
-name = "dd-poc"
+name = "dd-poc-spaces"
 version = "0.1.0"
-description = "AI-powered document analysis with citations"
+description = "AI Due Diligence - HuggingFace Spaces Production"
 requires-python = ">=3.13"
 dependencies = [
-    # Core dependencies - pinned for deployment
+    # Core dependencies - production only
     "streamlit==1.49.1",
     "sentence-transformers==5.1.0",
     "numpy==2.3.2",
-    # Document processing - pinned for deployment
+    # Document processing
     "pymupdf==1.24.14",
-    # Environment and configuration - pinned for deployment
+    # Configuration
     "python-dotenv==1.1.1",
     "pydantic-settings>=2.10.1,<3.0.0",
-    # Vector store - optimized CPU version
+    # Vector store - CPU optimized for Spaces
     "faiss-cpu==1.12.0",
-    # CPU optimization libraries
-    "accelerate",
-    "optuna", # For hyperparameter optimization
-    "memory-profiler", # For detailed memory profiling
-    # AI Enhancement - LangChain packages pinned for deployment
+    # AI Enhancement - LangChain
     "langchain-anthropic==0.3.19",
     "langgraph==0.6.6",
     "langchain-core==0.3.75",
@@ -28,11 +24,10 @@ dependencies = [
     "langchain-huggingface==0.3.1",
     "tqdm>=4.67.1",
     "pydantic>=2.11.7",
-    "pytest>=8.4.2",
     "huggingface-hub>=0.20.0",
     "pypdf>=6.0.0",
     "watchdog>=6.0.0",
-    # Performance optimization libraries
+    # Performance optimization
     "diskcache>=5.6.0",
     "joblib>=1.4.0",
     "httpx>=0.25.0",
@@ -51,33 +46,4 @@ dependencies = [
     "yake>=0.6.0",
 ]
 
-[build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
-
-[dependency-groups]
-dev = [
-    "autoflake>=2.3.1",
-    "flake8>=7.3.0",
-    # Testing dependencies
-    "playwright>=1.55.0",
-    "pytest>=7.4.0",
-    "pytest-asyncio>=0.21.0",
-    "pytest-cov>=4.1.0",
-    "pytest-mock>=3.12.0",
-    "pytest-playwright>=0.7.1",
-    "pytest-xdist>=3.5.0",
-]
-
-[tool.setuptools.packages.find]
-include = ["app*", "scripts*", ""]
-
-[project.scripts]
-download-models = "scripts.download_models:main"
-verify-test-coverage = "scripts.verify_test_coverage:main"
-build-indexes = "scripts.build_indexes:main"
-build-graphs = "scripts.build_knowledge_graphs:main"
-build = "scripts.build:main"
-start = "scripts.start:main"
-e2e-test = "scripts.run_e2e_tests:main"
-
+# No build system needed for Spaces - dependencies only

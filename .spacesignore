@@ -1,0 +1,29 @@
+# HuggingFace Spaces ignore file - exclude unnecessary files
+# Development files
+tests/
+scripts/
+pytest.ini
+pytest-e2e.ini
+playwright.config.py
+packages.txt
+runtime.txt
+dd_poc.egg-info/
+
+# Local development
+.venv/
+.env
+.env.*
+.logs/
+.pytest_cache/
+.DS_Store
+.claude/
+
+# Git and build artifacts  
+.git/
+__pycache__/
+*.pyc
+*.pyo
+*.log
+
+# Keep only essential streamlit config
+.streamlit/secrets.toml
