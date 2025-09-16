@@ -54,7 +54,11 @@ htmlcov/
 *.pem
 *.key
 *.crt
-# Cache directories
+# Cache directories and binary files
 .cache/
+*.cache
+*.db
+*.joblib
 
-# Model files - allow in models/ directory for Streamlit Cloud
+# Model files - exclude for HuggingFace Spaces (use runtime downloads)
+models/
