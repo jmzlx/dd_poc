@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Main Application Entry Point
+Main Application Entry Point - Updated for HuggingFace Spaces
 """
 
 # Standard library imports
