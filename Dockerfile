@@ -22,15 +22,11 @@ COPY pyproject.spaces.toml ./pyproject.toml
 RUN uv export --no-dev --no-hashes > requirements.txt && \
     uv pip install -r requirements.txt
 
-# Copy essential application files only
-COPY app/ ./app/
-COPY models/ ./models/
-COPY data/ ./data/
-COPY .cache/ ./.cache/
-COPY .streamlit/config.toml ./.streamlit/config.toml
-COPY checklist_scoring_analysis.json ./
-COPY .gitattributes ./
-COPY app.py ./
+# Copy the entire application (Git LFS files will be pulled automatically)
+COPY . .
+
+# Ensure LFS files are pulled
+RUN git lfs pull || echo "LFS pull failed, continuing..."
 
 # HuggingFace Spaces environment variables
 ENV STREAMLIT_SERVER_HEADLESS=true
