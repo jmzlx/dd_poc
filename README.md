@@ -1,3 +1,17 @@
+---
+title: AI Due Diligence
+emoji: 🤖
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_file: app.py
+pinned: false
+license: mit
+models:
+  - sentence-transformers/all-mpnet-base-v2
+  - cross-encoder/ms-marco-MiniLM-L-6-v2
+---
+
 # 🤖 AI Due Diligence
 
 A professional, enterprise-grade Streamlit application for automated due diligence document analysis with AI-powered insights, checklist matching, and intelligent Q&A capabilities.
