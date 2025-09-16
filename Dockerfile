@@ -15,8 +15,8 @@ RUN apt-get update && apt-get install -y \
 # Initialize Git LFS
 RUN git lfs install
 
-# Copy Spaces-specific project file
-COPY pyproject.spaces.toml ./pyproject.toml
+# Copy project configuration
+COPY pyproject.toml ./
 
 # Generate requirements.txt and install (avoid package building)
 RUN uv export --no-dev --no-hashes > requirements.txt && \
