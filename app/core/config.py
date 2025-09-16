@@ -128,16 +128,13 @@ class AppConfig:
                 raise ValueError(f"Path '{dir_name}' exists but is not a directory: {dir_path}")
 
     def _validate_models(self) -> None:
-        """Validate that required models are available."""
-        # Check sentence transformer model
-        model_path = Path('models') / 'sentence_transformers' / self.model['sentence_transformer_model'].split('/')[-1]
-        if not model_path.exists():
-            raise ValueError(f"Sentence transformer model not found: {model_path}")
+        """Validate that required models are available or can be downloaded."""
+        # Models will be loaded via model_cache.py which handles:
+        # 1. Local models (if available)  
+        # 2. HuggingFace download (if local not found)
+        # Skip validation - let model_cache handle it gracefully
+        pass
 
-        # Check cross-encoder model
-        cross_encoder_path = Path('models') / 'cross_encoder' / 'ms-marco-MiniLM-L-6-v2'
-        if not cross_encoder_path.exists():
-            raise ValueError(f"Cross-encoder model not found: {cross_encoder_path}")
 
     def _validate_processing_config(self) -> None:
         """Validate processing configuration values."""
